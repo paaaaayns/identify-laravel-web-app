@@ -14,7 +14,30 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                primary: {
+                    DEFAULT: '#1F555F',   // Main primary color
+                },
+                secondary: {
+                    DEFAULT: '#DDE9F1',   // Main primary color
+                },
+                background: {
+                    light: '#DDE9F1',  // Light background color
+                    dark: '#1F555F',    // Dark background color
+                },
+                button: {
+                    primary: {
+                      DEFAULT: '#1F555F',       // Primary button color
+                      hover: '#276873',         // Lighter hover color
+                      active: '#173D45',        // Darker active color
+                      disabled: '#A0B5BA'       // Muted disabled color
+                    },
+                },
+            },
         },
     },
-    plugins: [],
+    plugins: [
+        // require('@tailwindcss/forms'),
+    ],
+    
 };
