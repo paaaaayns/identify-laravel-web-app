@@ -41,7 +41,7 @@ class DoctorFactory extends Factory
             'first_name' => $this->faker->firstName(),
             'middle_name' => $this->faker->optional()->lastName(),
             'last_name' => $this->faker->lastName(),
-            'birthdate' => $this->faker->date(), // Date format: YYYY-MM-DD
+        'birthdate' => $this->faker->date(), // Date format: YYYY-MM-DD
             'sex' => $this->faker->randomElement(['Male', 'Female']),
             'religion' => $this->faker->randomElement(['Catholic', 'Buddhist', 'Muslim', 'Christian']),
             'civil_status' => $this->faker->randomElement(['Single', 'Married', 'Widowed', 'Divorced']),
@@ -51,6 +51,7 @@ class DoctorFactory extends Factory
             'address' => $this->faker->address(),
             'email' => $this->faker->unique()->safeEmail(),
             'contact_number' => $this->faker->phoneNumber(),
+            'room' => $this->faker->regexify('[A-K][1-3][0-1][1-9]'),
             
             'type' => fake()->randomElement($doctorTypes),
         ];
