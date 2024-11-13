@@ -17,10 +17,13 @@ class DashboardController extends Controller
         switch ($user->type) {
             case 'ADMIN':
                 $doctors = Doctor::latest()->get();
+                $opds = Doctor::latest()->get();
+
                 return view('dashboard.admin', [
-                    'doctors' => $doctors
+                    'doctors' => $doctors,
+                    'opds' => $opds
                 ]);
-                
+
             case 'OPD':
                 return view('dashboard.opd');
             case 'DOCTOR':

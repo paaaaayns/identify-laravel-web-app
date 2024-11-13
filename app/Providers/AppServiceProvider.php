@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Doctor;
+use App\Models\Opd;
 use App\Observers\DoctorRegistrationObserver;
+use App\Observers\OpdRegistrationObserver;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,5 +25,6 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         Doctor::observe(DoctorRegistrationObserver::class);
+        Opd::observe(OpdRegistrationObserver::class);
     }
 }
