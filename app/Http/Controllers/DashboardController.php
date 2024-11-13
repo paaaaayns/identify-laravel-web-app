@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Doctor;
 use App\Models\Opd;
 use App\Models\Patient;
+use App\Models\PreRegisteredPatient;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -20,12 +21,14 @@ class DashboardController extends Controller
             case 'ADMIN':
                 $doctors = Doctor::latest()->get();
                 $opds = Opd::latest()->get();
-                $patients = Patient::latest()->get();
+                $reg_patients = Patient::latest()->get();
+                $pre_reg_patients = PreRegisteredPatient::latest()->get();
 
-                return view('dashboard.admin', [
+                return view('auth.admin.dashboard', [
                     'doctors' => $doctors,
                     'opds' => $opds,
-                    'patients' => $patients,
+                    'reg_patients' => $reg_patients,
+                    'pre_reg_patients' => $pre_reg_patients,
                 ]);
 
             case 'OPD':
@@ -36,37 +39,19 @@ class DashboardController extends Controller
                 return view('dashboard.patient');
             // Add more roles if necessary
             default:
-                return view('dashboard.default');  // Default dashboard view
+                return abort(403);  // Default dashboard view
         }
     }
 
-    // public function show(){
-    //     // Get the authenticated user
-    //     $user = Auth::user();
-        
-    //     // Check user role and return the appropriate view
-    //     switch ($user->type) {
-    //         case 'ADMIN':
-    //             $doctors = Doctor::latest()->get();
-    //             $opds = Opd::latest()->get();
-    //             $patients = Patient::latest()->get();
-
-    //             return view('dashboard.admin', [
-    //                 'doctors' => $doctors,
-    //                 'opds' => $opds,
-    //                 'patients' => $patients,
-    //             ]);
-
-    //         case 'OPD':
-    //             return view('dashboard.opd');
-    //         case 'DOCTOR':
-    //             return view('dashboard.doctor');
-    //         case 'PATIENT':
-    //             return view('dashboard.patient');
-    //         // Add more roles if necessary
-    //         default:
-    //             return view('dashboard.default');  // Default dashboard view
-    //     }
-    // }
+    private function getPreRegisteredPatients($firstName)
+    {
+        return Patient::where(function($query) use ($firstName) {
+            $query->where('first_name', 'like', "%$firstName%")
+                  ->orWhere('middle_name', 'like', "%$firstName%")
+                  ->orWhere('last_name', 'like', "%$firstName%");
+        })
+        ->whereNull('registered_at')
+        ->get();
+    }
 
 }
