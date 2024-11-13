@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Doctor;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -14,7 +16,11 @@ class DashboardController extends Controller
         // Check user role and return the appropriate view
         switch ($user->type) {
             case 'ADMIN':
-                return view('dashboard.admin');
+                $doctors = Doctor::latest()->get();
+                return view('dashboard.admin', [
+                    'doctors' => $doctors
+                ]);
+                
             case 'OPD':
                 return view('dashboard.opd');
             case 'DOCTOR':

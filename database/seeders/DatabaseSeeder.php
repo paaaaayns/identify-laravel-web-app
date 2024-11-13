@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+use App\Models\Doctor;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
+use Database\Seeders\UserSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,7 +17,11 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
         
+        
         // Call the UserSeeder
         $this->call(UserSeeder::class);
+
+        // Seed 10 doctor records
+        Doctor::factory(10)->create();
     }
 }

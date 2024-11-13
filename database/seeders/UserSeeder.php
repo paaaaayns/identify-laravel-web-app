@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
             'username' => 'admin',
             'email' => 'admin@example.com',
             'password' => 'admin',  // Hash the password
-            'type' => 'admin',
+            'type' => 'ADMIN',
             'otp_code' => null,
             'is_otp_verified' => null,
         ]);
