@@ -30,7 +30,6 @@ class DoctorFactory extends Factory
             'middle_name' => fake()->lastName(),
             'last_name' => fake()->lastName(),
             'email' => fake()->unique()->safeEmail(),
-            'last_name' => fake()->lastName(),
             'type' => fake()->jobTitle(),
         ];
     }
