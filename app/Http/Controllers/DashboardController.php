@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Doctor;
+use App\Models\Opd;
+use App\Models\Patient;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -17,11 +19,13 @@ class DashboardController extends Controller
         switch ($user->type) {
             case 'ADMIN':
                 $doctors = Doctor::latest()->get();
-                $opds = Doctor::latest()->get();
+                $opds = Opd::latest()->get();
+                $patients = Patient::latest()->get();
 
                 return view('dashboard.admin', [
                     'doctors' => $doctors,
-                    'opds' => $opds
+                    'opds' => $opds,
+                    'patients' => $patients,
                 ]);
 
             case 'OPD':

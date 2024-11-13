@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Doctor;
 use App\Models\Opd;
+use App\Models\Patient;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\User;
 use Database\Seeders\UserSeeder;
@@ -22,11 +23,14 @@ class DatabaseSeeder extends Seeder
         // Call the UserSeeder
         $this->call(UserSeeder::class);
 
-        // Seed 10 doctor records
-        Doctor::factory(10)->create();
+        // Seed doctor records
+        Doctor::factory(3)->create();
 
         
-        // Seed 10 opd records
-        Opd::factory(10)->create();
+        // Seed opd records
+        Opd::factory(3)->create();
+
+        // Seed patient records
+        Patient::factory(3)->create();
     }
 }
