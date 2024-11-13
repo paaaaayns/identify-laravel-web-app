@@ -38,7 +38,6 @@ class DoctorFactory extends Factory
 
         return [
             //
-            'user_id' => fake()->name(),
             'first_name' => fake()->firstName(),
             'middle_name' => fake()->lastName(),
             'last_name' => fake()->lastName(),
