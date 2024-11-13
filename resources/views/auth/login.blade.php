@@ -32,14 +32,14 @@
                     <x-forms.field>
                         <x-forms.label>Email</x-forms.label>
 
-                        <x-forms.input type="text" name="email" id="email" :value="old('email')" autocomplete="off" />
+                        <x-forms.input type="text" name="email" id="email" :value="old('email')" autocomplete="off" class="mt-2" />
                         <x-forms.error name="email" />
                     </x-forms.field>
 
                     <x-forms.field>
                         <x-forms.label>Password</x-forms.label>
 
-                        <x-forms.input type="password" name="password" id="password" autocomplete="off" />
+                        <x-forms.input type="password" name="password" id="password" autocomplete="off" class="mt-2" />
                         <x-forms.error name="password" />
                     </x-forms.field>
                 </div>
