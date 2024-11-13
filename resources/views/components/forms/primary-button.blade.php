@@ -1,8 +1,18 @@
 <button {{ $attributes->merge([
-    'class' => 'rounded-md bg-button-primary px-3 py-2 text-sm font-semibold text-white shadow-sm 
-            hover:bg-button-primary-hover 
-            focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
+    'class' => 'bg-primary
+        text-white font-medium text-sm
+        rounded-lg
+        ring-primary ring-offset-2 ring-offset-slate-50 focus:outline-none focus:ring-2
+        px-5 py-2.5',
+        
     ]) }}>
+
     {{ $slot }}
 </button>
 
+
+<!-- px-4 py-2 
+font-semibold text-sm text-slate-700
+bg-white border border-slate-300 
+rounded-md shadow-sm 
+ring-violet-300 ring-offset-2 ring-offset-slate-50 focus:outline-none focus:ring-2 -->
