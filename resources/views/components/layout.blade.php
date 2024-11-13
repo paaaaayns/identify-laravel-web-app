@@ -306,6 +306,30 @@
                            </a>
                         </li>
 
+                        <!-- <li x-data="{ isActive: window.location.pathname === '/dashboard' }"> -->
+                        <li x-data="{ isActive: window.location.pathname.startsWith('/search') }">
+                           <a
+                              href="/search"
+                              :class="isActive ? 'bg-background-dark text-white' : 'text-gray-700 hover:bg-gray-50'"
+                              class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold">
+                              <svg
+                                 :class="isActive ? 'text-white' : 'text-gray-400'"
+                                 class="h-6 w-6 shrink-0"
+                                 fill="none"
+                                 viewBox="0 0 24 24"
+                                 stroke-width="1.5"
+                                 stroke="currentColor"
+                                 aria-hidden="true">
+                                 <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                              </svg>
+                              Search
+                           </a>
+                        </li>
+
+                        
                         <li>
                            <div x-data="{ isOpen: window.location.pathname.startsWith('/register') }">
                               <button
@@ -357,30 +381,6 @@
                                  </li>
                               </ul>
                            </div>
-                        </li>
-
-
-                        <!-- <li x-data="{ isActive: window.location.pathname === '/dashboard' }"> -->
-                        <li x-data="{ isActive: window.location.pathname.startsWith('/search') }">
-                           <a
-                              href="/search"
-                              :class="isActive ? 'bg-background-dark text-white' : 'text-gray-700 hover:bg-gray-50'"
-                              class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold">
-                              <svg
-                                 :class="isActive ? 'text-white' : 'text-gray-400'"
-                                 class="h-6 w-6 shrink-0"
-                                 fill="none"
-                                 viewBox="0 0 24 24"
-                                 stroke-width="1.5"
-                                 stroke="currentColor"
-                                 aria-hidden="true">
-                                 <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-                              </svg>
-                              Search
-                           </a>
                         </li>
 
 
