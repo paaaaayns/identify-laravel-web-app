@@ -69,7 +69,15 @@
             class="fixed inset-0 bg-gray-900/80">
          </div>
 
-         <div class="fixed inset-0 flex">
+         <div
+            x-show="isOpen"
+            x-transition:enter="transition ease-in-out duration-300 transform"
+            x-transition:enter-start="-translate-x-full"
+            x-transition:enter-end="translate-x-0"
+            x-transition:leave="transition ease-in-out duration-300 transform"
+            x-transition:leave-start="translate-x-0"
+            x-transition:leave-end="-translate-x-full"
+            class="fixed inset-0 flex">
             <!--
             Off-canvas menu, show/hide based on off-canvas menu state.
 
