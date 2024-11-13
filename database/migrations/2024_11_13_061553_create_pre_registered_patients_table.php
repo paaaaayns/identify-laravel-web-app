@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('doctors', function (Blueprint $table) {
+        Schema::create('pre_registered_patients', function (Blueprint $table) {
             $table->id();
             $table->string('user_id')->unique()->nullable();
 
@@ -23,14 +23,22 @@ return new class extends Migration
             $table->string('religion');
             $table->string('civil_status');
             $table->string('citizenship');
+            $table->string('healthcard_number')->nullable();
 
             $table->string('address');
             $table->string('email')->unique();
             $table->string('contact_number');
 
-            $table->string('type');
+            $table->string('emergency_contact1_name');
+            $table->string('emergency_contact1_number');
+            $table->string('emergency_contact1_relationship');
+            $table->string('emergency_contact2_name');
+            $table->string('emergency_contact2_number');
+            $table->string('emergency_contact2_relationship');
 
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('pre_registration_code')->nullable();
+            $table->timestamp('pre_registered_at');
+
             $table->timestamps();
         });
     }
@@ -40,6 +48,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('doctors');
+        Schema::dropIfExists('pre_registered_patients');
     }
 };

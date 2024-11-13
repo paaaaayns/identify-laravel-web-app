@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Doctor;
 use App\Models\Opd;
 use App\Models\Patient;
+use App\Models\PreRegisteredPatient;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\User;
 use Database\Seeders\UserSeeder;
@@ -25,12 +26,14 @@ class DatabaseSeeder extends Seeder
 
         // Seed doctor records
         Doctor::factory(3)->create();
-
         
         // Seed opd records
         Opd::factory(3)->create();
 
         // Seed patient records
         Patient::factory(3)->create();
+
+        // Seed pre-registered patient records
+        PreRegisteredPatient::factory(3)->create();
     }
 }

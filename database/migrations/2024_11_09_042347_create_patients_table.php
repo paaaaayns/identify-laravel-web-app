@@ -36,13 +36,11 @@ return new class extends Migration
             $table->string('emergency_contact2_number');
             $table->string('emergency_contact2_relationship');
 
-            $table->string('account_status')->nullable()->default('PRE-REGISTERED');
-            $table->string('queue_status')->nullable();
-
             $table->string('pre_registration_code')->nullable();
             $table->timestamp('pre_registered_at')->nullable();
             $table->timestamp('registered_at')->nullable();
 
+            $table->string('queue_status')->nullable();
 
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();

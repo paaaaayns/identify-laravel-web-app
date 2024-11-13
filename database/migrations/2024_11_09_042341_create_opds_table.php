@@ -14,11 +14,22 @@ return new class extends Migration
         Schema::create('opds', function (Blueprint $table) {
             $table->id();
             $table->string('user_id')->unique()->nullable();
+
             $table->string('first_name');
             $table->string('middle_name')->nullable();
             $table->string('last_name');
+            $table->string('birthdate');
+            $table->string('sex');
+            $table->string('religion');
+            $table->string('civil_status');
+            $table->string('citizenship');
+
+            $table->string('address');
             $table->string('email')->unique();
+            $table->string('contact_number');
+
             $table->string('type');
+
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();
         });

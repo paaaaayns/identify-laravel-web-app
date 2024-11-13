@@ -33,10 +33,20 @@ class OpdFactory extends Factory
 
         return [
             //
-            'first_name' => fake()->firstName(),
-            'middle_name' => fake()->lastName(),
-            'last_name' => fake()->lastName(),
-            'email' => fake()->unique()->safeEmail(),
+            'first_name' => $this->faker->firstName(),
+            'middle_name' => $this->faker->optional()->lastName(),
+            'last_name' => $this->faker->lastName(),
+            'birthdate' => $this->faker->date(), // Date format: YYYY-MM-DD
+            'sex' => $this->faker->randomElement(['Male', 'Female']),
+            'religion' => $this->faker->randomElement(['Catholic', 'Buddhist', 'Muslim', 'Christian']),
+            'civil_status' => $this->faker->randomElement(['Single', 'Married', 'Widowed', 'Divorced']),
+            'citizenship' => $this->faker->randomElement(['Filipino', 'American', 'Greek', 'Egyptian']),
+
+            // Contact Details
+            'address' => $this->faker->address(),
+            'email' => $this->faker->unique()->safeEmail(),
+            'contact_number' => $this->faker->phoneNumber(),
+            
             'type' => fake()->randomElement($opdDepartments),
         ];
     }

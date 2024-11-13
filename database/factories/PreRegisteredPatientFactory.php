@@ -3,19 +3,12 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Doctor>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PreRegisteredPatient>
  */
-class DoctorFactory extends Factory
+class PreRegisteredPatientFactory extends Factory
 {
-    /**
-     * The current password being used by the factory.
-     */
-    protected static ?string $password;
-    
     /**
      * Define the model's default state.
      *
@@ -23,20 +16,8 @@ class DoctorFactory extends Factory
      */
     public function definition(): array
     {
-        $doctorTypes = [
-            'General Practitioner',
-            'Cardiologist',
-            'Dermatologist',
-            'Endocrinologist',
-            'Gastroenterologist',
-            'Neurologist',
-            'Oncologist',
-            'Orthopedic Surgeon',
-            'Pediatrician',
-            'Psychiatrist',
-        ];
-
         return [
+            //
             // Personal Information
             'first_name' => $this->faker->firstName(),
             'middle_name' => $this->faker->optional()->lastName(),
@@ -46,13 +27,26 @@ class DoctorFactory extends Factory
             'religion' => $this->faker->randomElement(['Catholic', 'Buddhist', 'Muslim', 'Christian']),
             'civil_status' => $this->faker->randomElement(['Single', 'Married', 'Widowed', 'Divorced']),
             'citizenship' => $this->faker->randomElement(['Filipino', 'American', 'Greek', 'Egyptian']),
+            'healthcard_number' => $this->faker->optional()->regexify('[A-Z]{2}[0-9]{6}'), // Optional health card number
 
             // Contact Details
             'address' => $this->faker->address(),
             'email' => $this->faker->unique()->safeEmail(),
-            'contact_number' => $this->faker->phoneNumber(),
+            'contact_number' => $this->faker->regexify('09[1-9][0-9]{7}'),
+
+            // Emergency Contact 1
+            'emergency_contact1_name' => $this->faker->name(),
+            'emergency_contact1_number' => $this->faker->regexify('09[1-9][0-9]{7}'),
+            'emergency_contact1_relationship' => $this->faker->randomElement(['Parent', 'Sibling', 'Friend', 'Spouse']),
+
+            // Emergency Contact 2
+            'emergency_contact2_name' => $this->faker->name(),
+            'emergency_contact2_number' => $this->faker->regexify('09[1-9][0-9]{7}'),
+            'emergency_contact2_relationship' => $this->faker->randomElement(['Parent', 'Sibling', 'Friend', 'Spouse']),
+
             
-            'type' => fake()->randomElement($doctorTypes),
+            'pre_registration_code' => $this->faker->regexify('[A-Z]{2}[0-9]{6}'),
+            'pre_registered_at' => now(),
         ];
     }
 }

@@ -17,7 +17,7 @@ class PatientRegistrationObserver
     public function created(Patient $patient)
     {
         // Update the user_id once the ID is available.
-        $patient->user_id = 'O-' . str_pad($patient->id, 5, '0', STR_PAD_LEFT);
+        $patient->user_id = 'P-' . str_pad($patient->id, 5, '0', STR_PAD_LEFT);
         $patient->saveQuietly(); // Avoid infinite loop by saving without triggering events.
 
         // Create a new user record
