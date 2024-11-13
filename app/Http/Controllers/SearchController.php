@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 class SearchController extends Controller
 {
     //
-    public function show()
+    public function index()
     {
         // Get the authenticated user
         $user = Auth::user();
@@ -36,18 +36,64 @@ class SearchController extends Controller
     }
 
 
-    private function showAdmin()
+    public function showAdmin()
     {
-        $doctors = Doctor::latest()->get();
-        $opds = Opd::latest()->get();
-        $reg_patients = Patient::latest()->get();
-        $pre_reg_patients = PreRegisteredPatient::latest()->get();
+        $data = PreRegisteredPatient::latest()->get();
 
         return view('auth.admin.search', [
-            'doctors' => $doctors,
-            'opds' => $opds,
-            'reg_patients' => $reg_patients,
-            'pre_reg_patients' => $pre_reg_patients,
+            'data' => $data
+        ]);
+    }
+
+    public function show(Request $request)
+    {
+        $account_type = request('account_type');
+        $name = request('name');
+
+        // dd(request());
+        // dd($account_type);
+
+        switch ($account_type) {
+            case 'PRE-REGISTERED':
+                $data = PreRegisteredPatient::when($name, function ($query, $name) {
+                    return $query->where('first_name', 'like', "%$name%")
+                        ->orWhere('middle_name', 'like', "%$name%")
+                        ->orWhere('last_name', 'like', "%$name%");
+                })->latest()->get();
+                break;
+
+            case 'REGISTERED':
+                $data = Patient::when($name, function ($query, $name) {
+                    return $query->where('first_name', 'like', "%$name%")
+                        ->orWhere('middle_name', 'like', "%$name%")
+                        ->orWhere('last_name', 'like', "%$name%");
+                })->latest()->get();
+                break;
+
+            case 'DOCTOR':
+                $data = Doctor::when($name, function ($query, $name) {
+                    return $query->where('first_name', 'like', "%$name%")
+                        ->orWhere('middle_name', 'like', "%$name%")
+                        ->orWhere('last_name', 'like', "%$name%");
+                })->latest()->get();
+                break;
+
+            case 'OPD':
+                $data = Opd::when($name, function ($query, $name) {
+                    return $query->where('first_name', 'like', "%$name%")
+                        ->orWhere('middle_name', 'like', "%$name%")
+                        ->orWhere('last_name', 'like', "%$name%");
+                })->latest()->get();
+                break;
+            default:
+                return abort(400, 'Invalid account type');
+        }
+
+        // dd($data);
+
+        return view('auth.admin.search', [
+            'data' => $data,
+            'name' => $name,
         ]);
     }
 }

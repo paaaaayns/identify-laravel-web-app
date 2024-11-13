@@ -46,7 +46,7 @@ class SessionController extends Controller
         $user = Auth::user();
         // dd($user->type);
 
-         return redirect('/dashboard');
+        return redirect('/dashboard');
     }
 
     /**
