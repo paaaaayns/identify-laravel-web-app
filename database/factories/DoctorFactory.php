@@ -23,6 +23,19 @@ class DoctorFactory extends Factory
      */
     public function definition(): array
     {
+        $doctorTypes = [
+            'General Practitioner',
+            'Cardiologist',
+            'Dermatologist',
+            'Endocrinologist',
+            'Gastroenterologist',
+            'Neurologist',
+            'Oncologist',
+            'Orthopedic Surgeon',
+            'Pediatrician',
+            'Psychiatrist',
+        ];
+
         return [
             //
             'user_id' => fake()->name(),
@@ -30,7 +43,7 @@ class DoctorFactory extends Factory
             'middle_name' => fake()->lastName(),
             'last_name' => fake()->lastName(),
             'email' => fake()->unique()->safeEmail(),
-            'type' => fake()->jobTitle(),
+            'type' => fake()->randomElement($doctorTypes),
         ];
     }
 }
