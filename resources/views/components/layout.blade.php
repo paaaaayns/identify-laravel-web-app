@@ -300,7 +300,7 @@
                            <a
                               href="/dashboard"
                               :class="isActive ? 'bg-background-dark text-white' : 'text-gray-700 hover:bg-gray-50'"
-                              class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-gray-700 hover:bg-gray-50">
+                              class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold">
                               <svg
                                  :class="isActive ? 'text-white' : 'text-gray-400'"
                                  class="h-6 w-6 shrink-0 text-gray-400"
@@ -348,9 +348,9 @@
                                     fill="currentColor"
                                     aria-hidden="true"
                                     data-slot="icon">
-                                    <path 
-                                    fill-rule="evenodd" 
-                                    d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                                    <path
+                                       fill-rule="evenodd"
+                                       d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
                                  </svg>
                               </button>
 
@@ -393,7 +393,8 @@
 
 
                         <li>
-                           <div x-data="{ isOpen: window.location.pathname.startsWith('/register') }">
+                           <div 
+                              x-data="{ isOpen: window.location.pathname.startsWith('/register') }">
                               <button
                                  @click="isOpen = !isOpen"
                                  type="button"
@@ -474,6 +475,19 @@
             <!-- Separator -->
             <div class="h-6 w-px bg-gray-900/10 lg:hidden" aria-hidden="true"></div>
 
+            <div x-data="{ isOpen: false }">
+               <button @click="isOpen = !isOpen; console.log('Dropdown toggled', isOpen)">
+                  Toggle Dropdown
+               </button>
+
+               <div x-show="isOpen" style="background: red;">
+                  Dropdown Content
+               </div>
+            </div>
+
+
+            <div class="h-6 w-px bg-gray-900/10 lg:hidden" aria-hidden="true"></div>
+
             <div class="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
                <div class="flex-1"></div>
                <div class="flex items-center gap-x-4 lg:gap-x-6">
@@ -492,13 +506,15 @@
                      x-data="{ isOpen: false }"
                      class="relative">
                      <button
-                        @click="isOpen = !isOpen"
-                        :aria-expanded="isOpen.toString()"
+                        @click="isOpen = !isOpen" 
+                        @click.outside="isOpen = false"
                         type="button"
-                        class="-m-1.5 flex items-center p-1.5"
                         id="user-menu-button"
+                        class="-m-1.5 flex items-center p-1.5"
                         aria-expanded="false"
-                        aria-haspopup="true">
+                        aria-haspopup="true"
+                        aria-controls="profile-menu"
+                        :aria-expanded="isOpen">
                         <span class="sr-only">Open user menu</span>
                         <img class="h-8 w-8 rounded-full bg-gray-50" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
                         <span class="hidden lg:flex lg:items-center">
@@ -520,8 +536,9 @@
                         To: "transform opacity-0 scale-95"
                      -->
                      <div
+                        id="profile-menu"
                         x-show="isOpen"
-                        @click.outside="isOpen = false"
+                        x-cloak 
                         x-transition:enter="transition ease-out duration-100"
                         x-transition:enter-start="transform opacity-0 scale-95"
                         x-transition:enter-end="transform opacity-100 scale-100"
@@ -535,7 +552,6 @@
                         tabindex="-1">
                         <!-- Active: "bg-gray-50 outline-none", Not Active: "" -->
                         <a href="#" class="block px-3 py-1 text-sm/6 text-gray-900" role="menuitem" tabindex="-1" id="user-menu-item-0">Your profile</a>
-                        <a href="#" class="block px-3 py-1 text-sm/6 text-gray-900" role="menuitem" tabindex="-1" id="user-menu-item-1">Sign out</a>
                         <form method="POST" action="/logout">
                            @csrf
                            <button type="submit" class="block w-full px-3 py-1 text-left text-sm/6 text-gray-900 hover:bg-gray-50" role="menuitem" tabindex="-1">
@@ -557,7 +573,7 @@
    </div>
 
    @livewireScripts()
-   <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 </body>
 
 </html>
