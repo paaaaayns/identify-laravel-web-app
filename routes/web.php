@@ -19,8 +19,10 @@ Route::post('/logout', [SessionController::class, 'destroy']);
 
 Route::get('/dashboard', [DashboardController::class, 'show'])->middleware('auth');
 
-Route::get('/search', [SearchController::class, 'index'])->middleware('auth');
-Route::post('/search', [SearchController::class, 'show'])->middleware('auth');
+Route::get('/search/{type}', [SearchController::class, 'index'])->middleware('auth')->name('search.index');
+
+Route::get('/search/pre-reg', [SearchController::class, 'indexPreReg'])->middleware('auth');
+Route::post('/search/pre-reg', [SearchController::class, 'searchPreReg'])->middleware('auth');
 
 // Register OPD
 Route::get('/register/opd', [RegisterOpdController::class, 'create'])->middleware('auth');

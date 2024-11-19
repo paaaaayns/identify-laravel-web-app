@@ -9,4 +9,5 @@ class PreRegisteredPatient extends Model
 {
     /** @use HasFactory<\Database\Factories\PreRegisteredPatientFactory> */
     use HasFactory;
+    protected $guarded = [];
 }

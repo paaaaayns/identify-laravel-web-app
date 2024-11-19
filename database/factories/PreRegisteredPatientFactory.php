@@ -22,7 +22,7 @@ class PreRegisteredPatientFactory extends Factory
             'first_name' => $this->faker->firstName(),
             'middle_name' => $this->faker->optional()->lastName(),
             'last_name' => $this->faker->lastName(),
-            'birthdate' => $this->faker->date(), // Date format: YYYY-MM-DD
+            'birthdate' => $this->faker->date('m-d-Y', 'now'),
             'sex' => $this->faker->randomElement(['Male', 'Female']),
             'religion' => $this->faker->randomElement(['Catholic', 'Buddhist', 'Muslim', 'Christian']),
             'civil_status' => $this->faker->randomElement(['Single', 'Married', 'Widowed', 'Divorced']),

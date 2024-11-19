@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Opd;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -24,6 +25,7 @@ class SessionController extends Controller
      */
     public function store(){
         // dd('hello');
+
 
         // validate
         $validatedData = request()->validate([

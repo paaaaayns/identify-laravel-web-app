@@ -14,6 +14,18 @@
    @vite(['resources/css/app.css', 'resources/js/app.js'])
    <script src="//unpkg.com/alpinejs" defer></script>
 
+   <!-- jQuery -->
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+   <!-- DataTables CSS -->
+   <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+
+   <!-- DataTables JS -->
+   <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+
+   <!-- Livewire Assets -->
+   @livewireStyles()
 </head>
 
 <body class="h-full">
@@ -288,15 +300,16 @@
                            <a
                               href="/dashboard"
                               :class="isActive ? 'bg-background-dark text-white' : 'text-gray-700 hover:bg-gray-50'"
-                              class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold">
+                              class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-gray-700 hover:bg-gray-50">
                               <svg
                                  :class="isActive ? 'text-white' : 'text-gray-400'"
-                                 class="h-6 w-6 shrink-0"
+                                 class="h-6 w-6 shrink-0 text-gray-400"
                                  fill="none"
                                  viewBox="0 0 24 24"
                                  stroke-width="1.5"
                                  stroke="currentColor"
-                                 aria-hidden="true">
+                                 aria-hidden="true"
+                                 data-slot="icon">
                                  <path
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
@@ -306,30 +319,79 @@
                            </a>
                         </li>
 
-                        <!-- <li x-data="{ isActive: window.location.pathname === '/dashboard' }"> -->
-                        <li x-data="{ isActive: window.location.pathname.startsWith('/search') }">
-                           <a
-                              href="/search"
-                              :class="isActive ? 'bg-background-dark text-white' : 'text-gray-700 hover:bg-gray-50'"
-                              class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold">
-                              <svg
-                                 :class="isActive ? 'text-white' : 'text-gray-400'"
-                                 class="h-6 w-6 shrink-0"
-                                 fill="none"
-                                 viewBox="0 0 24 24"
-                                 stroke-width="1.5"
-                                 stroke="currentColor"
-                                 aria-hidden="true">
-                                 <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-                              </svg>
-                              Search
-                           </a>
+                        <li>
+                           <div x-data="{ isOpen: window.location.pathname.startsWith('/search') }">
+                              <button
+                                 @click="isOpen = !isOpen"
+                                 type="button"
+                                 class="flex w-full items-center gap-x-3 rounded-md p-2 text-left text-sm/6 font-semibold text-gray-700 hover:bg-gray-50"
+                                 :aria-expanded="isOpen"
+                                 aria-controls="sub-menu-1">
+                                 <svg
+                                    class="h-6 w-6 shrink-0 text-gray-400"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="1.5"
+                                    stroke="currentColor"
+                                    aria-hidden="true"
+                                    data-slot="icon">
+                                    <path
+                                       stroke-linecap="round"
+                                       stroke-linejoin="round"
+                                       d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                                 </svg>
+                                 Search
+                                 <svg
+                                    :class="isOpen ? 'rotate-90 text-gray-500' : 'text-gray-400'"
+                                    class="ml-auto h-5 w-5 shrink-0"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                    aria-hidden="true"
+                                    data-slot="icon">
+                                    <path 
+                                    fill-rule="evenodd" 
+                                    d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                                 </svg>
+                              </button>
+
+                              <ul
+                                 x-show="isOpen"
+                                 x-cloak
+                                 class="mt-1 px-2"
+                                 id="sub-menu-1">
+                                 <li x-data="{ isActive: window.location.pathname === '/search/pre-reg' }">
+                                    <a href="{{ route('search.index', ['type' => 'pre-reg']) }}"
+                                       :class="isActive ? 'bg-background-dark text-white' : 'text-gray-700 hover:bg-gray-50'"
+                                       class="block rounded-md py-2 pl-9 pr-2 text-sm/6">
+                                       Pre-Registered Patients
+                                    </a>
+                                 </li>
+                                 <li x-data="{ isActive: window.location.pathname === '/search/patient' }">
+                                    <a href="{{ route('search.index', ['type' => 'patient']) }}"
+                                       :class="isActive ? 'bg-background-dark text-white' : 'text-gray-700 hover:bg-gray-50'"
+                                       class="block rounded-md py-2 pl-9 pr-2 text-sm/6">
+                                       Registered Patients
+                                    </a>
+                                 </li>
+                                 <li x-data="{ isActive: window.location.pathname === '/search/doctor' }">
+                                    <a href="{{ route('search.index', ['type' => 'doctor']) }}"
+                                       :class="isActive ? 'bg-background-dark text-white' : 'text-gray-700 hover:bg-gray-50'"
+                                       class="block rounded-md py-2 pl-9 pr-2 text-sm/6">
+                                       Doctors
+                                    </a>
+                                 </li>
+                                 <li x-data="{ isActive: window.location.pathname === '/search/opd' }">
+                                    <a href="{{ route('search.index', ['type' => 'opd']) }}"
+                                       :class="isActive ? 'bg-background-dark text-white' : 'text-gray-700 hover:bg-gray-50'"
+                                       class="block rounded-md py-2 pl-9 pr-2 text-sm/6">
+                                       OPDs
+                                    </a>
+                                 </li>
+                              </ul>
+                           </div>
                         </li>
 
-                        
+
                         <li>
                            <div x-data="{ isOpen: window.location.pathname.startsWith('/register') }">
                               <button
@@ -494,6 +556,8 @@
       </div>
    </div>
 
+   @livewireScripts()
+   <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
 </body>
 
 </html>

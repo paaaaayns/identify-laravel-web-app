@@ -24,7 +24,7 @@ class DashboardController extends Controller
                 $reg_patients = Patient::latest()->get();
                 $pre_reg_patients = PreRegisteredPatient::latest()->get();
 
-                return view('auth.admin.dashboard', [
+                return view('auth.dashboard.admin', [
                     'doctors' => $doctors,
                     'opds' => $opds,
                     'reg_patients' => $reg_patients,
@@ -32,11 +32,11 @@ class DashboardController extends Controller
                 ]);
 
             case 'OPD':
-                return view('dashboard.opd');
+                return view('auth.dashboard.opd');
             case 'DOCTOR':
-                return view('dashboard.doctor');
+                return view('auth.dashboard.doctor');
             case 'PATIENT':
-                return view('dashboard.patient');
+                return view('auth.dashboard.patient');
             // Add more roles if necessary
             default:
                 return abort(403);  // Default dashboard view
