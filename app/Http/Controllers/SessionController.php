@@ -16,7 +16,13 @@ class SessionController extends Controller
      */
     public function create(){
         // dd('hello');
-        return view('auth.login');
+        $user = Auth::user();
+        if ($user){
+            return redirect('/dashboard');
+        } else {
+            return view('auth.login');
+        }
+        
     }
 
 

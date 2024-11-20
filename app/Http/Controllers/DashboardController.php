@@ -42,16 +42,4 @@ class DashboardController extends Controller
                 return abort(403);  // Default dashboard view
         }
     }
-
-    private function getPreRegisteredPatients($firstName)
-    {
-        return Patient::where(function($query) use ($firstName) {
-            $query->where('first_name', 'like', "%$firstName%")
-                  ->orWhere('middle_name', 'like', "%$firstName%")
-                  ->orWhere('last_name', 'like', "%$firstName%");
-        })
-        ->whereNull('registered_at')
-        ->get();
-    }
-
 }

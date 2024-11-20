@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class RegisterOpdController extends Controller
+class PreRegController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -12,6 +12,7 @@ class RegisterOpdController extends Controller
     public function index()
     {
         //
+        return view('auth.users.pre-reg.index');
     }
 
     /**
@@ -20,8 +21,6 @@ class RegisterOpdController extends Controller
     public function create()
     {
         //
-
-        return view('register.opd');
     }
 
     /**

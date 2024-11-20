@@ -43,21 +43,6 @@ class SearchController extends Controller
     }
 
 
-    public function getPreReg()
-    {
-        $users = PreRegisteredPatient::query(); // Start with the User query
-
-        return DataTables::of($users)
-            ->addColumn('actions', function ($user) {
-                return '<a href="' . route('/api/users', $user->id) . '" class="btn btn-sm btn-primary">Edit</a>';
-            })
-            ->rawColumns(['actions']) // Mark columns with raw HTML
-            ->make(true);
-    }
-
-
-
-
 
 
     public function show(Request $request)

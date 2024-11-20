@@ -10,22 +10,19 @@
    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
 
+   <!-- Livewire Assets -->
+   @livewireStyles
+
    <!-- Styles / Scripts -->
    @vite(['resources/css/app.css', 'resources/js/app.js'])
-   <script src="//unpkg.com/alpinejs" defer></script>
-
-   <!-- jQuery -->
-   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-   <!-- DataTables CSS -->
-   <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-
-   <!-- DataTables JS -->
-   <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
 
-   <!-- Livewire Assets -->
-   @livewireStyles()
+   <style>
+      [x-cloak] {
+         display: none !important;
+      }
+   </style>
+
 </head>
 
 <body class="h-full">
@@ -320,7 +317,7 @@
                         </li>
 
                         <li>
-                           <div x-data="{ isOpen: window.location.pathname.startsWith('/search') }">
+                           <div x-data="{ isOpen: window.location.pathname.startsWith('/users') }">
                               <button
                                  @click="isOpen = !isOpen"
                                  type="button"
@@ -340,7 +337,7 @@
                                        stroke-linejoin="round"
                                        d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                                  </svg>
-                                 Search
+                                 Users
                                  <svg
                                     :class="isOpen ? 'rotate-90 text-gray-500' : 'text-gray-400'"
                                     class="ml-auto h-5 w-5 shrink-0"
@@ -359,29 +356,29 @@
                                  x-cloak
                                  class="mt-1 px-2"
                                  id="sub-menu-1">
-                                 <li x-data="{ isActive: window.location.pathname === '/search/pre-reg' }">
-                                    <a href="{{ route('search.index', ['type' => 'pre-reg']) }}"
+                                 <li x-data="{ isActive: window.location.pathname === '/users/pre-reg' }">
+                                    <a href="{{ route('users.pre-reg.index') }}"
                                        :class="isActive ? 'bg-background-dark text-white' : 'text-gray-700 hover:bg-gray-50'"
                                        class="block rounded-md py-2 pl-9 pr-2 text-sm/6">
                                        Pre-Registered Patients
                                     </a>
                                  </li>
-                                 <li x-data="{ isActive: window.location.pathname === '/search/patient' }">
-                                    <a href="{{ route('search.index', ['type' => 'patient']) }}"
+                                 <li x-data="{ isActive: window.location.pathname === '/users/patient' }">
+                                    <a href="{{ route('users.patient.index') }}"
                                        :class="isActive ? 'bg-background-dark text-white' : 'text-gray-700 hover:bg-gray-50'"
                                        class="block rounded-md py-2 pl-9 pr-2 text-sm/6">
                                        Registered Patients
                                     </a>
                                  </li>
-                                 <li x-data="{ isActive: window.location.pathname === '/search/doctor' }">
-                                    <a href="{{ route('search.index', ['type' => 'doctor']) }}"
+                                 <li x-data="{ isActive: window.location.pathname === '/users/doctor' }">
+                                    <a href="{{ route('users.doctor.index') }}"
                                        :class="isActive ? 'bg-background-dark text-white' : 'text-gray-700 hover:bg-gray-50'"
                                        class="block rounded-md py-2 pl-9 pr-2 text-sm/6">
                                        Doctors
                                     </a>
                                  </li>
-                                 <li x-data="{ isActive: window.location.pathname === '/search/opd' }">
-                                    <a href="{{ route('search.index', ['type' => 'opd']) }}"
+                                 <li x-data="{ isActive: window.location.pathname === '/users/opd' }">
+                                    <a href="{{ route('users.opd.index') }}"
                                        :class="isActive ? 'bg-background-dark text-white' : 'text-gray-700 hover:bg-gray-50'"
                                        class="block rounded-md py-2 pl-9 pr-2 text-sm/6">
                                        OPDs
@@ -393,7 +390,7 @@
 
 
                         <li>
-                           <div 
+                           <div
                               x-data="{ isOpen: window.location.pathname.startsWith('/register') }">
                               <button
                                  @click="isOpen = !isOpen"
@@ -475,18 +472,6 @@
             <!-- Separator -->
             <div class="h-6 w-px bg-gray-900/10 lg:hidden" aria-hidden="true"></div>
 
-            <div x-data="{ isOpen: false }">
-               <button @click="isOpen = !isOpen; console.log('Dropdown toggled', isOpen)">
-                  Toggle Dropdown
-               </button>
-
-               <div x-show="isOpen" style="background: red;">
-                  Dropdown Content
-               </div>
-            </div>
-
-
-            <div class="h-6 w-px bg-gray-900/10 lg:hidden" aria-hidden="true"></div>
 
             <div class="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
                <div class="flex-1"></div>
@@ -506,7 +491,7 @@
                      x-data="{ isOpen: false }"
                      class="relative">
                      <button
-                        @click="isOpen = !isOpen" 
+                        @click="isOpen = !isOpen"
                         @click.outside="isOpen = false"
                         type="button"
                         id="user-menu-button"
@@ -538,7 +523,7 @@
                      <div
                         id="profile-menu"
                         x-show="isOpen"
-                        x-cloak 
+                        x-cloak
                         x-transition:enter="transition ease-out duration-100"
                         x-transition:enter-start="transform opacity-0 scale-95"
                         x-transition:enter-end="transform opacity-100 scale-100"
@@ -572,8 +557,13 @@
       </div>
    </div>
 
-   @livewireScripts()
-   <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+   <!-- Livewire Assets -->
+   @livewireScripts
+
+   <!-- Styles / Scripts -->
+   <!-- @vite('resources/js/app.js') -->
+   <!-- <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script> -->
 </body>
 
 </html>

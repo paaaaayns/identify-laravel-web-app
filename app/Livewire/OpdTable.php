@@ -4,11 +4,11 @@ namespace App\Livewire;
 
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
-use App\Models\PreRegisteredPatient;
+use App\Models\Opd;
 
-class PreRegTable extends DataTableComponent
+class OpdTable extends DataTableComponent
 {
-    protected $model = PreRegisteredPatient::class;
+    protected $model = Opd::class;
 
     public function configure(): void
     {
@@ -21,7 +21,7 @@ class PreRegTable extends DataTableComponent
     public function columns(): array
     {
         return [
-            Column::make("Code", "pre_registration_code")
+            Column::make("UID", "user_id")
                 ->sortable()
                 ->searchable(),
 
@@ -29,19 +29,7 @@ class PreRegTable extends DataTableComponent
                 ->sortable()
                 ->searchable(),
 
-            // Column::make("Middle Name", "middle_name")
-            //     ->sortable()
-            //     ->searchable(),
-
-            // Column::make("Last Name", "last_name")
-            //     ->sortable()
-            //     ->searchable(),
-
-            Column::make("Birthdate", "birthdate")
-                ->sortable()
-                ->searchable(),
-
-            Column::make("Sex", "sex")
+            Column::make("Type", "Type")
                 ->sortable()
                 ->searchable(),
 
