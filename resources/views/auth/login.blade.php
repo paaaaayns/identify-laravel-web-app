@@ -12,17 +12,16 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="h-screen flex flex-row p-0 m-0">
+<body class="h-screen flex">
     <!-- Left Division -->
-    <div class="flex flex-grow min-w-1/2 max-w-1/2 items-center justify-center bg-background-dark">
-        <div class="text-center">
-            <h1 class="text-white text-2xl">Left Side Content</h1>
-        </div>
+    <div class="fixed inset-y-0 w-1/2 z-50 flex flex-col items-center justify-center bg-background-dark text-white">
+        <h1 class="text-2xl">Left Side Content</h1>
     </div>
 
     <!-- Right Division -->
-    <div class="flex flex-grow min-w-1/2 max-w-1/2 items-center justify-center bg-background-light">
-        <div class="text-center">
+    <div class="bg-background-light ml-auto w-1/2 pl-4 overflow-y-auto py-10 px-4 sm:px-6 lg:px-10">
+        <div class="">
+
             <form method="POST" action="/login">
                 @csrf
 
@@ -49,16 +48,16 @@
                 </div>
 
                 <p class="mt-6">
-                    Not registered yet? <a href="" class="text-primary">Register Now</a>
+                    Not registered yet? <a href="{{ route('pre-reg.create') }}" class="text-primary">Register Now</a>
                 </p>
 
                 <p class="mt-6">
-                    <a href="" class="text-primary">Forget Password?</a>
+                    <a href="{{ route('pre-reg.create') }}" class="text-primary">Forget Password?</a>
                 </p>
             </form>
-
         </div>
     </div>
 </body>
+
 
 </html>

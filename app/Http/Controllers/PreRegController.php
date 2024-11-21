@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Illuminate\Validation\Rule;
 
 class PreRegController extends Controller
 {
@@ -12,7 +14,7 @@ class PreRegController extends Controller
     public function index()
     {
         //
-        return view('auth.users.pre-reg.index');
+        return view('pre-reg.index');
     }
 
     /**
@@ -21,6 +23,7 @@ class PreRegController extends Controller
     public function create()
     {
         //
+        return view('pre-reg.create');
     }
 
     /**
@@ -29,6 +32,7 @@ class PreRegController extends Controller
     public function store(Request $request)
     {
         //
+        dd(request());
     }
 
     /**

@@ -25,6 +25,15 @@ Route::post('/logout', [SessionController::class, 'destroy']);
 Route::get('/dashboard', [DashboardController::class, 'show'])->middleware('auth')->name('dashboard');
 
 Route::get('/users/pre-reg', [PreRegController::class, 'index'])->middleware('auth')->name('users.pre-reg.index');
+Route::get('/pre-reg', [PreRegController::class, 'create'])->name('pre-reg.create');
+Route::post('/pre-reg', [PreRegController::class, 'store'])->name('pre-reg.store');
+
+
+
+
+
+
+
 Route::get('/users/patient', [PatientController::class, 'index'])->middleware('auth')->name('users.patient.index');
 Route::get('/users/doctor', [DoctorController::class, 'index'])->middleware('auth')->name('users.doctor.index');
 Route::get('/users/opd', [OpdController::class, 'index'])->middleware('auth')->name('users.opd.index');
