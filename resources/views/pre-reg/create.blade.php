@@ -38,10 +38,10 @@
                         <h2 class="text-base/7 font-semibold text-gray-900">Personal Information</h2>
                     </div>
 
-                    <div class="bg-white shadow-sm ring-1 ring-gray-900/5 md:col-span-3
+                    <div class="bg-white shadow-sm ring-1 ring-gray-900/5 md:col-span-3 max-w-2xl
                         rounded-xl rounded-bl-none rounded-br-none">
                         <div class="px-4 py-6 sm:p-8">
-                            <div class="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-6 sm:gap-y-8 sm:grid-cols-12">
+                            <div class="grid grid-cols-1 gap-x-6 gap-y-6 sm:gap-y-8 sm:grid-cols-12">
                                 <div class="block sm:hidden">
                                     <h2 class="text-base/7 font-semibold text-gray-900">Personal Information</h2>
                                 </div>
@@ -55,6 +55,7 @@
                                         type="text"
                                         id="first_name"
                                         name="first_name"
+                                        :value="old('first_name')"
                                         autocomplete="off" />
 
                                     <x-forms.error name="first_name" />
@@ -70,6 +71,7 @@
                                         type="text"
                                         id="middle_name"
                                         name="middle_name"
+                                        :value="old('middle_name')"
                                         autocomplete="off" />
 
                                     <x-forms.error name="middle_name" />
@@ -85,6 +87,7 @@
                                         type="text"
                                         id="last_name"
                                         name="last_name"
+                                        :value="old('last_name')"
                                         autocomplete="off" />
 
                                     <x-forms.error name="last_name" />
@@ -100,7 +103,9 @@
                                         type="text"
                                         id="birthdate"
                                         name="birthdate"
+                                        :value="old('birthdate')"
                                         autocomplete="off"
+                                        oninput="restrictLetterInput(this)"
                                         datepicker
                                         datepicker-autohide
                                         datepicker-format="mm-dd-yyyy" />
@@ -117,9 +122,9 @@
                                     <x-forms.select
                                         id="sex"
                                         name="sex">
-                                        <option disabled selected value="">Select</option>
-                                        <option value="male">Male</option>
-                                        <option value="female">Female</option>
+                                        <option disabled {{ old('sex') === null ? 'selected' : '' }} value="">Select</option>
+                                        <option value="Male" {{ old('sex') === 'Male' ? 'selected' : '' }}>Male</option>
+                                        <option value="Female" {{ old('sex') === 'Female' ? 'selected' : '' }}>Female</option>
                                     </x-forms.select>
 
                                     <x-forms.error name="sex" />
@@ -135,6 +140,7 @@
                                         type="text"
                                         id="religion"
                                         name="religion"
+                                        :value="old('religion')"
                                         autocomplete="off" />
 
                                     <x-forms.error name="religion" />
@@ -149,10 +155,10 @@
                                     <x-forms.select
                                         id="civil_status"
                                         name="civil_status">
-                                        <option disabled selected value="">Select</option>
-                                        <option value="Single">Single</option>
-                                        <option value="Married">Married</option>
-                                        <option value="Divorced">Divorced</option>
+                                        <option disabled {{ old('civil_status') === null ? 'selected' : '' }} value="">Select</option>
+                                        <option value="Single" {{ old('civil_status') === 'Single' ? 'selected' : '' }}>Single</option>
+                                        <option value="Single" {{ old('civil_status') === 'Single' ? 'selected' : '' }}>Single</option>
+                                        <option value="Divorced" {{ old('civil_status') === 'Divorced' ? 'selected' : '' }}>Divorced</option>
                                     </x-forms.select>
 
                                     <x-forms.error name="civil_status" />
@@ -168,6 +174,7 @@
                                         type="text"
                                         id="citizenship"
                                         name="citizenship"
+                                        :value="old('citizenship')"
                                         autocomplete="off" />
 
                                     <x-forms.error name="citizenship" />
@@ -183,6 +190,7 @@
                                         type="text"
                                         id="healthcard_number"
                                         name="healthcard_number"
+                                        :value="old('healthcard_number')"
                                         autocomplete="off" />
 
                                     <x-forms.error name="healthcard_number" />
@@ -202,7 +210,7 @@
                     <div class="bg-white shadow-sm ring-1 ring-gray-900/5 md:col-span-3
                     rounded-none">
                         <div class="px-4 py-6 sm:p-8">
-                            <div class="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-6 sm:gap-y-8 sm:grid-cols-12">
+                            <div class="grid grid-cols-1 gap-x-6 gap-y-6 sm:gap-y-8 sm:grid-cols-12">
                                 <div class="block sm:hidden">
                                     <h2 class="text-base/7 font-semibold text-gray-900">Contact Information</h2>
                                 </div>
@@ -216,6 +224,7 @@
                                         type="text"
                                         id="address"
                                         name="address"
+                                        :value="old('address')"
                                         autocomplete="off" />
 
                                     <x-forms.error name="address" />
@@ -231,6 +240,7 @@
                                         type="email"
                                         id="email"
                                         name="email"
+                                        :value="old('email')"
                                         autocomplete="off" />
 
                                     <x-forms.error name="email" />
@@ -246,7 +256,10 @@
                                         type="text"
                                         id="contact_number"
                                         name="contact_number"
-                                        autocomplete="off" />
+                                        :value="old('contact_number')"
+                                        maxlength="11"
+                                        autocomplete="off"
+                                        oninput="restrictLetterInput(this)" />
 
                                     <x-forms.error name="contact_number" />
                                 </x-forms.field-container>
@@ -263,10 +276,9 @@
                     </div>
 
                     <div class="bg-white shadow-sm ring-1 ring-gray-900/5 md:col-span-3
-                    rounded-xl rounded-tl-none rounded-tr-none 
-                    border-t-1 border-gray-900/10">
+                    rounded-none">
                         <div class="px-4 py-6 sm:p-8">
-                            <div class="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-6 sm:gap-y-8 sm:grid-cols-12">
+                            <div class="grid grid-cols-1 gap-x-6 gap-y-6 sm:gap-y-8 sm:grid-cols-12">
                                 <div class="block sm:hidden">
                                     <h2 class="text-base/7 font-semibold text-gray-900">Emergency Contact Information</h2>
                                 </div>
@@ -280,6 +292,7 @@
                                         type="text"
                                         id="emergency_contact1_name"
                                         name="emergency_contact1_name"
+                                        :value="old('emergency_contact1_name')"
                                         autocomplete="off" />
 
                                     <x-forms.error name="emergency_contact1_name" />
@@ -295,7 +308,10 @@
                                         type="text"
                                         id="emergency_contact1_number"
                                         name="emergency_contact1_number"
-                                        autocomplete="off" />
+                                        :value="old('emergency_contact1_number')"
+                                        autocomplete="off"
+                                        maxlength="11"
+                                        oninput="restrictLetterInput(this)" />
 
                                     <x-forms.error name="emergency_contact1_number" />
                                 </x-forms.field-container>
@@ -310,6 +326,7 @@
                                         type="text"
                                         id="emergency_contact1_relationship"
                                         name="emergency_contact1_relationship"
+                                        :value="old('emergency_contact1_relationship')"
                                         autocomplete="off" />
 
                                     <x-forms.error name="emergency_contact1_relationship" />
@@ -318,13 +335,14 @@
                                 <x-forms.field-container class="sm:col-span-4">
                                     <x-forms.label
                                         for="emergency_contact2_name">
-                                        Name <span class="text-red-500">*</span>
+                                        Name
                                     </x-forms.label>
 
                                     <x-forms.input
                                         type="text"
                                         id="emergency_contact2_name"
                                         name="emergency_contact2_name"
+                                        :value="old('emergency_contact2_name')"
                                         autocomplete="off" />
 
                                     <x-forms.error name="emergency_contact2_name" />
@@ -333,14 +351,17 @@
                                 <x-forms.field-container class="sm:col-span-4">
                                     <x-forms.label
                                         for="emergency_contact2_number">
-                                        Contact Number <span class="text-red-500">*</span>
+                                        Contact Number
                                     </x-forms.label>
 
                                     <x-forms.input
                                         type="text"
                                         id="emergency_contact2_number"
                                         name="emergency_contact2_number"
-                                        autocomplete="off" />
+                                        :value="old('emergency_contact2_number')"
+                                        autocomplete="off"
+                                        maxlength="11"
+                                        oninput="restrictLetterInput(this)" />
 
                                     <x-forms.error name="emergency_contact2_number" />
                                 </x-forms.field-container>
@@ -348,22 +369,74 @@
                                 <x-forms.field-container class="sm:col-span-4">
                                     <x-forms.label
                                         for="emergency_contact2_relationship">
-                                        Relationship <span class="text-red-500">*</span>
+                                        Relationship
                                     </x-forms.label>
 
                                     <x-forms.input
                                         type="text"
                                         id="emergency_contact2_relationship"
                                         name="emergency_contact2_relationship"
+                                        :value="old('emergency_contact2_relationship')"
                                         autocomplete="off" />
 
                                     <x-forms.error name="emergency_contact2_relationship" />
                                 </x-forms.field-container>
                             </div>
                         </div>
+                    </div>
+                </div>
+
+
+
+                <!-- Emergency Contact Information -->
+                <div class="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-4">
+                    <div class="px-4 pt-6 sm:pt-8 hidden sm:block">
+                        <h2 class="text-base/7 font-semibold text-gray-900">Emergency Contact Information</h2>
+                    </div>
+
+                    <div class="bg-white shadow-sm ring-1 ring-gray-900/5 md:col-span-3
+                    rounded-xl rounded-tl-none rounded-tr-none 
+                    border-t-1 border-gray-900/10">
+                        <div class="px-4 py-6 sm:p-8">
+                            <div class="grid grid-cols-1 gap-x-6 gap-y-6 sm:gap-y-8 sm:grid-cols-12">
+                                <div class="block sm:hidden">
+                                    <h2 class="text-base/7 font-semibold text-gray-900">Emergency Contact Information</h2>
+                                </div>
+
+                                <x-forms.field-container class="sm:col-span-12">
+                                    <x-forms.checkbox
+                                        id="terms_and_conditions"
+                                        type="checkbox"
+                                        value="" />
+
+                                    <label
+                                        for="terms_and_conditions"
+                                        class="ms-2 text-sm font-medium text-gray-900">
+                                        I agree with the <a href="#" class="text-primary hover:underline">Terms and Conditions</a>.
+                                    </label>
+
+                                    <x-forms.error name="terms_and_conditions" />
+                                </x-forms.field-container>
+
+                                <x-forms.field-container class="sm:col-span-12">
+                                    <x-forms.checkbox
+                                        id="privacy_policy"
+                                        type="checkbox"
+                                        value="" />
+
+                                    <label
+                                        for="privacy_policy"
+                                        class="ms-2 text-sm font-medium text-gray-900">
+                                        I agree with the <a href="#" class="text-primary hover:underline">Privacy Policy</a>.
+                                    </label>
+
+                                    <x-forms.error name="terms_and_conditions" />
+                                </x-forms.field-container>
+                            </div>
+                        </div>
 
                         <div class="flex items-center justify-end gap-x-6 border-t border-gray-900/10 px-4 py-4 sm:px-8">
-                            <button type="button" class="text-sm/6 font-semibold text-gray-900">Cancel</button>
+                            <button type="button" class="rounded-md px-3 py-2 text-sm font-semibold text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">Cancel</button>
                             <button type="submit" class="rounded-md bg-primary px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">Save</button>
                         </div>
                     </div>
@@ -376,6 +449,13 @@
             </form>
         </div>
     </div>
+
+    <script>
+        function restrictLetterInput(input) {
+            // Allow only numbers and dash "-" (for date format like mm-dd-yyyy)
+            input.value = input.value.replace(/[^0-9\-]/g, '');
+        }
+    </script>
 </body>
 
 
