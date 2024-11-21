@@ -5,7 +5,7 @@ use App\Http\Controllers\DataTableController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\OpdController;
 use App\Http\Controllers\PatientController;
-use App\Http\Controllers\PreRegController;
+use App\Http\Controllers\PreRegisteredPatientController;
 use App\Http\Controllers\RegisterDoctorController;
 use App\Http\Controllers\RegisterOpdController;
 use App\Http\Controllers\SearchController;
@@ -17,6 +17,10 @@ Route::get('/', function () {
     return redirect('/login');
 });
 
+Route::get('/token', function () {
+    return csrf_token(); 
+});
+
 // Login
 Route::get('/login', [SessionController::class, 'create'])->name('login');
 Route::post('/login', [SessionController::class, 'store']);
@@ -24,9 +28,9 @@ Route::post('/logout', [SessionController::class, 'destroy']);
 
 Route::get('/dashboard', [DashboardController::class, 'show'])->middleware('auth')->name('dashboard');
 
-Route::get('/users/pre-reg', [PreRegController::class, 'index'])->middleware('auth')->name('users.pre-reg.index');
-Route::get('/pre-reg', [PreRegController::class, 'create'])->name('pre-reg.create');
-Route::post('/pre-reg', [PreRegController::class, 'store'])->name('pre-reg.store');
+Route::get('/users/pre-reg', [PreRegisteredPatientController::class, 'index'])->middleware('auth')->name('users.pre-reg.index');
+Route::get('/pre-reg', [PreRegisteredPatientController::class, 'create'])->name('pre-reg.create');
+Route::post('/pre-reg', [PreRegisteredPatientController::class, 'store'])->name('pre-reg.store');
 
 
 

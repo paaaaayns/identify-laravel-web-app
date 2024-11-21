@@ -32,20 +32,20 @@ class PreRegisteredPatientFactory extends Factory
             // Contact Details
             'address' => $this->faker->address(),
             'email' => $this->faker->unique()->safeEmail(),
-            'contact_number' => $this->faker->regexify('09[1-9][0-9]{7}'),
+            'contact_number' => $this->faker->regexify('09[1-9][0-9]{8}'),
 
             // Emergency Contact 1
             'emergency_contact1_name' => $this->faker->name(),
-            'emergency_contact1_number' => $this->faker->regexify('09[1-9][0-9]{7}'),
+            'emergency_contact1_number' => $this->faker->regexify('09[1-9][0-9]{8}'),
             'emergency_contact1_relationship' => $this->faker->randomElement(['Parent', 'Sibling', 'Friend', 'Spouse']),
 
             // Emergency Contact 2
             'emergency_contact2_name' => $this->faker->name(),
-            'emergency_contact2_number' => $this->faker->regexify('09[1-9][0-9]{7}'),
+            'emergency_contact2_number' => $this->faker->regexify('09[1-9][0-9]{8}'),
             'emergency_contact2_relationship' => $this->faker->randomElement(['Parent', 'Sibling', 'Friend', 'Spouse']),
 
-            
-            'pre_registration_code' => $this->faker->regexify('[A-Z]{2}[0-9]{6}'),
+            // Pregistration Details
+            // 'pre_registration_code' => $this->faker->regexify('[A-Z]{2}[0-9]{6}'),
             'pre_registered_at' => now(),
         ];
     }

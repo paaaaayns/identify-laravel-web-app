@@ -36,14 +36,16 @@
                 <div class="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-4">
                     <div class="px-4 pt-6 sm:pt-8 hidden sm:block">
                         <h2 class="text-base/7 font-semibold text-gray-900">Personal Information</h2>
+                        <p class="mt-1 text-sm/6 text-gray-600">Please provide your personal details so we can register you properly.</p>
                     </div>
 
-                    <div class="bg-white shadow-sm ring-1 ring-gray-900/5 md:col-span-3 max-w-2xl
+                    <div class="bg-white shadow-sm ring-1 ring-gray-900/5 md:col-span-3
                         rounded-xl rounded-bl-none rounded-br-none">
                         <div class="px-4 py-6 sm:p-8">
                             <div class="grid grid-cols-1 gap-x-6 gap-y-6 sm:gap-y-8 sm:grid-cols-12">
                                 <div class="block sm:hidden">
                                     <h2 class="text-base/7 font-semibold text-gray-900">Personal Information</h2>
+                                    <p class="mt-1 text-sm/6 text-gray-600">Please provide your personal details so we can register you properly.</p>
                                 </div>
 
                                 <x-forms.field-container class="sm:col-span-4">
@@ -205,6 +207,7 @@
                 <div class="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-4">
                     <div class="px-4 pt-6 sm:pt-8 hidden sm:block">
                         <h2 class="text-base/7 font-semibold text-gray-900">Contact Information</h2>
+                        <p class="mt-1 text-sm/6 text-gray-600">Enter your contact details so we can reach you if needed.</p>
                     </div>
 
                     <div class="bg-white shadow-sm ring-1 ring-gray-900/5 md:col-span-3
@@ -213,6 +216,7 @@
                             <div class="grid grid-cols-1 gap-x-6 gap-y-6 sm:gap-y-8 sm:grid-cols-12">
                                 <div class="block sm:hidden">
                                     <h2 class="text-base/7 font-semibold text-gray-900">Contact Information</h2>
+                                    <p class="mt-1 text-sm/6 text-gray-600">Enter your contact details so we can reach you if needed.</p>
                                 </div>
                                 <x-forms.field-container class="sm:col-span-12">
                                     <x-forms.label
@@ -273,6 +277,7 @@
                 <div class="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-4">
                     <div class="px-4 pt-6 sm:pt-8 hidden sm:block">
                         <h2 class="text-base/7 font-semibold text-gray-900">Emergency Contact Information</h2>
+                        <p class="mt-1 text-sm/6 text-gray-600">Provide emergency contact details in case of urgent situations.</p>
                     </div>
 
                     <div class="bg-white shadow-sm ring-1 ring-gray-900/5 md:col-span-3
@@ -281,6 +286,7 @@
                             <div class="grid grid-cols-1 gap-x-6 gap-y-6 sm:gap-y-8 sm:grid-cols-12">
                                 <div class="block sm:hidden">
                                     <h2 class="text-base/7 font-semibold text-gray-900">Emergency Contact Information</h2>
+                                    <p class="mt-1 text-sm/6 text-gray-600">Provide emergency contact details in case of urgent situations.</p>
                                 </div>
                                 <x-forms.field-container class="sm:col-span-4">
                                     <x-forms.label
@@ -335,7 +341,7 @@
                                 <x-forms.field-container class="sm:col-span-4">
                                     <x-forms.label
                                         for="emergency_contact2_name">
-                                        Name
+                                        Name <span class="text-red-500">*</span>
                                     </x-forms.label>
 
                                     <x-forms.input
@@ -351,7 +357,7 @@
                                 <x-forms.field-container class="sm:col-span-4">
                                     <x-forms.label
                                         for="emergency_contact2_number">
-                                        Contact Number
+                                        Contact Number <span class="text-red-500">*</span>
                                     </x-forms.label>
 
                                     <x-forms.input
@@ -369,7 +375,7 @@
                                 <x-forms.field-container class="sm:col-span-4">
                                     <x-forms.label
                                         for="emergency_contact2_relationship">
-                                        Relationship
+                                        Relationship <span class="text-red-500">*</span>
                                     </x-forms.label>
 
                                     <x-forms.input
@@ -388,10 +394,11 @@
 
 
 
-                <!-- Emergency Contact Information -->
+                <!-- Agreement and Consent -->
                 <div class="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-4">
                     <div class="px-4 pt-6 sm:pt-8 hidden sm:block">
-                        <h2 class="text-base/7 font-semibold text-gray-900">Emergency Contact Information</h2>
+                        <h2 class="text-base/7 font-semibold text-gray-900">Agreement and Consent</h2>
+                        <p class="mt-1 text-sm/6 text-gray-600">By checking the boxes, you confirm your agreement to our terms and policies.</p>
                     </div>
 
                     <div class="bg-white shadow-sm ring-1 ring-gray-900/5 md:col-span-3
@@ -400,14 +407,15 @@
                         <div class="px-4 py-6 sm:p-8">
                             <div class="grid grid-cols-1 gap-x-6 gap-y-6 sm:gap-y-8 sm:grid-cols-12">
                                 <div class="block sm:hidden">
-                                    <h2 class="text-base/7 font-semibold text-gray-900">Emergency Contact Information</h2>
+                                    <h2 class="text-base/7 font-semibold text-gray-900">Agreement and Consent</h2>
+                                    <p class="mt-1 text-sm/6 text-gray-600">By checking the boxes, you confirm your agreement to our terms and policies.</p>
                                 </div>
 
                                 <x-forms.field-container class="sm:col-span-12">
                                     <x-forms.checkbox
-                                        id="terms_and_conditions"
                                         type="checkbox"
-                                        value="" />
+                                        id="terms_and_conditions"
+                                        name="terms_and_conditions" />
 
                                     <label
                                         for="terms_and_conditions"
@@ -420,9 +428,9 @@
 
                                 <x-forms.field-container class="sm:col-span-12">
                                     <x-forms.checkbox
-                                        id="privacy_policy"
                                         type="checkbox"
-                                        value="" />
+                                        id="privacy_policy"
+                                        name="privacy_policy" />
 
                                     <label
                                         for="privacy_policy"
@@ -430,14 +438,14 @@
                                         I agree with the <a href="#" class="text-primary hover:underline">Privacy Policy</a>.
                                     </label>
 
-                                    <x-forms.error name="terms_and_conditions" />
+                                    <x-forms.error name="privacy_policy" />
                                 </x-forms.field-container>
                             </div>
                         </div>
 
                         <div class="flex items-center justify-end gap-x-6 border-t border-gray-900/10 px-4 py-4 sm:px-8">
-                            <button type="button" class="rounded-md px-3 py-2 text-sm font-semibold text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">Cancel</button>
-                            <button type="submit" class="rounded-md bg-primary px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">Save</button>
+                            <!-- <button type="button" class="rounded-md px-3 py-2 text-sm font-semibold text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">Cancel</button> -->
+                            <button type="submit" class="rounded-md bg-primary px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">Submit</button>
                         </div>
                     </div>
                 </div>
@@ -453,7 +461,7 @@
     <script>
         function restrictLetterInput(input) {
             // Allow only numbers and dash "-" (for date format like mm-dd-yyyy)
-            input.value = input.value.replace(/[^0-9\-]/g, '');
+            input.value = input.value.replace(/[^0-9\-\/]/g, '');
         }
     </script>
 </body>
