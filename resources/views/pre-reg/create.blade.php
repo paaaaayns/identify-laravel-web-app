@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Document</title>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -11,7 +12,11 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+    <!-- Flowbite -->
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+
+    <!-- SweelAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="h-screen flex">
@@ -28,7 +33,7 @@
                 <a href="/login" class="text-sm/6 font-semibold text-gray-900">Back</a>
             </div>
 
-            <form method="POST" action="/pre-reg">
+            <form method="POST" action="{{ route('pre-reg.create') }}" id="PreRegistrationForm">
                 @csrf
 
 
@@ -393,7 +398,6 @@
                 </div>
 
 
-
                 <!-- Agreement and Consent -->
                 <div class="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-4">
                     <div class="px-4 pt-6 sm:pt-8 hidden sm:block">
@@ -450,19 +454,105 @@
                     </div>
                 </div>
 
-
-
-
-
             </form>
         </div>
     </div>
+
+
 
     <script>
         function restrictLetterInput(input) {
             // Allow only numbers and dash "-" (for date format like mm-dd-yyyy)
             input.value = input.value.replace(/[^0-9\-\/]/g, '');
         }
+    </script>
+
+
+    <!-- Flowbite/Tailwind -->
+    <!-- <script>
+        document.querySelector('#PreRegistrationForm').addEventListener('submit', async (e) => {
+            e.preventDefault(); // Prevent default form submission
+
+            const formData = new FormData(e.target);
+
+            try {
+                const response = await fetch(e.target.action, {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    // Show the success modal
+                    const modalToggle = document.querySelector('[data-modal-target="success-modal"]');
+                    modalToggle.click();
+
+                    // Redirect to login page on confirmation
+                    document.getElementById('confirmButton').addEventListener('click', () => {
+                        window.location.href = result.redirect || '/login'; // Default to /login if no redirect is provided
+                    });
+                } else {
+                    console.error(result.message); // Handle validation or server-side errors
+                }
+            } catch (error) {
+                console.error('An error occurred:', error);
+            }
+        });
+    </script> -->
+
+
+    <!-- Swal2 -->
+    <script>
+        const form = document.querySelector('#PreRegistrationForm');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+            console.log(formData);
+
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    },
+                });
+
+                console.log(response);
+                const result = await response.json();
+                console.log(result);
+
+
+                if (result.success) {
+                    Swal.fire({
+                        title: 'Pre-registration Successful!',
+                        text: 'You have successfully pre-registered. Click OK to continue.',
+                        icon: 'success',
+                        confirmButtonText: 'OK',
+                        customClass: {
+                            confirmButton: 'bg-primary text-white px-6 py-3', // Button styles
+                        },
+                    }).then(() => {
+                        // window.location.href = "{{ route('login') }}"; // Redirect to login page
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: result.message || 'An error occurred. Please try again.',
+                        icon: 'error',
+                    });
+                }
+            } catch (error) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Something went wrong. Please try again later.',
+                    icon: 'error',
+                });
+            }
+        });
     </script>
 </body>
 
