@@ -20,14 +20,14 @@
 
     <!-- Right Division -->
     <div class="bg-background-light ml-auto w-1/2 pl-4 overflow-y-auto py-10 px-4 sm:px-6 lg:px-10">
-        <div class="">
+        <div class="h-full grid grid-cols-5 place-content-center">
 
-            <form method="POST" action="/login">
+            <form method="POST" action="/login" class="col-start-2 col-span-3">
                 @csrf
 
-                <x-forms.error name="test" />
+                <h1 class="text-2xl font-semibold text-gray-900 text-center">Login</h1>
 
-                <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-12">
+                <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-12 pt-6">
                     <x-forms.field>
                         <x-forms.label>Email</x-forms.label>
 
@@ -43,8 +43,8 @@
                     </x-forms.field>
                 </div>
 
-                <div class="mt-6 flex items-center justify-center gap-x-6">
-                    <x-forms.primary-button type="submit">Login</x-button>
+                <div class="mt-6 flex items-center justify-center">
+                    <x-forms.primary-button type="submit">Login</x-primary-button>
                 </div>
 
                 <p class="mt-6">
