@@ -449,7 +449,9 @@
 
                         <div class="flex items-center justify-end gap-x-6 border-t border-gray-900/10 px-4 py-4 sm:px-8">
                             <!-- <button type="button" class="rounded-md px-3 py-2 text-sm font-semibold text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">Cancel</button> -->
-                            <button type="submit" class="rounded-md bg-primary px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">Submit</button>
+                            <x-forms.primary-button type="submit">
+                                Submit
+                            </x-forms.primary-button>
                         </div>
                     </div>
                 </div>
@@ -529,7 +531,7 @@
                 if (result.success) {
                     Swal.fire({
                         title: 'Pre-registration Successful!',
-                        text: 'You have successfully pre-registered. Click OK to continue.',
+                        text: 'You have successfully pre-registered. Click OK to view further instructions.',
                         icon: 'success',
                         confirmButtonText: 'OK',
                         customClass: {
