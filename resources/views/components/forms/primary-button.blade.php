@@ -1,9 +1,10 @@
 <button {{ $attributes->merge([
-    'class' => 'bg-primary
-        text-white font-medium text-sm
-        rounded-lg
-        ring-primary ring-offset-2 ring-offset-slate-50 focus:outline-none focus:ring-2
-        px-5 py-2.5',
+    'class' => '
+        bg-primary px-3 py-2 
+        text-sm font-semibold text-white 
+        rounded-md shadow-sm 
+        hover:bg-primary 
+        focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary',
         
     ]) }}>
 
