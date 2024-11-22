@@ -90,12 +90,30 @@ class PreRegisteredPatientController extends Controller
         //     'emergency_contact2_number.min' => 'Invalid contact number',
         // ]);
 
+        $validatedData = $request->validate([
+            // Personal Information
+            'first_name' => ['required', 'string', 'max:255'],
+            'middle_name' => ['nullable', 'string', 'max:255'], // Allow middle name to be optional
+            'last_name' => ['required', 'string', 'max:255'],
+        ]);
+
         // dd($validatedData);
 
+        // Generate a unique 8-character pre_registration_code consisting of uppercase letters and numbers.
+        do {
+            // Create a new Faker instance
+            $faker = Faker::create();
+
+            // Use regexify to generate an 8-character alphanumeric code (uppercase letters and numbers)
+            $code = $faker->regexify('[A-Z0-9]{8}');
+        } while (PreRegisteredPatient::where('pre_registration_code', $code)->exists()); // Ensure uniqueness by checking if the pre_registration_code already exists
+
+        // dd($code);
+
         $patient = new PreRegisteredPatient();
-        // $patient->first_name = $validatedData['first_name'];
-        // $patient->middle_name = $validatedData['middle_name'] ?? null;
-        // $patient->last_name = $validatedData['last_name'];
+        $patient->first_name = $validatedData['first_name'];
+        $patient->middle_name = $validatedData['middle_name'] ?? null;
+        $patient->last_name = $validatedData['last_name'];
         // $patient->birthdate = Carbon::createFromFormat('m-d-Y', $validatedData['birthdate'])->format('Y-m-d'); // Save as standard date format
         // $patient->sex = $validatedData['sex'];
         // $patient->religion = $validatedData['religion'];
@@ -111,29 +129,20 @@ class PreRegisteredPatientController extends Controller
         // $patient->emergency_contact2_name = $validatedData['emergency_contact2_name'];
         // $patient->emergency_contact2_number = $validatedData['emergency_contact2_number'];
         // $patient->emergency_contact2_relationship = $validatedData['emergency_contact2_relationship'];
-        // $patient->pre_registered_at = now();
-
-        // Generate a unique 8-character pre_registration_code consisting of uppercase letters and numbers.
-        do {
-            // Create a new Faker instance
-            $faker = Faker::create();
-
-            // Use regexify to generate an 8-character alphanumeric code (uppercase letters and numbers)
-            $code = $faker->regexify('[A-Z0-9]{8}');
-        } while (PreRegisteredPatient::where('pre_registration_code', $code)->exists()); // Ensure uniqueness by checking if the pre_registration_code already exists
+        $patient->pre_registration_code = $code;
+        $patient->pre_registered_at = now();
+        
 
         // $patient->save();
 
-        $patient->first_name = request('first_name');
-        $patient->middle_name = request('middle_name');
-        $patient->last_name = request('last_name');
-        $patient->pre_registration_code = $code;
-
         // dd($patient);
+
+        session([
+            'pre_registration_code' => $code,
+        ]);
 
         return response()->json([
             'success' => true,
-            'data' => $patient,
             'message' => 'Pre-registration successful.',
         ], 201);
     }

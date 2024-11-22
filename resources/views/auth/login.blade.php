@@ -12,15 +12,16 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="h-screen flex">
+<body class="h-full flex">
     <!-- Left Division -->
     <div class="fixed inset-y-0 w-1/2 z-50 flex flex-col items-center justify-center bg-background-dark text-white">
         <h1 class="text-2xl">Left Side Content</h1>
     </div>
 
     <!-- Right Division -->
-    <div class="bg-background-light ml-auto w-1/2 pl-4 overflow-y-auto py-10 px-4 sm:px-6 lg:px-10">
-        <div class="h-full grid grid-cols-5 place-content-center">
+    <div class="bg-background-light ml-auto w-1/2 pl-4 overflow-y-auto py-10 px-4 sm:px-6 lg:px-10
+    flex flex-col justify-center items-center min-h-screen">
+        <div class="grid grid-cols-5 place-content-center w-full">
 
             <form method="POST" action="/login" class="col-start-2 col-span-3">
                 @csrf

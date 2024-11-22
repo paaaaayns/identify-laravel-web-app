@@ -6,6 +6,7 @@ use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\OpdController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PreRegisteredPatientController;
+use App\Http\Controllers\PreRegTrackingController;
 use App\Http\Controllers\RegisterDoctorController;
 use App\Http\Controllers\RegisterOpdController;
 use App\Http\Controllers\SearchController;
@@ -29,8 +30,12 @@ Route::post('/logout', [SessionController::class, 'destroy']);
 Route::get('/dashboard', [DashboardController::class, 'show'])->middleware('auth')->name('dashboard');
 
 Route::get('/users/pre-reg', [PreRegisteredPatientController::class, 'index'])->middleware('auth')->name('users.pre-reg.index');
-Route::get('/pre-reg', [PreRegisteredPatientController::class, 'create'])->name('pre-reg.create');
-Route::post('/pre-reg', [PreRegisteredPatientController::class, 'store'])->name('pre-reg.store');
+Route::get('/pre-register', [PreRegisteredPatientController::class, 'create'])->name('pre-reg.create');
+Route::post('/pre-register', [PreRegisteredPatientController::class, 'store'])->name('pre-reg.store');
+Route::get('/pre-register/instructions', [PreRegisteredPatientController::class, 'instructions'])->name('pre-reg.instructions');
+
+Route::get('/pre-register/track', [PreRegTrackingController::class, 'index'])->name('pre-reg.tracking.index');
+Route::get('/pre-register/track/search', [PreRegTrackingController::class, 'show'])->name('pre-reg.tracking.show');
 
 
 
