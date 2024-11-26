@@ -5,7 +5,7 @@
             <a href="/login" class="text-sm/6 font-semibold text-gray-900">Back</a>
         </div>
 
-        <form method="POST" action="{{ route('pre-reg.create') }}" id="PreRegistrationForm">
+        <form method="POST" action="{{ route('pre-reg.store') }}" id="PreRegistrationForm">
             @csrf
 
 
@@ -442,6 +442,8 @@
     </script>
 
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
     <!-- Swal2 -->
     <script>
@@ -451,7 +453,9 @@
             e.preventDefault();
 
             const formData = new FormData(form);
-            console.log(formData);
+
+            // Clear existing error messages before submitting the form
+            document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
 
             try {
                 const response = await fetch(form.action, {
@@ -459,39 +463,57 @@
                     body: formData,
                     headers: {
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Accept': 'application/json', // Ensures JSON response
                     },
                 });
 
-                console.log(response);
-                const result = await response.json();
-                console.log(result);
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result.success) {
+                        // Display the Swal success message with the code
+                        Swal.fire({
+                            title: 'Pre-registration Successful!',
+                            text: 'You have successfully pre-registered. Please check your email for confirmation and further details.',
+                            icon: 'success',
+                            confirmButtonText: 'OK',
+                            customClass: {
+                                confirmButton: 'bg-primary text-white px-6 py-3',
+                            },
+                        }).then(() => {
+                            window.location.href = "{{ route('login') }}"; // Redirect to login page
+                        });
+                    }
+                } else if (response.status === 422) {
+                    const errors = await response.json();
 
-
-                if (result.success) {
+                    // Loop through errors and display them in the appropriate field
+                    for (const [field, messages] of Object.entries(errors.errors)) {
+                        const errorElement = document.querySelector(`#${field}-error`);
+                        if (errorElement) {
+                            errorElement.textContent = messages[0]; // Show first error message
+                        }
+                    }
 
                     Swal.fire({
-                        title: 'Pre-registration Successful!',
-                        text: 'You have successfully pre-registered. Click OK to view further instructions.',
-                        icon: 'success',
-                        confirmButtonText: 'OK',
+                        title: 'Validation Error!',
+                        text: 'Please correct the highlighted errors and try again.',
+                        icon: 'warning',
                         customClass: {
-                            confirmButton: 'bg-primary text-white px-6 py-3', // Button styles
+                            confirmButton: 'bg-primary text-white px-6 py-3',
                         },
-                    }).then(() => {
-                        window.location.href = "{{ route('login') }}"; // Redirect to login page
+                        returnFocus: false,
                     });
                 } else {
-                    Swal.fire({
-                        title: 'Error!',
-                        text: result.message || 'An error occurred. Please try again.',
-                        icon: 'error',
-                    });
+                    throw new Error('Unexpected response');
                 }
             } catch (error) {
                 Swal.fire({
                     title: 'Error!',
                     text: 'Something went wrong. Please try again later.',
                     icon: 'error',
+                    customClass: {
+                        confirmButton: 'bg-primary text-white px-6 py-3',
+                    },
                 });
             }
         });

@@ -31,7 +31,7 @@ Route::get('/dashboard', [DashboardController::class, 'show'])->middleware('auth
 
 Route::get('/users/pre-reg', [PreRegisteredPatientController::class, 'index'])->middleware('auth')->name('users.pre-reg.index');
 Route::get('/pre-register', [PreRegisteredPatientController::class, 'create'])->name('pre-reg.create');
-Route::post('/pre-register', [PreRegisteredPatientController::class, 'store'])->name('pre-reg.store');
+Route::post('/pre-register/store', [PreRegisteredPatientController::class, 'store'])->name('pre-reg.store');
 Route::get('/pre-register/instructions', [PreRegisteredPatientController::class, 'instructions'])->name('pre-reg.instructions');
 
 Route::get('/pre-register/track', [PreRegTrackingController::class, 'index'])->name('pre-reg.tracking.index');
