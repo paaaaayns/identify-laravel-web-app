@@ -9,7 +9,6 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rule;
 use Faker\Factory as Faker;
-use RealRashid\SweetAlert\Facades\Alert;
 
 class PreRegisteredPatientController extends Controller
 {

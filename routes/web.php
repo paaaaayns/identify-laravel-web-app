@@ -27,9 +27,11 @@ Route::get('/login', [SessionController::class, 'create'])->name('login');
 Route::post('/login', [SessionController::class, 'store']);
 Route::post('/logout', [SessionController::class, 'destroy']);
 
-Route::get('/dashboard', [DashboardController::class, 'show'])->middleware('auth')->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard')
+->middleware('auth');
 
-Route::get('/users/pre-reg', [PreRegisteredPatientController::class, 'index'])->middleware('auth')->name('users.pre-reg.index');
+Route::get('/users/pre-reg', [PreRegisteredPatientController::class, 'index'])->name('users.pre-reg.index')
+->middleware('auth');
 Route::get('/pre-register', [PreRegisteredPatientController::class, 'create'])->name('pre-reg.create');
 Route::post('/pre-register/store', [PreRegisteredPatientController::class, 'store'])->name('pre-reg.store');
 Route::get('/pre-register/instructions', [PreRegisteredPatientController::class, 'instructions'])->name('pre-reg.instructions');

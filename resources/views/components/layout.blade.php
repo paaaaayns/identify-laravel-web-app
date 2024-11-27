@@ -9,12 +9,11 @@
    <link rel="preconnect" href="https://fonts.bunny.net">
    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
+   <!-- Styles / Scripts -->
+   @vite(['resources/css/app.css', 'resources/js/app.js'])
 
    <!-- Livewire Assets -->
    @livewireStyles
-
-   <!-- Styles / Scripts -->
-   @vite(['resources/css/app.css', 'resources/js/app.js'])
 
    <!-- Flowbite -->
    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
@@ -27,7 +26,6 @@
          display: none !important;
       }
    </style>
-
 </head>
 
 <body class="h-full">
@@ -565,13 +563,6 @@
 
    <!-- Livewire Assets -->
    @livewireScripts
-
-   <!-- Styles / Scripts -->
-   <!-- @vite('resources/js/app.js') -->
-   <!-- <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script> -->
-
-   <!-- RealRashid SweetAlert -->
-   @include('sweetalert::alert')
 </body>
 
 </html>

@@ -6,29 +6,46 @@ use App\Models\Doctor;
 use App\Models\Opd;
 use App\Models\Patient;
 use App\Models\PreRegisteredPatient;
-use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
     //
-    public function show(){
+    public function show()
+    {
         // Get the authenticated user
         $user = Auth::user();
-        
+
         // Check user role and return the appropriate view
         switch ($user->type) {
             case 'ADMIN':
-                $doctors = Doctor::latest()->get();
-                $opds = Opd::latest()->get();
-                $reg_patients = Patient::latest()->get();
-                $pre_reg_patients = PreRegisteredPatient::latest()->get();
+                $preRegPatientsCount = PreRegisteredPatient::count();
+                $recentPreRegPatientsCount = PreRegisteredPatient::where('created_at', '>=', Carbon::now()->subDay())->count();
+
+                $patientsCount = Patient::count();
+                $recentPatientsCount = Patient::where('created_at', '>=', Carbon::now()->subDay())->count();
+
+                $opdsCount = Opd::count();
+                $recentOpdsCount = Opd::where('created_at', '>=', Carbon::now()->subDay())->count();
+
+                $doctorsCount = Doctor::count();
+                $recentDoctorsCount  = Doctor::where('created_at', '>=', Carbon::now()->subDay())->count();
 
                 return view('auth.dashboard.admin', [
-                    'doctors' => $doctors,
-                    'opds' => $opds,
-                    'reg_patients' => $reg_patients,
-                    'pre_reg_patients' => $pre_reg_patients,
+                    'preRegPatientsCount' => $preRegPatientsCount,
+                    'recentPreRegPatientsCount' => $recentPreRegPatientsCount,
+
+                    'patientsCount' => $patientsCount,
+                    'recentPatientsCount' => $recentPatientsCount,
+
+                    'opdsCount' => $opdsCount,
+                    'recentOpdsCount' => $recentOpdsCount,
+
+                    'doctorsCount' => $doctorsCount,
+                    'recentDoctorsCount' => $recentDoctorsCount,
                 ]);
 
             case 'OPD':
@@ -37,7 +54,7 @@ class DashboardController extends Controller
                 return view('auth.dashboard.doctor');
             case 'PATIENT':
                 return view('auth.dashboard.patient');
-            // Add more roles if necessary
+                // Add more roles if necessary
             default:
                 return abort(403);  // Default dashboard view
         }

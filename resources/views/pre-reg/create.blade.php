@@ -441,10 +441,6 @@
         }
     </script>
 
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
     <!-- Swal2 -->
     <script>
         const form = document.querySelector('#PreRegistrationForm');
