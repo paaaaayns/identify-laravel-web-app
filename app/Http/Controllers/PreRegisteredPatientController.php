@@ -18,7 +18,20 @@ class PreRegisteredPatientController extends Controller
     public function index()
     {
         //
-        return view('pre-reg.index');
+        $breadcrumbs = [
+            [
+                'label' => 'Users',
+                'url' => route('dashboard'),
+            ],
+            [
+                'label' => 'Pre-Registered Patients',
+                'url' => route('dashboard', ['project' => 1]),  // Example route with dynamic parameter
+                'current' => true,  // Mark the current page
+            ]
+        ];
+        return view('pre-reg.index', [
+            'breadcrumbs' => $breadcrumbs,
+        ]);
     }
 
     /**
@@ -138,33 +151,6 @@ class PreRegisteredPatientController extends Controller
         ], 201);
     }
 
-    public function storeTest(Request $request)
-    {
-        //
-        $validatedData = $request->validate([
-            // Personal Information
-            'first_name' => ['required', 'string', 'max:255'],
-            'middle_name' => ['nullable', 'string', 'max:255'], // Allow middle name to be optional
-            'last_name' => ['required', 'string', 'max:255'],
-        ]);
-
-        // dd($validatedData);
-
-        do {
-            // Create a new Faker instance
-            $faker = Faker::create();
-
-            // Use regexify to generate an 8-character alphanumeric code (uppercase letters and numbers)
-            $code = $faker->regexify('[A-Z0-9]{8}');
-        } while (PreRegisteredPatient::where('pre_registration_code', $code)->exists());
-
-        return response()->json([
-            'success' => true,
-            'code' => $code,
-            'message' => 'Pre-registration successful.',
-        ], 201);
-    }
-
     /**
      * Display the specified resource.
      */
@@ -194,6 +180,16 @@ class PreRegisteredPatientController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // dd($id);
+
+        $user = PreRegisteredPatient::where('pre_registration_code', $id)->firstOrFail();
+        $user->delete();
+        // dd($user);
+
+        // Return a JSON response to inform the frontend that the deletion was successful
+        return response()->json([
+            'success' => true,
+            'message' => 'Pre-registered patient deleted successfully.'
+        ], 200);
     }
 }

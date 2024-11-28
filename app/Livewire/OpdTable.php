@@ -10,6 +10,8 @@ class OpdTable extends DataTableComponent
 {
     protected $model = Opd::class;
 
+    protected $listeners = ['refreshTable' => '$refresh'];  // Listen for the event and refresh the table
+
     public function configure(): void
     {
         $this->setPrimaryKey('id')
@@ -39,7 +41,8 @@ class OpdTable extends DataTableComponent
                         [
                             'viewLink' => route('dashboard', $row),
                             'editLink' => route('dashboard', $row),
-                            'deleteLink' => route('dashboard', $row),
+                            'deleteLink' => route('users.opd.destroy', ['user_id' => $row->user_id]), // Pass dynamic delete link
+                            'user_id' => $row->user_id,
                         ]
                     )
                 )->html(),

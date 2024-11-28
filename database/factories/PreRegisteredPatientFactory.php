@@ -45,7 +45,7 @@ class PreRegisteredPatientFactory extends Factory
             'emergency_contact2_relationship' => $this->faker->randomElement(['Parent', 'Sibling', 'Friend', 'Spouse']),
 
             // Pregistration Details
-            // 'pre_registration_code' => $this->faker->regexify('[A-Z]{2}[0-9]{6}'),
+            'pre_registration_code' => $this->faker->regexify('[A-Z0-9]{8}'),
             'pre_registered_at' => now(),
         ];
     }

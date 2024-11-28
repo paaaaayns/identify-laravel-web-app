@@ -5,10 +5,13 @@ namespace App\Livewire;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\PreRegisteredPatient;
+use Livewire\Component;
 
 class PreRegTable extends DataTableComponent
 {
     protected $model = PreRegisteredPatient::class;
+
+    protected $listeners = ['refreshTable' => '$refresh'];  // Listen for the event and refresh the table
 
     public function configure(): void
     {
@@ -16,6 +19,12 @@ class PreRegTable extends DataTableComponent
             ->setDefaultSort('created_at', 'desc')
             ->setRefreshTime(60000) // Component refreshes every 60 seconds
             ->setPerPageAccepted([10, 25, 50, 100, -1]); // Options for pagination
+    }
+
+    // Add the refreshTable method
+    public function refreshTable()
+    {
+        $this->emitSelf('refresh'); // Trigger the table refresh
     }
 
     public function columns(): array
@@ -28,14 +37,6 @@ class PreRegTable extends DataTableComponent
             Column::make("First Name", "first_name")
                 ->sortable()
                 ->searchable(),
-
-            // Column::make("Middle Name", "middle_name")
-            //     ->sortable()
-            //     ->searchable(),
-
-            // Column::make("Last Name", "last_name")
-            //     ->sortable()
-            //     ->searchable(),
 
             Column::make("Birthdate", "birthdate")
                 ->sortable()
@@ -51,7 +52,8 @@ class PreRegTable extends DataTableComponent
                         [
                             'viewLink' => route('dashboard', $row),
                             'editLink' => route('dashboard', $row),
-                            'deleteLink' => route('dashboard', $row),
+                            'deleteLink' => route('users.pre-reg.destroy', ['user_id' => $row->pre_registration_code]), // Pass dynamic delete link
+                            'user_id' => $row->pre_registration_code,
                         ]
                     )
                 )->html(),

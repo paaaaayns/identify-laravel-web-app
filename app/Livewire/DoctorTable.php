@@ -10,6 +10,8 @@ class DoctorTable extends DataTableComponent
 {
     protected $model = Doctor::class;
 
+    protected $listeners = ['refreshTable' => '$refresh'];  // Listen for the event and refresh the table
+
     public function configure(): void
     {
         $this->setPrimaryKey('id')
@@ -43,7 +45,8 @@ class DoctorTable extends DataTableComponent
                         [
                             'viewLink' => route('dashboard', $row),
                             'editLink' => route('dashboard', $row),
-                            'deleteLink' => route('dashboard', $row),
+                            'deleteLink' => route('users.doctor.destroy', ['user_id' => $row->user_id]), // Pass dynamic delete link
+                            'user_id' => $row->user_id,
                         ]
                     )
                 )->html(),

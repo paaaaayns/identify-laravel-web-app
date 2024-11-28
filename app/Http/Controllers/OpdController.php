@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Opd;
 use Illuminate\Http\Request;
 
 class OpdController extends Controller
@@ -62,6 +63,16 @@ class OpdController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // dd($id);
+
+        $user = Opd::where('user_id', $id)->firstOrFail();
+        $user->delete();
+        // dd($user);
+
+        // Return a JSON response to inform the frontend that the deletion was successful
+        return response()->json([
+            'success' => true,
+            'message' => 'Pre-registered patient deleted successfully.'
+        ], 200);
     }
 }

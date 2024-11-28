@@ -18,22 +18,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // User::factory(20)->create();
         
         
         // Call the UserSeeder
         $this->call(UserSeeder::class);
 
         // Seed doctor records
-        Doctor::factory(10)->create();
+        Doctor::factory(20)->create();
         
         // Seed opd records
-        Opd::factory(10)->create();
+        Opd::factory(20)->create();
 
         // Seed patient records
-        Patient::factory(10)->create();
+        Patient::factory(20)->create();
 
         // Seed pre-registered patient records
-        PreRegisteredPatient::factory(10)->create();
+        PreRegisteredPatient::factory(20)->create();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Patient;
 use Illuminate\Http\Request;
 
 class PatientController extends Controller
@@ -60,6 +61,16 @@ class PatientController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // dd($id);
+
+        $user = Patient::where('user_id', $id)->firstOrFail();
+        $user->delete();
+        // dd($user);
+
+        // Return a JSON response to inform the frontend that the deletion was successful
+        return response()->json([
+            'success' => true,
+            'message' => 'Pre-registered patient deleted successfully.'
+        ], 200);
     }
 }
