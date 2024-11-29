@@ -5,7 +5,10 @@
         border-0 rounded-md shadow-sm
         ring-1 ring-inset ring-gray-300
         placeholder:text-gray-400
-        focus:ring-2 focus:ring-inset focus:ring-primary'
+        focus:ring-2 focus:ring-inset focus:ring-primary
+        
+        disabled:bg-gray-100
+        disabled:text-gray-900 disabled:opacity-100'
 ]) }}>
     {{ $slot }}
 </select>
