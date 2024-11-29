@@ -8,5 +8,6 @@
         focus:ring-2 focus:ring-inset focus:ring-primary
         
         disabled:bg-gray-100
-        disabled:text-gray-900 disabled:opacity-100'
+        disabled:text-gray-900 disabled:opacity-100
+        disabled:select-text'
 ]) }}>
