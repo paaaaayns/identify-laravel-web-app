@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Patient;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class PatientController extends Controller
 {
@@ -65,6 +67,8 @@ class PatientController extends Controller
 
         $user = Patient::where('user_id', $id)->firstOrFail();
         $user->delete();
+        $creds = User::where('user_id', $id)->firstOrFail();
+        $creds->delete();
         // dd($user);
 
         // Return a JSON response to inform the frontend that the deletion was successful

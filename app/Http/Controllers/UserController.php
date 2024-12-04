@@ -18,13 +18,11 @@ class UserController extends Controller
         if (Hash::check($request->password, $user->password)) {
             return response()->json([
                 'success' => true,
-                'user' => $user,
-            ]);
+            ], 200);
         } else {
             return response()->json([
                 'success' => false,
-                'user' => $user,
-            ], 400);
+            ], 401);
         }
     }
 }

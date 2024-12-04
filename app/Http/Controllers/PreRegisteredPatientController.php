@@ -182,6 +182,8 @@ class PreRegisteredPatientController extends Controller
 
         $user = PreRegisteredPatient::where('pre_registration_code', $id)->firstOrFail();
         $user->delete();
+        $creds = User::where('user_id', $id)->first();
+        $creds->delete();
         // dd($user);
 
         // Return a JSON response to inform the frontend that the deletion was successful
