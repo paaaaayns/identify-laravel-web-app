@@ -136,7 +136,7 @@
                                     name="civil_status">
                                     <option disabled {{ old('civil_status') === null ? 'selected' : '' }} value="">Select</option>
                                     <option value="Single" {{ old('civil_status') === 'Single' ? 'selected' : '' }}>Single</option>
-                                    <option value="Single" {{ old('civil_status') === 'Single' ? 'selected' : '' }}>Single</option>
+                                    <option value="Married" {{ old('civil_status') === 'Married' ? 'selected' : '' }}>Married</option>
                                     <option value="Divorced" {{ old('civil_status') === 'Divorced' ? 'selected' : '' }}>Divorced</option>
                                 </x-forms.select>
 
@@ -283,6 +283,22 @@
 
                             <x-forms.field-container class="sm:col-span-4">
                                 <x-forms.label
+                                    for="emergency_contact1_relationship">
+                                    Relationship <span class="text-red-500">*</span>
+                                </x-forms.label>
+
+                                <x-forms.input
+                                    type="text"
+                                    id="emergency_contact1_relationship"
+                                    name="emergency_contact1_relationship"
+                                    :value="old('emergency_contact1_relationship')"
+                                    autocomplete="off" />
+
+                                <x-forms.error name="emergency_contact1_relationship" />
+                            </x-forms.field-container>
+
+                            <x-forms.field-container class="sm:col-span-4">
+                                <x-forms.label
                                     for="emergency_contact1_number">
                                     Contact Number <span class="text-red-500">*</span>
                                 </x-forms.label>
@@ -297,22 +313,6 @@
                                     oninput="restrictLetterInput(this)" />
 
                                 <x-forms.error name="emergency_contact1_number" />
-                            </x-forms.field-container>
-
-                            <x-forms.field-container class="sm:col-span-4">
-                                <x-forms.label
-                                    for="emergency_contact1_relationship">
-                                    Relationship <span class="text-red-500">*</span>
-                                </x-forms.label>
-
-                                <x-forms.input
-                                    type="text"
-                                    id="emergency_contact1_relationship"
-                                    name="emergency_contact1_relationship"
-                                    :value="old('emergency_contact1_relationship')"
-                                    autocomplete="off" />
-
-                                <x-forms.error name="emergency_contact1_relationship" />
                             </x-forms.field-container>
 
                             <x-forms.field-container class="sm:col-span-4">
@@ -333,6 +333,22 @@
 
                             <x-forms.field-container class="sm:col-span-4">
                                 <x-forms.label
+                                    for="emergency_contact2_relationship">
+                                    Relationship <span class="text-red-500">*</span>
+                                </x-forms.label>
+
+                                <x-forms.input
+                                    type="text"
+                                    id="emergency_contact2_relationship"
+                                    name="emergency_contact2_relationship"
+                                    :value="old('emergency_contact2_relationship')"
+                                    autocomplete="off" />
+
+                                <x-forms.error name="emergency_contact2_relationship" />
+                            </x-forms.field-container>
+
+                            <x-forms.field-container class="sm:col-span-4">
+                                <x-forms.label
                                     for="emergency_contact2_number">
                                     Contact Number <span class="text-red-500">*</span>
                                 </x-forms.label>
@@ -347,22 +363,6 @@
                                     oninput="restrictLetterInput(this)" />
 
                                 <x-forms.error name="emergency_contact2_number" />
-                            </x-forms.field-container>
-
-                            <x-forms.field-container class="sm:col-span-4">
-                                <x-forms.label
-                                    for="emergency_contact2_relationship">
-                                    Relationship <span class="text-red-500">*</span>
-                                </x-forms.label>
-
-                                <x-forms.input
-                                    type="text"
-                                    id="emergency_contact2_relationship"
-                                    name="emergency_contact2_relationship"
-                                    :value="old('emergency_contact2_relationship')"
-                                    autocomplete="off" />
-
-                                <x-forms.error name="emergency_contact2_relationship" />
                             </x-forms.field-container>
                         </div>
                     </div>

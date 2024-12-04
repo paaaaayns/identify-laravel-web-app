@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\PreRegisteredPatient;
 use App\Models\User;
+use Faker\Factory as Faker;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rule;
-use Faker\Factory as Faker;
 
 class PreRegisteredPatientController extends Controller
 {
@@ -116,27 +117,18 @@ class PreRegisteredPatientController extends Controller
 
         // dd($code);
 
+        // Exclude terms and privacy policy from the validated data
+        $validatedData = Arr::except($validatedData, ['terms_and_conditions', 'privacy_policy']);
+
+        // Adjust birthdate format in the filtered data
+        $validatedData['birthdate'] = Carbon::createFromFormat('m-d-Y', $validatedData['birthdate'])->format('Y-m-d');
+
+        // Add additional fields not in validated data
+        $validatedData['pre_registration_code'] = $code;
+        $validatedData['pre_registered_at'] = now();
+
         $patient = new PreRegisteredPatient();
-        $patient->first_name = $validatedData['first_name'];
-        $patient->middle_name = $validatedData['middle_name'] ?? null;
-        $patient->last_name = $validatedData['last_name'];
-        $patient->birthdate = Carbon::createFromFormat('m-d-Y', $validatedData['birthdate'])->format('Y-m-d'); // Save as standard date format
-        $patient->sex = $validatedData['sex'];
-        $patient->religion = $validatedData['religion'];
-        $patient->civil_status = $validatedData['civil_status'];
-        $patient->citizenship = $validatedData['citizenship'];
-        $patient->healthcard_number = $validatedData['healthcard_number'] ?? null;
-        $patient->address = $validatedData['address'];
-        $patient->email = $validatedData['email'];
-        $patient->contact_number = $validatedData['contact_number'];
-        $patient->emergency_contact1_name = $validatedData['emergency_contact1_name'];
-        $patient->emergency_contact1_number = $validatedData['emergency_contact1_number'];
-        $patient->emergency_contact1_relationship = $validatedData['emergency_contact1_relationship'];
-        $patient->emergency_contact2_name = $validatedData['emergency_contact2_name'];
-        $patient->emergency_contact2_number = $validatedData['emergency_contact2_number'];
-        $patient->emergency_contact2_relationship = $validatedData['emergency_contact2_relationship'];
-        $patient->pre_registration_code = $code;
-        $patient->pre_registered_at = now();
+        $patient->fill($validatedData);
         $patient->save();
 
         // dd($patient);
@@ -195,7 +187,7 @@ class PreRegisteredPatientController extends Controller
         // Return a JSON response to inform the frontend that the deletion was successful
         return response()->json([
             'success' => true,
-            'message' => 'Pre-registered patient deleted successfully.'
+            'message' => 'Record successfully deleted.'
         ], 200);
     }
 }

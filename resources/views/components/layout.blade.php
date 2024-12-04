@@ -360,28 +360,28 @@
                                  x-cloak
                                  class="mt-1 px-2"
                                  id="sub-menu-1">
-                                 <li x-data="{ isActive: window.location.pathname === '/users/pre-reg' }">
+                                 <li x-data="{ isActive: window.location.pathname.startsWith('/users/pre-reg') }">
                                     <a href="{{ route('users.pre-reg.index') }}"
                                        :class="isActive ? 'bg-background-dark text-white' : 'text-gray-700 hover:bg-gray-50'"
                                        class="block rounded-md py-2 pl-9 pr-2 text-sm/6">
                                        Pre-Registered Patients
                                     </a>
                                  </li>
-                                 <li x-data="{ isActive: window.location.pathname === '/users/patient' }">
+                                 <li x-data="{ isActive: window.location.pathname.startsWith('/users/patient') }">
                                     <a href="{{ route('users.patient.index') }}"
                                        :class="isActive ? 'bg-background-dark text-white' : 'text-gray-700 hover:bg-gray-50'"
                                        class="block rounded-md py-2 pl-9 pr-2 text-sm/6">
                                        Registered Patients
                                     </a>
                                  </li>
-                                 <li x-data="{ isActive: window.location.pathname === '/users/opd' }">
+                                 <li x-data="{ isActive: window.location.pathname.startsWith('/users/opd') }">
                                     <a href="{{ route('users.opd.index') }}"
                                        :class="isActive ? 'bg-background-dark text-white' : 'text-gray-700 hover:bg-gray-50'"
                                        class="block rounded-md py-2 pl-9 pr-2 text-sm/6">
                                        OPDs
                                     </a>
                                  </li>
-                                 <li x-data="{ isActive: window.location.pathname === '/users/doctor' }">
+                                 <li x-data="{ isActive: window.location.pathname.startsWith('/users/doctor') }">
                                     <a href="{{ route('users.doctor.index') }}"
                                        :class="isActive ? 'bg-background-dark text-white' : 'text-gray-700 hover:bg-gray-50'"
                                        class="block rounded-md py-2 pl-9 pr-2 text-sm/6">
@@ -430,14 +430,14 @@
                                  class="mt-1 px-2"
                                  id="sub-menu-1">
                                  <li x-data="{ isActive: window.location.pathname === '/register/opd' }">
-                                    <a href="/register/opd"
+                                    <a href="{{ route('users.opd.create') }}"
                                        :class="isActive ? 'bg-background-dark text-white' : 'text-gray-700 hover:bg-gray-50'"
                                        class="block rounded-md py-2 pl-9 pr-2 text-sm/6">
                                        OPD
                                     </a>
                                  </li>
                                  <li x-data="{ isActive: window.location.pathname === '/register/doctor' }">
-                                    <a href="/register/doctor"
+                                    <a href="{{ route('users.doctor.create') }}"
                                        :class="isActive ? 'bg-background-dark text-white' : 'text-gray-700 hover:bg-gray-50'"
                                        class="block rounded-md py-2 pl-9 pr-2 text-sm/6">
                                        Doctor
