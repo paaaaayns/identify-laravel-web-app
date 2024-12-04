@@ -9,4 +9,5 @@ class PatientQueue extends Model
 {
     /** @use HasFactory<\Database\Factories\PatientQueueFactory> */
     use HasFactory;
+    protected $guarded = [];
 }

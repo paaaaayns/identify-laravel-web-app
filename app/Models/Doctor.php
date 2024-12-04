@@ -9,4 +9,5 @@ class Doctor extends Model
 {
     /** @use HasFactory<\Database\Factories\DoctorFactory> */
     use HasFactory;
+    protected $guarded = [];
 }

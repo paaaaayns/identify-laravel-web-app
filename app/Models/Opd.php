@@ -10,4 +10,5 @@ class Opd extends Model
 {
     /** @use HasFactory<\Database\Factories\OpdFactory> */
     use HasFactory;
+    protected $guarded = [];
 }
