@@ -70,11 +70,14 @@
             if (response.ok) {
                 const result = await response.json();
                 showToast('toast-success', result.message);
+                console.log('Success:', result.message);
                 Livewire.dispatch('refreshTable'); // Dispatch the Livewire event to refresh the table
             } else {
                 showToast('toast-error', 'Failed to delete the record.');
+                console.error('Error:', 'Failed to delete the record.');
             }
         } catch (error) {
+            showToast('toast-error', 'An error occurred while processing the request.');
             console.error('Error:', error);
         }
     }
