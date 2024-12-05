@@ -46,6 +46,80 @@ window.hideToast = function (toastID) {
     }, 300); // Wait for slide-up animation to finish before hiding
 }
 
+// Function to validate the form
+window.validateForm = async function (formID, fetchURL) {
+    // Validate the form
+    const form = document.getElementById(formID);
+    const formData = new FormData(form);
+
+    // Clear existing error messages
+    clearErrorMessages(); 
+
+    try {
+        // Make the fetch request to the validation endpoint
+        const response = await fetch(fetchURL, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'Accept': 'application/json',
+            },
+        });
+
+        if (response.ok) {
+            // If the server responds with 200 OK, assume validation passed
+            console.log('Success:', 'Form data is validated.');
+            return true;
+        } else if (response.status === 422) {
+            // Handle validation errors (422 Unprocessable Content)
+            const errors = await response.json();
+            showErrorMessages(errors.errors); // Function to display validation errors
+            return false; // Prevent form submission
+        } else {
+            // Handle other response statuses
+            showToast('toast-error', 'An unexpected error occurred. Please try again later.');
+            console.error('Unexpected response:', response.status);
+            return false;
+        }
+    } catch (error) {
+        // Handle network or other errors
+        showToast('toast-error', 'Failed to validate the form. Please check your connection and try again.');
+        console.error('Error during form validation:', error);
+        return false;
+    }
+}
+
+window.clearForm = function (formID) {
+    const form = document.getElementById(formID);
+    form.reset();
+    clearErrorMessages();
+}
+
+
+// Helper function to show validation errors
+window.showErrorMessages = function (errors) {
+    // Clear existing errors
+    document.querySelectorAll('.error-message').forEach((el) => (el.textContent = ''));
+
+    // Loop through errors and display them next to the relevant fields
+    for (const [field, messages] of Object.entries(errors)) {
+        const errorElement = document.getElementById(`${field}-error`);
+        if (errorElement) {
+            errorElement.textContent = messages[0]; // Show the first error message
+        }
+    }
+
+    showToast('toast-error', 'Please correct the highlighted errors and try again.');
+    console.error('Validation errors:', errors);
+}
+
+// Clear error messages
+window.clearErrorMessages = function () {
+    document.querySelectorAll('.error-message').forEach(el => (el.textContent = ''));
+}
+
+
+
 
 
 // Verify the password with the server (make a request to the server to check the password)
