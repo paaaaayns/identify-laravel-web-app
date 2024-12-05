@@ -140,11 +140,11 @@ window.verifyPassword = async function (password) {
         const result = await response.json();
 
         if (response.ok && result.success) {
-            console.log(response.status + ": Password verified.");
+            console.log(response.status, 'Password verified.');
             return true; // Password verified
         } else {
             showToast('toast-error', 'Incorrect password.');
-            console.log(response.status + ": Incorrect password.");
+            console.error(response.status, 'Incorrect password.');
             return false; // Invalid password
         }
     } catch (error) {

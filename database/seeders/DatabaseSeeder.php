@@ -25,15 +25,15 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
 
         // Seed doctor records
-        Doctor::factory(20)->create();
+        Doctor::factory(5)->create();
         
         // Seed opd records
-        Opd::factory(20)->create();
+        Opd::factory(5)->create();
 
         // Seed patient records
-        Patient::factory(20)->create();
+        Patient::factory(5)->create();
 
         // Seed pre-registered patient records
-        PreRegisteredPatient::factory(20)->create();
+        PreRegisteredPatient::factory(5)->create();
     }
 }

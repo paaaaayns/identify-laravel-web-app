@@ -27,7 +27,8 @@ class OpdController extends Controller
     public function create()
     {
         //
-        return view('register.opd');
+        // dd('opd create');
+        return view('auth.users.opd.create');
     }
 
     /**
@@ -107,6 +108,7 @@ class OpdController extends Controller
     public function show(string $id)
     {
         //
+        dd('opd show');
     }
 
     /**
