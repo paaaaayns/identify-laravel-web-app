@@ -37,7 +37,7 @@ return new class extends Migration
             $table->string('emergency_contact2_relationship');
 
             $table->string('pre_registration_code')->nullable();
-            $table->timestamp('pre_registered_at');
+            $table->timestamp('pre_registered_at')->nullable();
 
             $table->timestamps();
         });
