@@ -46,14 +46,14 @@ Route::get('/pre-register/track', [PreRegTrackingController::class, 'index'])->n
 Route::get('/pre-register/track/search', [PreRegTrackingController::class, 'show'])->name('pre-reg.tracking.show');
 
 
-
-Route::get('/users/pre-reg', [PreRegisteredPatientController::class, 'index'])->name('users.pre-reg.index')
-    ->middleware('auth');
-Route::get('/users/pre-reg/{user_id}', [PreRegisteredPatientController::class, 'show'])->name('users.pre-reg.show')
-    ->middleware('auth');
-Route::delete('/users/pre-reg/{user_id}', [PreRegisteredPatientController::class, 'destroy'])->name('users.pre-reg.destroy')
-    ->middleware('auth');
+// Pre-Registered Patient
+Route::get('/users/pre-reg', [PreRegisteredPatientController::class, 'index'])->name('users.pre-reg.index');
 Route::get('/users/pre-reg/create', [PreRegisteredPatientController::class, 'create'])->name('users.pre-reg.create'); // TOD0: Implement this
+Route::post('/users/pre-reg/validate-store-request', [PreRegisteredPatientController::class, 'validateStoreRequest']); // TOD0: Implement this
+Route::post('/users/pre-reg/store', [PreRegisteredPatientController::class, 'store'])->name('users.pre-reg.store'); // TOD0: Implement this
+Route::get('/users/pre-reg/{user_id}', [PreRegisteredPatientController::class, 'show'])->name('users.pre-reg.show');
+Route::delete('/users/pre-reg/{user_id}', [PreRegisteredPatientController::class, 'destroy'])->name('users.pre-reg.destroy');
+
 
 
 
