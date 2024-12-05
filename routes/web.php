@@ -6,6 +6,7 @@ use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\OpdController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PreRegisteredPatientController;
+use App\Http\Controllers\PreRegistrationController;
 use App\Http\Controllers\PreRegTrackingController;
 use App\Http\Controllers\RegisterDoctorController;
 use App\Http\Controllers\RegisterOpdController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+
 
 
 Route::get('/', function () {
@@ -35,9 +37,9 @@ Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard'
     ->middleware('auth');
 
 
-Route::get('/pre-register', [PreRegisteredPatientController::class, 'create'])->name('pre-reg.create');
-Route::post('/pre-register/store', [PreRegisteredPatientController::class, 'store'])->name('pre-reg.store');
-Route::get('/pre-register/instructions', [PreRegisteredPatientController::class, 'instructions'])->name('pre-reg.instructions');
+Route::get('/pre-register', [PreRegistrationController::class, 'create'])->name('pre-reg.create');
+Route::post('/pre-register/store', [PreRegistrationController::class, 'store'])->name('pre-reg.store'); // TOD0: Implement this
+Route::get('/pre-register/instructions', [PreRegistrationController::class, 'instructions'])->name('pre-reg.instructions'); // TOD0: Implement this
 
 
 
@@ -48,9 +50,9 @@ Route::get('/pre-register/track/search', [PreRegTrackingController::class, 'show
 
 // Pre-Registered Patient
 Route::get('/users/pre-reg', [PreRegisteredPatientController::class, 'index'])->name('users.pre-reg.index');
-Route::get('/users/pre-reg/create', [PreRegisteredPatientController::class, 'create'])->name('users.pre-reg.create'); // TOD0: Implement this
-Route::post('/users/pre-reg/validate-store-request', [PreRegisteredPatientController::class, 'validateStoreRequest']); // TOD0: Implement this
-Route::post('/users/pre-reg/store', [PreRegisteredPatientController::class, 'store'])->name('users.pre-reg.store'); // TOD0: Implement this
+Route::get('/users/pre-reg/create', [PreRegisteredPatientController::class, 'create'])->name('users.pre-reg.create'); 
+Route::post('/users/pre-reg/validate-store-request', [PreRegisteredPatientController::class, 'validateStoreRequest']); 
+Route::post('/users/pre-reg/store', [PreRegisteredPatientController::class, 'store'])->name('users.pre-reg.store'); 
 Route::get('/users/pre-reg/{user_id}', [PreRegisteredPatientController::class, 'show'])->name('users.pre-reg.show');
 Route::delete('/users/pre-reg/{user_id}', [PreRegisteredPatientController::class, 'destroy'])->name('users.pre-reg.destroy');
 

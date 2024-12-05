@@ -238,7 +238,7 @@ class PreRegisteredPatientController extends Controller
         $user = PreRegisteredPatient::where('pre_registration_code', $user_id)->first();
         // dd($user);
 
-        return view('pre-reg.show', [
+        return view('auth.users.pre-registered.show', [
             'user' => $user,
         ]);
     }

@@ -14,7 +14,7 @@ class PreRegTrackingController extends Controller
     public function index()
     {
         //
-        return view('pre-reg.tracking.index');
+        return view('pre-register.tracking.index');
     }
 
     /**
@@ -34,7 +34,7 @@ class PreRegTrackingController extends Controller
         }
 
         // Pass the patient data to the view for displaying details
-        return view('pre-reg.tracking.show', [
+        return view('pre-register.tracking.show', [
             'patient' => $patient
         ]);
     }
