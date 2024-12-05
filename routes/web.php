@@ -49,22 +49,46 @@ Route::get('/pre-register/track/search', [PreRegTrackingController::class, 'show
 
 Route::get('/users/pre-reg', [PreRegisteredPatientController::class, 'index'])->name('users.pre-reg.index')
     ->middleware('auth');
+Route::get('/users/pre-reg/{user_id}', [PreRegisteredPatientController::class, 'show'])->name('users.pre-reg.show')
+    ->middleware('auth');
 Route::delete('/users/pre-reg/{user_id}', [PreRegisteredPatientController::class, 'destroy'])->name('users.pre-reg.destroy')
     ->middleware('auth');
 
+
+// Patient
 Route::get('/users/patient', [PatientController::class, 'index'])->name('users.patient.index')
     ->middleware('auth');
 Route::delete('/users/patient/{user_id}', [PatientController::class, 'destroy'])->name('users.patient.destroy')
     ->middleware('auth');
 
+
+// OPD
+Route::get('/users/opd', [OpdController::class, 'index'])->name('users.opd.index')
+    ->middleware('auth');
+Route::get('/users/opd/{user_id}', [OpdController::class, 'show'])->name('users.opd.show') // TOD0: Implement this
+    ->middleware('auth'); 
+Route::delete('/users/opd/{user_id}', [OpdController::class, 'destroy'])->name('users.opd.destroy')
+    ->middleware('auth');
+
+Route::get('/register/opd', [OpdController::class, 'create'])->name('users.opd.create') // TOD0: Implement this
+    ->middleware('auth');
+Route::post('/register/opd/validate-store-request', [OpdController::class, 'validateStoreRequest']) // TOD0: Implement this
+    ->middleware('auth');
+Route::post('/register/opd/store', [OpdController::class, 'store'])->name('users.opd.store') // TOD0: Implement this
+    ->middleware('auth');
+
+
+
+// Doctor
 Route::get('/users/doctor', [DoctorController::class, 'index'])->name('users.doctor.index')
+    ->middleware('auth');
+Route::get('/users/doctor/{user_id}', [DoctorController::class, 'show'])->name('users.doctor.show') // TOD0: Implement this
     ->middleware('auth');
 Route::delete('/users/doctor/{user_id}', [DoctorController::class, 'destroy'])->name('users.doctor.destroy')
     ->middleware('auth');
-
-Route::get('/users/opd', [OpdController::class, 'index'])->name('users.opd.index')
+Route::get('/register/doctor', [DoctorController::class, 'create'])->name('users.doctor.create') // TOD0: Implement this
     ->middleware('auth');
-Route::delete('/users/opd/{user_id}', [OpdController::class, 'destroy'])->name('users.opd.destroy')
+Route::get('/register/doctor/store', [DoctorController::class, 'store'])->name('users.doctor.store') // TOD0: Implement this
     ->middleware('auth');
 
 // Route::get('/search/pre-reg', [SearchController::class, 'indexPreReg'])->middleware('auth');

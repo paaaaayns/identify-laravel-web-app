@@ -27,18 +27,14 @@ class OpdController extends Controller
     public function create()
     {
         //
-
         return view('register.opd');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Validate the store request.
      */
-    public function store(Request $request)
+    public function validateStoreRequest(Request $request)
     {
-        //
-        // dd(request());
-
         $validatedData = $request->validate([
             // Personal Information
             'first_name' => ['required', 'string', 'max:255'],
@@ -78,18 +74,31 @@ class OpdController extends Controller
             'contact_number.min' => 'Invalid contact number',
         ]);
 
-        // dd(request());
+        return response()->json([
+            'success' => true,
+            'message' => 'Store request validated successfully.',
+            'data' => $validatedData,
+        ], 200);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        // Validate the request and get validated data
+        $response = $this->validateStoreRequest($request)->getData(true); // Use 'true' to get an associative array
+        $data = $response['data']; // Access the 'data' key from the array
 
         $user = new Opd();
-        $user->fill($validatedData);
-        // $user->save();
+        $user->fill($data);
+        $user->save();
+        // dd($user);
 
         return response()->json([
             'success' => true,
             'message' => 'OPD account created successfully.'
         ], 200);
-
-        // dd($user);
     }
 
     /**
@@ -121,18 +130,16 @@ class OpdController extends Controller
      */
     public function destroy(string $id)
     {
-        // dd($id);
-
-        $user = Opd::where('user_id', $id)->firstOrFail();
+        $user = Opd::where('user_id', $id)->first();
         $user->delete();
-        $creds = User::where('user_id', $id)->firstOrFail();
+        $creds = User::where('user_id', $id)->first();
         $creds->delete();
         // dd($user);
 
         // Return a JSON response to inform the frontend that the deletion was successful
         return response()->json([
             'success' => true,
-            'message' => 'Pre-registered patient deleted successfully.'
+            'message' => 'Record deleted successfully.'
         ], 200);
     }
 }
