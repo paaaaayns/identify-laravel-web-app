@@ -15,6 +15,7 @@ use Illuminate\Support\ServiceProvider;
 use App\Models\User;
 use App\Observers\AdminRegistrationObserver;
 use App\Observers\PatientPreRegistrationObserver;
+use Illuminate\Support\Facades\Auth;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -39,6 +40,30 @@ class AppServiceProvider extends ServiceProvider
         Doctor::observe(DoctorRegistrationObserver::class);
 
 
+        // TODO: Implement the logic to share the authenticated user globally
+        // Share the admin instance globally if the user is authenticated
+        view()->composer('*', function ($view) {
+            $user = null;
+
+            if (Auth::check()) {
+                $type = Auth::user()->type;
+                $user_id = Auth::user()->user_id;
+
+                if ($type === 'ADMIN') {
+                    $user = Admin::where('user_id', $user_id)->firstOrFail();
+                } elseif ($type === 'OPD') {
+                    $user = Opd::where('user_id', $user_id)->first();
+                } elseif ($type === 'DOCTOR') {
+                    $user = Doctor::where('user_id', $user_id)->first();
+                } elseif ($type === 'PATIENT') {
+                    $user = Patient::where('user_id', $user_id)->first();
+                }
+            }
+
+            $view->with('user', $user);
+        });
+
+
         Gate::define('view-admin-dashboard', function (User $user) {
             return $user->account_type === 'admin'; // Admin can access this
         });
@@ -54,6 +79,5 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('view-patient-dashboard', function (User $user) {
             return $user->account_type === 'patient'; // Patient can access this
         });
-
     }
 }
