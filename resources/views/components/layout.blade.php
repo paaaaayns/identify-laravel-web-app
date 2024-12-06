@@ -266,7 +266,7 @@
                            <a href="#" class="flex items-center gap-x-4 px-6 py-3 text-sm/6 font-semibold text-gray-900 hover:bg-gray-50">
                               <img class="h-8 w-8 rounded-full bg-gray-50" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
                               <span class="sr-only">Your profile</span>
-                              <span aria-hidden="true">Tom Cook</span>
+                              <span aria-hidden="true">{{ $user->first_name }} {{ $user->last_name }}</span>
                            </a>
                         </li>
                      </ul>
@@ -321,6 +321,11 @@
                         </li>
 
 
+                        <li>
+                           <div class="flex w-full items-center gap-x-3 rounded-md px-2 pt-2 text-left text-sm/6">
+                              <h2 class="text-sm/6 text-gray-700">Users</h2>
+                           </div>
+                        </li>
                         <!-- Pre-Registered Patients -->
                         <li>
                            <div x-data="{ isOpen: window.location.pathname.startsWith('/users/pre-reg') }">
@@ -375,6 +380,9 @@
                                        class="block rounded-md py-2 pl-9 pr-2 text-sm/6">
                                        Create
                                     </a>
+                                 </li>
+                                 <li>
+
                                  </li>
                               </ul>
                            </div>
@@ -568,7 +576,7 @@
                      <a href="#" class="flex items-center gap-x-4 px-6 py-3 text-sm/6 font-semibold text-gray-900 hover:bg-gray-50">
                         <img class="h-8 w-8 rounded-full bg-gray-50" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
                         <span class="sr-only">Your profile</span>
-                        <span aria-hidden="true">Tom Cook</span>
+                        <span aria-hidden="true">{{ $user->first_name }} {{ $user->last_name }}</span>
                      </a>
                   </li>
                </ul>
@@ -621,7 +629,7 @@
                         <span class="sr-only">Open user menu</span>
                         <img class="h-8 w-8 rounded-full bg-gray-50" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
                         <span class="hidden lg:flex lg:items-center">
-                           <span class="ml-4 text-sm/6 font-semibold text-gray-900" aria-hidden="true">Tom Cook</span>
+                           <span class="ml-4 text-sm/6 font-semibold text-gray-900" aria-hidden="true"> {{ $user->first_name }} {{ $user->last_name }} </span>
                            <svg class="ml-2 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
                               <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
                            </svg>
