@@ -8,7 +8,7 @@ use App\Models\Patient;
 use App\Models\PreRegisteredPatient;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\User;
-use Database\Seeders\UserSeeder;
+use Database\Seeders\AdminSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,8 +21,8 @@ class DatabaseSeeder extends Seeder
         // User::factory(20)->create();
         
         
-        // Call the UserSeeder
-        $this->call(UserSeeder::class);
+        // Call the AdminSeeder
+        $this->call(AdminSeeder::class);
 
         // Seed doctor records
         Doctor::factory(5)->create();

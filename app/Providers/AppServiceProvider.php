@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Admin;
 use App\Models\Doctor;
 use App\Models\Opd;
 use App\Models\Patient;
@@ -12,6 +13,7 @@ use App\Observers\PatientRegistrationObserver;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use App\Models\User;
+use App\Observers\AdminRegistrationObserver;
 use App\Observers\PatientPreRegistrationObserver;
 
 class AppServiceProvider extends ServiceProvider
@@ -30,10 +32,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
-        Doctor::observe(DoctorRegistrationObserver::class);
-        Opd::observe(OpdRegistrationObserver::class);
-        Patient::observe(PatientRegistrationObserver::class);
+        Admin::observe(AdminRegistrationObserver::class);
         PreRegisteredPatient::observe(PatientPreRegistrationObserver::class);
+        Patient::observe(PatientRegistrationObserver::class);
+        Opd::observe(OpdRegistrationObserver::class);
+        Doctor::observe(DoctorRegistrationObserver::class);
 
 
         Gate::define('view-admin-dashboard', function (User $user) {

@@ -15,14 +15,5 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         //
-        User::create([
-            'user_id' => 'U-000001',
-            'username' => 'admin',
-            'email' => 'admin@example.com',
-            'password' => 'admin',  // Hash the password
-            'type' => 'ADMIN',
-            'otp_code' => null,
-            'is_otp_verified' => null,
-        ]);
     }
 }

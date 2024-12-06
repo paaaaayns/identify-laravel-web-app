@@ -31,7 +31,7 @@ class DoctorRegistrationObserver
             ]);
         } catch (\Exception $e) {
             // Log the error for debugging purposes
-            Log::error('Error creating User for OPD: ' . $e->getMessage(), [
+            Log::error('Error creating User for DOCTOR: ' . $e->getMessage(), [
                 'opd_id' => $doctor->id,
                 'email' => $doctor->email,
             ]);
