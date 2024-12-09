@@ -5,6 +5,7 @@ use App\Http\Controllers\DataTableController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\OpdController;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\PatientQueueController;
 use App\Http\Controllers\PreRegisteredPatientController;
 use App\Http\Controllers\PreRegistrationController;
 use App\Http\Controllers\PreRegTrackingController;
@@ -82,3 +83,8 @@ Route::post('/users/doctor/store', [DoctorController::class, 'store'])->name('us
 Route::post('/users/doctor/validate-store-request', [DoctorController::class, 'validateStoreRequest']); // TOD0: Implement this
 Route::get('/users/doctor/{user_id}', [DoctorController::class, 'show'])->name('users.doctor.show'); // TOD0: Implement this
 Route::delete('/users/doctor/{user_id}', [DoctorController::class, 'destroy'])->name('users.doctor.destroy');
+
+
+
+// Queued Patient
+Route::get('/queue', [PatientQueueController::class, 'index'])->name('queue.index');

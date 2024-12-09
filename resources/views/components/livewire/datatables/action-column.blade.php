@@ -1,19 +1,20 @@
 <div class="inline-flex items-center mx-auto space-x-3">
     <a
-        href="{{ $viewLink }}"
+        href="{{ $viewLink ?? '#' }}"
         class="text-primary">
         View
     </a>
 
+    @if ($user->account_type === 'ADMIN')
     <a
-        href="{{ $editLink }}"
+        href="{{ $editLink ?? '#' }}"
         class="text-indigo-500">
         Edit
     </a>
 
     <form
         method="POST"
-        action="{{ $deleteLink }}"
+        action="{{ $deleteLink ?? '#' }}"
         id="delete-form-{{ $user_id }}"
         class="d-inline">
         @csrf
@@ -26,6 +27,7 @@
             Delete
         </button>
     </form>
+    @endif
 
 </div>
 

@@ -10,4 +10,9 @@ class Patient extends Model
     /** @use HasFactory<\Database\Factories\PatientFactory> */
     use HasFactory;
     protected $guarded = [];
+
+    public function medicalHistory()
+    {
+        return $this->hasMany(PatientQueue::class, 'patient_id'); // Adjust based on actual foreign key
+    }
 }
