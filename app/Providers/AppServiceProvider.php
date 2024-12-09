@@ -33,6 +33,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
+
         Admin::observe(AdminRegistrationObserver::class);
         PreRegisteredPatient::observe(PatientPreRegistrationObserver::class);
         Patient::observe(PatientRegistrationObserver::class);
@@ -51,12 +52,16 @@ class AppServiceProvider extends ServiceProvider
 
                 if ($type === 'ADMIN') {
                     $user = Admin::where('user_id', $user_id)->firstOrFail();
+                    $user->account_type = 'ADMIN';
                 } elseif ($type === 'OPD') {
                     $user = Opd::where('user_id', $user_id)->first();
+                    $user->account_type = 'OPD';
                 } elseif ($type === 'DOCTOR') {
                     $user = Doctor::where('user_id', $user_id)->first();
+                    $user->account_type = 'DOCTOR';
                 } elseif ($type === 'PATIENT') {
                     $user = Patient::where('user_id', $user_id)->first();
+                    $user->account_type = 'PATIENT';
                 }
             }
 
@@ -78,6 +83,10 @@ class AppServiceProvider extends ServiceProvider
 
         Gate::define('view-patient-dashboard', function (User $user) {
             return $user->account_type === 'patient'; // Patient can access this
+        });
+
+        Gate::define('view-patient-index', function (User $user) {
+            return in_array($user->account_type, ['ADMIN', 'OPD']); // Admin can access this
         });
     }
 }
