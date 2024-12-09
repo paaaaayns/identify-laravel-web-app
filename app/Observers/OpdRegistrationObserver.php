@@ -26,7 +26,7 @@ class OpdRegistrationObserver
             $user = User::create([
                 'user_id' => $opd->user_id, // Use the custom user_id
                 'username' => $opd->user_id, // Use the custom username
-                'password' => Hash::make('identify123'), // Default password or logic to generate a secure password
+                'password' => Hash::make('opd'), // Default password or logic to generate a secure password
                 'email' => $opd->email, // Use the email of the doctor or opd
                 'type' => 'OPD', // Set the type (e.g., doctor, opd)
             ]);

@@ -25,7 +25,7 @@ class DoctorRegistrationObserver
             $user = User::create([
                 'user_id' => $doctor->user_id,  // Use the custom user_id
                 'username' => $doctor->user_id, // Use the custom username
-                'password' => Hash::make('identify123'), // Default password or logic to generate a secure password
+                'password' => Hash::make('doctor'), // Default password or logic to generate a secure password
                 'email' => $doctor->email, // Use the email of the doctor or opd
                 'type' => 'DOCTOR',  // Set the type (e.g., doctor, opd)
             ]);
