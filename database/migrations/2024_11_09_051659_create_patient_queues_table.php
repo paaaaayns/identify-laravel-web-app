@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Doctor;
+use App\Models\Opd;
 use App\Models\Patient;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -16,26 +17,36 @@ return new class extends Migration
         Schema::create('patient_queues', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Patient::class);
+            $table->foreignIdFor(Opd::class);
             $table->foreignIdFor(Doctor::class);
-            $table->string('queue_status');
+            // Define queue_status as an ENUM field
+            $table->enum('queue_status', [
+                'Waiting',
+                'Vitals Taken',
+                'Consulting',
+                'Completed',
+                'Cancelled'
+            ])->default('Waiting');
 
-            $table->string('blood_pressure');
-            $table->string('temperature');
-            $table->string('pulse_rate');
-            $table->string('respiration_rate');
-            $table->string('height');
-            $table->string('weight');
-            $table->string('o2');
+            $table->string('blood_pressure')->nullable();
+            $table->string('temperature')->nullable();
+            $table->string('pulse_rate')->nullable();
+            $table->string('respiration_rate')->nullable();
+            $table->string('height')->nullable();
+            $table->string('weight')->nullable();
+            $table->string('o2')->nullable();
+            $table->text('other')->nullable();
 
-            $table->string('mr1');
-            $table->string('mr2');
-            $table->string('mr3');
-            $table->string('mr4');
-            $table->string('mr5');
-            $table->string('mr6');
-            $table->string('mr7');
-            $table->string('mr8');
-            
+            $table->string('mr1')->nullable();
+            $table->string('mr2')->nullable();
+            $table->string('mr3')->nullable();
+            $table->string('mr4')->nullable();
+            $table->string('mr5')->nullable();
+            $table->string('mr6')->nullable();
+            $table->string('mr7')->nullable();
+            $table->string('mr8')->nullable();
+
+            $table->timestamp('queued_at')->nullable();
             $table->timestamps();
         });
     }
