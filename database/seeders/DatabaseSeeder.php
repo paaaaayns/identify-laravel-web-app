@@ -24,6 +24,12 @@ class DatabaseSeeder extends Seeder
         // Call the AdminSeeder
         $this->call(AdminSeeder::class);
 
+        // Call the DoctorSeeder
+        $this->call(DoctorSeeder::class);
+
+        // Call the OpdSeeder
+        $this->call(OpdSeeder::class);
+
         // Seed doctor records
         Doctor::factory(5)->create();
         
@@ -35,5 +41,8 @@ class DatabaseSeeder extends Seeder
 
         // Seed pre-registered patient records
         PreRegisteredPatient::factory(5)->create();
+
+        // Seed user records
+        // php artisan migrate:rollback && php artisan migrate:fresh --seed
     }
 }

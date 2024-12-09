@@ -24,7 +24,7 @@ class AdminSeeder extends Seeder
             'civil_status' => 'Single',
             'citizenship' => 'Filipino',
             
-            'address' => 'admin@example.com',
+            'address' => 'Mandaluyong City 1550 Metro Manila',
             'email' => 'admin@example.com',
             'contact_number' => '09955062741',
         ]);
