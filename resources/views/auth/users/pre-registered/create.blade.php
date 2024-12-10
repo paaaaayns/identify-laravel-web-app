@@ -54,8 +54,9 @@
 
                             <x-forms.field-container class="sm:col-span-4">
                                 <x-forms.label
-                                    for="last_name">
-                                    Last Name <span class="text-red-500">*</span>
+                                    for="last_name"
+                                    :required="true">
+                                    Last Name
                                 </x-forms.label>
 
                                 <x-forms.input
@@ -65,13 +66,13 @@
                                     :value="old('last_name')"
                                     autocomplete="off" />
                                 <x-forms.error name="last_name" />
-
                             </x-forms.field-container>
 
                             <x-forms.field-container class="sm:col-span-4">
                                 <x-forms.label
-                                    for="first_name">
-                                    First Name <span class="text-red-500">*</span>
+                                    for="first_name"
+                                    :required="true">
+                                    First Name
                                 </x-forms.label>
 
                                 <x-forms.input
@@ -81,7 +82,6 @@
                                     :value="old('first_name')"
                                     autocomplete="off" />
                                 <x-forms.error name="first_name" />
-
                             </x-forms.field-container>
 
                             <x-forms.field-container class="sm:col-span-4">
@@ -97,13 +97,13 @@
                                     :value="old('middle_name') ?? ''"
                                     autocomplete="off" />
                                 <x-forms.error name="middle_name" />
-
                             </x-forms.field-container>
 
                             <x-forms.field-container class="sm:col-span-6">
                                 <x-forms.label
-                                    for="birthdate">
-                                    Birthdate <span class="text-red-500">*</span>
+                                    for="birthdate"
+                                    :required="true">
+                                    Birthdate
                                 </x-forms.label>
 
                                 <x-forms.input
@@ -117,13 +117,13 @@
                                     datepicker-autohide
                                     datepicker-format="mm-dd-yyyy" />
                                 <x-forms.error name="birthdate" />
-
                             </x-forms.field-container>
 
                             <x-forms.field-container class="sm:col-span-6">
                                 <x-forms.label
-                                    for="sex">
-                                    Sex <span class="text-red-500">*</span>
+                                    for="sex"
+                                    :required="true">
+                                    Sex
                                 </x-forms.label>
 
                                 <x-forms.select
@@ -134,13 +134,13 @@
                                     <option value="Female" {{ old('sex') === 'Female' ? 'selected' : '' }}>Female</option>
                                 </x-forms.select>
                                 <x-forms.error name="sex" />
-
                             </x-forms.field-container>
 
                             <x-forms.field-container class="sm:col-span-4">
                                 <x-forms.label
-                                    for="religion">
-                                    Religion <span class="text-red-500">*</span>
+                                    for="religion"
+                                    :required="true">
+                                    Religion
                                 </x-forms.label>
 
                                 <x-forms.input
@@ -150,13 +150,13 @@
                                     :value="old('religion')"
                                     autocomplete="off" />
                                 <x-forms.error name="religion" />
-
                             </x-forms.field-container>
 
                             <x-forms.field-container class="sm:col-span-4">
                                 <x-forms.label
-                                    for="civil_status">
-                                    Civil Status <span class="text-red-500">*</span>
+                                    for="civil_status"
+                                    :required="true">
+                                    Civil Status
                                 </x-forms.label>
 
                                 <x-forms.select
@@ -168,13 +168,13 @@
                                     <option value="Divorced" {{ old('civil_status') === 'Divorced' ? 'selected' : '' }}>Divorced</option>
                                 </x-forms.select>
                                 <x-forms.error name="civil_status" />
-
                             </x-forms.field-container>
 
                             <x-forms.field-container class="sm:col-span-4">
                                 <x-forms.label
-                                    for="citizenship">
-                                    Citizenship <span class="text-red-500">*</span>
+                                    for="citizenship"
+                                    :required="true">
+                                    Citizenship
                                 </x-forms.label>
 
                                 <x-forms.input
@@ -184,7 +184,21 @@
                                     :value="old('citizenship')"
                                     autocomplete="off" />
                                 <x-forms.error name="citizenship" />
+                            </x-forms.field-container>
 
+                            <x-forms.field-container class="sm:col-span-4">
+                                <x-forms.label
+                                    for="healthcard_number">
+                                    Health Card No.
+                                </x-forms.label>
+
+                                <x-forms.input
+                                    type="text"
+                                    id="healthcard_number"
+                                    name="healthcard_number"
+                                    :value="old('healthcard_number')"
+                                    autocomplete="off" />
+                                <x-forms.error name="healthcard_number" />
                             </x-forms.field-container>
                         </div>
                     </div>
@@ -196,8 +210,9 @@
 
                             <x-forms.field-container class="sm:col-span-12">
                                 <x-forms.label
-                                    for="address">
-                                    Complete Address <span class="text-red-500">*</span>
+                                    for="address"
+                                    :required="true">
+                                    Complete Address
                                 </x-forms.label>
 
                                 <x-forms.input
@@ -207,13 +222,13 @@
                                     :value="old('address')"
                                     autocomplete="off" />
                                 <x-forms.error name="address" />
-
                             </x-forms.field-container>
 
                             <x-forms.field-container class="sm:col-span-6">
                                 <x-forms.label
-                                    for="email">
-                                    Email <span class="text-red-500">*</span>
+                                    for="email"
+                                    :required="true">
+                                    Email
                                 </x-forms.label>
 
                                 <x-forms.input
@@ -223,13 +238,13 @@
                                     :value="old('email')"
                                     autocomplete="off" />
                                 <x-forms.error name="email" />
-
                             </x-forms.field-container>
 
                             <x-forms.field-container class="sm:col-span-6">
                                 <x-forms.label
-                                    for="contact_number">
-                                    Contact Number <span class="text-red-500">*</span>
+                                    for="contact_number"
+                                    :required="true">
+                                    Contact Number
                                 </x-forms.label>
 
                                 <x-forms.input
@@ -241,7 +256,6 @@
                                     oninput="restrictLetterInput(this)"
                                     autocomplete="off" />
                                 <x-forms.error name="contact_number" />
-
                             </x-forms.field-container>
 
                         </div>
@@ -254,8 +268,9 @@
 
                             <x-forms.field-container class="sm:col-span-4">
                                 <x-forms.label
-                                    for="emergency_contact1_name">
-                                    Name <span class="text-red-500">*</span>
+                                    for="emergency_contact1_name"
+                                    :required="true">
+                                    Name
                                 </x-forms.label>
 
                                 <x-forms.input
@@ -269,8 +284,9 @@
 
                             <x-forms.field-container class="sm:col-span-4">
                                 <x-forms.label
-                                    for="emergency_contact1_number">
-                                    Contact Number <span class="text-red-500">*</span>
+                                    for="emergency_contact1_number"
+                                    :required="true">
+                                    Contact Number
                                 </x-forms.label>
 
                                 <x-forms.input
@@ -286,8 +302,9 @@
 
                             <x-forms.field-container class="sm:col-span-4">
                                 <x-forms.label
-                                    for="emergency_contact1_relationship">
-                                    Relationship <span class="text-red-500">*</span>
+                                    for="emergency_contact1_relationship"
+                                    :required="true">
+                                    Relationship
                                 </x-forms.label>
 
                                 <x-forms.input
@@ -301,8 +318,9 @@
 
                             <x-forms.field-container class="sm:col-span-4">
                                 <x-forms.label
-                                    for="emergency_contact2_name">
-                                    Name <span class="text-red-500">*</span>
+                                    for="emergency_contact2_name"
+                                    :required="true">
+                                    Name
                                 </x-forms.label>
 
                                 <x-forms.input
@@ -316,8 +334,9 @@
 
                             <x-forms.field-container class="sm:col-span-4">
                                 <x-forms.label
-                                    for="emergency_contact2_number">
-                                    Contact Number <span class="text-red-500">*</span>
+                                    for="emergency_contact2_number"
+                                    :required="true">
+                                    Contact Number
                                 </x-forms.label>
 
                                 <x-forms.input
@@ -333,8 +352,9 @@
 
                             <x-forms.field-container class="sm:col-span-4">
                                 <x-forms.label
-                                    for="emergency_contact2_relationship">
-                                    Relationship <span class="text-red-500">*</span>
+                                    for="emergency_contact2_relationship"
+                                    :required="true">
+                                    Relationship
                                 </x-forms.label>
 
                                 <x-forms.input
