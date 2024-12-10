@@ -34,7 +34,7 @@
                         <svg class="size-5 shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
                             <path fill-rule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
                         </svg>
-                        <a href="#" class="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700" aria-current="page">{{ $profile->pre_registration_code }}</a>
+                        <a href="#" class="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700" aria-current="page">{{ $profile->user_id }}</a>
                     </div>
                 </li>
             </ol>
@@ -50,7 +50,7 @@
             </div>
             <!-- User Info -->
             <h2 class="text-lg font-semibold text-gray-800">{{ $profile->first_name }} {{ $profile->middle_name ?? '' }} {{ $profile->last_name }}</h2>
-            <p class="text-sm text-gray-500">UID: {{ $profile->pre_registration_code }}</p>
+            <p class="text-sm text-gray-500">UID: {{ $profile->user_id }}</p>
         </div>
 
         <!-- Right Column -->

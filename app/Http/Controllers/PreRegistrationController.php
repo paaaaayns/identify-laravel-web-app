@@ -102,6 +102,7 @@ class PreRegistrationController extends Controller
         $validatedData['birthdate'] = Carbon::createFromFormat('m-d-Y', $validatedData['birthdate'])->format('Y-m-d');
 
         // Add additional fields not in validated data
+        $validatedData['user_id'] = $code;
         $validatedData['pre_registration_code'] = $code;
         $validatedData['pre_registered_at'] = now();
 
