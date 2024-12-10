@@ -2,14 +2,26 @@
 
 namespace App\Models;
 
+use App\Models\Doctor;
+use App\Models\Patient;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class PatientQueue extends Model
 {
     /** @use HasFactory<\Database\Factories\PatientQueueFactory> */
     use HasFactory;
     protected $guarded = [];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->queue_id = 'Q-' . now()->format('Ymd') . '-' . Str::upper(Str::random(5));
+        });
+    }
 
     public function patient()
     {
