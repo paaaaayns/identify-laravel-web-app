@@ -235,11 +235,11 @@ class PreRegisteredPatientController extends Controller
     public function show(string $user_id)
     {
         // Fetch the user based on the user_id
-        $user = PreRegisteredPatient::where('pre_registration_code', $user_id)->first();
-        // dd($user);
+        $profile = PreRegisteredPatient::where('pre_registration_code', $user_id)->first();
+        // dd($profile->user_id);
 
         return view('auth.users.pre-registered.show', [
-            'user' => $user,
+            'profile' => $profile,
         ]);
     }
 

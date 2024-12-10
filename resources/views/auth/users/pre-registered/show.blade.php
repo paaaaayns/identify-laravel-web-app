@@ -34,7 +34,7 @@
                         <svg class="size-5 shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
                             <path fill-rule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
                         </svg>
-                        <a href="#" class="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700" aria-current="page">{{ $user->pre_registration_code }}</a>
+                        <a href="#" class="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700" aria-current="page">{{ $profile->pre_registration_code }}</a>
                     </div>
                 </li>
             </ol>
@@ -49,8 +49,8 @@
                 <img src="https://via.placeholder.com/150" alt="Profile Picture" class="w-full h-full rounded-full shadow">
             </div>
             <!-- User Info -->
-            <h2 class="text-lg font-semibold text-gray-800">{{ $user->first_name }} {{ $user->middle_name ?? '' }} {{ $user->last_name }}</h2>
-            <p class="text-sm text-gray-500">UID: {{ $user->pre_registration_code }}</p>
+            <h2 class="text-lg font-semibold text-gray-800">{{ $profile->first_name }} {{ $profile->middle_name ?? '' }} {{ $profile->last_name }}</h2>
+            <p class="text-sm text-gray-500">UID: {{ $profile->pre_registration_code }}</p>
         </div>
 
         <!-- Right Column -->
@@ -72,7 +72,7 @@
                             type="text"
                             id="last_name"
                             name="last_name"
-                            :value="$user->last_name"
+                            :value="$profile->last_name"
                             autocomplete="off"
                             disabled />
                         <x-forms.error name="last_name" />
@@ -90,7 +90,7 @@
                             type="text"
                             id="first_name"
                             name="first_name"
-                            :value="$user->first_name"
+                            :value="$profile->first_name"
                             autocomplete="off"
                             disabled />
                         <x-forms.error name="first_name" />
@@ -108,7 +108,7 @@
                             type="text"
                             id="middle_name"
                             name="middle_name"
-                            :value="$user->middle_name ?? 'N/A'"
+                            :value="$profile->middle_name ?? 'N/A'"
                             autocomplete="off"
                             disabled />
                         <x-forms.error name="middle_name" />
@@ -126,7 +126,7 @@
                             type="text"
                             id="birthdate"
                             name="birthdate"
-                            :value="$user->birthdate"
+                            :value="$profile->birthdate"
                             autocomplete="off"
                             oninput="restrictLetterInput(this)"
                             datepicker
@@ -147,9 +147,9 @@
                             id="sex"
                             name="sex"
                             disabled>
-                            <option disabled {{ $user->sex === null ? 'selected' : '' }} value="">Select</option>
-                            <option value="Male" {{ $user->sex === 'Male' ? 'selected' : '' }}>Male</option>
-                            <option value="Female" {{ $user->sex === 'Female' ? 'selected' : '' }}>Female</option>
+                            <option disabled {{ $profile->sex === null ? 'selected' : '' }} value="">Select</option>
+                            <option value="Male" {{ $profile->sex === 'Male' ? 'selected' : '' }}>Male</option>
+                            <option value="Female" {{ $profile->sex === 'Female' ? 'selected' : '' }}>Female</option>
                         </x-forms.select>
                         @endif
                     </x-forms.field-container>
@@ -165,7 +165,7 @@
                             type="text"
                             id="religion"
                             name="religion"
-                            :value="$user->religion"
+                            :value="$profile->religion"
                             autocomplete="off"
                             disabled />
                         <x-forms.error name="religion" />
@@ -183,10 +183,10 @@
                             id="civil_status"
                             name="civil_status"
                             disabled>
-                            <option disabled {{ $user->civil_status === null ? 'selected' : '' }} value="">Select</option>
-                            <option value="Single" {{ $user->civil_status === 'Single' ? 'selected' : '' }}>Single</option>
-                            <option value="Married" {{ $user->civil_status === 'Married' ? 'selected' : '' }}>Married</option>
-                            <option value="Divorced" {{ $user->civil_status === 'Divorced' ? 'selected' : '' }}>Divorced</option>
+                            <option disabled {{ $profile->civil_status === null ? 'selected' : '' }} value="">Select</option>
+                            <option value="Single" {{ $profile->civil_status === 'Single' ? 'selected' : '' }}>Single</option>
+                            <option value="Married" {{ $profile->civil_status === 'Married' ? 'selected' : '' }}>Married</option>
+                            <option value="Divorced" {{ $profile->civil_status === 'Divorced' ? 'selected' : '' }}>Divorced</option>
                         </x-forms.select>
                         @endif
                     </x-forms.field-container>
@@ -202,7 +202,7 @@
                             type="text"
                             id="citizenship"
                             name="citizenship"
-                            :value="$user->citizenship"
+                            :value="$profile->citizenship"
                             autocomplete="off"
                             disabled />
                         <x-forms.error name="citizenship" />
@@ -220,7 +220,7 @@
                             type="text"
                             id="healthcard_number"
                             name="healthcard_number"
-                            :value="$user->healthcard_number ?? 'N/A'"
+                            :value="$profile->healthcard_number ?? 'N/A'"
                             autocomplete="off"
                             disabled />
                         <x-forms.error name="healthcard_number" />
@@ -245,7 +245,7 @@
                             type="text"
                             id="address"
                             name="address"
-                            :value="$user->address"
+                            :value="$profile->address"
                             autocomplete="off"
                             disabled />
                         <x-forms.error name="address" />
@@ -263,7 +263,7 @@
                             type="text"
                             id="email"
                             name="email"
-                            :value="$user->email"
+                            :value="$profile->email"
                             autocomplete="off"
                             disabled />
                         <x-forms.error name="email" />
@@ -281,7 +281,7 @@
                             type="text"
                             id="contact_number"
                             name="contact_number"
-                            :value="$user->contact_number"
+                            :value="$profile->contact_number"
                             autocomplete="off"
                             disabled />
                         <x-forms.error name="contact_number" />
@@ -307,7 +307,7 @@
                             type="text"
                             id="emergency_contact1_name"
                             name="emergency_contact1_name"
-                            :value="$user->emergency_contact1_name"
+                            :value="$profile->emergency_contact1_name"
                             autocomplete="off"
                             disabled />
                         <x-forms.error name="emergency_contact1_name" />
@@ -325,7 +325,7 @@
                             type="text"
                             id="emergency_contact1_relationship"
                             name="emergency_contact1_relationship"
-                            :value="$user->emergency_contact1_relationship"
+                            :value="$profile->emergency_contact1_relationship"
                             autocomplete="off"
                             disabled />
                         <x-forms.error name="emergency_contact1_relationship" />
@@ -343,7 +343,7 @@
                             type="text"
                             id="emergency_contact1_number"
                             name="emergency_contact1_number"
-                            :value="$user->emergency_contact1_number"
+                            :value="$profile->emergency_contact1_number"
                             autocomplete="off"
                             disabled />
                         <x-forms.error name="emergency_contact1_number" />
@@ -361,7 +361,7 @@
                             type="text"
                             id="emergency_contact2_name"
                             name="emergency_contact2_name"
-                            :value="$user->emergency_contact2_name"
+                            :value="$profile->emergency_contact2_name"
                             autocomplete="off"
                             disabled />
                         <x-forms.error name="emergency_contact2_name" />
@@ -379,7 +379,7 @@
                             type="text"
                             id="emergency_contact2_relationship"
                             name="emergency_contact2_relationship"
-                            :value="$user->emergency_contact2_relationship"
+                            :value="$profile->emergency_contact2_relationship"
                             autocomplete="off"
                             disabled />
                         <x-forms.error name="emergency_contact2_relationship" />
@@ -397,7 +397,7 @@
                             type="text"
                             id="emergency_contact2_number"
                             name="emergency_contact2_number"
-                            :value="$user->emergency_contact2_number"
+                            :value="$profile->emergency_contact2_number"
                             autocomplete="off"
                             disabled />
                         <x-forms.error name="emergency_contact2_number" />
