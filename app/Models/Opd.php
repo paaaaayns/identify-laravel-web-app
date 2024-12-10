@@ -37,7 +37,7 @@ class Opd extends Model
                     // 'password' => Hash::make('opd'), // Default password
                     'password' => 'opd', // Default password
                     'email' => $opd->email, // opd's email
-                    'type' => 'opd',  // Define user type
+                    'type' => 'OPD',  // Define user type
                 ]);
             } catch (\Exception $e) {
                 // Log any issues during user creation
