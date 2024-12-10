@@ -19,7 +19,7 @@ class DoctorTable extends DataTableComponent
             ->setDefaultSort('created_at', 'desc')
             ->setRefreshTime(60000) // Component refreshes every 60 seconds
             ->setPerPageAccepted([10, 25, 50, 100, -1]) // Options for pagination
-            ->setAdditionalSelects(['first_name', 'middle_name', 'last_name']) // Additional columns to select
+            ->setAdditionalSelects(['*']) // Additional columns to select
             ->setTrimSearchStringEnabled() // Will trim whitespace from either end of search strings
         ;
     }
