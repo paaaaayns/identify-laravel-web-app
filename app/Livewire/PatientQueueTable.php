@@ -21,7 +21,7 @@ class PatientQueueTable extends DataTableComponent
             ->setDefaultSort('created_at', 'desc')
             ->setRefreshTime(60000) // Component refreshes every 60 seconds
             ->setPerPageAccepted([10, 25, 50, 100, -1]) // Options for pagination
-            ->setAdditionalSelects(['id', 'patient_id', 'opd_id', 'doctor_id']) // Additional columns to select
+            ->setAdditionalSelects(['*']) // Additional columns to select
             ->setTrimSearchStringEnabled() // Will trim whitespace from either end of search strings
         ;
     }
@@ -41,21 +41,36 @@ class PatientQueueTable extends DataTableComponent
 
             Column::make("Patient Name")
                 ->label(fn($row) => $this->getPatientName($row)) // Display full name
-                ->searchable(), // Make it searchable if needed
+                ->searchable(), // TODO: Fix search
 
-                Column::make("Doctor Name")
+            Column::make("Doctor Name")
                 ->label(fn($row) => $this->getDoctorName($row)) // Display full name
-                ->searchable(fn(Builder $query, $searchTerm) => $query->where(function ($query) use ($searchTerm) {
+                ->searchable(fn(Builder $query, $searchTerm) => $query->whereHas('doctor', function ($query) use ($searchTerm) {
                     $query->where('first_name', 'like', "%{$searchTerm}%")
-                          ->orWhere('middle_name', 'like', "%{$searchTerm}%")
-                          ->orWhere('last_name', 'like', "%{$searchTerm}%");
-                })),
+                        ->orWhere('middle_name', 'like', "%{$searchTerm}%")
+                        ->orWhere('last_name', 'like', "%{$searchTerm}%");
+                })), // TODO: Fix search
 
             Column::make("Status", "queue_status")
                 ->sortable()
-                ->searchable(),
+                ->searchable()
+                ->label(function ($row) {
+                    $statusColors = [
+                        'Waiting' => 'bg-yellow-500 text-white',
+                        'Vitals Taken' => 'bg-blue-500 text-white',
+                        'Consulting' => 'bg-orange-500 text-white',
+                        'Completed' => 'bg-green-500 text-white',
+                        'Cancelled' => 'bg-red-500 text-white',
+                    ];
 
-            Column::make('Action')
+                    $status = $row->queue_status;
+                    $colorClass = $statusColors[$status] ?? 'bg-gray-500 text-white';
+
+                    return '<span class="px-2 py-1 rounded ' . $colorClass . '">' . ucfirst($status) . '</span>';
+                })
+                ->html(),
+
+            Column::make('Action') // TODO: Implement the action column
                 ->label(
                     fn($row, Column $column) => view('components.livewire.datatables.action-column')->with(
                         [

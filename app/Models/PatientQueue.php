@@ -14,6 +14,7 @@ class PatientQueue extends Model
     use HasFactory;
     protected $guarded = [];
 
+    // Boot method to generate queue_id before saving
     protected static function boot()
     {
         parent::boot();

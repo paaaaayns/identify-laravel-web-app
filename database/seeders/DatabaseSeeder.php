@@ -41,7 +41,7 @@ class DatabaseSeeder extends Seeder
         // Patient::factory(5)->create();
 
         // // Seed pre-registered patient records
-        // PreRegisteredPatient::factory(5)->create();
+        PreRegisteredPatient::factory(5)->create();
 
         // // Seed patient queue records
         PatientQueue::factory(5)->create();
