@@ -104,10 +104,16 @@ class DoctorController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $user_id)
     {
         //
-        dd('doctor show');
+        // Fetch the user based on the user_id
+        $profile = Doctor::where('user_id', $user_id)->first();
+        // dd($profile->user_id);
+
+        return view('auth.users.doctor.show', [
+            'profile' => $profile,
+        ]);
     }
 
     /**

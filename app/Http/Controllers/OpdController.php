@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Opd;
+use App\Models\Patient;
 use App\Models\PreRegisteredPatient;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -105,10 +106,16 @@ class OpdController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $user_id)
     {
         //
-        dd('opd show');
+        // Fetch the user based on the user_id
+        $profile = Opd::where('user_id', $user_id)->first();
+        // dd($profile->user_id);
+
+        return view('auth.users.opd.show', [
+            'profile' => $profile,
+        ]);
     }
 
     /**
