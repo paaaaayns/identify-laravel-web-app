@@ -18,7 +18,7 @@ class PatientQueueTable extends DataTableComponent
     public function configure(): void
     {
         $this->setPrimaryKey('id')
-            ->setDefaultSort('created_at', 'desc')
+            ->setDefaultSort('queued_at', 'desc')
             ->setRefreshTime(60000) // Component refreshes every 60 seconds
             ->setPerPageAccepted([10, 25, 50, 100, -1]) // Options for pagination
             ->setAdditionalSelects(['*']) // Additional columns to select
@@ -45,11 +45,18 @@ class PatientQueueTable extends DataTableComponent
 
             Column::make("Doctor Name")
                 ->label(fn($row) => $this->getDoctorName($row)) // Display full name
-                ->searchable(fn(Builder $query, $searchTerm) => $query->whereHas('doctor', function ($query) use ($searchTerm) {
-                    $query->where('first_name', 'like', "%{$searchTerm}%")
-                        ->orWhere('middle_name', 'like', "%{$searchTerm}%")
-                        ->orWhere('last_name', 'like', "%{$searchTerm}%");
-                })), // TODO: Fix search
+                ->sortable() // TODO: Fix search
+                ->searchable(
+                    fn(Builder $query, $searchTerm) =>
+                    $query->orWhereHas(
+                        'doctor',
+                        fn($query) =>
+                        $query->where('first_name', 'like', '%' . trim($searchTerm) . '%')
+                            ->orWhere('middle_name', 'like', '%' . trim($searchTerm) . '%')
+                            ->orWhere('last_name', 'like', '%' . trim($searchTerm) . '%')
+                    )
+                ),
+
 
             Column::make("Status", "queue_status")
                 ->sortable()
@@ -83,7 +90,7 @@ class PatientQueueTable extends DataTableComponent
         ];
     }
 
-    // Get the patient's information
+    // Get the patient's name
     public function getPatientName($row)
     {
         // Retrieve the patient using the relationships
@@ -91,13 +98,13 @@ class PatientQueueTable extends DataTableComponent
 
         // Check if patient exist
         if ($patient) {
-            return $patient->first_name . ' ' . $patient->middle_name . ' ' . $patient->last_name;
+            return "{$patient->last_name}, {$patient->first_name} {$patient->middle_name}";
         }
 
         return 'N/A'; // Default value if no names found
     }
 
-    // Get the doctor's information
+    // Get the doctor's name
     public function getDoctorName($row)
     {
         // Retrieve the doctor using the relationships
@@ -105,7 +112,7 @@ class PatientQueueTable extends DataTableComponent
 
         // Check if doctor exist
         if ($doctor) {
-            return $doctor->first_name . ' ' . $doctor->middle_name . ' ' . $doctor->last_name;
+            return "{$doctor->last_name}, {$doctor->first_name} {$doctor->middle_name}";
         }
 
         return 'N/A'; // Default value if no names found

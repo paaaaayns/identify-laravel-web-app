@@ -5,6 +5,7 @@ namespace App\Livewire;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\PreRegisteredPatient;
+use Illuminate\Database\Eloquent\Builder;
 
 class PreRegTable extends DataTableComponent
 {
@@ -36,17 +37,15 @@ class PreRegTable extends DataTableComponent
                 ->sortable()
                 ->searchable(),
 
-            // Combine first_name, middle_name, and last_name into a single "Full Name" column
             Column::make("Full Name")
-                ->label(fn($row) => "{$row->first_name} {$row->middle_name} {$row->last_name}")
+                ->label(fn($row) => "{$row->last_name}, {$row->first_name} {$row->middle_name}")
+                ->sortable(fn($builder, $direction) => $builder->orderBy('last_name', $direction))
                 ->searchable(
-                    fn($builder, $term) => $builder->where(function ($query) use ($term) {
-                        $query->where('first_name', 'like', "%{$term}%")
-                            ->orWhere('middle_name', 'like', "%{$term}%")
-                            ->orWhere('last_name', 'like', "%{$term}%");
-                    })
-                )
-                ->sortable(fn($builder, $direction) => $builder->orderBy('last_name', $direction)),
+                    fn(Builder $query, $searchTerm) =>
+                    $query->orWhere('first_name', 'like', '%' . trim($searchTerm) . '%')
+                        ->orWhere('middle_name', 'like', '%' . trim($searchTerm) . '%')
+                        ->orWhere('last_name', 'like', '%' . trim($searchTerm) . '%')
+                ),
 
             Column::make("Birthdate", "birthdate")
                 ->sortable()
