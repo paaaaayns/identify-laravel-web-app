@@ -33,8 +33,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
-
-        PreRegisteredPatient::observe(PatientPreRegistrationObserver::class);
         Patient::observe(PatientRegistrationObserver::class);
         Opd::observe(OpdRegistrationObserver::class);
         Doctor::observe(DoctorRegistrationObserver::class);
