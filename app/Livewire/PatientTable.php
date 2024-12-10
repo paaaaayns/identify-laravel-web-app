@@ -60,7 +60,7 @@ class PatientTable extends DataTableComponent
                 ->label(
                     fn($row, Column $column) => view('components.livewire.datatables.action-column')->with(
                         [
-                            'viewLink' => route('dashboard', $row),
+                            'viewLink' => route('users.patient.show', ['user_id' => $row->user_id]),
                             'deleteLink' => route('users.patient.destroy', ['user_id' => $row->user_id]), // Pass dynamic delete link
                             'user_id' => $row->user_id,
                         ]
