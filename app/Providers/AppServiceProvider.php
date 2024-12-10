@@ -34,7 +34,6 @@ class AppServiceProvider extends ServiceProvider
     {
         //
 
-        Admin::observe(AdminRegistrationObserver::class);
         PreRegisteredPatient::observe(PatientPreRegistrationObserver::class);
         Patient::observe(PatientRegistrationObserver::class);
         Opd::observe(OpdRegistrationObserver::class);
