@@ -61,7 +61,6 @@ class DoctorTable extends DataTableComponent
                     fn($row, Column $column) => view('components.livewire.datatables.action-column')->with(
                         [
                             'viewLink' => route('users.doctor.show', ['user_id' => $row->user_id]),
-                            'editLink' => route('dashboard', $row),
                             'deleteLink' => route('users.doctor.destroy', ['user_id' => $row->user_id]), // Pass dynamic delete link
                             'user_id' => $row->user_id,
                         ]

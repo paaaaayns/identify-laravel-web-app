@@ -82,7 +82,6 @@ class PatientQueueTable extends DataTableComponent
                     fn($row, Column $column) => view('components.livewire.datatables.action-column')->with(
                         [
                             'viewLink' => route('dashboard', $row),
-                            'editLink' => route('dashboard', $row),
                             'queue_id' => $row->id,
                         ]
                     )

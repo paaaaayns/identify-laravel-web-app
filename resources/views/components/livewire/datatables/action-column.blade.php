@@ -6,12 +6,6 @@
     </a>
 
     @if ($user->account_type === 'ADMIN')
-    <a
-        href="{{ $editLink ?? '#' }}"
-        class="text-indigo-500">
-        Edit
-    </a>
-
     <form
         method="POST"
         action="{{ $deleteLink ?? '#' }}"
