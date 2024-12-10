@@ -32,11 +32,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
-        Doctor::observe(DoctorRegistrationObserver::class);
-
-
-        // TODO: Implement the logic to share the authenticated user globally
         // Share the admin instance globally if the user is authenticated
         view()->composer('*', function ($view) {
             $user = null;
