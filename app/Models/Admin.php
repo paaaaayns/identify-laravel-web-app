@@ -32,10 +32,9 @@ class Admin extends Model
                 User::create([
                     'user_id' => $admin->user_id,  // Use the custom user_id
                     'username' => $admin->user_id, // Use the custom username
-                    // 'password' => Hash::make('admin'), // Default password
-                    'password' => 'admin', // Default password
+                    'password' => Hash::make('admin'), // Default password
                     'email' => $admin->email, // admin's email
-                    'type' => 'admin',  // Define user type
+                    'type' => 'ADMIN',  // Define user type
                 ]);
             } catch (\Exception $e) {
                 // Log any issues during user creation
