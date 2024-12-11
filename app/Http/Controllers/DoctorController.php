@@ -39,9 +39,9 @@ class DoctorController extends Controller
             'first_name' => ['required', 'string', 'max:255'],
             'middle_name' => ['nullable', 'string', 'max:255'], // Allow middle name to be optional
             'last_name' => ['required', 'string', 'max:255'],
-            'birthdate' => ['required', 'date_format:m-d-Y', function ($attribute, $value, $fail) {
+            'birthdate' => ['required', 'date_format:Y-m-d', function ($attribute, $value, $fail) {
                 // Convert to Carbon instance
-                $date = Carbon::createFromFormat('m-d-Y', $value);
+                $date = Carbon::createFromFormat('Y-m-d', $value);
 
                 // Check if the date is before today
                 if ($date->isAfter(Carbon::today())) {
