@@ -90,7 +90,7 @@
                                     oninput="restrictLetterInput(this)"
                                     datepicker
                                     datepicker-autohide
-                                    datepicker-format="mm-dd-yyyy" />
+                                    datepicker-format="yyyy-mm-dd" />
 
                                 <x-forms.error name="birthdate" />
                             </x-forms.field-container>
@@ -436,7 +436,13 @@
                     </div>
 
                     <div class="flex items-center justify-end gap-x-6 border-t border-gray-900/10 px-4 py-4 sm:px-8">
-                        <!-- <button type="button" class="rounded-md px-3 py-2 text-sm font-semibold text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">Cancel</button> -->
+                        <button
+                            id="fill"
+                            type="button"
+                            onclick="fillFields()"
+                            class="rounded-md px-3 py-2 text-sm font-semibold text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+                            Test
+                        </button>
 
                         <x-forms.primary-button type="submit">
                             Submit
@@ -529,5 +535,60 @@
                 });
             }
         });
+    </script>
+
+    <!-- Test -->
+    <script>
+        function fillFields() {
+            // Predefined values for testing
+            const testData = {
+                first_name: "John",
+                middle_name: "James",
+                last_name: "Doe",
+                email: "jd.opd@example.com",
+                birthdate: "1990-10-20",
+                sex: "Male",
+                religion: "Catholic",
+                civil_status: "Single",
+                citizenship: "Male",
+
+                address: "4527 Colonial Drive High Hill Texas",
+                email: "john.doe@gmail.com",
+                contact_number: "09123456789",
+
+                emergency_contact1_name: "John Doe",
+                emergency_contact1_number: "09123456789",
+                emergency_contact1_relationship: "Friend",
+                emergency_contact2_name: "Jane Doe",
+                emergency_contact2_number: "09987654321",
+                emergency_contact2_relationship: "Friend",
+            };
+
+            // Fill fields using their IDs
+            document.getElementById('first_name').value = testData.first_name;
+            document.getElementById('middle_name').value = testData.middle_name;
+            document.getElementById('last_name').value = testData.last_name;
+            document.getElementById('birthdate').value = testData.birthdate;
+            document.getElementById('sex').value = testData.sex;
+            document.getElementById('religion').value = testData.religion;
+            document.getElementById('civil_status').value = testData.civil_status;
+            document.getElementById('citizenship').value = testData.citizenship;
+
+            document.getElementById('address').value = testData.address;
+            document.getElementById('email').value = testData.email;
+            document.getElementById('contact_number').value = testData.contact_number;
+
+            document.getElementById('emergency_contact1_name').value = testData.emergency_contact1_name;
+            document.getElementById('emergency_contact1_number').value = testData.emergency_contact1_number;
+            document.getElementById('emergency_contact1_relationship').value = testData.emergency_contact1_relationship;
+            document.getElementById('emergency_contact2_name').value = testData.emergency_contact2_name;
+            document.getElementById('emergency_contact2_number').value = testData.emergency_contact2_number;
+            document.getElementById('emergency_contact2_relationship').value = testData.emergency_contact2_relationship;
+
+            document.getElementById('terms_and_conditions').checked = true;
+            document.getElementById('privacy_policy').checked = true;
+
+            console.log("Fields filled with test data!");
+        }
     </script>
 </x-pre-reg-layout>

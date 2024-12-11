@@ -115,7 +115,7 @@
                                     oninput="restrictLetterInput(this)"
                                     datepicker
                                     datepicker-autohide
-                                    datepicker-format="mm-dd-yyyy" />
+                                    datepicker-format="yyyy-mm-dd" />
                                 <x-forms.error name="birthdate" />
                             </x-forms.field-container>
 
@@ -378,7 +378,7 @@
                 middle_name: "James",
                 last_name: "Doe",
                 email: "john.doe@example.com",
-                birthdate: "10-20-1990",
+                birthdate: "1990-10-20",
                 sex: "Male",
                 religion: "Catholic",
                 civil_status: "Single",

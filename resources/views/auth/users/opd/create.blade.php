@@ -119,7 +119,7 @@
                                     oninput="restrictLetterInput(this)"
                                     datepicker
                                     datepicker-autohide
-                                    datepicker-format="mm-dd-yyyy" />
+                                    datepicker-format="yyyy-mm-dd" />
                                 <x-forms.error name="birthdate" />
 
                             </x-forms.field-container>
@@ -374,18 +374,24 @@
                 first_name: "John",
                 middle_name: "James",
                 last_name: "Doe",
-                email: "jd.opd@example.com",
-                birthdate: "10-20-1990",
+                email: "john.doe@example.com",
+                birthdate: "1990-10-20",
                 sex: "Male",
                 religion: "Catholic",
                 civil_status: "Single",
                 citizenship: "Male",
 
                 address: "4527 Colonial Drive High Hill Texas",
-                email: "john.doe@gmail.com",
+                email: "jd.pre-reg@gmail.com",
                 contact_number: "09123456789",
 
-                type: "Orthopedic",
+                emergency_contact1_name: "John Doe",
+                emergency_contact1_number: "09123456789",
+                emergency_contact1_relationship: "Friend",
+
+                emergency_contact2_name: "Jane Doe",
+                emergency_contact2_number: "09987654321",
+                emergency_contact2_relationship: "Friend",
             };
 
             // Fill fields using their IDs
