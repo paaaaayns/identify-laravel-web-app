@@ -50,7 +50,7 @@
             </div>
             <!-- User Info -->
             <h2 class="text-lg font-semibold text-gray-800">{{ $profile->first_name }} {{ $profile->middle_name ?? '' }} {{ $profile->last_name }}</h2>
-            <p class="text-sm text-gray-500">UID: {{ $profile->user_id }}</p>
+            <p class="text-sm text-gray-500">{{ $profile->user_id }}</p>
         </div>
 
         <!-- Right Column -->
@@ -131,7 +131,7 @@
                             oninput="restrictLetterInput(this)"
                             datepicker
                             datepicker-autohide
-                            datepicker-format="mm-dd-yyyy"
+                            datepicker-format="yyyy-mm-dd"
                             disabled />
                         @endif
                     </x-forms.field-container>

@@ -131,7 +131,7 @@
                             oninput="restrictLetterInput(this)"
                             datepicker
                             datepicker-autohide
-                            datepicker-format="mm-dd-yyyy"
+                            datepicker-format="yyyy-mm-dd"
                             disabled />
                         @endif
                     </x-forms.field-container>
