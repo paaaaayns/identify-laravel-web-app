@@ -59,7 +59,7 @@
             <!-- Personal Information -->
             <div class="bg-white shadow rounded-lg p-6">
                 <h3 class="text-xl font-semibold text-gray-800">Personal Information</h3>
-                <div class="grid grid-cols-12 gap-x-6 gap-y-6 mt-6">
+                <div class="grid grid-cols-1 sm:grid-cols-12 gap-x-6 gap-y-6 mt-6">
 
                     <x-forms.field-container class="sm:col-span-4">
                         <x-forms.label
@@ -232,7 +232,7 @@
             <!-- Contact Information -->
             <div class="bg-white shadow rounded-lg p-6">
                 <h3 class="text-xl font-semibold text-gray-800">Contact Information</h3>
-                <div class="grid grid-cols-12 gap-x-6 gap-y-6 mt-6">
+                <div class="grid grid-cols-1 sm:grid-cols-12 gap-x-6 gap-y-6 mt-6">
 
                     <x-forms.field-container class="sm:col-span-12">
                         <x-forms.label
@@ -294,7 +294,7 @@
             <!-- Emergency Contact Information -->
             <div class="bg-white shadow rounded-lg p-6">
                 <h3 class="text-xl font-semibold text-gray-800">Emergency Contact Information</h3>
-                <div class="grid grid-cols-12 gap-x-6 gap-y-6 mt-6">
+                <div class="grid grid-cols-1 sm:grid-cols-12 gap-x-6 gap-y-6 mt-6">
 
                     <x-forms.field-container class="sm:col-span-4">
                         <x-forms.label
