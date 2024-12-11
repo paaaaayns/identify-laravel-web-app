@@ -18,7 +18,7 @@ class DoctorSeeder extends Seeder
             'first_name' => 'Exiquiel John',
             'middle_name' => 'Aldave',
             'last_name' => 'Pines',
-            'birthdate' => '10-26-2001',
+            'birthdate' => '2001-10-26',
             'sex' => 'Male',
             'religion' => 'Catholic',
             'civil_status' => 'Single',
