@@ -97,7 +97,8 @@ class DoctorController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Doctor account created successfully.'
+            'message' => 'Doctor account created successfully.',
+            'user' => $user,
         ], 200);
     }
 

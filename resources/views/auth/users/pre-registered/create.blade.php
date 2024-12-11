@@ -414,6 +414,8 @@
                 if (isVerified) {
                     const user = await createUser();
                     if (user) {
+                        // Scroll to top
+                        window.scrollTo(0, 0);
                         // Reset form fields
                         clearForm('RegistrationForm');
                     }

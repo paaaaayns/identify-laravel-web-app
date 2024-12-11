@@ -47,7 +47,7 @@ class OpdController extends Controller
                 $date = Carbon::createFromFormat('Y-m-d', $value);
 
                 // Check if the date is before today
-                if ($value->isAfter(Carbon::today())) {
+                if ($date->isAfter(Carbon::today())) {
                     $fail('The birthdate must be before today.');
                 }
             }], // Ensure birthdate is a valid date in the past
@@ -99,7 +99,8 @@ class OpdController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'OPD account created successfully.'
+            'message' => 'OPD account created successfully.',
+            'user' => $user,
         ], 200);
     }
 

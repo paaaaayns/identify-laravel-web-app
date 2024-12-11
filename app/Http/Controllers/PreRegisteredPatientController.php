@@ -118,7 +118,7 @@ class PreRegisteredPatientController extends Controller
         $user->user_id = $code;
         $user->pre_registration_code = $code;
         $user->pre_registered_at = now();
-        // $user->save();
+        $user->save();
         // dd($user);
 
         return response()->json([

@@ -326,10 +326,13 @@
             if (isFormValidated) {
                 const isVerified = await promptForPassword();
                 if (isVerified) {
-                    createUser();
-
-                    // redirect to the list of users
-                    clearForm('RegistrationForm');
+                    const user = await createUser();
+                    if (user) {
+                        // Scroll to top
+                        window.scrollTo(0, 0);
+                        // Reset form fields
+                        clearForm('RegistrationForm');
+                    }
                 }
                 return;
             }
@@ -354,14 +357,20 @@
                 if (response.ok) {
                     const result = await response.json();
                     showToast('toast-success', result.message);
-                    console.log('Success:', result.message);
+                    console.log(response.status, result.message);
+                    console.log('User:', result.user);
+
+                    // Return user data
+                    return result.user;
                 } else {
                     showToast('toast-error', 'Failed to create the account.');
-                    console.error('Error:', 'Failed to create the account.');
+                    console.error(response.status, 'Failed to create the account.');
+                    return null;
                 }
             } catch (error) {
                 showToast('toast-error', 'An error occurred while processing the request.');
-                console.error('Error:', error);
+                console.error(response.status, error);
+                return null;
             }
         }
     </script>
@@ -385,13 +394,7 @@
                 email: "jd.pre-reg@gmail.com",
                 contact_number: "09123456789",
 
-                emergency_contact1_name: "John Doe",
-                emergency_contact1_number: "09123456789",
-                emergency_contact1_relationship: "Friend",
-
-                emergency_contact2_name: "Jane Doe",
-                emergency_contact2_number: "09987654321",
-                emergency_contact2_relationship: "Friend",
+                type: "Pediatrics",
             };
 
             // Fill fields using their IDs
