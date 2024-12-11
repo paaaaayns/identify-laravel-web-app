@@ -14,6 +14,8 @@ use App\Http\Controllers\RegisterOpdController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UserController;
+use App\Mail\TestMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 
@@ -89,3 +91,15 @@ Route::delete('/users/doctor/{user_id}', [DoctorController::class, 'destroy'])->
 
 // Queued Patient
 Route::get('/queue', [PatientQueueController::class, 'index'])->name('queue.index');
+
+// Test email
+Route::get('/test-email', function () {
+
+    $data = [
+        'subject' => 'Test Email',
+        'message' => 'This is a test email.'];
+    
+    Mail::to('ejpines21@gmail.com')->send(new TestMail($data));
+
+    return 'Test email sent successfully!';
+});
