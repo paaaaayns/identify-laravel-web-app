@@ -118,10 +118,8 @@ class PreRegisteredPatientController extends Controller
         $user->user_id = $code;
         $user->pre_registration_code = $code;
         $user->pre_registered_at = now();
-        
-        $user->save();
+        // $user->save();
         // dd($user);
-
 
         return response()->json([
             'success' => true,
@@ -266,7 +264,7 @@ class PreRegisteredPatientController extends Controller
         $user->delete();
         $creds = User::where('user_id', $id)->first();
         if ($creds) {
-        $creds->delete();
+            $creds->delete();
         }
         // dd($user);
 

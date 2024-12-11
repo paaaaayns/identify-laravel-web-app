@@ -415,7 +415,8 @@
                     const user = await createUser();
                     if (user) {
                         // Reset form fields
-                    clearForm('RegistrationForm');
+                        clearForm('RegistrationForm');
+                    }
                 }
                 return;
             }

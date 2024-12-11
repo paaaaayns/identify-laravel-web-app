@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\Route;
 
 
 
+
+
 Route::get('/', function () {
     return redirect('/login');
 });
@@ -40,6 +42,7 @@ Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard'
     ->middleware('auth');
 
 
+// Pre-Registration Public Routes
 Route::get('/pre-register', [PreRegistrationController::class, 'create'])->name('pre-reg.create');
 Route::post('/pre-register/store', [PreRegistrationController::class, 'store'])->name('pre-reg.store'); // TOD0: Implement this
 Route::get('/pre-register/instructions', [PreRegistrationController::class, 'instructions'])->name('pre-reg.instructions'); // TOD0: Implement this
@@ -53,20 +56,22 @@ Route::get('/pre-register/track/search', [PreRegTrackingController::class, 'show
 
 // Pre-Registered Patient
 Route::get('/users/pre-reg', [PreRegisteredPatientController::class, 'index'])->name('users.pre-reg.index');
-Route::get('/users/pre-reg/create', [PreRegisteredPatientController::class, 'create'])->name('users.pre-reg.create'); 
-Route::post('/users/pre-reg/validate-store-request', [PreRegisteredPatientController::class, 'validateStoreRequest']); 
-Route::post('/users/pre-reg/store', [PreRegisteredPatientController::class, 'store'])->name('users.pre-reg.store'); 
+Route::get('/users/pre-reg/create', [PreRegisteredPatientController::class, 'create'])->name('users.pre-reg.create');
+Route::post('/users/pre-reg/validate-store-request', [PreRegisteredPatientController::class, 'validateStoreRequest']);
+Route::post('/users/pre-reg/store', [PreRegisteredPatientController::class, 'store'])->name('users.pre-reg.store');
 Route::get('/users/pre-reg/{user_id}', [PreRegisteredPatientController::class, 'show'])->name('users.pre-reg.show');
 Route::delete('/users/pre-reg/{user_id}', [PreRegisteredPatientController::class, 'destroy'])->name('users.pre-reg.destroy');
+// Route::post('/users/pre-reg/send-confirmation-email', [PreRegisteredPatientController::class, 'sendConfirmationEmail'])->name('users.pre-reg.send-confirmation-email');
+
 
 
 
 
 // Patient
 Route::get('/users/patient', [PatientController::class, 'index'])->name('users.patient.index');
-Route::delete('/users/patient/{user_id}', [PatientController::class, 'destroy'])->name('users.patient.destroy');
 Route::get('/users/patient/create', [PatientController::class, 'create'])->name('users.patient.create');
 Route::get('/users/patient/{user_id}', [PatientController::class, 'show'])->name('users.patient.show');
+Route::delete('/users/patient/{user_id}', [PatientController::class, 'destroy'])->name('users.patient.destroy');
 
 
 // OPD
