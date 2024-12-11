@@ -115,6 +115,7 @@ class PreRegisteredPatientController extends Controller
         $user->fill($data);
 
         // add the pre_registration_code to the user
+        $user->user_id = $code;
         $user->pre_registration_code = $code;
         $user->pre_registered_at = now();
         
@@ -261,12 +262,12 @@ class PreRegisteredPatientController extends Controller
      */
     public function destroy(string $id)
     {
-        // dd($id);
-
-        $user = PreRegisteredPatient::where('pre_registration_code', $id)->firstOrFail();
+        $user = PreRegisteredPatient::where('user_id', $id)->first();
         $user->delete();
         $creds = User::where('user_id', $id)->first();
+        if ($creds) {
         $creds->delete();
+        }
         // dd($user);
 
         // Return a JSON response to inform the frontend that the deletion was successful

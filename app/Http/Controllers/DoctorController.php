@@ -148,7 +148,7 @@ class DoctorController extends Controller
         // Return a JSON response to inform the frontend that the deletion was successful
         return response()->json([
             'success' => true,
-            'message' => 'Pre-registered patient deleted successfully.'
+            'message' => 'Record successfully deleted.'
         ], 200);
     }
 }
