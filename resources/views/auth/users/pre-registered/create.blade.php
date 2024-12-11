@@ -412,9 +412,9 @@
             if (isFormValidated) {
                 const isVerified = await promptForPassword();
                 if (isVerified) {
-                    createUser();
-
-                    // redirect to the list of users
+                    const user = await createUser();
+                    if (user) {
+                        // Reset form fields
                     clearForm('RegistrationForm');
                 }
                 return;
@@ -442,13 +442,18 @@
                     showToast('toast-success', result.message);
                     console.log(response.status, result.message);
                     console.log('User:', result.user);
+
+                    // Return user data
+                    return result.user;
                 } else {
                     showToast('toast-error', 'Failed to create the account.');
                     console.error(response.status, 'Failed to create the account.');
+                    return null;
                 }
             } catch (error) {
                 showToast('toast-error', 'An error occurred while processing the request.');
                 console.error(response.status, error);
+                return null;
             }
         }
     </script>
