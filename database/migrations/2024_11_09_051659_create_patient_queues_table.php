@@ -35,7 +35,7 @@ return new class extends Migration
             $table->string('respiration_rate')->nullable();
             $table->string('height')->nullable();
             $table->string('weight')->nullable();
-            $table->string('o2')->nullable();
+            $table->string('o2_sat')->nullable();
             $table->text('other')->nullable();
 
             $table->string('mr1')->nullable();
