@@ -456,26 +456,20 @@
                         </div>
                     </x-forms.field-container>
 
-                    <x-forms.field-container class="sm:col-span-12 grid place-items-center">
-                        <x-forms.primary-button
-                            type="button"
-                            onclick="captureImage()">
-                            Capture
-                        </x-forms.primary-button>
-                    </x-forms.field-container>
-
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        function captureImage() {
-            showToast('toast-success', 'Image captured successfully!');
-        }
-
         function restrictLetterInput(input) {
             input.value = input.value.replace(/[^0-9\-]/g, '');
+        }
+    </script>
+
+    <script>
+        function captureImage() {
+            showToast('toast-success', 'Image captured successfully!');
         }
     </script>
 

@@ -43,14 +43,37 @@
 
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
         <!-- Left Column -->
-        <div class="flex flex-col items-center text-center bg-white shadow rounded-lg md:col-span-1 p-6 self-start">
-            <!-- Profile Picture -->
-            <div class="w-32 h-32 mb-4">
-                <img src="https://via.placeholder.com/150" alt="Profile Picture" class="w-full h-full rounded-full shadow">
+        <div class="space-y-4 md:col-span-1">
+            <div class="flex flex-col items-center text-center bg-white shadow rounded-lg p-6 self-start">
+                <!-- Profile Picture -->
+                <div class="w-32 h-32 mb-4">
+                    <img src="https://via.placeholder.com/150" alt="Profile Picture" class="w-full h-full rounded-full shadow">
+                </div>
+                <!-- User Info -->
+                <h2 class="text-lg font-semibold text-gray-800">{{ $profile->first_name }} {{ $profile->middle_name ?? '' }} {{ $profile->last_name }}</h2>
+                <p class="text-sm text-gray-500">{{ $profile->user_id }}</p>
             </div>
-            <!-- User Info -->
-            <h2 class="text-lg font-semibold text-gray-800">{{ $profile->first_name }} {{ $profile->middle_name ?? '' }} {{ $profile->last_name }}</h2>
-            <p class="text-sm text-gray-500">{{ $profile->user_id }}</p>
+
+            <div class="grid grid-cols-1 text-center bg-white shadow rounded-lg gap-y-6 p-6 self-start">
+                <!-- Profile Picture -->
+                <div class="">
+                    <x-forms.primary-button
+                        class="w-full"
+                        type="button"
+                        onclick="captureImage('{{ $profile->user_id }}')">
+                        Capture Iris
+                    </x-forms.primary-button>
+                </div>
+
+                <div class="">
+                    
+                    <x-forms.link-button
+                        class="w-full"
+                        href="{{ route('queue.create', ['user_id' => $profile->user_id]) }}">
+                        Send to Queue
+                    </x-forms.link-button>
+                </div>
+            </div>
         </div>
 
         <!-- Right Column -->
@@ -406,7 +429,63 @@
 
                 </div>
             </div>
+
+            <!-- Biometric Information -->
+            <div class="bg-white shadow rounded-lg p-6">
+                <h3 class="text-xl font-semibold text-gray-800">Biometric Information</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-12 gap-x-6 gap-y-6 mt-6">
+
+                    <x-forms.field-container class="sm:col-span-4 grid place-items-center">
+                        <x-forms.label for="address">
+                            Right Iris
+                        </x-forms.label>
+
+                        <div class="w-full">
+                            <img src="https://via.placeholder.com/200" alt="Profile Picture" class="w-full h-full rounded-lg shadow">
+                        </div>
+                    </x-forms.field-container>
+
+                    <x-forms.field-container class="sm:col-span-4 grid place-items-center">
+                        <x-forms.label for="email">
+                            Face
+                        </x-forms.label>
+
+                        <div class="w-full">
+                            <img src="https://via.placeholder.com/200" alt="Profile Picture" class="w-full h-full rounded-lg shadow">
+                        </div>
+                    </x-forms.field-container>
+
+                    <x-forms.field-container class="sm:col-span-4 grid place-items-center">
+                        <x-forms.label for="contact_number">
+                            Left Iris
+                        </x-forms.label>
+
+                        <div class="w-full">
+                            <img src="https://via.placeholder.com/200" alt="Profile Picture" class="w-full h-full rounded-lg shadow">
+                        </div>
+                    </x-forms.field-container>
+
+                </div>
+            </div>
         </div>
     </div>
+
+
+    <script>
+        function captureImage(user_id) {
+            showToast('toast-success', 'Capturing image...');
+        }
+
+        function promptForDoctorSelection() {
+        }
+
+        function sendToQueue(profileUserId) {
+            console.log("Selecting a doctor...");
+
+            promptForDoctorSelection();
+
+            // window.location.href = "{{ route('users.doctor.show', ['user_id' => 'profileUserId']) }}";
+        }
+    </script>
 
 </x-layout>
