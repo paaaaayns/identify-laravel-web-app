@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pre_registered_patients', function (Blueprint $table) {
-            $table->id();
+            $table->ulid('id')->primary();
             $table->string('user_id')->unique()->nullable();
 
             $table->string('first_name');

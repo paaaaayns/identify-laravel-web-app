@@ -23,10 +23,10 @@ class PreRegTrackingController extends Controller
     public function show(Request $request)
     {
         // Retrieve the code from the query string
-        $code = $request->query('code');
+        $id = $request->query('id');
 
         // Find the record associated with the code
-        $patient = PreRegisteredPatient::where('pre_registration_code', $code)->first();
+        $patient = PreRegisteredPatient::where('id', $id)->first();
 
         // If no record is found, redirect back with an error message
         if (!$patient) {

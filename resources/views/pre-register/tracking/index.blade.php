@@ -16,7 +16,7 @@
             <form method="GET" action=" {{ route ('pre-reg.tracking.show') }} " class="mt-3 grid gap-4">
                 <x-forms.input
                     type="text"
-                    name="code"
+                    name="id"
                     placeholder="Enter Pre-Registration Code"
                     class="!p-3 !text-center !text-base" />
 
