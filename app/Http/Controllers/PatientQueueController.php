@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Patient;
 use Illuminate\Http\Request;
 
 class PatientQueueController extends Controller
@@ -11,16 +12,20 @@ class PatientQueueController extends Controller
      */
     public function index()
     {
-        //
         return view('auth.queue.index');
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(string $id)
     {
-        //
+        $profile = Patient::where('user_id', $id)->first();
+        // dd($profile);
+
+        return view('auth.queue.create', [
+            'profile' => $profile
+        ]);
     }
 
     /**
