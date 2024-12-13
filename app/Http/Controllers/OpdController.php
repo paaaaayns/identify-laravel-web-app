@@ -110,7 +110,7 @@ class OpdController extends Controller
     public function show(string $ulid)
     {
         // Fetch the user based on the ulid
-        $profile = Opd::where('ulid', $ulid)->first();
+        $profile = Opd::where('ulid', $ulid)->firstOrFail();
         // dd($profile->ulid);
 
         return view('auth.users.opd.show', [

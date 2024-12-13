@@ -44,13 +44,13 @@ class AppServiceProvider extends ServiceProvider
                     $user = Admin::where('user_id', $user_id)->firstOrFail();
                     $user->account_type = 'ADMIN';
                 } elseif ($type === 'OPD') {
-                    $user = Opd::where('user_id', $user_id)->first();
+                    $user = Opd::where('user_id', $user_id)->firstOrFail();
                     $user->account_type = 'OPD';
                 } elseif ($type === 'DOCTOR') {
-                    $user = Doctor::where('user_id', $user_id)->first();
+                    $user = Doctor::where('user_id', $user_id)->firstOrFail();
                     $user->account_type = 'DOCTOR';
                 } elseif ($type === 'PATIENT') {
-                    $user = Patient::where('user_id', $user_id)->first();
+                    $user = Patient::where('user_id', $user_id)->firstOrFail();
                     $user->account_type = 'PATIENT';
                 }
             }

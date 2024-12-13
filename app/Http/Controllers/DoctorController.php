@@ -108,7 +108,7 @@ class DoctorController extends Controller
     public function show(string $ulid)
     {
         // Fetch the user based on the ulid
-        $profile = Doctor::where('ulid', $ulid)->first();
+        $profile = Doctor::where('ulid', $ulid)->firstOrFail();
         // dd($profile->ulid);
 
         return view('auth.users.doctor.show', [
