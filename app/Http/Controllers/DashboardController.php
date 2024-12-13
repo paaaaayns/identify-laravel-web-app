@@ -51,12 +51,14 @@ class DashboardController extends Controller
 
             case 'OPD':
                 $preRegPatientsCount = PreRegisteredPatient::count();
-                $recentPreRegPatientsCount = PreRegisteredPatient::where('created_at', '>=', Carbon::now()->subHours(3))->count();
-
-                $queuedPatientsCount = PatientQueue::where('queue_status', 'waiting')
-                    ->whereDate('queued_at', Carbon::today())
+                $recentPreRegPatientsCount = PreRegisteredPatient::query()
+                    ->where('created_at', '>=', Carbon::now()->subHours(3))
                     ->count();
-                $recentQueuedPatientsCount = 0;
+
+                $queuedPatientsCount = PatientQueue::whereNotIn('queue_status', ['Completed', 'Cancelled'])->count();
+                $recentQueuedPatientsCount = PatientQueue::whereNotIn('queue_status', ['Completed', 'Cancelled'])
+                    ->where('created_at', '>=', Carbon::now()->subHours(3))
+                    ->count();
 
                 return view('auth.dashboard.opd', [
                     'preRegPatientsCount' => $preRegPatientsCount,
