@@ -9,7 +9,7 @@
     <form
         method="POST"
         action="{{ $deleteLink ?? '#' }}"
-        id="delete-form-{{ $user_id }}"
+        id="delete-form-{{ $id }}"
         class="d-inline">
         @csrf
         @method('DELETE')
@@ -17,7 +17,7 @@
         <button
             type="button"
             class="btn btn-link text-red-500"
-            onclick="confirmDelete('{{ $user_id }}')">
+            onclick="confirmDelete('{{ $id }}')">
             Delete
         </button>
     </form>
@@ -27,7 +27,7 @@
 
 <script>
     // Confirmation dialog
-    function confirmDelete(user_id) {
+    function confirmDelete(id) {
         Swal.fire({
             title: 'Are you sure?',
             text: 'You will not be able to recover this record!',
@@ -43,15 +43,15 @@
                 // Ask for password
                 const isVerified = await promptForPassword();
                 if (isVerified) {
-                    deleteUser(user_id);
+                    deleteUser(id);
                 }
             }
         });
     }
 
     // Deletion process
-    async function deleteUser(user_id) {
-        const form = document.getElementById('delete-form-' + user_id);
+    async function deleteUser(id) {
+        const form = document.getElementById('delete-form-' + id);
 
         try {
             // Perform the DELETE request using Fetch API
