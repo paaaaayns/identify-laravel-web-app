@@ -79,7 +79,7 @@ Route::get('/users/opd', [OpdController::class, 'index'])->name('users.opd.index
 Route::get('/users/opd/create', [OpdController::class, 'create'])->name('users.opd.create');
 Route::post('/users/opd/validate-store-request', [OpdController::class, 'validateStoreRequest']);
 Route::post('/users/opd/store', [OpdController::class, 'store'])->name('users.opd.store');
-Route::get('/users/opd/{user_id}', [OpdController::class, 'show'])->name('users.opd.show');
+Route::get('/users/opd/{ulid}', [OpdController::class, 'show'])->name('users.opd.show');
 Route::delete('/users/opd/{user_id}', [OpdController::class, 'destroy'])->name('users.opd.destroy');
 
 

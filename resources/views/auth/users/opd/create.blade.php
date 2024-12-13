@@ -391,7 +391,7 @@
                 citizenship: "Male",
 
                 address: "4527 Colonial Drive High Hill Texas",
-                email: "jd.pre-reg@gmail.com",
+                email: "jd.opd@gmail.com",
                 contact_number: "09123456789",
 
                 type: "Pediatrics",

@@ -107,12 +107,11 @@ class OpdController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $user_id)
+    public function show(string $ulid)
     {
-        //
-        // Fetch the user based on the user_id
-        $profile = Opd::where('user_id', $user_id)->first();
-        // dd($profile->user_id);
+        // Fetch the user based on the ulid
+        $profile = Opd::where('ulid', $ulid)->first();
+        // dd($profile->ulid);
 
         return view('auth.users.opd.show', [
             'profile' => $profile,
@@ -138,11 +137,12 @@ class OpdController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $user_id)
     {
-        $user = Opd::where('user_id', $id)->first();
+        // dd($user_id);
+        $user = Opd::where('user_id', $user_id)->firstOrFail();
         $user->delete();
-        $creds = User::where('user_id', $id)->first();
+        $creds = User::where('user_id', $user_id)->firstOrFail();
         $creds->delete();
         // dd($user);
 
