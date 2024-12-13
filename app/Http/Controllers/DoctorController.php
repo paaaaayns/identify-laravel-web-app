@@ -105,12 +105,11 @@ class DoctorController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $user_id)
+    public function show(string $ulid)
     {
-        //
-        // Fetch the user based on the user_id
-        $profile = Doctor::where('user_id', $user_id)->first();
-        // dd($profile->user_id);
+        // Fetch the user based on the ulid
+        $profile = Doctor::where('ulid', $ulid)->first();
+        // dd($profile->ulid);
 
         return view('auth.users.doctor.show', [
             'profile' => $profile,
@@ -136,13 +135,12 @@ class DoctorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $user_id)
     {
-        // dd($id);
-
-        $user = Doctor::where('user_id', $id)->firstOrFail();
+        // dd($user_id);
+        $user = Doctor::where('user_id', $user_id)->firstOrFail();
         $user->delete();
-        $creds = User::where('user_id', $id)->firstOrFail();
+        $creds = User::where('user_id', $user_id)->firstOrFail();
         $creds->delete();
         // dd($user);
 

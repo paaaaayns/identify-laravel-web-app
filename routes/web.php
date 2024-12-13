@@ -89,7 +89,7 @@ Route::get('/users/doctor', [DoctorController::class, 'index'])->name('users.doc
 Route::get('/users/doctor/create', [DoctorController::class, 'create'])->name('users.doctor.create');
 Route::post('/users/doctor/store', [DoctorController::class, 'store'])->name('users.doctor.store');
 Route::post('/users/doctor/validate-store-request', [DoctorController::class, 'validateStoreRequest']);
-Route::get('/users/doctor/{user_id}', [DoctorController::class, 'show'])->name('users.doctor.show');
+Route::get('/users/doctor/{ulid}', [DoctorController::class, 'show'])->name('users.doctor.show');
 Route::delete('/users/doctor/{user_id}', [DoctorController::class, 'destroy'])->name('users.doctor.destroy');
 
 
