@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('otp_code')->nullable();
             $table->boolean('is_otp_verified')->nullable()->default(false);
             $table->rememberToken()->nullable();
+            $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();
         });
 

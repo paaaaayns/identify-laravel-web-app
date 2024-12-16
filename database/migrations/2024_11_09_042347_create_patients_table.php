@@ -42,7 +42,6 @@ return new class extends Migration
 
             $table->string('queue_status')->nullable();
 
-            $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();
         });
     }

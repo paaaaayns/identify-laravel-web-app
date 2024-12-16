@@ -31,7 +31,6 @@ return new class extends Migration
 
             $table->string('type');
 
-            $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();
         });
     }
