@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\PatientQueue;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
@@ -32,7 +33,7 @@ class Patient extends Model
                 $patient->saveQuietly(); // Save without triggering model events
 
                 // Create the associated user
-                User::create([
+                $user = User::create([
                     'user_id' => $patient->user_id,  // Use the custom user_id
                     'username' => $patient->user_id, // Use the custom username
                     // 'password' => Hash::make('patient'), // Default password
@@ -40,6 +41,9 @@ class Patient extends Model
                     'email' => $patient->email, // patient's email
                     'type' => 'PATIENT',  // Define user type
                 ]);
+
+                // Send email verification notification
+                event(new Registered($user));
             } catch (\Exception $e) {
                 // Log any issues during user creation
                 Log::error('Error creating User for patient: ' . $e->getMessage(), [

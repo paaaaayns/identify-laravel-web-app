@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User;
@@ -29,13 +30,16 @@ class Admin extends Model
                 $admin->saveQuietly(); // Save without triggering model events
 
                 // Create the associated user
-                User::create([
+                $user = User::create([
                     'user_id' => $admin->user_id,  // Use the custom user_id
                     'username' => $admin->user_id, // Use the custom username
                     'password' => Hash::make('admin'), // Default password
                     'email' => $admin->email, // admin's email
                     'type' => 'ADMIN',  // Define user type
                 ]);
+
+                // Send email verification notification
+                event(new Registered($user));
             } catch (\Exception $e) {
                 // Log any issues during user creation
                 Log::error('Error creating User for admin: ' . $e->getMessage(), [

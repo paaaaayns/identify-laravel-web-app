@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
@@ -32,13 +33,16 @@ class Doctor extends Model
                 $doctor->saveQuietly(); // Save without triggering model events
 
                 // Create the associated user
-                User::create([
+                $user = User::create([
                     'user_id' => $doctor->user_id,  // Use the custom user_id
                     'username' => $doctor->user_id, // Use the custom username
                     'password' => Hash::make('doctor'), // Default password
                     'email' => $doctor->email, // doctor's email
                     'type' => 'DOCTOR',  // Define user type
                 ]);
+
+                // Send email verification notification
+                event(new Registered($user));
             } catch (\Exception $e) {
                 // Log any issues during user creation
                 Log::error('Error creating User for doctor: ' . $e->getMessage(), [
