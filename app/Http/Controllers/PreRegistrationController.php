@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\PreRegisteredPatient;
 use App\Models\User;
 use Faker\Factory as Faker;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Arr;
@@ -103,11 +104,11 @@ class PreRegistrationController extends Controller
         $validatedData['pre_registration_code'] = $code;
         $validatedData['pre_registered_at'] = now();
 
-        $patient = new PreRegisteredPatient();
-        $patient->fill($validatedData);
-        $patient->save();
+        $user = new PreRegisteredPatient();
+        $user->fill($validatedData);
+        $user->save();
 
-        // dd($patient);
+        // dd($user);
 
         session([
             'pre_registration_code' => $code,
