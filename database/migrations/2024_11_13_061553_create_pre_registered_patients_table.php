@@ -15,6 +15,8 @@ return new class extends Migration
             $table->ulid('id')->primary();
             $table->string('user_id')->unique()->nullable();
 
+            $table->string('pre_registration_code')->nullable();
+
             $table->string('first_name');
             $table->string('middle_name')->nullable();
             $table->string('last_name');
@@ -36,9 +38,11 @@ return new class extends Migration
             $table->string('emergency_contact2_number');
             $table->string('emergency_contact2_relationship');
 
-            $table->string('pre_registration_code')->nullable();
-            $table->timestamp('pre_registered_at')->nullable();
+            $table->string('left_iris')->nullable();
+            $table->string('face')->nullable();
+            $table->string('right_iris')->nullable();
 
+            $table->timestamp('pre_registered_at')->nullable();
             $table->timestamps();
         });
     }
