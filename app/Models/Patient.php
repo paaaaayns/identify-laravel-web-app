@@ -33,6 +33,10 @@ class Patient extends Model
                 $patient->ulid = Str::ulid();
                 $patient->saveQuietly(); // Save without triggering model events
 
+                // Delete from PreregisteredPatient table
+                $pre_reg = PreRegisteredPatient::where('email', $patient->email)->firstOrFail();
+                $pre_reg->delete();
+
                 // Create the associated user
                 $user = User::create([
                     'user_id' => $patient->user_id,  // Use the custom user_id
