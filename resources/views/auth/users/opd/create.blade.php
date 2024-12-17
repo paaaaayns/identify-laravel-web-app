@@ -299,6 +299,14 @@
                                 onclick="confirmCreate()">
                                 Submit
                             </x-forms.primary-button>
+
+                            <!-- Override submission -->
+                            @if (false)
+                                <x-forms.primary-button
+                                    type="submit">
+                                    Override Submit
+                                </x-forms.primary-button>
+                            @endif
                         </div>
                     </div>
                 </div>

@@ -108,7 +108,7 @@
                             type="text"
                             id="middle_name"
                             name="middle_name"
-                            :value="$profile->middle_name ?? 'N/A'"
+                            :value="$profile->middle_name ?? ''"
                             autocomplete="off"
                             disabled />
                         <x-forms.error name="middle_name" />
@@ -151,6 +151,7 @@
                             <option value="Male" {{ $profile->sex === 'Male' ? 'selected' : '' }}>Male</option>
                             <option value="Female" {{ $profile->sex === 'Female' ? 'selected' : '' }}>Female</option>
                         </x-forms.select>
+                        <x-forms.error name="sex" />
                         @endif
                     </x-forms.field-container>
 
@@ -188,6 +189,7 @@
                             <option value="Married" {{ $profile->civil_status === 'Married' ? 'selected' : '' }}>Married</option>
                             <option value="Divorced" {{ $profile->civil_status === 'Divorced' ? 'selected' : '' }}>Divorced</option>
                         </x-forms.select>
+                        <x-forms.error name="civil_status" />
                         @endif
                     </x-forms.field-container>
 
