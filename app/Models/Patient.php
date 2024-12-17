@@ -30,14 +30,14 @@ class Patient extends Model
             try {
                 // Generate a unique user_id based on the patient's ID
                 $patient->user_id = 'P-' . str_pad($patient->id, 5, '0', STR_PAD_LEFT);
+                $patient->ulid = Str::ulid();
                 $patient->saveQuietly(); // Save without triggering model events
 
                 // Create the associated user
                 $user = User::create([
                     'user_id' => $patient->user_id,  // Use the custom user_id
                     'username' => $patient->user_id, // Use the custom username
-                    // 'password' => Hash::make('patient'), // Default password
-                    'password' => 'patient', // Default password
+                    'password' => Hash::make('patient'), // Default password
                     'email' => $patient->email, // patient's email
                     'type' => 'PATIENT',  // Define user type
                 ]);

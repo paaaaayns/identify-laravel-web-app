@@ -37,11 +37,11 @@ class PatientController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $user_id)
+    public function show(string $ulid)
     {
-        // Fetch the user based on the user_id
-        $profile = Patient::where('user_id', $user_id)->first();
-        // dd($profile->user_id);
+        // Fetch the user based on the ulid
+        $profile = Patient::where('ulid', $ulid)->firstOrFail();
+        // dd($profile->ulid);
 
         return view('auth.users.patient.show', [
             'profile' => $profile,
@@ -67,13 +67,12 @@ class PatientController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $user_id)
     {
-        // dd($id);
-
-        $user = Patient::where('user_id', $id)->firstOrFail();
+        // dd($user_id);
+        $user = Patient::where('user_id', $user_id)->firstOrFail();
         $user->delete();
-        $creds = User::where('user_id', $id)->firstOrFail();
+        $creds = User::where('user_id', $user_id)->firstOrFail();
         $creds->delete();
         // dd($user);
 

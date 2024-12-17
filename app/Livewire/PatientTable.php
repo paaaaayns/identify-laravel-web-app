@@ -19,7 +19,7 @@ class PatientTable extends DataTableComponent
             ->setDefaultSort('created_at', 'desc')
             ->setRefreshTime(60000) // Component refreshes every 60 seconds
             ->setPerPageAccepted([10, 25, 50, 100, -1]) // Options for pagination
-            ->setAdditionalSelects(['first_name', 'middle_name', 'last_name']) // Additional columns to select
+            ->setAdditionalSelects(['*']) // Additional columns to select
             ->setTrimSearchStringEnabled() // Will trim whitespace from either end of search strings
         ;
     }
@@ -36,7 +36,6 @@ class PatientTable extends DataTableComponent
             Column::make("UID", "user_id")
                 ->sortable()
                 ->searchable(),
-
 
             Column::make("Full Name")
                 ->label(fn($row) => "{$row->last_name}, {$row->first_name} {$row->middle_name}")
@@ -60,9 +59,9 @@ class PatientTable extends DataTableComponent
                 ->label(
                     fn($row, Column $column) => view('components.livewire.datatables.action-column')->with(
                         [
-                            'viewLink' => route('users.patient.show', ['user_id' => $row->user_id]),
-                            'deleteLink' => route('users.patient.destroy', ['user_id' => $row->user_id]), // Pass dynamic delete link
-                            'user_id' => $row->user_id,
+                            'viewLink' => route('users.patient.show', ['ulid' => $row->ulid]), // Pass the ULID to the route
+                            'deleteLink' => route('users.patient.destroy', ['user_id' => $row->user_id]), // Pass the USER_ID to the route
+                            'id' => $row->id, 
                         ]
                     )
                 )->html(),
