@@ -484,7 +484,7 @@
 
             promptForDoctorSelection();
 
-            // window.location.href = "{{ route('users.doctor.show', ['user_id' => 'profileUserId']) }}";
+            
         }
     </script>
 

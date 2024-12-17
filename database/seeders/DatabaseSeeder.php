@@ -31,15 +31,6 @@ class DatabaseSeeder extends Seeder
         // Call the OpdSeeder
         $this->call(OpdSeeder::class);
 
-        // // Seed doctor records
-        // Doctor::factory(5)->create();
-        
-        // // Seed opd records
-        // Opd::factory(5)->create();
-
-        // // Seed patient records
-        // Patient::factory(5)->create();
-
         // // Seed pre-registered patient records
         PreRegisteredPatient::factory(5)->create();
 
