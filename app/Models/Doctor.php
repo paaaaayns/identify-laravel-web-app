@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\PatientQueue;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -42,7 +43,7 @@ class Doctor extends Model
                 ]);
 
                 // Send email verification notification
-                event(new Registered($user));
+                // event(new Registered($user));
             } catch (\Exception $e) {
                 // Log any issues during user creation
                 Log::error('Error creating User for doctor: ' . $e->getMessage(), [
@@ -54,5 +55,10 @@ class Doctor extends Model
                 $doctor->delete();
             }
         });
+    }
+
+    public function medicalHistory()
+    {
+        return $this->hasMany(PatientQueue::class, 'doctor_id'); // Adjust based on actual foreign key
     }
 }

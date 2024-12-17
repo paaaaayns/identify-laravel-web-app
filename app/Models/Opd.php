@@ -42,7 +42,7 @@ class Opd extends Model
                 ]);
 
                 // Send email verification notification
-                event(new Registered($user));
+                // event(new Registered($user));
             } catch (\Exception $e) {
                 // Log any issues during user creation
                 Log::error('Error creating User for opd: ' . $e->getMessage(), [
