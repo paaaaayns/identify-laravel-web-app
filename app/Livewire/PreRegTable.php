@@ -59,9 +59,9 @@ class PreRegTable extends DataTableComponent
                 ->label(
                     fn($row, Column $column) => view('components.livewire.datatables.action-column')->with(
                         [
-                            'viewLink' => route('users.pre-reg.show', ['id' => $row->id]),
-                            'deleteLink' => route('users.pre-reg.destroy', ['id' => $row->id]), // Pass dynamic delete link
-                            'id' => $row->id,
+                            'viewLink' => route('users.pre-reg.show', ['ulid' => $row->ulid]), // Pass the ULID to the route
+                            'deleteLink' => route('users.pre-reg.destroy', ['user_id' => $row->user_id]), // Pass the USER_ID to the route
+                            'id' => $row->id, 
                         ]
                     )
                 )->html(),

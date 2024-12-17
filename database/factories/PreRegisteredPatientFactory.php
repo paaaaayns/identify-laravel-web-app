@@ -21,7 +21,6 @@ class PreRegisteredPatientFactory extends Factory
         return [
             //
             // Personal Information
-            'id' => Str::ulid(),
             'first_name' => $this->faker->firstName(),
             'middle_name' => $this->faker->optional()->lastName(),
             'last_name' => $this->faker->lastName(),

@@ -55,7 +55,16 @@
             </div>
 
             <div class="grid grid-cols-1 text-center bg-white shadow rounded-lg gap-y-6 p-6 self-start">
-                <!-- Profile Picture -->
+
+                <div class="">
+                    <x-forms.primary-button
+                        class="w-full"
+                        type="button"
+                        onclick="confirmCreate()">
+                        Complete Registration
+                    </x-forms.primary-button>
+                </div>
+
                 <div class="">
                     <x-forms.primary-button
                         class="w-full"
@@ -68,7 +77,8 @@
         </div>
 
         <!-- Right Column -->
-        <div class="space-y-4 md:col-span-3">
+        <form method="POST" action="{{ route('users.patient.store') }}" id="RegistrationForm" class="space-y-4 md:col-span-3">
+            @csrf
 
             <!-- Personal Information -->
             <div class="bg-white shadow rounded-lg p-6">
@@ -87,8 +97,7 @@
                             id="last_name"
                             name="last_name"
                             :value="$profile->last_name"
-                            autocomplete="off"
-                            disabled />
+                            autocomplete="off" />
                         <x-forms.error name="last_name" />
                         @endif
                     </x-forms.field-container>
@@ -105,8 +114,7 @@
                             id="first_name"
                             name="first_name"
                             :value="$profile->first_name"
-                            autocomplete="off"
-                            disabled />
+                            autocomplete="off" />
                         <x-forms.error name="first_name" />
                         @endif
                     </x-forms.field-container>
@@ -122,9 +130,8 @@
                             type="text"
                             id="middle_name"
                             name="middle_name"
-                            :value="$profile->middle_name ?? 'N/A'"
-                            autocomplete="off"
-                            disabled />
+                            :value="$profile->middle_name ?? ''"
+                            autocomplete="off" />
                         <x-forms.error name="middle_name" />
                         @endif
                     </x-forms.field-container>
@@ -145,8 +152,7 @@
                             oninput="restrictLetterInput(this)"
                             datepicker
                             datepicker-autohide
-                            datepicker-format="yyyy-mm-dd"
-                            disabled />
+                            datepicker-format="yyyy-mm-dd" />
                         @endif
                     </x-forms.field-container>
 
@@ -159,12 +165,12 @@
                         @if (true)
                         <x-forms.select
                             id="sex"
-                            name="sex"
-                            disabled>
-                            <option disabled {{ $profile->sex === null ? 'selected' : '' }} value="">Select</option>
+                            name="sex">
+                            <option {{ $profile->sex === null ? 'selected' : '' }} value="">Select</option>
                             <option value="Male" {{ $profile->sex === 'Male' ? 'selected' : '' }}>Male</option>
                             <option value="Female" {{ $profile->sex === 'Female' ? 'selected' : '' }}>Female</option>
                         </x-forms.select>
+                        <x-forms.error name="sex" />
                         @endif
                     </x-forms.field-container>
 
@@ -180,8 +186,7 @@
                             id="religion"
                             name="religion"
                             :value="$profile->religion"
-                            autocomplete="off"
-                            disabled />
+                            autocomplete="off" />
                         <x-forms.error name="religion" />
                         @endif
                     </x-forms.field-container>
@@ -195,13 +200,13 @@
                         @if (true)
                         <x-forms.select
                             id="civil_status"
-                            name="civil_status"
-                            disabled>
-                            <option disabled {{ $profile->civil_status === null ? 'selected' : '' }} value="">Select</option>
+                            name="civil_status">
+                            <option {{ $profile->civil_status === null ? 'selected' : '' }} value="">Select</option>
                             <option value="Single" {{ $profile->civil_status === 'Single' ? 'selected' : '' }}>Single</option>
                             <option value="Married" {{ $profile->civil_status === 'Married' ? 'selected' : '' }}>Married</option>
                             <option value="Divorced" {{ $profile->civil_status === 'Divorced' ? 'selected' : '' }}>Divorced</option>
                         </x-forms.select>
+                        <x-forms.error name="civil_status" />
                         @endif
                     </x-forms.field-container>
 
@@ -217,8 +222,7 @@
                             id="citizenship"
                             name="citizenship"
                             :value="$profile->citizenship"
-                            autocomplete="off"
-                            disabled />
+                            autocomplete="off" />
                         <x-forms.error name="citizenship" />
                         @endif
                     </x-forms.field-container>
@@ -235,8 +239,7 @@
                             id="healthcard_number"
                             name="healthcard_number"
                             :value="$profile->healthcard_number ?? 'N/A'"
-                            autocomplete="off"
-                            disabled />
+                            autocomplete="off" />
                         <x-forms.error name="healthcard_number" />
                         @endif
                     </x-forms.field-container>
@@ -260,8 +263,7 @@
                             id="address"
                             name="address"
                             :value="$profile->address"
-                            autocomplete="off"
-                            disabled />
+                            autocomplete="off" />
                         <x-forms.error name="address" />
                         @endif
                     </x-forms.field-container>
@@ -278,8 +280,7 @@
                             id="email"
                             name="email"
                             :value="$profile->email"
-                            autocomplete="off"
-                            disabled />
+                            autocomplete="off" />
                         <x-forms.error name="email" />
                         @endif
                     </x-forms.field-container>
@@ -296,8 +297,7 @@
                             id="contact_number"
                             name="contact_number"
                             :value="$profile->contact_number"
-                            autocomplete="off"
-                            disabled />
+                            autocomplete="off" />
                         <x-forms.error name="contact_number" />
                         @endif
                     </x-forms.field-container>
@@ -322,8 +322,7 @@
                             id="emergency_contact1_name"
                             name="emergency_contact1_name"
                             :value="$profile->emergency_contact1_name"
-                            autocomplete="off"
-                            disabled />
+                            autocomplete="off" />
                         <x-forms.error name="emergency_contact1_name" />
                         @endif
                     </x-forms.field-container>
@@ -340,8 +339,7 @@
                             id="emergency_contact1_relationship"
                             name="emergency_contact1_relationship"
                             :value="$profile->emergency_contact1_relationship"
-                            autocomplete="off"
-                            disabled />
+                            autocomplete="off" />
                         <x-forms.error name="emergency_contact1_relationship" />
                         @endif
                     </x-forms.field-container>
@@ -358,8 +356,7 @@
                             id="emergency_contact1_number"
                             name="emergency_contact1_number"
                             :value="$profile->emergency_contact1_number"
-                            autocomplete="off"
-                            disabled />
+                            autocomplete="off" />
                         <x-forms.error name="emergency_contact1_number" />
                         @endif
                     </x-forms.field-container>
@@ -376,8 +373,7 @@
                             id="emergency_contact2_name"
                             name="emergency_contact2_name"
                             :value="$profile->emergency_contact2_name"
-                            autocomplete="off"
-                            disabled />
+                            autocomplete="off" />
                         <x-forms.error name="emergency_contact2_name" />
                         @endif
                     </x-forms.field-container>
@@ -394,8 +390,7 @@
                             id="emergency_contact2_relationship"
                             name="emergency_contact2_relationship"
                             :value="$profile->emergency_contact2_relationship"
-                            autocomplete="off"
-                            disabled />
+                            autocomplete="off" />
                         <x-forms.error name="emergency_contact2_relationship" />
                         @endif
                     </x-forms.field-container>
@@ -412,8 +407,7 @@
                             id="emergency_contact2_number"
                             name="emergency_contact2_number"
                             :value="$profile->emergency_contact2_number"
-                            autocomplete="off"
-                            disabled />
+                            autocomplete="off" />
                         <x-forms.error name="emergency_contact2_number" />
                         @endif
                     </x-forms.field-container>
@@ -458,7 +452,7 @@
 
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 
     <script>
@@ -470,6 +464,63 @@
     <script>
         function captureImage() {
             showToast('toast-success', 'Image captured successfully!');
+        }
+    </script>
+
+    <script>
+        // Confirmation dialog
+        async function confirmCreate() {
+            // Prevent the default form submission
+            event.preventDefault();
+
+            const isFormValidated = await validateForm('RegistrationForm', '/users/patient/validate-store-request');
+            if (isFormValidated) {
+                const isVerified = await promptForPassword();
+                if (isVerified) {
+                    const user = await createUser();
+                    if (user) {
+                        // redirect to the pre-reg list
+                        window.location.href = "{{ route('users.pre-reg.index') }}";
+                    }
+                }
+                return;
+            }
+        }
+
+        // Creation process
+        async function createUser() {
+            const form = document.getElementById('RegistrationForm');
+            const formData = new FormData(form);
+
+            try {
+                // Perform the POST request using Fetch API
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Accept': 'application/json',
+                    },
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    showToast('toast-success', result.message);
+                    console.log(response.status, result.message);
+                    console.log('User:', result.user);
+
+                    // Return user data
+                    return result.user;
+                } else {
+                    showToast('toast-error', 'Failed to create the account.');
+                    console.error(response.status, 'Failed to create the account.');
+                    return null;
+                }
+            } catch (error) {
+                showToast('toast-error', 'An error occurred while processing the request.');
+                console.error(response.status, error);
+                return null;
+            }
         }
     </script>
 

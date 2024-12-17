@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pre_registered_patients', function (Blueprint $table) {
-            $table->ulid('id')->primary();
+            $table->id();
+            $table->string('ulid')->nullable();
             $table->string('user_id')->unique()->nullable();
 
             $table->string('pre_registration_code')->nullable();
