@@ -44,7 +44,7 @@ class DoctorFactory extends Factory
         'birthdate' => $this->faker->date(), // Date format: YYYY-MM-DD
             'sex' => $this->faker->randomElement(['Male', 'Female']),
             'religion' => $this->faker->randomElement(['Catholic', 'Buddhist', 'Muslim', 'Christian']),
-            'civil_status' => $this->faker->randomElement(['Single', 'Married', 'Widowed', 'Divorced']),
+            'civil_status' => $this->faker->randomElement(['Single', 'Married', 'Divorced']),
             'citizenship' => $this->faker->randomElement(['Filipino', 'American', 'Greek', 'Egyptian']),
 
             // Contact Details
