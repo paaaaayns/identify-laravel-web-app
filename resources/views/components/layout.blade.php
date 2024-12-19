@@ -327,6 +327,7 @@
                               <h2 class="text-sm/6 text-gray-700">Users</h2>
                            </div>
                         </li>
+
                         <!-- Pre-Registered Patients -->
                         <li>
                            <div x-data="{ isOpen: window.location.pathname.startsWith('/users/pre-reg') }">
@@ -352,7 +353,7 @@
                                  Pre-Registered Patients
                                  <svg
                                     :class="isOpen ? 'rotate-90 text-gray-500' : 'text-gray-400'"
-                                    class="ml-auto h-5 w-5 shrink-0"
+                                    class="ml-auto h-5 w-5 shrink-0 transition-transform duration-200"
                                     viewBox="0 0 20 20"
                                     fill="currentColor"
                                     aria-hidden="true"
@@ -435,13 +436,6 @@
                                        :class="isActive ? 'bg-background-dark text-white' : 'text-gray-700 hover:bg-gray-50'"
                                        class="block rounded-md py-2 pl-9 pr-2 text-sm/6">
                                        List
-                                    </a>
-                                 </li>
-                                 <li x-data="{ isActive: window.location.pathname === '/users/patient/create' }">
-                                    <a href="{{ route('users.patient.create') }}"
-                                       :class="isActive ? 'bg-background-dark text-white' : 'text-gray-700 hover:bg-gray-50'"
-                                       class="block rounded-md py-2 pl-9 pr-2 text-sm/6">
-                                       Create
                                     </a>
                                  </li>
                               </ul>
@@ -684,13 +678,6 @@
                                        :class="isActive ? 'bg-background-dark text-white' : 'text-gray-700 hover:bg-gray-50'"
                                        class="block rounded-md py-2 pl-9 pr-2 text-sm/6">
                                        List
-                                    </a>
-                                 </li>
-                                 <li x-data="{ isActive: window.location.pathname === '/users/patient/create' }">
-                                    <a href="{{ route('users.patient.create') }}"
-                                       :class="isActive ? 'bg-background-dark text-white' : 'text-gray-700 hover:bg-gray-50'"
-                                       class="block rounded-md py-2 pl-9 pr-2 text-sm/6">
-                                       Create
                                     </a>
                                  </li>
                               </ul>
