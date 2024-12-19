@@ -34,8 +34,10 @@ class Patient extends Model
                 $patient->saveQuietly(); // Save without triggering model events
 
                 // Delete from PreregisteredPatient table
-                $pre_reg = PreRegisteredPatient::where('email', $patient->email)->firstOrFail();
-                $pre_reg->delete();
+                $pre_reg = PreRegisteredPatient::where('email', $patient->email)->first();
+                if ($pre_reg) {
+                    $pre_reg->delete();
+                }
 
                 // Create the associated user
                 $user = User::create([
@@ -56,7 +58,7 @@ class Patient extends Model
                 ]);
 
                 // Delete the patient record to maintain data consistency
-                $patient->delete();
+                // $patient->delete();
             }
         });
     }
