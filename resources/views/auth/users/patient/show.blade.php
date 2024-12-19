@@ -66,11 +66,6 @@
                         onclick="confirmSend()">
                         Send to Queue
                     </x-forms.primary-button>
-                    <x-forms.primary-button
-                        type="submit"
-                        class="w-full">
-                        Override Queue
-                    </x-forms.primary-button>
                 </form>
             </div>
         </div>
@@ -483,10 +478,8 @@
 
                 const queue = await createQueue();
                 if (queue) {
-                    // Scroll to top
-                    window.scrollTo(0, 0);
-                    // Reset form fields
-                    clearForm('RegistrationForm');
+                    // Redirect to the queue show page passing queue_id
+                    window.location.href = `/queue/${queue.ulid}`;
                 }
             }
             return;
@@ -501,10 +494,7 @@
                 // Perform the POST request using Fetch API
                 const response = await fetch(form.action, {
                     method: 'POST',
-                    body: JSON.stringify({
-                        opd_id: '{{ $user->user_id }}',
-                        patient_id: '{{ $profile->user_id }}',
-                    }),
+                    body: formData,
                     headers: {
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
                         'Accept': 'application/json',
@@ -515,7 +505,7 @@
                     const result = await response.json();
                     showToast('toast-success', result.message);
                     console.log(response.status, result.message);
-                    console.log('User:', result.queue);
+                    console.log('Queue:', result.queue);
 
                     // Return queue data
                     return result.queue;

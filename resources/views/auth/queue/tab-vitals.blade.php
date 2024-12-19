@@ -13,7 +13,7 @@
                 type="text"
                 id="height"
                 name="height"
-                :value="$profile->height"
+                :value="$queue->height"
                 autocomplete="off"
                 oninput="restrictLetterInput(this)" />
             <x-forms.error name="height" />
@@ -30,7 +30,7 @@
                 type="text"
                 id="weight"
                 name="weight"
-                :value="$profile->weight"
+                :value="$queue->weight"
                 autocomplete="off"
                 oninput="restrictLetterInput(this)" />
             <x-forms.error name="weight" />
@@ -47,7 +47,7 @@
                 type="text"
                 id="blood_pressure"
                 name="blood_pressure"
-                :value="$profile->blood_pressure"
+                :value="$queue->blood_pressure"
                 autocomplete="off"
                 oninput="restrictLetterInput(this)" />
             <x-forms.error name="blood_pressure" />
@@ -64,7 +64,7 @@
                 type="text"
                 id="temperature"
                 name="temperature"
-                :value="$profile->temperature"
+                :value="$queue->temperature"
                 autocomplete="off"
                 oninput="restrictLetterInput(this)" />
             <x-forms.error name="temperature" />
@@ -81,7 +81,7 @@
                 type="text"
                 id="pulse_rate"
                 name="pulse_rate"
-                :value="$profile->pulse_rate"
+                :value="$queue->pulse_rate"
                 autocomplete="off"
                 oninput="restrictLetterInput(this)" />
             <x-forms.error name="pulse_rate" />
@@ -98,7 +98,7 @@
                 type="text"
                 id="respiration_rate"
                 name="respiration_rate"
-                :value="$profile->respiration_rate"
+                :value="$queue->respiration_rate"
                 autocomplete="off"
                 oninput="restrictLetterInput(this)" />
             <x-forms.error name="respiration_rate" />
@@ -115,7 +115,7 @@
                 type="text"
                 id="o2_sat"
                 name="o2_sat"
-                :value="$profile->o2_sat"
+                :value="$queue->o2_sat"
                 autocomplete="off"
                 oninput="restrictLetterInput(this)" />
             <x-forms.error name="o2_sat" />
@@ -133,13 +133,13 @@
                 name="other"
                 rows="4"
                 class="form-textarea w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                autocomplete="off">{{ old('other', $profile->other) }}</textarea> -->
+                autocomplete="off">{{ old('other', $queue->other) }}</textarea> -->
             <x-forms.textarea
                 type="text"
                 id="other"
                 name="other"
                 rows="4"
-                :value="$profile->other"/>
+                :value="$queue->other"/>
             <x-forms.error name="other" />
             @endif
         </x-forms.field-container>

@@ -26,7 +26,7 @@
                         <svg class="size-5 shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
                             <path fill-rule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
                         </svg>
-                        <a href="#" class="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700" aria-current="page">{{ $profile->user_id }}</a>
+                        <a href="#" class="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700" aria-current="page">{{ $patient->user_id }}</a>
                     </div>
                 </li>
             </ol>
@@ -42,8 +42,8 @@
                     <img src="https://via.placeholder.com/150" alt="Profile Picture" class="w-full h-full rounded-full shadow">
                 </div>
                 <!-- User Info -->
-                <h2 class="text-lg font-semibold text-gray-800">{{ $profile->first_name }} {{ $profile->middle_name ?? '' }} {{ $profile->last_name }}</h2>
-                <p class="text-sm text-gray-500">{{ $profile->user_id }}</p>
+                <h2 class="text-lg font-semibold text-gray-800">{{ $patient->first_name }} {{ $patient->middle_name ?? '' }} {{ $patient->last_name }}</h2>
+                <p class="text-sm text-gray-500">{{ $patient->user_id }}</p>
             </div>
 
             <div class="grid grid-cols-1 text-center bg-white shadow rounded-lg gap-y-6 p-6 self-start">
@@ -52,7 +52,7 @@
                     <x-forms.primary-button
                         class="w-full"
                         type="button"
-                        onclick="captureImage('{{ $profile->user_id }}')">
+                        onclick="captureImage('{{ $patient->user_id }}')">
                         Capture Iris
                     </x-forms.primary-button>
                 </div>
@@ -60,7 +60,7 @@
                 <div class="">
                     <x-forms.link-button
                         class="w-full"
-                        href="{{ route('queue.create', ['user_id' => $profile->user_id]) }}">
+                        href="{{ route('queue.create', ['user_id' => $patient->user_id]) }}">
                         Send to Queue
                     </x-forms.link-button>
                 </div>

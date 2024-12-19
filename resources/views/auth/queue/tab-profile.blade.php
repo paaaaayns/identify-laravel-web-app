@@ -12,7 +12,7 @@
                 type="text"
                 id="last_name"
                 name="last_name"
-                :value="$profile->last_name"
+                :value="$patient->last_name"
                 autocomplete="off"
                 disabled />
             <x-forms.error name="last_name" />
@@ -28,7 +28,7 @@
                 type="text"
                 id="first_name"
                 name="first_name"
-                :value="$profile->first_name"
+                :value="$patient->first_name"
                 autocomplete="off"
                 disabled />
             <x-forms.error name="first_name" />
@@ -44,7 +44,7 @@
                 type="text"
                 id="middle_name"
                 name="middle_name"
-                :value="$profile->middle_name ?? 'N/A'"
+                :value="$patient->middle_name ?? 'N/A'"
                 autocomplete="off"
                 disabled />
             <x-forms.error name="middle_name" />
@@ -60,7 +60,7 @@
                 type="text"
                 id="birthdate"
                 name="birthdate"
-                :value="$profile->birthdate"
+                :value="$patient->birthdate"
                 autocomplete="off"
                 oninput="restrictLetterInput(this)"
                 datepicker
@@ -79,9 +79,9 @@
                 id="sex"
                 name="sex"
                 disabled>
-                <option disabled {{ $profile->sex === null ? 'selected' : '' }} value="">Select</option>
-                <option value="Male" {{ $profile->sex === 'Male' ? 'selected' : '' }}>Male</option>
-                <option value="Female" {{ $profile->sex === 'Female' ? 'selected' : '' }}>Female</option>
+                <option disabled {{ $patient->sex === null ? 'selected' : '' }} value="">Select</option>
+                <option value="Male" {{ $patient->sex === 'Male' ? 'selected' : '' }}>Male</option>
+                <option value="Female" {{ $patient->sex === 'Female' ? 'selected' : '' }}>Female</option>
             </x-forms.select>
             @endif
         </x-forms.field-container>
@@ -95,7 +95,7 @@
                 type="text"
                 id="religion"
                 name="religion"
-                :value="$profile->religion"
+                :value="$patient->religion"
                 autocomplete="off"
                 disabled />
             <x-forms.error name="religion" />
@@ -111,10 +111,10 @@
                 id="civil_status"
                 name="civil_status"
                 disabled>
-                <option disabled {{ $profile->civil_status === null ? 'selected' : '' }} value="">Select</option>
-                <option value="Single" {{ $profile->civil_status === 'Single' ? 'selected' : '' }}>Single</option>
-                <option value="Married" {{ $profile->civil_status === 'Married' ? 'selected' : '' }}>Married</option>
-                <option value="Divorced" {{ $profile->civil_status === 'Divorced' ? 'selected' : '' }}>Divorced</option>
+                <option disabled {{ $patient->civil_status === null ? 'selected' : '' }} value="">Select</option>
+                <option value="Single" {{ $patient->civil_status === 'Single' ? 'selected' : '' }}>Single</option>
+                <option value="Married" {{ $patient->civil_status === 'Married' ? 'selected' : '' }}>Married</option>
+                <option value="Divorced" {{ $patient->civil_status === 'Divorced' ? 'selected' : '' }}>Divorced</option>
             </x-forms.select>
             @endif
         </x-forms.field-container>
@@ -128,7 +128,7 @@
                 type="text"
                 id="citizenship"
                 name="citizenship"
-                :value="$profile->citizenship"
+                :value="$patient->citizenship"
                 autocomplete="off"
                 disabled />
             <x-forms.error name="citizenship" />
@@ -144,7 +144,7 @@
                 type="text"
                 id="healthcard_number"
                 name="healthcard_number"
-                :value="$profile->healthcard_number ?? 'N/A'"
+                :value="$patient->healthcard_number ?? 'N/A'"
                 autocomplete="off"
                 disabled />
             <x-forms.error name="healthcard_number" />
@@ -166,7 +166,7 @@
                 type="text"
                 id="address"
                 name="address"
-                :value="$profile->address"
+                :value="$patient->address"
                 autocomplete="off"
                 disabled />
             <x-forms.error name="address" />
@@ -182,7 +182,7 @@
                 type="text"
                 id="email"
                 name="email"
-                :value="$profile->email"
+                :value="$patient->email"
                 autocomplete="off"
                 disabled />
             <x-forms.error name="email" />
@@ -198,7 +198,7 @@
                 type="text"
                 id="contact_number"
                 name="contact_number"
-                :value="$profile->contact_number"
+                :value="$patient->contact_number"
                 autocomplete="off"
                 disabled />
             <x-forms.error name="contact_number" />
@@ -220,7 +220,7 @@
                 type="text"
                 id="emergency_contact1_name"
                 name="emergency_contact1_name"
-                :value="$profile->emergency_contact1_name"
+                :value="$patient->emergency_contact1_name"
                 autocomplete="off"
                 disabled />
             <x-forms.error name="emergency_contact1_name" />
@@ -236,7 +236,7 @@
                 type="text"
                 id="emergency_contact1_relationship"
                 name="emergency_contact1_relationship"
-                :value="$profile->emergency_contact1_relationship"
+                :value="$patient->emergency_contact1_relationship"
                 autocomplete="off"
                 disabled />
             <x-forms.error name="emergency_contact1_relationship" />
@@ -252,7 +252,7 @@
                 type="text"
                 id="emergency_contact1_number"
                 name="emergency_contact1_number"
-                :value="$profile->emergency_contact1_number"
+                :value="$patient->emergency_contact1_number"
                 autocomplete="off"
                 disabled />
             <x-forms.error name="emergency_contact1_number" />
@@ -268,7 +268,7 @@
                 type="text"
                 id="emergency_contact2_name"
                 name="emergency_contact2_name"
-                :value="$profile->emergency_contact2_name"
+                :value="$patient->emergency_contact2_name"
                 autocomplete="off"
                 disabled />
             <x-forms.error name="emergency_contact2_name" />
@@ -284,7 +284,7 @@
                 type="text"
                 id="emergency_contact2_relationship"
                 name="emergency_contact2_relationship"
-                :value="$profile->emergency_contact2_relationship"
+                :value="$patient->emergency_contact2_relationship"
                 autocomplete="off"
                 disabled />
             <x-forms.error name="emergency_contact2_relationship" />
@@ -300,7 +300,7 @@
                 type="text"
                 id="emergency_contact2_number"
                 name="emergency_contact2_number"
-                :value="$profile->emergency_contact2_number"
+                :value="$patient->emergency_contact2_number"
                 autocomplete="off"
                 disabled />
             <x-forms.error name="emergency_contact2_number" />
