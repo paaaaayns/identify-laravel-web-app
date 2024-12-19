@@ -6,6 +6,7 @@ use App\Models\Doctor;
 use App\Models\Patient;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class PatientQueue extends Model
@@ -14,13 +15,30 @@ class PatientQueue extends Model
     use HasFactory;
     protected $guarded = [];
 
-    // Boot method to generate queue_id before saving
-    protected static function boot()
+    // Hook into the creating and created model events
+    protected static function booted()
     {
-        parent::boot();
+        static::creating(function (PatientQueue $queue) {
+            // No user_id yet; ID will be available after creation.
+        });
 
-        static::creating(function ($model) {
-            $model->queue_id = 'Q-' . now()->format('Ymd') . '-' . Str::upper(Str::random(5));
+        static::created(function (PatientQueue $queue) {
+            try {
+                $queue->queue_id = 'Q-' . now()->format('Ymd') . '-' . Str::upper(Str::random(5));
+                $queue->ulid = Str::ulid();
+                $queue->saveQuietly(); // Save without triggering model events
+
+            } catch (\Exception $e) {
+                // Log any issues during user creation
+                Log::error('Error creating User for opd: ' . $e->getMessage(), [
+                    'queue_id' => $queue->queue_id,
+                    'opd_id' => $queue->opd_id,
+                    'patient_id' => $queue->patient_id,
+                ]);
+
+                // Delete the opd record to maintain data consistency
+                $queue->delete();
+            }
         });
     }
 
