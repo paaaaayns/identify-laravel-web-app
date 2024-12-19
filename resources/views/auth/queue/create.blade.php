@@ -89,24 +89,32 @@
                     <nav class="flex space-x-4" aria-label="Tabs">
                         <!-- Current: "bg-indigo-100 text-indigo-700", Default: "text-gray-500 hover:text-gray-700" -->
                         <a href="?tab=profile" data-target="profile" class="tab-link rounded-md bg-primary px-3 py-2 text-sm font-medium text-white" aria-current="page">Profile</a>
+                        <a href="?tab=doctor" data-target="doctor" class="tab-link rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Doctor</a>
                         <a href="?tab=vitals" data-target="vitals" class="tab-link rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Vitals</a>
-                        <a href="?tab=findings" data-target="findings" class="tab-link rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Findings</a>
                     </nav>
                 </div>
 
-                <div class="hidden sm:flex flex-row">
-                    <span class="rounded-md px-3 py-2 text-sm font-medium text-gray-500">Status</span>
-                    <x-forms.select
-                        id="sex"
-                        name="sex"
-                        aria-label="Select a status"
-                        class="!m-0">
-                        <option selected>Waiting</option>
-                        <option>Vitals Taken</option>
-                        <option>Consulting</option>
-                        <option>Completed</option>
-                        <option>Cancelled</option>
-                    </x-forms.select>
+                <div class="hidden sm:flex flex-row gap-6">
+                    <div class="flex flex-row">
+                        <span class="rounded-md px-3 py-2 text-sm font-medium text-gray-500">Status</span>
+                        <x-forms.select
+                            id="queue_status"
+                            name="queue_status"
+                            aria-label="Select a status"
+                            class="!m-0">
+                            <option selected>Waiting</option>
+                            <option>Vitals Taken</option>
+                            <option>Consulting</option>
+                            <option>Completed</option>
+                            <option>Cancelled</option>
+                        </x-forms.select>
+                    </div>
+
+                    <x-forms.primary-button
+                        type="button"
+                        onclick="confirmCreate()">
+                        Save
+                    </x-forms.primary-button>
                 </div>
             </div>
 
@@ -115,12 +123,12 @@
                 @include('auth.queue.tab-profile')
             </div>
 
+            <div id="doctor" class="tab-content hidden">
+                @include('auth.queue.tab-doctor')
+            </div>
+
             <div id="vitals" class="tab-content hidden">
                 @include('auth.queue.tab-vitals')
-            </div>
-            <div id="findings" class="tab-content hidden">
-                <!-- Findings Tab Content -->
-                <p>Findings information goes here.</p>
             </div>
         </div>
     </div>

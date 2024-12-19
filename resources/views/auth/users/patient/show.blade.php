@@ -55,30 +55,28 @@
             </div>
 
             <div class="grid grid-cols-1 text-center bg-white shadow rounded-lg gap-y-6 p-6 self-start">
-                <!-- Profile Picture -->
-                <div class="">
-                    <x-forms.primary-button
-                        class="w-full"
-                        type="button"
-                        onclick="captureImage('{{ $profile->user_id }}')">
-                        Capture Iris
-                    </x-forms.primary-button>
-                </div>
 
-                <div class="">
-                    
-                    <x-forms.link-button
+                <form method="POST" action="{{ route('queue.store') }}" id="SendQueueForm" class="grid grid-cols-1 gap-y-6">
+                    @csrf
+                    <input type="hidden" name="opd_id" value="{{ $user->user_id }}">
+                    <input type="hidden" name="patient_id" value="{{ $profile->user_id }}">
+                    <x-forms.primary-button
+                        type="button"
                         class="w-full"
-                        href="{{ route('queue.create', ['user_id' => $profile->user_id]) }}">
+                        onclick="confirmSend()">
                         Send to Queue
-                    </x-forms.link-button>
-                </div>
+                    </x-forms.primary-button>
+                    <x-forms.primary-button
+                        type="submit"
+                        class="w-full">
+                        Override Queue
+                    </x-forms.primary-button>
+                </form>
             </div>
         </div>
 
         <!-- Right Column -->
         <div class="space-y-4 md:col-span-3">
-
             <!-- Personal Information -->
             <div class="bg-white shadow rounded-lg p-6">
                 <h3 class="text-xl font-semibold text-gray-800">Personal Information</h3>
@@ -472,21 +470,65 @@
         </div>
     </div>
 
-
+    <!-- Confirmation dialog -->
     <script>
-        function captureImage(user_id) {
-            showToast('toast-success', 'Capturing image...');
+        // Confirmation dialog
+        async function confirmSend() {
+            // Prevent the default form submission
+            event.preventDefault();
+
+            const isVerified = await promptForPassword();
+            if (isVerified) {
+                console.log("Sending to queue..." + '{{ $profile->user_id }}');
+
+                const queue = await createQueue();
+                if (queue) {
+                    // Scroll to top
+                    window.scrollTo(0, 0);
+                    // Reset form fields
+                    clearForm('RegistrationForm');
+                }
+            }
+            return;
         }
 
-        function promptForDoctorSelection() {
-        }
+        // Creation process
+        async function createQueue() {
+            const form = document.getElementById('SendQueueForm');
+            const formData = new FormData(form);
 
-        function sendToQueue(profileUserId) {
-            console.log("Selecting a doctor...");
+            try {
+                // Perform the POST request using Fetch API
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        opd_id: '{{ $user->user_id }}',
+                        patient_id: '{{ $profile->user_id }}',
+                    }),
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Accept': 'application/json',
+                    },
+                });
 
-            promptForDoctorSelection();
+                if (response.ok) {
+                    const result = await response.json();
+                    showToast('toast-success', result.message);
+                    console.log(response.status, result.message);
+                    console.log('User:', result.queue);
 
-            
+                    // Return queue data
+                    return result.queue;
+                } else {
+                    showToast('toast-error', 'Failed to create queue.');
+                    console.error(response.status, 'Failed to create queue.');
+                    return null;
+                }
+            } catch (error) {
+                showToast('toast-error', 'An error occurred while processing the request.');
+                console.error(response.status, error);
+                return null;
+            }
         }
     </script>
 
