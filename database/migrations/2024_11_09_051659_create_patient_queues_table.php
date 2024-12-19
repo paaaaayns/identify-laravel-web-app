@@ -16,10 +16,11 @@ return new class extends Migration
     {
         Schema::create('patient_queues', function (Blueprint $table) {
             $table->id();
+            $table->string('ulid')->nullable();
             $table->string('queue_id')->unique()->nullable();
             $table->foreignIdFor(Patient::class);
             $table->foreignIdFor(Opd::class);
-            $table->foreignIdFor(Doctor::class);
+            $table->foreignIdFor(Doctor::class)->nullable();
             // Define queue_status as an ENUM field
             $table->enum('queue_status', [
                 'Waiting',
