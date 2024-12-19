@@ -7,7 +7,7 @@ use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\Doctor;
 use Illuminate\Database\Eloquent\Builder;
 
-class DoctorTable extends DataTableComponent
+class DoctorSelectionTable extends DataTableComponent
 {
     protected $model = Doctor::class;
 
@@ -60,8 +60,6 @@ class DoctorTable extends DataTableComponent
                 ->label(
                     fn($row, Column $column) => view('components.livewire.datatables.action-column')->with(
                         [
-                            'viewLink' => route('users.doctor.show', ['user_id' => $row->user_id]),
-                            'deleteLink' => route('users.doctor.destroy', ['user_id' => $row->user_id]), // Pass dynamic delete link
                             'user_id' => $row->user_id,
                         ]
                     )
