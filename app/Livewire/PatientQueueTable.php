@@ -18,7 +18,7 @@ class PatientQueueTable extends DataTableComponent
     public function configure(): void
     {
         $this->setPrimaryKey('id')
-            ->setDefaultSort('queued_at', 'desc')
+            ->setDefaultSort('created_at', 'desc')
             ->setRefreshTime(60000) // Component refreshes every 60 seconds
             ->setPerPageAccepted([10, 25, 50, 100, -1]) // Options for pagination
             ->setAdditionalSelects(['*']) // Additional columns to select
@@ -34,28 +34,22 @@ class PatientQueueTable extends DataTableComponent
 
     public function columns(): array
     {
+        $patientName = fn($row) => $this->getPatientName($row);
+        $doctorName = fn($row) => $this->getDoctorName($row);
         return [
-            Column::make("Queued At", "queued_at")
+            Column::make("Queued At", "created_at")
                 ->sortable()
                 ->searchable(),
 
             Column::make("Patient Name")
-                ->label(fn($row) => $this->getPatientName($row)) // Display full name
-                ->searchable(), // TODO: Fix search
+                ->label($patientName) // Display full name
+                ->sortable(fn($builder, $direction) => $builder->orderBy('last_name', $direction))
+                ->searchable(), // TODO: Implement the search functionality
 
             Column::make("Doctor Name")
-                ->label(fn($row) => $this->getDoctorName($row)) // Display full name
-                ->sortable() // TODO: Fix search
-                ->searchable(
-                    fn(Builder $query, $searchTerm) =>
-                    $query->orWhereHas(
-                        'doctor',
-                        fn($query) =>
-                        $query->where('first_name', 'like', '%' . trim($searchTerm) . '%')
-                            ->orWhere('middle_name', 'like', '%' . trim($searchTerm) . '%')
-                            ->orWhere('last_name', 'like', '%' . trim($searchTerm) . '%')
-                    )
-                ),
+                ->label($doctorName) // Display full name
+                ->sortable(fn($builder, $direction) => $builder->orderBy('last_name', $direction))
+                ->searchable(), // TODO: Implement the search functionality
 
 
             Column::make("Status", "queue_status")
@@ -93,7 +87,10 @@ class PatientQueueTable extends DataTableComponent
     public function getPatientName($row)
     {
         // Retrieve the patient using the relationships
-        $patient = $row->patient;
+        $patient = $row->patient_id;
+
+        // Find patient that matches the patient_id
+        $patient = Patient::where('user_id', $row->patient_id)->first();
 
         // Check if patient exist
         if ($patient) {
@@ -107,7 +104,10 @@ class PatientQueueTable extends DataTableComponent
     public function getDoctorName($row)
     {
         // Retrieve the doctor using the relationships
-        $doctor = $row->doctor;
+        $doctor = $row->doctor_id;
+
+        // Find doctor that matches the doctor_id using the relationships
+        $doctor = Doctor::where('user_id', $row->doctor_id)->first();
 
         // Check if doctor exist
         if ($doctor) {
