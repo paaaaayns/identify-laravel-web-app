@@ -58,25 +58,6 @@ class AppServiceProvider extends ServiceProvider
             $view->with('user', $user);
         });
 
-
-        Gate::define('view-admin-dashboard', function (User $user) {
-            return $user->role === 'admin'; // Admin can access this
-        });
-
-        Gate::define('view-opd-dashboard', function (User $user) {
-            return $user->role === 'opd'; // opd can access this
-        });
-
-        Gate::define('view-doctor-dashboard', function (User $user) {
-            return $user->role === 'doctor'; // Doctor can access this
-        });
-
-        Gate::define('view-patient-dashboard', function (User $user) {
-            return $user->role === 'patient'; // Patient can access this
-        });
-
-        Gate::define('view-patient-index', function (User $user) {
-            return in_array($user->role, ['admin', 'opd']); // Admin can access this
-        });
+        
     }
 }
