@@ -19,7 +19,6 @@ class DashboardController extends Controller
     {
         // Get the authenticated user
         $user = Auth::user();
-        dd($user);
 
         // Check user role and return the appropriate view
         switch ($user->role) {
