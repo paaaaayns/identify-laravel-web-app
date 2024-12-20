@@ -32,10 +32,10 @@ class DatabaseSeeder extends Seeder
         $this->call(OpdSeeder::class);
 
         // // Seed pre-registered patient records
-        PreRegisteredPatient::factory(5)->create();
+        // PreRegisteredPatient::factory(5)->create();
 
         // // Seed patient queue records
-        PatientQueue::factory(5)->create();
+        // PatientQueue::factory(5)->create();
 
         // Seed user records
         // php artisan migrate:rollback && php artisan migrate:fresh --seed
