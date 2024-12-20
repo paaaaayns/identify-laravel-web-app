@@ -22,7 +22,7 @@ class DashboardController extends Controller
         dd($user);
 
         // Check user role and return the appropriate view
-        switch ($user->type) {
+        switch ($user->role) {
             case 'admin':
                 $preRegPatientsCount = PreRegisteredPatient::count();
                 $recentPreRegPatientsCount = PreRegisteredPatient::where('created_at', '>=', Carbon::now()->subHours(3))->count();
