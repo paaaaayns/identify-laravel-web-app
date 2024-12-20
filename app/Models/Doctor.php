@@ -39,7 +39,7 @@ class Doctor extends Model
                     'username' => $doctor->user_id, // Use the custom username
                     'password' => Hash::make('doctor'), // Default password
                     'email' => $doctor->email, // doctor's email
-                    'type' => 'DOCTOR',  // Define user type
+                    'role' => 'doctor',  // Define user type
                 ]);
 
                 // Send email verification notification

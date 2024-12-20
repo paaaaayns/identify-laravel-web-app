@@ -35,7 +35,7 @@ class Admin extends Model
                     'username' => $admin->user_id, // Use the custom username
                     'password' => Hash::make('admin'), // Default password
                     'email' => $admin->email, // admin's email
-                    'type' => 'ADMIN',  // Define user type
+                    'role' => 'admin',  // Define user type
                 ]);
 
                 // Send email verification notification

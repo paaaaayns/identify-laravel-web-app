@@ -45,7 +45,7 @@ class Patient extends Model
                     'username' => $patient->user_id, // Use the custom username
                     'password' => Hash::make('patient'), // Default password
                     'email' => $patient->email, // patient's email
-                    'type' => 'PATIENT',  // Define user type
+                    'role' => 'patient',  // Define user type
                 ]);
 
                 // Send email verification notification

@@ -37,21 +37,21 @@ class AppServiceProvider extends ServiceProvider
             $user = null;
 
             if (Auth::check()) {
-                $type = Auth::user()->type;
+                $role = Auth::user()->role;
                 $user_id = Auth::user()->user_id;
 
-                if ($type === 'ADMIN') {
+                if ($role === 'ADMIN') {
                     $user = Admin::where('user_id', $user_id)->firstOrFail();
-                    $user->account_type = 'ADMIN';
-                } elseif ($type === 'OPD') {
+                    $user->role = 'ADMIN';
+                } elseif ($role === 'OPD') {
                     $user = Opd::where('user_id', $user_id)->firstOrFail();
-                    $user->account_type = 'OPD';
-                } elseif ($type === 'DOCTOR') {
+                    $user->role = 'OPD';
+                } elseif ($role === 'DOCTOR') {
                     $user = Doctor::where('user_id', $user_id)->firstOrFail();
-                    $user->account_type = 'DOCTOR';
-                } elseif ($type === 'PATIENT') {
+                    $user->role = 'DOCTOR';
+                } elseif ($role === 'PATIENT') {
                     $user = Patient::where('user_id', $user_id)->firstOrFail();
-                    $user->account_type = 'PATIENT';
+                    $user->role = 'PATIENT';
                 }
             }
 
@@ -60,23 +60,23 @@ class AppServiceProvider extends ServiceProvider
 
 
         Gate::define('view-admin-dashboard', function (User $user) {
-            return $user->account_type === 'admin'; // Admin can access this
+            return $user->role === 'admin'; // Admin can access this
         });
 
         Gate::define('view-opd-dashboard', function (User $user) {
-            return $user->account_type === 'opd'; // OPD can access this
+            return $user->role === 'opd'; // OPD can access this
         });
 
         Gate::define('view-doctor-dashboard', function (User $user) {
-            return $user->account_type === 'doctor'; // Doctor can access this
+            return $user->role === 'doctor'; // Doctor can access this
         });
 
         Gate::define('view-patient-dashboard', function (User $user) {
-            return $user->account_type === 'patient'; // Patient can access this
+            return $user->role === 'patient'; // Patient can access this
         });
 
         Gate::define('view-patient-index', function (User $user) {
-            return in_array($user->account_type, ['ADMIN', 'OPD']); // Admin can access this
+            return in_array($user->role, ['ADMIN', 'OPD']); // Admin can access this
         });
     }
 }

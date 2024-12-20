@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('username'); // uid
             $table->string('password');
             $table->string('email')->unique();
-            $table->string('type')->default('user');
+            $table->string('role');
             $table->string('otp_code')->nullable();
             $table->boolean('is_otp_verified')->nullable()->default(false);
             $table->rememberToken()->nullable();

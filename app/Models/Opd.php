@@ -38,7 +38,7 @@ class Opd extends Model
                     'username' => $opd->user_id, // Use the custom username
                     'password' => Hash::make('opd'), // Default password
                     'email' => $opd->email, // opd's email
-                    'type' => 'OPD',  // Define user type
+                    'role' => 'opd',  // Define user type
                 ]);
 
                 // Send email verification notification
