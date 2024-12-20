@@ -19,10 +19,11 @@ class DashboardController extends Controller
     {
         // Get the authenticated user
         $user = Auth::user();
+        dd($user);
 
         // Check user role and return the appropriate view
         switch ($user->type) {
-            case 'ADMIN':
+            case 'admin':
                 $preRegPatientsCount = PreRegisteredPatient::count();
                 $recentPreRegPatientsCount = PreRegisteredPatient::where('created_at', '>=', Carbon::now()->subHours(3))->count();
 
@@ -49,7 +50,7 @@ class DashboardController extends Controller
                     'recentDoctorsCount' => $recentDoctorsCount,
                 ]);
 
-            case 'OPD':
+            case 'opd':
                 $preRegPatientsCount = PreRegisteredPatient::count();
                 $recentPreRegPatientsCount = PreRegisteredPatient::query()
                     ->where('created_at', '>=', Carbon::now()->subHours(3))
@@ -67,9 +68,9 @@ class DashboardController extends Controller
                     'queuedPatientsCount' => $queuedPatientsCount,
                     'recentQueuedPatientsCount' => $recentQueuedPatientsCount,
                 ]);
-            case 'DOCTOR':
+            case 'doctor':
                 return view('auth.dashboard.doctor');
-            case 'PATIENT':
+            case 'patient':
                 return view('auth.dashboard.patient');
                 // Add more roles if necessary
             default:

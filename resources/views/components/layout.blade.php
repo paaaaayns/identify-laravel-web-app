@@ -321,7 +321,7 @@
                         </li>
 
 
-                        @if ($user->role === 'ADMIN')
+                        @if ($user->role === 'admin')
                         <li>
                            <div class="flex w-full items-center gap-x-3 rounded-md px-2 pt-2 text-left text-sm/6">
                               <h2 class="text-sm/6 text-gray-700">Users</h2>
@@ -561,7 +561,7 @@
                         </li>
                         @endif
 
-                        @if ($user->role === 'OPD')
+                        @if ($user->role === 'opd')
                         <li>
                            <div class="flex w-full items-center gap-x-3 rounded-md px-2 pt-2 text-left text-sm/6">
                               <h2 class="text-sm/6 text-gray-700">Users</h2>

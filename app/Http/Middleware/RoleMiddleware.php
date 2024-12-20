@@ -19,8 +19,8 @@ class RoleMiddleware
     {
         // Check if the user is authenticated
         if (Auth::check()) {
-            // Check if the user's type matches the required role
-            if (Auth::user()->type === $role) {
+            // Check if the user's role matches the required role
+            if (Auth::user()->role === $role) {
                 return $next($request); // Allow access
             }
         }

@@ -40,18 +40,18 @@ class AppServiceProvider extends ServiceProvider
                 $role = Auth::user()->role;
                 $user_id = Auth::user()->user_id;
 
-                if ($role === 'ADMIN') {
+                if ($role === 'admin') {
                     $user = Admin::where('user_id', $user_id)->firstOrFail();
-                    $user->role = 'ADMIN';
-                } elseif ($role === 'OPD') {
+                    $user->role = 'admin';
+                } elseif ($role === 'opd') {
                     $user = Opd::where('user_id', $user_id)->firstOrFail();
-                    $user->role = 'OPD';
-                } elseif ($role === 'DOCTOR') {
+                    $user->role = 'opd';
+                } elseif ($role === 'doctor') {
                     $user = Doctor::where('user_id', $user_id)->firstOrFail();
-                    $user->role = 'DOCTOR';
-                } elseif ($role === 'PATIENT') {
+                    $user->role = 'doctor';
+                } elseif ($role === 'patient') {
                     $user = Patient::where('user_id', $user_id)->firstOrFail();
-                    $user->role = 'PATIENT';
+                    $user->role = 'patient';
                 }
             }
 
@@ -64,7 +64,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Gate::define('view-opd-dashboard', function (User $user) {
-            return $user->role === 'opd'; // OPD can access this
+            return $user->role === 'opd'; // opd can access this
         });
 
         Gate::define('view-doctor-dashboard', function (User $user) {
@@ -76,7 +76,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Gate::define('view-patient-index', function (User $user) {
-            return in_array($user->role, ['ADMIN', 'OPD']); // Admin can access this
+            return in_array($user->role, ['admin', 'opd']); // Admin can access this
         });
     }
 }

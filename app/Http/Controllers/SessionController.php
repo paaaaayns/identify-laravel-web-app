@@ -52,7 +52,7 @@ class SessionController extends Controller
         
          // get the authenticated user
         $user = Auth::user();
-        // dd($user->type);
+        // dd($user->role);
 
         return redirect('/dashboard');
     }

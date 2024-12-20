@@ -5,7 +5,7 @@
         View
     </a>
 
-    @if ($user->role === 'ADMIN')
+    @if ($user->role === 'admin')
     <form
         method="POST"
         action="{{ $deleteLink ?? '#' }}"
