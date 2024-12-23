@@ -56,6 +56,17 @@
 
             <div class="grid grid-cols-1 text-center bg-white shadow rounded-lg gap-y-6 p-6 self-start">
 
+                @role(['admin'])
+                <div class="">
+                    <x-forms.primary-button
+                        type="submit"
+                        form="RegistrationForm"
+                        class="w-full">
+                        Override Registration
+                    </x-forms.primary-button>
+                </div>
+                @endrole
+
                 <div class="">
                     <x-forms.primary-button
                         class="w-full"
@@ -79,6 +90,8 @@
         <!-- Right Column -->
         <form method="POST" action="{{ route('users.patient.store') }}" id="RegistrationForm" class="space-y-4 md:col-span-3">
             @csrf
+            <input type="hidden" name="ulid" value="{{ $profile->ulid }}">
+            <input type="hidden" name="pre_registration_code" value="{{ $profile->pre_registration_code }}">
 
             <!-- Personal Information -->
             <div class="bg-white shadow rounded-lg p-6">
@@ -479,8 +492,8 @@
                 if (isVerified) {
                     const user = await createUser();
                     if (user) {
-                        // redirect to the pre-reg list
-                        window.location.href = "{{ route('users.pre-reg.index') }}";
+                        // redirect to the users.patient.show with ulid
+                        window.location.href = `/users/patient/${user.ulid}`;
                     }
                 }
                 return;
