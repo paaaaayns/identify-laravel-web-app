@@ -41,6 +41,8 @@ class Opd extends Model
                     'role' => 'opd',  // Define user type
                 ]);
 
+                $user->assignRole('opd');
+
                 // Send email verification notification
                 // event(new Registered($user));
             } catch (\Exception $e) {
@@ -52,6 +54,7 @@ class Opd extends Model
 
                 // Delete the opd record to maintain data consistency
                 $opd->delete();
+                $user->delete();
             }
         });
     }

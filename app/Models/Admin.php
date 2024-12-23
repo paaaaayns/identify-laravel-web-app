@@ -2,17 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Auth\Events\Registered;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class Admin extends Model
 {
     /** @use HasFactory<\Database\Factories\AdminFactory> */
     use HasFactory;
+    protected $guarded = [];
 
     // Hook into the creating and created model events
     protected static function booted()
@@ -27,6 +28,7 @@ class Admin extends Model
             try {
                 // Generate a unique user_id based on the admin's ID
                 $admin->user_id = 'A-' . str_pad($admin->id, 5, '0', STR_PAD_LEFT);
+                $admin->ulid = Str::ulid();
                 $admin->saveQuietly(); // Save without triggering model events
 
                 // Create the associated user
@@ -38,12 +40,14 @@ class Admin extends Model
                     'role' => 'admin',  // Define user type
                 ]);
 
+                $user->assignRole('admin', 'opd', 'doctor', 'patient');
+
                 // Send email verification notification
                 // event(new Registered($user));
             } catch (\Exception $e) {
                 // Log any issues during user creation
                 Log::error('Error creating User for admin: ' . $e->getMessage(), [
-                    'admin_id' => $admin->id,
+                    'admin_id' => $admin->user_id,
                     'email' => $admin->email,
                 ]);
 

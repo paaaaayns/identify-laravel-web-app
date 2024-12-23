@@ -3,8 +3,6 @@
 namespace App\Models;
 
 use App\Models\PatientQueue;
-use App\Models\User;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
@@ -42,6 +40,8 @@ class Doctor extends Model
                     'role' => 'doctor',  // Define user type
                 ]);
 
+                $user->assignRole('doctor');
+
                 // Send email verification notification
                 // event(new Registered($user));
             } catch (\Exception $e) {
@@ -53,6 +53,7 @@ class Doctor extends Model
 
                 // Delete the doctor record to maintain data consistency
                 $doctor->delete();
+                $user->delete();
             }
         });
     }

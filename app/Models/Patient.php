@@ -48,6 +48,8 @@ class Patient extends Model
                     'role' => 'patient',  // Define user type
                 ]);
 
+                $user->assignRole('patient');
+
                 // Send email verification notification
                 // event(new Registered($user));
             } catch (\Exception $e) {
@@ -58,7 +60,8 @@ class Patient extends Model
                 ]);
 
                 // Delete the patient record to maintain data consistency
-                // $patient->delete();
+                $patient->delete();
+                $user->delete();
             }
         });
     }

@@ -21,15 +21,15 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(20)->create();
         
-        
+        // Call the RoleSeeder
+        $this->call(RoleSeeder::class);
         // Call the AdminSeeder
         $this->call(AdminSeeder::class);
-
+        // Call the OpdSeeder
+        $this->call(OpdSeeder::class);
         // Call the DoctorSeeder
         $this->call(DoctorSeeder::class);
 
-        // Call the OpdSeeder
-        $this->call(OpdSeeder::class);
 
         // // Seed pre-registered patient records
         // PreRegisteredPatient::factory(5)->create();
