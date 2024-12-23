@@ -40,7 +40,7 @@ class Admin extends Model
                     'role' => 'admin',  // Define user type
                 ]);
 
-                $user->assignRole('admin', 'opd', 'doctor', 'patient');
+                $user->assignRole('admin');
 
                 // Send email verification notification
                 // event(new Registered($user));
