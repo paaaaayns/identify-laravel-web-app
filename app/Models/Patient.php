@@ -30,7 +30,6 @@ class Patient extends Model
             try {
                 // Generate a unique user_id based on the patient's ID
                 $patient->user_id = 'P-' . str_pad($patient->id, 5, '0', STR_PAD_LEFT);
-                $patient->ulid = Str::ulid();
                 $patient->saveQuietly(); // Save without triggering model events
 
                 // Delete from PreregisteredPatient table

@@ -97,11 +97,12 @@ class PatientController extends Controller
     public function store(Request $request)
     {
         // Validate the request and get validated data
-        $response = $this->validateStoreRequest($request)->getData(true); // Use 'true' to get an associative array
-        $data = $response['data']; // Access the 'data' key from the array
+        // $response = $this->validateStoreRequest($request)->getData(true); // Use 'true' to get an associative array
+        // $data = $response['data']; // Access the 'data' key from the array
 
         $user = new Patient();
-        $user->fill($data);
+        $user->fill($request->all());
+        // $user->ulid = $request->ulid;
 
         // add the pre_registration_code to the user
         $user->registered_at = now();
