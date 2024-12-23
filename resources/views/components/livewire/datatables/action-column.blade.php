@@ -5,7 +5,7 @@
         View
     </a>
 
-    @if ($user->role === 'admin')
+    @role(['admin'])
     <form
         method="POST"
         action="{{ $deleteLink ?? '#' }}"
@@ -21,17 +21,7 @@
             Delete
         </button>
     </form>
-    @endif
-
-    <!-- if uri starts with queue -->
-    @if (Request::is('users*'))
-    <button
-        type="button"
-        class="btn btn-link text-primary"
-        onclick="selectDoctor()">
-        Select
-    </button>
-    @endif
+    @endrole
 
 </div>
 
