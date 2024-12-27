@@ -42,6 +42,11 @@ class PatientQueue extends Model
         });
     }
 
+    public function opd()
+    {
+        return $this->belongsTo(Opd::class, 'opd_id'); // Adjust based on actual foreign key
+    }
+
     public function patient()
     {
         return $this->belongsTo(Patient::class, 'patient_id'); // Adjust based on actual foreign key
