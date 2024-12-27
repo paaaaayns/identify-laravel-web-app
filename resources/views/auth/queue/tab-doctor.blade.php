@@ -3,6 +3,6 @@
     <h3 class="text-xl font-semibold text-gray-800">Doctor Selection</h3>
 
     <div class="mt-6">
-        <livewire:doctor-selection-table />
+        <livewire:doctor-selection-table :queue="$queue" />
     </div>
 </div>
