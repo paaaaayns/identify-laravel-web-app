@@ -45,26 +45,6 @@
                 <h2 class="text-lg font-semibold text-gray-800">{{ $patient->first_name }} {{ $patient->middle_name ?? '' }} {{ $patient->last_name }}</h2>
                 <p class="text-sm text-gray-500">{{ $patient->user_id }}</p>
             </div>
-
-            <div class="grid grid-cols-1 text-center bg-white shadow rounded-lg gap-y-6 p-6 self-start">
-                <!-- Profile Picture -->
-                <div class="">
-                    <x-forms.primary-button
-                        class="w-full"
-                        type="button"
-                        onclick="captureImage('{{ $patient->user_id }}')">
-                        Capture Iris
-                    </x-forms.primary-button>
-                </div>
-
-                <div class="">
-                    <x-forms.link-button
-                        class="w-full"
-                        href="{{ route('queue.create', ['user_id' => $patient->user_id]) }}">
-                        Send to Queue
-                    </x-forms.link-button>
-                </div>
-            </div>
         </div>
 
         <!-- Right Column -->
