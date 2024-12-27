@@ -11,6 +11,13 @@ class DoctorSelectionTable extends DataTableComponent
 {
     protected $model = Doctor::class;
 
+    public $queue;
+
+    public function mount($queue)
+    {
+        $this->queue = $queue; // Assign the queue
+    }
+
     protected $listeners = ['refreshTable' => '$refresh'];  // Listen for the event and refresh the table
 
     public function configure(): void
@@ -58,11 +65,13 @@ class DoctorSelectionTable extends DataTableComponent
 
             Column::make('Action')
                 ->label(
-                    fn($row, Column $column) => view('components.livewire.datatables.action-column')->with(
+                    fn($row, Column $column) => view('components.livewire.datatables.doctor-selection-column')->with(
                         [
-                            'user_id' => $row->user_id,
+                            'id' => $row->id,
+                            'doctor_id' => $row->user_id,
+                            'queue' => $this->queue,
                         ]
-                    )
+                    )->render()
                 )->html(),
 
 
