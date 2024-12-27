@@ -17,13 +17,6 @@ class PatientQueueController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create(string $user_id)
-    {
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -32,7 +25,7 @@ class PatientQueueController extends Controller
         // dd($request->all());
         $opd_id = $request->input('opd_id');
         $patient_id = $request->input('patient_id');
-        
+
         $queue = new PatientQueue();
         $queue->opd_id = $opd_id;
         $queue->patient_id = $patient_id;
@@ -63,19 +56,33 @@ class PatientQueueController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $ulid)
     {
-        //
+        // Debugging to check received data
+        // dd($request->all(), $ulid);
+
+        // Validate the incoming request data (optional, but recommended)
+        $validatedData = $request->validate([
+            // Define validation rules for all possible fields
+            'doctor_id' => 'nullable|exists:doctors,user_id',
+            'vitals' => 'nullable|string',
+            'other_field' => 'nullable|some_rule', // Add other fields as necessary
+        ]);
+        // dd($validatedData);
+
+        // Fetch the queue based on the ulid
+        $queue = PatientQueue::where('ulid', $ulid)->first();
+
+        // Update only the fields present in the request
+        $queue->update($validatedData);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Queue updated successfully.',
+            'queue' => $queue,
+        ], 200);
     }
 
     /**
