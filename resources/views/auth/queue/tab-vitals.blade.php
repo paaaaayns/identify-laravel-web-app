@@ -7,13 +7,14 @@
         class="w-full">
         @csrf
         @method('PUT')
+
+        <input type="hidden" name="queue_status" value="Vitals Taken">
+        
         <div class="bg-white rounded-lg shadow">
             <div class="p-6">
 
                 <h3 class="text-xl font-semibold text-gray-800">Vitals Information</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-12 gap-x-6 gap-y-6 mt-6">
-
-                    <input type="hidden" name="queue_status" value="Vitals Taken">
 
                     <x-forms.field-container class="sm:col-span-3">
                         <x-forms.label
@@ -149,7 +150,7 @@
                     <button
                         id="fill"
                         type="button"
-                        onclick="fillFields()"
+                        onclick="fillVitalsFields()"
                         class="rounded-md px-3 py-2 text-sm font-semibold text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
                         Test
                     </button>
@@ -208,7 +209,7 @@
 
 <!-- Test -->
 <script>
-    function fillFields() {
+    function fillVitalsFields() {
         // Predefined values for testing
         const testData = {
             height: "175",
