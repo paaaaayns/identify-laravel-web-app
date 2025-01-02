@@ -18,9 +18,13 @@ return new class extends Migration
             $table->id();
             $table->string('ulid')->nullable();
             $table->string('queue_id')->unique()->nullable();
-            $table->foreignIdFor(Patient::class);
-            $table->foreignIdFor(Opd::class);
-            $table->foreignIdFor(Doctor::class)->nullable();
+
+            $table->string('patient_id')->nullable();  // Foreign key for the patient (user_id)
+            $table->string('doctor_id')->nullable();   // Foreign key for the doctor (user_id)
+            $table->string('opd_id')->nullable();      // Foreign key for the opd (user_id)
+            $table->foreign('patient_id')->references('user_id')->on('patients');
+            $table->foreign('doctor_id')->references('user_id')->on('doctors');
+            $table->foreign('opd_id')->references('user_id')->on('opds');
             // Define queue_status as an ENUM field
             $table->enum('queue_status', [
                 'Waiting',
