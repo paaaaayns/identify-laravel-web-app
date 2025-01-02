@@ -34,23 +34,24 @@ return new class extends Migration
                 'Cancelled'
             ])->default('Waiting');
 
+            $table->string('height')->nullable();
+            $table->string('weight')->nullable();
             $table->string('blood_pressure')->nullable();
             $table->string('temperature')->nullable();
             $table->string('pulse_rate')->nullable();
             $table->string('respiration_rate')->nullable();
-            $table->string('height')->nullable();
-            $table->string('weight')->nullable();
             $table->string('o2_sat')->nullable();
             $table->text('other')->nullable();
 
-            $table->string('mr1')->nullable();
-            $table->string('mr2')->nullable();
-            $table->string('mr3')->nullable();
-            $table->string('mr4')->nullable();
-            $table->string('mr5')->nullable();
-            $table->string('mr6')->nullable();
-            $table->string('mr7')->nullable();
-            $table->string('mr8')->nullable();
+            $table->string('primary_complaint')->nullable();
+            $table->string('duration_of_symptoms')->nullable();
+            $table->string('intensity_and_frequency')->nullable();
+            $table->string('findings')->nullable();
+            $table->string('diagnosis')->nullable();
+            $table->string('recommended_treatment')->nullable();
+            $table->string('follow_up_instructions')->nullable();
+            $table->string('referrals')->nullable();
+            $table->string('doctor_notes')->nullable();
 
             $table->timestamp('queued_at')->nullable();
             $table->timestamps();
