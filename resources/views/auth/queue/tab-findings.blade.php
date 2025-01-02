@@ -1,8 +1,8 @@
-<!-- Vitals Information -->
+<!-- Findings -->
 <div class="w-full flex flex-col items-center">
     <form
         method="POST"
-        id="VitalsForm"
+        id="FindingsForm"
         action="{{ route('queue.update', ['ulid' => $queue->ulid]) }}"
         class="w-full">
         @csrf
@@ -13,8 +13,6 @@
                 <h3 class="text-xl font-semibold text-gray-800">Vitals Information</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-12 gap-x-6 gap-y-6 mt-6">
 
-                    <input type="hidden" name="queue_status" value="Vitals Taken">
-                    
                     <x-forms.field-container class="sm:col-span-3">
                         <x-forms.label
                             for="height">
@@ -156,7 +154,7 @@
 
                     <x-forms.primary-button
                         type="button"
-                        onclick="updateVitals()">
+                        onclick="updateQueue()">
                         Save
                     </x-forms.primary-button>
 
@@ -181,7 +179,7 @@
 </script>
 
 <script>
-    async function updateVitals() {
+    async function updateQueue() {
         const form = document.getElementById('VitalsForm');
         const formData = new FormData(form);
         const formAction = form.action;
