@@ -14,7 +14,7 @@
                 <div class="grid grid-cols-1 sm:grid-cols-12 gap-x-6 gap-y-6 mt-6">
 
                     <input type="hidden" name="queue_status" value="Vitals Taken">
-                    
+
                     <x-forms.field-container class="sm:col-span-3">
                         <x-forms.label
                             for="height">
@@ -27,7 +27,7 @@
                             :value="$queue->height"
                             autocomplete="off"
                             oninput="restrictLetterInput(this)"
-                            :disabled="$queue->pulse_rate ? true : false" />
+                            :disabled="$queue->height ? true : false" />
                         <x-forms.error name="height" />
                     </x-forms.field-container>
 
@@ -43,7 +43,7 @@
                             :value="$queue->weight"
                             autocomplete="off"
                             oninput="restrictLetterInput(this)"
-                            :disabled="$queue->pulse_rate ? true : false" />
+                            :disabled="$queue->weight ? true : false" />
                         <x-forms.error name="weight" />
                     </x-forms.field-container>
 
@@ -59,7 +59,7 @@
                             :value="$queue->blood_pressure"
                             autocomplete="off"
                             oninput="restrictLetterInput(this)"
-                            :disabled="$queue->pulse_rate ? true : false" />
+                            :disabled="$queue->blood_pressure ? true : false" />
                         <x-forms.error name="blood_pressure" />
                     </x-forms.field-container>
 
@@ -75,7 +75,7 @@
                             :value="$queue->temperature"
                             autocomplete="off"
                             oninput="restrictLetterInput(this)"
-                            :disabled="$queue->pulse_rate ? true : false" />
+                            :disabled="$queue->temperature ? true : false" />
                         <x-forms.error name="temperature" />
                     </x-forms.field-container>
 
@@ -107,7 +107,7 @@
                             :value="$queue->respiration_rate"
                             autocomplete="off"
                             oninput="restrictLetterInput(this)"
-                            :disabled="$queue->pulse_rate ? true : false" />
+                            :disabled="$queue->respiration_rate ? true : false" />
                         <x-forms.error name="respiration_rate" />
                     </x-forms.field-container>
 
@@ -123,7 +123,7 @@
                             :value="$queue->o2_sat"
                             autocomplete="off"
                             oninput="restrictLetterInput(this)"
-                            :disabled="$queue->pulse_rate ? true : false" />
+                            :disabled="$queue->o2_sat ? true : false" />
                         <x-forms.error name="o2_sat" />
                     </x-forms.field-container>
 
@@ -137,8 +137,8 @@
                             id="other"
                             name="other"
                             rows="4"
-                            :value="$queue->other" 
-                            :disabled="$queue->pulse_rate ? true : false" />
+                            :value="$queue->other"
+                            :disabled="$queue->other ? true : false" />
                         <x-forms.error name="other" />
                     </x-forms.field-container>
                 </div>
@@ -159,13 +159,6 @@
                         onclick="updateVitals()">
                         Save
                     </x-forms.primary-button>
-
-                    @if (true)
-                    <x-forms.primary-button
-                        type="submit">
-                        Override
-                    </x-forms.primary-button>
-                    @endif
                 </div>
             </div>
         </div>
@@ -200,6 +193,7 @@
                 const result = await response.json();
                 showToast('toast-success', result.message);
                 console.log(response.status, result.message, result.queue);
+                location.reload();
             } else {
                 showToast('toast-error', 'Failed to update queue.');
                 console.error(response.status, 'Failed to update queue.');
