@@ -11,4 +11,5 @@
         disabled:text-gray-900 disabled:opacity-100
         disabled:select-text'
 ]) }}>
+{{ $value ?? '' }}
 </textarea>
