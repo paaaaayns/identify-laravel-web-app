@@ -45,6 +45,26 @@
                 <h2 class="text-lg font-semibold text-gray-800">{{ $patient->first_name }} {{ $patient->middle_name ?? '' }} {{ $patient->last_name }}</h2>
                 <p class="text-sm text-gray-500">{{ $patient->user_id }}</p>
             </div>
+
+            <div class="grid grid-cols-1 text-center bg-white shadow rounded-lg gap-y-6 p-6 self-start">
+                <!-- Profile Picture -->
+                <div class="">
+                    OPD: {{ $opd->first_name ?? '' }} {{ $opd->middle_name ?? '' }} {{ $opd->last_name ?? '' }}
+                </div>
+
+
+                <div class="">
+                    Doctor: {{ $doctor->first_name ?? '' }} {{ $doctor->middle_name ?? '' }} {{ $doctor->last_name ?? '' }}
+                </div>
+
+                <div class="">
+                    <x-forms.link-button
+                        class="w-full"
+                        href="{{ route('queue.create', ['user_id' => $patient->user_id]) }}">
+                        Send to Queue
+                    </x-forms.link-button>
+                </div>
+            </div>
         </div>
 
         <!-- Right Column -->
@@ -71,30 +91,28 @@
                         <a href="?tab=profile" data-target="profile" class="tab-link rounded-md bg-primary px-3 py-2 text-sm font-medium text-white" aria-current="page">Profile</a>
                         <a href="?tab=doctor" data-target="doctor" class="tab-link rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Doctor</a>
                         <a href="?tab=vitals" data-target="vitals" class="tab-link rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Vitals</a>
+                        <a href="?tab=assessment" data-target="assessment" class="tab-link rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Assessment</a>
                     </nav>
                 </div>
 
                 <div class="hidden sm:flex flex-row gap-6">
                     <div class="flex flex-row">
                         <span class="rounded-md px-3 py-2 text-sm font-medium text-gray-500">Status</span>
-                        <x-forms.select
-                            id="queue_status"
-                            name="queue_status"
-                            aria-label="Select a status"
-                            class="!m-0">
-                            <option selected>Waiting</option>
-                            <option>Vitals Taken</option>
-                            <option>Consulting</option>
-                            <option>Completed</option>
-                            <option>Cancelled</option>
-                        </x-forms.select>
-                    </div>
 
-                    <x-forms.primary-button
-                        type="button"
-                        onclick="confirmCreate()">
-                        Save
-                    </x-forms.primary-button>
+                        @php
+                        $statusClass = match ($queue->queue_status) {
+                        'Waiting' => 'bg-yellow-500 text-white',
+                        'Vitals Taken' => 'bg-blue-500 text-white',
+                        'Consulting' => 'bg-orange-500 text-white',
+                        'Completed' => 'bg-green-500 text-white',
+                        'Cancelled' => 'bg-red-500 text-white',
+                        default => 'text-gray-500',
+                        };
+                        @endphp
+                        <span class="rounded-md px-3 py-2 text-sm font-medium {{ $statusClass }}">
+                            {{ $queue->queue_status }}
+                        </span>
+                    </div>
                 </div>
             </div>
 
@@ -103,12 +121,19 @@
                 @include('auth.queue.tab-profile')
             </div>
 
+            <!-- Doctor Selection Tab -->
             <div id="doctor" class="tab-content hidden">
                 @include('auth.queue.tab-doctor')
             </div>
 
+            <!-- Vitals Tab -->
             <div id="vitals" class="tab-content hidden">
                 @include('auth.queue.tab-vitals')
+            </div>
+
+            <!-- Assessment Tab -->
+            <div id="assessment" class="tab-content hidden">
+                @include('auth.queue.tab-assessment')
             </div>
         </div>
     </div>

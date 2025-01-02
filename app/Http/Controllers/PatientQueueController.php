@@ -32,7 +32,7 @@ class PatientQueueController extends Controller
         $queue = new PatientQueue();
         $queue->fill($validatedData);
         // dd($queue);
-        
+
         $queue->save();
 
         return response()->json([
@@ -50,7 +50,7 @@ class PatientQueueController extends Controller
         // Fetch the queue based on the ulid
         $queue = PatientQueue::with(['patient', 'opd', 'doctor'])->where('ulid', $ulid)->first();
         // dd($queue);
-        
+
         $patient = $queue->patient;
         $opd = $queue->opd;
         $doctor = $queue->doctor;
@@ -74,7 +74,7 @@ class PatientQueueController extends Controller
         // Validate the incoming request data (optional, but recommended)
         $validatedData = $request->validate([
             'queue_status' => 'nullable|string',
-            
+
             // Doctor Selection
             'doctor_id' => 'nullable|exists:doctors,user_id',
 
@@ -87,6 +87,19 @@ class PatientQueueController extends Controller
             'respiration_rate' => 'nullable|string',
             'o2_sat' => 'nullable|string',
             'other' => 'nullable|string',
+
+            // Findings
+            'primary_complaint' => 'nullable|string',
+            'duration_of_symptoms' => 'nullable|string',
+            'intensity_and_frequency' => 'nullable|string',
+
+            'findings' => 'nullable|string',
+            'diagnosis' => 'nullable|string',
+            'recommended_treatment' => 'nullable|string',
+            'follow_up_instructions' => 'nullable|string',
+            'referrals' => 'nullable|string',
+
+            'doctor_notes' => 'nullable|string',
         ]);
         // dd($validatedData);
 
