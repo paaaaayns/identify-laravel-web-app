@@ -58,4 +58,9 @@ class Opd extends Model
             }
         });
     }
+
+    public function patientQueue()
+    {
+        return $this->hasMany(PatientQueue::class, 'opd_id'); // Adjust based on actual foreign key
+    }
 }

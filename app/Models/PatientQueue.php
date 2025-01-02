@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use App\Models\Doctor;
+use App\Models\Opd;
 use App\Models\Patient;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
@@ -42,18 +44,18 @@ class PatientQueue extends Model
         });
     }
 
-    public function opd()
+    public function opd(): BelongsTo
     {
-        return $this->belongsTo(Opd::class, 'opd_id'); // Adjust based on actual foreign key
+        return $this->belongsTo(Opd::class, 'opd_id', 'user_id'); // Adjust based on actual foreign key
     }
 
     public function patient()
     {
-        return $this->belongsTo(Patient::class, 'patient_id'); // Adjust based on actual foreign key
+        return $this->belongsTo(Patient::class, 'patient_id', 'user_id'); // Adjust based on actual foreign key
     }
 
-    public function doctor()
+    public function doctor(): BelongsTo
     {
-        return $this->belongsTo(Doctor::class, 'doctor_id'); // Adjust based on actual foreign key
+        return $this->belongsTo(Doctor::class, 'doctor_id', 'user_id'); // Adjust based on actual foreign key
     }
 }

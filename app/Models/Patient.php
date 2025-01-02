@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -65,8 +66,8 @@ class Patient extends Model
         });
     }
 
-    public function medicalHistory()
+    public function medicalHistory(): HasMany
     {
-        return $this->hasMany(PatientQueue::class, 'patient_id'); // Adjust based on actual foreign key
+        return $this->hasMany(PatientQueue::class, 'queue_id'); // Adjust based on actual foreign key
     }
 }
