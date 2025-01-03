@@ -73,33 +73,33 @@ class PatientQueueController extends Controller
 
         // Validate the incoming request data (optional, but recommended)
         $validatedData = $request->validate([
-            'queue_status' => 'nullable|string',
+            'queue_status' => 'string',
 
             // Doctor Selection
-            'doctor_id' => 'nullable|exists:doctors,user_id',
+            'doctor_id' => 'exists:doctors,user_id',
 
             // Patient Vitals
-            'height' => 'nullable|string',
-            'weight' => 'nullable|string',
-            'blood_pressure' => 'nullable|string',
-            'temperature' => 'nullable|string',
-            'pulse_rate' => 'nullable|string',
-            'respiration_rate' => 'nullable|string',
-            'o2_sat' => 'nullable|string',
-            'other' => 'nullable|string',
+            'height' => 'string',
+            'weight' => 'string',
+            'blood_pressure' => 'string',
+            'temperature' => 'string',
+            'pulse_rate' => 'string',
+            'respiration_rate' => 'string',
+            'o2_sat' => 'string',
+            'other' => 'string',
 
             // Findings
-            'primary_complaint' => 'nullable|string',
-            'duration_of_symptoms' => 'nullable|string',
-            'intensity_and_frequency' => 'nullable|string',
+            'primary_complaint' => 'string',
+            'duration_of_symptoms' => 'string',
+            'intensity_and_frequency' => 'string',
 
-            'findings' => 'nullable|string',
-            'diagnosis' => 'nullable|string',
-            'recommended_treatment' => 'nullable|string',
-            'follow_up_instructions' => 'nullable|string',
-            'referrals' => 'nullable|string',
+            'findings' => 'string',
+            'diagnosis' => 'string',
+            'recommended_treatment' => 'string',
+            'follow_up_instructions' => 'string',
+            'referrals' => 'string',
 
-            'doctor_notes' => 'nullable|string',
+            'doctor_notes' => 'string',
         ]);
         // dd($validatedData);
 
