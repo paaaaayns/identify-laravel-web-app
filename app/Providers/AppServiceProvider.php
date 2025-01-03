@@ -7,15 +7,16 @@ use App\Models\Doctor;
 use App\Models\Opd;
 use App\Models\Patient;
 use App\Models\PreRegisteredPatient;
-use App\Observers\DoctorRegistrationObserver;
-use App\Observers\OpdRegistrationObserver;
-use App\Observers\PatientRegistrationObserver;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\ServiceProvider;
 use App\Models\User;
 use App\Observers\AdminRegistrationObserver;
+use App\Observers\DoctorRegistrationObserver;
+use App\Observers\OpdRegistrationObserver;
 use App\Observers\PatientPreRegistrationObserver;
+use App\Observers\PatientRegistrationObserver;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -58,6 +59,12 @@ class AppServiceProvider extends ServiceProvider
             $view->with('user', $user);
         });
 
+        Relation::morphMap([
+            'admin' => 'App\Models\Admin',
+            'opd' => 'App\Models\Opd',
+            'doctor' => 'App\Models\Doctor',
+            'patient' => 'App\Models\Patient',
+        ]);
         
     }
 }

@@ -8,7 +8,6 @@ use App\Models\Patient;
 use App\Models\PatientQueue;
 use App\Models\PreRegisteredPatient;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,6 +18,7 @@ class DashboardController extends Controller
     {
         // Get the authenticated user
         $user = Auth::user();
+        // dd($user);
 
         // Check user role and return the appropriate view
         switch ($user->role) {

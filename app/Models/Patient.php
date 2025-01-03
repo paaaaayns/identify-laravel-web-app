@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use App\Models\PatientQueue;
+use App\Models\PreRegisteredPatient;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -63,6 +65,11 @@ class Patient extends Model
                 $user->delete();
             }
         });
+    }
+
+    public function credentials(): MorphOne
+    {
+        return $this->morphOne(User::class, 'personalInfo', 'role', 'user_id', 'user_id');
     }
 
     public function medicalHistory(): HasMany
