@@ -88,13 +88,18 @@
         </div>
 
         <!-- Right Column -->
-        <form method="POST" action="{{ route('users.patient.store') }}" id="RegistrationForm" class="space-y-4 md:col-span-3">
+        <form
+            id="RegistrationForm"
+            method="POST"
+            action="{{ route('users.patient.store') }}"
+            class="space-y-4 md:col-span-3">
             @csrf
+
             <input type="hidden" name="ulid" value="{{ $profile->ulid }}">
             <input type="hidden" name="pre_registration_code" value="{{ $profile->pre_registration_code }}">
 
             <!-- Personal Information -->
-            <div class="bg-white shadow rounded-lg p-6">
+            <div class="bg-white shadow rounded-lg p-6 !mt-0">
                 <h3 class="text-xl font-semibold text-gray-800">Personal Information</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-12 gap-x-6 gap-y-6 mt-6">
 
