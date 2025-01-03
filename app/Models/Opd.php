@@ -35,9 +35,8 @@ class Opd extends Model
                 // Create the associated user
                 $user = User::create([
                     'user_id' => $opd->user_id,  // Use the custom user_id
-                    'username' => $opd->user_id, // Use the custom username
-                    'password' => Hash::make('opd'), // Default password
                     'email' => $opd->email, // opd's email
+                    'password' => Hash::make('opd'), // Default password
                     'role' => 'opd',  // Define user type
                 ]);
 

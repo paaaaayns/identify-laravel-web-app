@@ -34,9 +34,8 @@ class Admin extends Model
                 // Create the associated user
                 $user = User::create([
                     'user_id' => $admin->user_id,  // Use the custom user_id
-                    'username' => $admin->user_id, // Use the custom username
-                    'password' => Hash::make('admin'), // Default password
                     'email' => $admin->email, // admin's email
+                    'password' => Hash::make('admin'), // Default password
                     'role' => 'admin',  // Define user type
                 ]);
 

@@ -16,9 +16,8 @@ return new class extends Migration
             $table->id();
             $table->string('user_id')->unique()->nullable();
             // $table->string('uid'); // uid of each user ex. A-000001
-            $table->string('username'); // uid
-            $table->string('password');
             $table->string('email')->unique();
+            $table->string('password');
             $table->string('role');
             $table->string('otp_code')->nullable();
             $table->boolean('is_otp_verified')->nullable()->default(false);

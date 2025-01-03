@@ -42,9 +42,8 @@ class Patient extends Model
                 // Create the associated user
                 $user = User::create([
                     'user_id' => $patient->user_id,  // Use the custom user_id
-                    'username' => $patient->user_id, // Use the custom username
-                    'password' => Hash::make('patient'), // Default password
                     'email' => $patient->email, // patient's email
+                    'password' => Hash::make('patient'), // Default password
                     'role' => 'patient',  // Define user type
                 ]);
 
