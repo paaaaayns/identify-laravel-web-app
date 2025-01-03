@@ -91,7 +91,7 @@
                         <a href="?tab=profile" data-target="profile" class="tab-link rounded-md bg-primary px-3 py-2 text-sm font-medium text-white" aria-current="page">Profile</a>
                         <a href="?tab=doctor" data-target="doctor" class="tab-link rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Doctor</a>
                         <a href="?tab=vitals" data-target="vitals" class="tab-link rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Vitals</a>
-                        <a href="?tab=assessment" data-target="assessment" class="tab-link rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Assessment</a>
+                        <a href="?tab=consultation" data-target="consultation" class="tab-link rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Consultation</a>
                     </nav>
                 </div>
 
@@ -131,36 +131,46 @@
                 @include('auth.queue.tab-vitals')
             </div>
 
-            <!-- Assessment Tab -->
-            <div id="assessment" class="tab-content hidden">
-                @include('auth.queue.tab-assessment')
+            <!-- Consultation Tab -->
+            <div id="consultation" class="tab-content hidden">
+                @include('auth.queue.tab-consultation')
             </div>
         </div>
     </div>
 
-    <!-- <script>
-        const tabLinks = document.querySelectorAll(".tab-link");
-        const tabContents = document.querySelectorAll(".tab-content");
+    <!-- Update Script -->
+    <script>
+        async function updateQueue(formId) {
+            const form = document.getElementById(formId);
+            const formData = new FormData(form);
+            const formAction = form.action;
 
-        tabLinks.forEach((tab) => {
-            tab.addEventListener("click", (e) => {
-                e.preventDefault();
+            try {
+                const response = await fetch(formAction, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Accept': 'application/json',
+                    },
+                });
 
-                // Remove active state from all tabs
-                tabLinks.forEach((link) => link.classList.remove("bg-primary", "text-white"));
-                // Add default state to all tabs
-                tabLinks.forEach((link) => link.classList.add("text-gray-500", "hover:text-gray-700"));
-                tabContents.forEach((content) => content.classList.add("hidden"));
-
-                // Add active state to clicked tab and show corresponding content
-                tab.classList.add("bg-primary", "text-white");
-                tab.classList.remove("text-gray-500", "hover:text-gray-700");
-                const target = tab.getAttribute("data-target");
-                document.getElementById(target).classList.remove("hidden");
-            });
-        });
-    </script> -->
-
+                if (response.ok) {
+                    const result = await response.json();
+                    showToast('toast-success', result.message);
+                    console.log(response.status, result.message, result.queue);
+                    location.reload();
+                } else {
+                    showToast('toast-error', 'Failed to update queue.');
+                    console.error(response.status, 'Failed to update queue.');
+                }
+            } catch (error) {
+                showToast('toast-error', 'An error occurred while processing the request.');
+                console.error(response.status, error);
+                return null;
+            }
+        }
+    </script>
 
     <script>
         const tabLinks = document.querySelectorAll(".tab-link");

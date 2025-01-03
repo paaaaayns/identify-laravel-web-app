@@ -1,8 +1,8 @@
-<!-- Findings -->
-<div class="w-full flex flex-col items-center">
+<!-- Consultation -->
+<div class="w-full flex flex-col items-center bg-white rounded-lg shadow">
     <form
         method="POST"
-        id="FindingsForm"
+        id="ConsultationForm"
         action="{{ route('queue.update', ['ulid' => $queue->ulid]) }}"
         class="w-full">
         @csrf
@@ -10,7 +10,7 @@
 
         <input type="hidden" name="queue_status" value="Completed">
 
-        <div class="grid grid-cols-1 bg-white rounded-lg shadow">
+        <div class="grid grid-cols-1">
             <div class="p-6">
                 <h3 class="text-xl font-semibold text-gray-800">Current Concerns</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-12 gap-x-6 gap-y-6 mt-6">
@@ -63,7 +63,7 @@
             </div>
 
             <div class="p-6">
-                <h3 class="text-xl font-semibold text-gray-800">Assessment & Plans</h3>
+                <h3 class="text-xl font-semibold text-gray-800">Consultation & Plans</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-12 gap-x-6 gap-y-6 mt-6">
 
                     <x-forms.field-container class="sm:col-span-6">
@@ -169,20 +169,31 @@
                     <button
                         id="fill"
                         type="button"
-                        onclick="fillAssessmentFields()"
+                        onclick="fillConsultationFields()"
                         class="rounded-md px-3 py-2 text-sm font-semibold text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
                         Test
                     </button>
 
                     <x-forms.primary-button
                         type="button"
-                        onclick="updateAssessment()">
+                        onclick="updateQueue('ConsultationForm')">
                         Save
                     </x-forms.primary-button>
                 </div>
             </div>
         </div>
     </form>
+
+    <form
+        method="POST"
+        id="StartConsultingForm"
+        action="{{ route('queue.update', ['ulid' => $queue->ulid]) }}"
+        class="w-full">
+        @csrf
+        @method('PUT')
+
+    </form>
+
 </div>
 
 <!-- Validation -->
@@ -193,42 +204,10 @@
     }
 </script>
 
-<script>
-    async function updateAssessment() {
-        const form = document.getElementById('FindingsForm');
-        const formData = new FormData(form);
-        const formAction = form.action;
-
-        try {
-            const response = await fetch(formAction, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                    'Accept': 'application/json',
-                },
-            });
-
-            if (response.ok) {
-                const result = await response.json();
-                showToast('toast-success', result.message);
-                console.log(response.status, result.message, result.queue);
-                location.reload();
-            } else {
-                showToast('toast-error', 'Failed to update queue.');
-                console.error(response.status, 'Failed to update queue.');
-            }
-        } catch (error) {
-            showToast('toast-error', 'An error occurred while processing the request.');
-            console.error(response.status, error);
-            return null;
-        }
-    }
-</script>
 
 <!-- Test -->
 <script>
-    function fillAssessmentFields() {
+    function fillConsultationFields() {
         // Predefined values for testing
         const testData = {
             primary_complaint: "Headache and nausea",

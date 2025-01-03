@@ -157,7 +157,7 @@
 
                     <x-forms.primary-button
                         type="button"
-                        onclick="updateVitals()">
+                        onclick="updateQueue('VitalsForm')">
                         Save
                     </x-forms.primary-button>
                 </div>
@@ -174,38 +174,7 @@
     }
 </script>
 
-<script>
-    async function updateVitals() {
-        const form = document.getElementById('VitalsForm');
-        const formData = new FormData(form);
-        const formAction = form.action;
 
-        try {
-            const response = await fetch(formAction, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                    'Accept': 'application/json',
-                },
-            });
-
-            if (response.ok) {
-                const result = await response.json();
-                showToast('toast-success', result.message);
-                console.log(response.status, result.message, result.queue);
-                location.reload();
-            } else {
-                showToast('toast-error', 'Failed to update queue.');
-                console.error(response.status, 'Failed to update queue.');
-            }
-        } catch (error) {
-            showToast('toast-error', 'An error occurred while processing the request.');
-            console.error(response.status, error);
-            return null;
-        }
-    }
-</script>
 
 <!-- Test -->
 <script>
