@@ -1,8 +1,9 @@
 <!-- Consultation -->
 <div class="w-full flex flex-col items-center bg-white rounded-lg shadow">
-    <form
+
+    @if ($queue->queue_status == 'Consulting' || $queue->queue_status == 'Completed')
+    <form id="ConsultationForm"
         method="POST"
-        id="ConsultationForm"
         action="{{ route('queue.update', ['ulid' => $queue->ulid]) }}"
         class="w-full">
         @csrf
@@ -184,15 +185,45 @@
         </div>
     </form>
 
-    <form
+    @elseif ($queue->queue_status == 'Vitals Taken')
+    <form id="StartConsultingForm"
         method="POST"
-        id="StartConsultingForm"
         action="{{ route('queue.update', ['ulid' => $queue->ulid]) }}"
         class="w-full">
         @csrf
         @method('PUT')
 
+        <input type="hidden" name="queue_status" value="Consulting">
+
+        <div class="grid grid-cols-1 text-center">
+            <div class="p-6">
+                <x-forms.primary-button
+                    type="button"
+                    onclick="updateQueue('StartConsultingForm')">
+                    Start Consultation
+                </x-forms.primary-button>
+            </div>
+        </div>
     </form>
+
+    @elseif ($queue->queue_status != 'Vitals Taken')
+    <div class="w-full">
+        <div class="grid grid-cols-1 text-center">
+            <div class="p-6">
+                <h3 class="text-xl font-semibold text-gray-800">Please Fill Up Vitals Form</h3>
+            </div>
+        </div>
+    </div>
+
+    @elseif ($queue->doctor == null)
+    <div class="w-full">
+        <div class="grid grid-cols-1 text-center">
+            <div class="p-6">
+                <h3 class="text-xl font-semibold text-gray-800">Please Select a Doctor</h3>
+            </div>
+        </div>
+    </div>
+    @endif
 
 </div>
 

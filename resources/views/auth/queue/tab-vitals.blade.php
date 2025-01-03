@@ -1,16 +1,17 @@
 <!-- Vitals Information -->
-<div class="w-full flex flex-col items-center">
-    <form
+<div class="w-full flex flex-col items-center bg-white rounded-lg shadow">
+
+    @if ($queue->doctor != null)
+    <form id="VitalsForm"
         method="POST"
-        id="VitalsForm"
         action="{{ route('queue.update', ['ulid' => $queue->ulid]) }}"
         class="w-full">
         @csrf
         @method('PUT')
 
         <input type="hidden" name="queue_status" value="Vitals Taken">
-        
-        <div class="bg-white rounded-lg shadow">
+
+        <div class="grid grid-cols-1">
             <div class="p-6">
 
                 <h3 class="text-xl font-semibold text-gray-800">Vitals Information</h3>
@@ -164,6 +165,18 @@
             </div>
         </div>
     </form>
+
+    @else
+    <div class="w-full">
+        <div class="grid grid-cols-1 text-center">
+            <div class="p-6">
+                <h3 class="text-xl font-semibold text-gray-800">Please Select a Doctor</h3>
+            </div>
+        </div>
+    </div>
+
+    @endif
+
 </div>
 
 <!-- Validation -->
@@ -173,8 +186,6 @@
         input.value = input.value.replace(/[^0-9\-\/]/g, '');
     }
 </script>
-
-
 
 <!-- Test -->
 <script>
