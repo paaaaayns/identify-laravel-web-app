@@ -50,7 +50,7 @@
                     <img src="https://via.placeholder.com/150" alt="Profile Picture" class="w-full h-full rounded-full shadow">
                 </div>
                 <!-- User Info -->
-                <h2 class="text-lg font-semibold text-gray-800">{{ $profile->first_name }} {{ $profile->middle_name ?? '' }} {{ $profile->last_name }}</h2>
+                <h2 class="text-lg font-semibold text-gray-800">{{ $profile->last_name }}, {{ $profile->first_name }} {{ $profile->middle_name ?? '' }}</h2>
                 <p class="text-sm text-gray-500">{{ $profile->user_id }}</p>
             </div>
 

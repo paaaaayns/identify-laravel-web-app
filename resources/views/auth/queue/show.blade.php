@@ -81,7 +81,7 @@
                         <!-- Current: "bg-indigo-100 text-indigo-700", Default: "text-gray-500 hover:text-gray-700" -->
                         <a href="?tab=profile" data-target="profile" class="tab-link rounded-md bg-primary px-3 py-2 text-sm font-medium text-white" aria-current="page">Profile</a>
                         <a href="?tab=doctor" data-target="doctor" class="tab-link rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Doctor</a>
-                        <a href="?tab=prep" data-target="prep" class="tab-link rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Prep</a>
+                        <a href="?tab=assessment" data-target="assessment" class="tab-link rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Assessment</a>
                         <a href="?tab=consultation" data-target="consultation" class="tab-link rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Consultation</a>
                     </nav>
                 </div>
@@ -93,7 +93,7 @@
                         @php
                         $statusClass = match ($queue->queue_status) {
                         'Waiting' => 'bg-yellow-500 text-white',
-                        'Vitals Taken' => 'bg-blue-500 text-white',
+                        'Assessment Done' => 'bg-blue-500 text-white',
                         'Consulting' => 'bg-orange-500 text-white',
                         'Completed' => 'bg-green-500 text-white',
                         'Cancelled' => 'bg-red-500 text-white',
@@ -117,9 +117,9 @@
                 @include('auth.queue.tab-doctor')
             </div>
 
-            <!-- Prep Tab -->
-            <div id="prep" class="tab-content hidden">
-                @include('auth.queue.tab-prep')
+            <!-- Assessment Tab -->
+            <div id="assessment" class="tab-content hidden">
+                @include('auth.queue.tab-assessment')
             </div>
 
             <!-- Consultation Tab -->

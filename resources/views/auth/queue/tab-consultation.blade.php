@@ -134,7 +134,7 @@
         </div>
     </form>
 
-    @elseif ($queue->queue_status == 'Vitals Taken')
+    @elseif ($queue->queue_status == 'Assessment Done')
     <form id="StartConsultingForm"
         method="POST"
         action="{{ route('queue.update', ['ulid' => $queue->ulid]) }}"
@@ -155,12 +155,12 @@
         </div>
     </form>
 
-    @elseif ($queue->queue_status != 'Vitals Taken')
+    @else
     @if ($queue->doctor != null)
     <div class="w-full">
         <div class="grid grid-cols-1 text-center">
             <div class="p-6">
-                <h3 class="text-xl font-semibold text-gray-800">Please Fill Up Vitals Form</h3>
+                <h3 class="text-xl font-semibold text-gray-800">Please Fill Up Prep Form</h3>
             </div>
         </div>
     </div>

@@ -28,7 +28,7 @@ return new class extends Migration
             // Define queue_status as an ENUM field
             $table->enum('queue_status', [
                 'Waiting',
-                'Vitals Taken',
+                'Assessment Done',
                 'Consulting',
                 'Completed',
                 'Cancelled'

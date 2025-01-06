@@ -1,15 +1,15 @@
-<!-- Prep -->
+<!-- Assessment -->
 <div class="w-full flex flex-col items-center bg-white rounded-lg shadow">
 
     @if ($queue->doctor != null)
-    <form id="VitalsForm"
+    <form id="AssessmentForm"
         method="POST"
         action="{{ route('queue.update', ['ulid' => $queue->ulid]) }}"
         class="w-full">
         @csrf
         @method('PUT')
 
-        <input type="hidden" name="queue_status" value="Vitals Taken">
+        <input type="hidden" name="queue_status" value="Assessment Done">
 
         <div class="grid grid-cols-1">
             <div class="p-6">
@@ -64,7 +64,7 @@
             </div>
 
             <div class="p-6">
-                <h3 class="text-xl font-semibold text-gray-800">Vitals</h3>
+                <h3 class="text-xl font-semibold text-gray-800">Assessment</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-12 gap-x-6 gap-y-6 mt-6">
 
                     <x-forms.field-container class="sm:col-span-3">
@@ -201,14 +201,14 @@
                     <button
                         id="fill"
                         type="button"
-                        onclick="fillVitalsFields()"
+                        onclick="fillAssessmentFields()"
                         class="rounded-md px-3 py-2 text-sm font-semibold text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
                         Test
                     </button>
 
                     <x-forms.primary-button
                         type="button"
-                        onclick="updateQueue('VitalsForm')">
+                        onclick="updateQueue('AssessmentForm')">
                         Save
                     </x-forms.primary-button>
                 </div>
@@ -239,7 +239,7 @@
 
 <!-- Test -->
 <script>
-    function fillVitalsFields() {
+    function fillAssessmentFields() {
         // Predefined values for testing
         const testData = {
             primary_complaint: "Headache and nausea",
