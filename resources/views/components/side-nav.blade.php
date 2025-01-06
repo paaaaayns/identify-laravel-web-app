@@ -442,3 +442,74 @@
 
 </ul>
 @endrole
+
+
+@role(['doctor'])
+<ul role="list" class="-mx-2 space-y-1">
+
+    <!-- Dashboard -->
+    <li>
+        <div class="flex w-full items-center gap-x-3 rounded-md px-2 pt-2 text-left text-sm/6">
+            <h2 class="text-sm/6 text-gray-700">
+                Dashboard
+            </h2>
+        </div>
+    </li>
+    
+    <!-- Dashboard -->
+    <li x-data="{ isActive: window.location.pathname.startsWith('/dashboard') }">
+        <a
+            href="/dashboard"
+            :class="isActive ? 'bg-background-dark text-white' : 'text-gray-700 hover:bg-gray-50'"
+            class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold">
+            <svg
+                :class="isActive ? 'text-white' : 'text-gray-400'"
+                class="h-6 w-6 shrink-0 text-gray-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                aria-hidden="true"
+                data-slot="icon">
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+            </svg>
+            Dashboard
+        </a>
+    </li>
+
+    <!-- Queues -->
+    <li>
+        <div class="flex w-full items-center gap-x-3 rounded-md px-2 pt-2 text-left text-sm/6">
+            <h2 class="text-sm/6 text-gray-700">Queues</h2>
+        </div>
+    </li>
+
+    <!-- Queued Patients -->
+    <li x-data="{ isActive: window.location.pathname.startsWith('/queue') }">
+        <a
+            href="{{ route('queue.index') }}"
+            :class="isActive ? 'bg-background-dark text-white' : 'text-gray-700 hover:bg-gray-50'"
+            class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold">
+            <svg
+                :class="isActive ? 'text-white' : 'text-gray-400'"
+                class="h-6 w-6 shrink-0 text-gray-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                aria-hidden="true"
+                data-slot="icon">
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 0 1 0 3.75H5.625a1.875 1.875 0 0 1 0-3.75Z" />
+            </svg>
+            Queued Patients
+        </a>
+    </li>
+
+</ul>
+@endrole

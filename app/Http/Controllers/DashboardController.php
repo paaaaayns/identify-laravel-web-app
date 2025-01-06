@@ -68,7 +68,15 @@ class DashboardController extends Controller
                     'recentQueuedPatientsCount' => $recentQueuedPatientsCount,
                 ]);
             case 'doctor':
-                return view('auth.dashboard.doctor');
+                $queuedPatientsCount = PatientQueue::whereNotIn('queue_status', ['Completed', 'Cancelled'])->count();
+                $recentQueuedPatientsCount = PatientQueue::whereNotIn('queue_status', ['Completed', 'Cancelled'])
+                    ->where('created_at', '>=', Carbon::now()->subHours(3))
+                    ->count();
+
+                return view('auth.dashboard.doctor', [
+                    'queuedPatientsCount' => $queuedPatientsCount,
+                    'recentQueuedPatientsCount' => $recentQueuedPatientsCount,
+                ]);
             case 'patient':
                 return view('auth.dashboard.patient');
                 // Add more roles if necessary
