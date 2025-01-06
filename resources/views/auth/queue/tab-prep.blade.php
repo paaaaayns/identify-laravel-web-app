@@ -1,4 +1,4 @@
-<!-- Vitals Information -->
+<!-- Prep -->
 <div class="w-full flex flex-col items-center bg-white rounded-lg shadow">
 
     @if ($queue->doctor != null)
@@ -13,8 +13,58 @@
 
         <div class="grid grid-cols-1">
             <div class="p-6">
+                <h3 class="text-xl font-semibold text-gray-800">Current Concerns</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-12 gap-x-6 gap-y-6 mt-6">
 
-                <h3 class="text-xl font-semibold text-gray-800">Vitals Information</h3>
+                    <x-forms.field-container class="sm:col-span-6">
+                        <x-forms.label
+                            for="primary_complaint">
+                            Primary Complaint
+                        </x-forms.label>
+                        <x-forms.textarea
+                            type="text"
+                            id="primary_complaint"
+                            name="primary_complaint"
+                            rows="3"
+                            :value="$queue->primary_complaint"
+                            :disabled="$queue->primary_complaint ? true : false" />
+                        <x-forms.error name="primary_complaint" />
+                    </x-forms.field-container>
+
+                    <x-forms.field-container class="sm:col-span-6">
+                        <x-forms.label
+                            for="duration_of_symptoms">
+                            Duration of Symptoms
+                        </x-forms.label>
+                        <x-forms.textarea
+                            type="text"
+                            id="duration_of_symptoms"
+                            name="duration_of_symptoms"
+                            rows="3"
+                            :value="$queue->duration_of_symptoms"
+                            :disabled="$queue->duration_of_symptoms ? true : false" />
+                        <x-forms.error name="duration_of_symptoms" />
+                    </x-forms.field-container>
+
+                    <x-forms.field-container class="sm:col-span-6">
+                        <x-forms.label
+                            for="intensity_and_frequency">
+                            Intensity & Frequency
+                        </x-forms.label>
+                        <x-forms.textarea
+                            type="text"
+                            id="intensity_and_frequency"
+                            name="intensity_and_frequency"
+                            rows="3"
+                            :value="$queue->intensity_and_frequency"
+                            :disabled="$queue->intensity_and_frequency ? true : false" />
+                        <x-forms.error name="intensity_and_frequency" />
+                    </x-forms.field-container>
+                </div>
+            </div>
+
+            <div class="p-6">
+                <h3 class="text-xl font-semibold text-gray-800">Vitals</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-12 gap-x-6 gap-y-6 mt-6">
 
                     <x-forms.field-container class="sm:col-span-3">
@@ -192,6 +242,10 @@
     function fillVitalsFields() {
         // Predefined values for testing
         const testData = {
+            primary_complaint: "Headache and nausea",
+            duration_of_symptoms: "3 days",
+            intensity_and_frequency: "Moderate, occurs twice daily",
+
             height: "175",
             weight: "80",
             blood_pressure: "120/80",
@@ -204,6 +258,10 @@
         };
 
         // Fill fields using their IDs
+        document.getElementById('primary_complaint').value = testData.primary_complaint;
+        document.getElementById('duration_of_symptoms').value = testData.duration_of_symptoms;
+        document.getElementById('intensity_and_frequency').value = testData.intensity_and_frequency;
+
         document.getElementById('height').value = testData.height;
         document.getElementById('weight').value = testData.weight;
         document.getElementById('blood_pressure').value = testData.blood_pressure;

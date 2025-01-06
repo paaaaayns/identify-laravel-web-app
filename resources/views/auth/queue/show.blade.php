@@ -52,17 +52,8 @@
                     OPD: {{ $opd->first_name ?? '' }} {{ $opd->middle_name ?? '' }} {{ $opd->last_name ?? '' }}
                 </div>
 
-
                 <div class="">
                     Doctor: {{ $doctor->first_name ?? '' }} {{ $doctor->middle_name ?? '' }} {{ $doctor->last_name ?? '' }}
-                </div>
-
-                <div class="">
-                    <x-forms.link-button
-                        class="w-full"
-                        href="{{ route('queue.create', ['user_id' => $patient->user_id]) }}">
-                        Send to Queue
-                    </x-forms.link-button>
                 </div>
             </div>
         </div>
@@ -90,7 +81,7 @@
                         <!-- Current: "bg-indigo-100 text-indigo-700", Default: "text-gray-500 hover:text-gray-700" -->
                         <a href="?tab=profile" data-target="profile" class="tab-link rounded-md bg-primary px-3 py-2 text-sm font-medium text-white" aria-current="page">Profile</a>
                         <a href="?tab=doctor" data-target="doctor" class="tab-link rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Doctor</a>
-                        <a href="?tab=vitals" data-target="vitals" class="tab-link rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Vitals</a>
+                        <a href="?tab=prep" data-target="prep" class="tab-link rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Prep</a>
                         <a href="?tab=consultation" data-target="consultation" class="tab-link rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Consultation</a>
                     </nav>
                 </div>
@@ -126,9 +117,9 @@
                 @include('auth.queue.tab-doctor')
             </div>
 
-            <!-- Vitals Tab -->
-            <div id="vitals" class="tab-content hidden">
-                @include('auth.queue.tab-vitals')
+            <!-- Prep Tab -->
+            <div id="prep" class="tab-content hidden">
+                @include('auth.queue.tab-prep')
             </div>
 
             <!-- Consultation Tab -->

@@ -12,14 +12,6 @@
             class="text-primary">
             Select
         </button>
-
-        @if (true)
-        <button
-            type="submit"
-            class="text-primary">
-            Override
-        </button>
-        @endif
     </form>
 </div>
 <script>
