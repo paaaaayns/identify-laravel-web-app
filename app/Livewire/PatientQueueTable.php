@@ -2,12 +2,9 @@
 
 namespace App\Livewire;
 
-use App\Models\Doctor;
-use App\Models\Patient;
 use App\Models\PatientQueue;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
-use Illuminate\Database\Eloquent\Builder;
 
 class PatientQueueTable extends DataTableComponent
 {
@@ -87,10 +84,7 @@ class PatientQueueTable extends DataTableComponent
     public function getPatientName($row)
     {
         // Retrieve the patient using the relationships
-        $patient = $row->patient_id;
-
-        // Find patient that matches the patient_id
-        $patient = Patient::where('user_id', $row->patient_id)->first();
+        $patient = $row->patient;
 
         // Check if patient exist
         if ($patient) {
@@ -104,10 +98,7 @@ class PatientQueueTable extends DataTableComponent
     public function getDoctorName($row)
     {
         // Retrieve the doctor using the relationships
-        $doctor = $row->doctor_id;
-
-        // Find doctor that matches the doctor_id using the relationships
-        $doctor = Doctor::where('user_id', $row->doctor_id)->first();
+        $doctor = $row->doctor;
 
         // Check if doctor exist
         if ($doctor) {
