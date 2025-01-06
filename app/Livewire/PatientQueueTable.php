@@ -34,7 +34,7 @@ class PatientQueueTable extends DataTableComponent
         $patientName = fn($row) => $this->getPatientName($row);
         $doctorName = fn($row) => $this->getDoctorName($row);
         return [
-            Column::make("Queued At", "created_at")
+            Column::make("Queue Id", "queue_id")
                 ->sortable()
                 ->searchable(),
 
