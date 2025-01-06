@@ -74,6 +74,6 @@ class Patient extends Model
 
     public function medicalHistory(): HasMany
     {
-        return $this->hasMany(PatientQueue::class, 'queue_id'); // Adjust based on actual foreign key
+        return $this->hasMany(PatientQueue::class, 'queue_id', 'user_id'); // Adjust based on actual foreign key
     }
 }

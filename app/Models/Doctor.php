@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -65,8 +66,8 @@ class Doctor extends Model
         return $this->morphOne(User::class, 'personalInfo', 'role', 'user_id', 'user_id');
     }
 
-    public function medicalHistory()
+    public function patientQueue(): HasMany
     {
-        return $this->hasMany(PatientQueue::class, 'doctor_id'); // Adjust based on actual foreign key
+        return $this->hasMany(PatientQueue::class, 'doctor_id', 'user_id');
     }
 }

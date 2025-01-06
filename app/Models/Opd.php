@@ -67,6 +67,6 @@ class Opd extends Model
 
     public function patientQueue()
     {
-        return $this->hasMany(PatientQueue::class, 'opd_id'); // Adjust based on actual foreign key
+        return $this->hasMany(PatientQueue::class, 'opd_id', 'user_id'); // Adjust based on actual foreign key
     }
 }
