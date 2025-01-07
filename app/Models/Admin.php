@@ -9,11 +9,12 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Admin extends Model
 {
     /** @use HasFactory<\Database\Factories\AdminFactory> */
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     protected $guarded = [];
 
     // Hook into the creating and created model events
