@@ -327,7 +327,7 @@
             </h2>
         </div>
     </li>
-    
+
     <!-- Dashboard -->
     <li x-data="{ isActive: window.location.pathname.startsWith('/dashboard') }">
         <a
@@ -455,7 +455,7 @@
             </h2>
         </div>
     </li>
-    
+
     <!-- Dashboard -->
     <li x-data="{ isActive: window.location.pathname.startsWith('/dashboard') }">
         <a
@@ -511,5 +511,42 @@
         </a>
     </li>
 
+</ul>
+@endrole
+
+
+@role(['patient'])
+<ul role="list" class="-mx-2 space-y-1">
+    <!-- Profile -->
+    <li>
+        <div class="flex w-full items-center gap-x-3 rounded-md px-2 pt-2 text-left text-sm/6">
+            <h2 class="text-sm/6 text-gray-700">Profile</h2>
+        </div>
+    </li>
+
+    <!-- Medical History -->
+    <li x-data="{ isActive: window.location.pathname.startsWith('/queue') }">
+        <a
+            href="{{ route('queue.index') }}"
+            :class="isActive ? 'bg-background-dark text-white' : 'text-gray-700 hover:bg-gray-50'"
+            class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold">
+
+            <svg
+                :class="isActive ? 'text-white' : 'text-gray-400'"
+                class="h-6 w-6 shrink-0 text-gray-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                aria-hidden="true"
+                data-slot="icon">
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25M9 16.5v.75m3-3v3M15 12v5.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+            </svg>
+            Medical History
+        </a>
+    </li>
 </ul>
 @endrole
