@@ -45,6 +45,7 @@ return new class extends Migration
 
             $table->timestamp('pre_registered_at')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
