@@ -3,6 +3,9 @@
 namespace App\Livewire;
 
 use App\Models\PatientQueue;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 
@@ -27,6 +30,21 @@ class PatientQueueTable extends DataTableComponent
     public function refreshTable()
     {
         $this->emitSelf('refresh'); // Trigger the table refresh
+    }
+
+    public function builder(): Builder
+    {
+        $query = PatientQueue::query()
+            ->with(['patient', 'doctor', 'opd']); // Eager load the relationships
+
+        $user = Auth::user();
+
+        if ($user->role === 'doctor' || $user->role === 'patient') {
+            // Filter the queue based on the user's role
+            $query->whereBelongsTo($user, $user->role)
+                ->get();
+        }
+        return $query;
     }
 
     public function columns(): array
@@ -55,7 +73,7 @@ class PatientQueueTable extends DataTableComponent
                 ->label(function ($row) {
                     $statusColors = [
                         'Waiting' => 'bg-yellow-500 text-white',
-                        'Vitals Taken' => 'bg-blue-500 text-white',
+                        'Assessment Done' => 'bg-blue-500 text-white',
                         'Consulting' => 'bg-orange-500 text-white',
                         'Completed' => 'bg-green-500 text-white',
                         'Cancelled' => 'bg-red-500 text-white',
