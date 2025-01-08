@@ -1,8 +1,5 @@
 <?php
 
-use App\Models\Doctor;
-use App\Models\Opd;
-use App\Models\Patient;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('patient_queues', function (Blueprint $table) {
+        Schema::create('medical_records', function (Blueprint $table) {
             $table->id();
             $table->string('ulid')->nullable();
-            $table->string('queue_id')->unique()->nullable();
+            $table->string('medical_record_id')->unique()->nullable();
 
-            $table->string('medical_record_id')->nullable(); // Foreign key for the medical_record (medical_record_id)
-            $table->foreign('medical_record_id')->references('medical_record_id')->on('medical_records');
+            $table->string('queue_id')->nullable(); // Foreign key for the queue (queue_id)
+            $table->foreign('queue_id')->references('queue_id')->on('patient_queues');
 
             $table->string('patient_id')->nullable(); // Foreign key for the patient (user_id)
             $table->foreign('patient_id')->references('user_id')->on('patients');
@@ -30,15 +27,6 @@ return new class extends Migration
 
             $table->string('doctor_id')->nullable(); // Foreign key for the doctor (user_id)
             $table->foreign('doctor_id')->references('user_id')->on('doctors');
-
-            // Define queue_status as an ENUM field
-            $table->enum('queue_status', [
-                'Waiting',
-                'Assessment Done',
-                'Consulting',
-                'Completed',
-                'Cancelled'
-            ])->default('Waiting');
 
             $table->string('height')->nullable();
             $table->string('weight')->nullable();
@@ -59,11 +47,8 @@ return new class extends Migration
             $table->string('referrals')->nullable();
             $table->string('doctor_notes')->nullable();
 
-            $table->timestamp('queued_at')->nullable();
-            $table->timestamp('assessed_at')->nullable();
-            $table->timestamp('consulted_at')->nullable();
-            $table->timestamp('cancelled_at')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -72,6 +57,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('patient_queues');
+        Schema::dropIfExists('medical_records');
     }
 };
