@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
+
 Route::get('/', function () {
     return redirect('/login');
 });
@@ -89,7 +90,6 @@ Route::middleware(['auth'])->group(function () {
 
     // Queued Patient
     Route::get('/queue', [PatientQueueController::class, 'index'])->name('queue.index');
-    Route::get('/queue/create', [PatientQueueController::class, 'create'])->name('queue.create');
     Route::post('/queue/store', [PatientQueueController::class, 'store'])->name('queue.store');
     Route::put('/queue/{ulid}', [PatientQueueController::class, 'update'])->name('queue.update');
     Route::get('/queue/{ulid}', [PatientQueueController::class, 'show'])->name('queue.show');
