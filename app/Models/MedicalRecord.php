@@ -5,48 +5,55 @@ namespace App\Models;
 use App\Models\Doctor;
 use App\Models\Opd;
 use App\Models\Patient;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\PatientQueue;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
-class PatientQueue extends Model
+class MedicalRecord extends Model
 {
-    /** @use HasFactory<\Database\Factories\PatientQueueFactory> */
-    use HasFactory;
+    use SoftDeletes;
+    //
     protected $guarded = [];
+
 
     // Hook into the creating and created model events
     protected static function booted()
     {
-        static::creating(function (PatientQueue $queue) {
+        static::creating(function (MedicalRecord $medical_record) {
             // No user_id yet; ID will be available after creation.
         });
 
-        static::created(function (PatientQueue $queue) {
+        static::created(function (MedicalRecord $medical_record) {
             try {
-                $queue->queue_id = 'Q-' . now()->format('Ymd') . '-' . Str::upper(Str::random(5));
-                $queue->ulid = Str::ulid();
-                $queue->saveQuietly(); // Save without triggering model events
+                $medical_record->medical_record_id = 'M-' . str_pad($medical_record->id, 8, '0', STR_PAD_LEFT);
+                $medical_record->ulid = Str::ulid();
+                $medical_record->saveQuietly(); // Save without triggering model events
 
-                Log::info('Queue created successfully.', [
-                    'queue_id' => $queue->queue_id,
-                    'opd_id' => $queue->opd_id,
-                    'patient_id' => $queue->patient_id,
+                Log::info('Medical Record created successfully.', [
+                    'medical_record_id' => $medical_record->medical_record_id,
                 ]);
             } catch (\Exception $e) {
-                // Log any issues during user creation
+                // Log any issues during record creation
                 Log::error('Error creating User for opd: ' . $e->getMessage(), [
-                    'queue_id' => $queue->queue_id,
-                    'opd_id' => $queue->opd_id,
-                    'patient_id' => $queue->patient_id,
+                    'medical_record_id' => $medical_record->medical_record_id,
                 ]);
 
                 // Delete the opd record to maintain data consistency
-                $queue->delete();
+                // $medical_record->delete();
             }
         });
+    }
+
+
+
+    public function queue(): BelongsTo
+    {
+        return $this->belongsTo(PatientQueue::class, 'queue_id', 'queue_id'); // Adjust based on actual foreign key
     }
 
     public function opd(): BelongsTo
@@ -54,7 +61,7 @@ class PatientQueue extends Model
         return $this->belongsTo(Opd::class, 'opd_id', 'user_id'); // Adjust based on actual foreign key
     }
 
-    public function patient()
+    public function patient(): BelongsTo
     {
         return $this->belongsTo(Patient::class, 'patient_id', 'user_id'); // Adjust based on actual foreign key
     }
@@ -62,10 +69,5 @@ class PatientQueue extends Model
     public function doctor(): BelongsTo
     {
         return $this->belongsTo(Doctor::class, 'doctor_id', 'user_id'); // Adjust based on actual foreign key
-    }
-
-    public function medicalRecord()
-    {
-        return $this->hasOne(MedicalRecord::class, 'queue_id', 'queue_id');
     }
 }
