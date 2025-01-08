@@ -192,7 +192,7 @@
             </div>
         </div>
 
-        @role(['admin', 'doctor'])
+        @role(['admin', 'doctor', 'opd'])
         @if ($queue->queue_status != 'Completed')
         <div class="p-6">
             <div class="flex items-center justify-end gap-x-6 border-t border-gray-900/10 pt-6">
