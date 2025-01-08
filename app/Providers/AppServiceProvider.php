@@ -4,19 +4,29 @@ namespace App\Providers;
 
 use App\Models\Admin;
 use App\Models\Doctor;
+use App\Models\MedicalRecord;
 use App\Models\Opd;
 use App\Models\Patient;
+use App\Models\PatientQueue;
 use App\Models\PreRegisteredPatient;
 use App\Models\User;
+use App\Observers\AdminObserver;
 use App\Observers\AdminRegistrationObserver;
+use App\Observers\DoctorObserver;
 use App\Observers\DoctorRegistrationObserver;
+use App\Observers\MedicalRecordObserver;
+use App\Observers\OpdObserver;
 use App\Observers\OpdRegistrationObserver;
+use App\Observers\PatientObserver;
 use App\Observers\PatientPreRegistrationObserver;
+use App\Observers\PatientQueueObserver;
 use App\Observers\PatientRegistrationObserver;
+use App\Observers\PreRegisteredPatientObserver;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
+use PhpParser\Comment\Doc;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,6 +43,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Register the observers
+        Admin::observe(AdminObserver::class);
+        Doctor::observe(DoctorObserver::class);
+        Opd::observe(OpdObserver::class);
+        Patient::observe(PatientObserver::class);
+        PreRegisteredPatient::observe(PreRegisteredPatientObserver::class);
+
+        PatientQueue::observe(PatientQueueObserver::class);
+        MedicalRecord::observe(MedicalRecordObserver::class);
+
+
         // Share the admin instance globally if the user is authenticated
         view()->composer('*', function ($view) {
             $user = null;
