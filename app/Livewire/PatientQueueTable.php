@@ -41,9 +41,9 @@ class PatientQueueTable extends DataTableComponent
 
         if ($user->role === 'doctor' || $user->role === 'patient') {
             // Filter the queue based on the user's role
-            $query->whereBelongsTo($user, $user->role)
-                ->get();
+            $query->whereBelongsTo($user, $user->role);
         }
+
         return $query;
     }
 
@@ -93,7 +93,7 @@ class PatientQueueTable extends DataTableComponent
                             'viewLink' => route('queue.show', ['ulid' => $row->ulid]),
                             'queue_id' => $row->id,
                         ]
-                    )
+                    )->render()
                 )->html(),
         ];
     }
