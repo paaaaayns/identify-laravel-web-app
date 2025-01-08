@@ -5,24 +5,6 @@
         View
     </a>
 
-    @role(['admin'])
-    <form
-        method="POST"
-        action="{{ $deleteLink ?? '#' }}"
-        id="delete-form-{{ $id }}"
-        class="d-inline">
-        @csrf
-        @method('DELETE')
-
-        <button
-            type="button"
-            class="btn btn-link text-red-500"
-            onclick="confirmDelete('{{ $id }}')">
-            Delete
-        </button>
-    </form>
-    @endrole
-
 </div>
 
 <script>
