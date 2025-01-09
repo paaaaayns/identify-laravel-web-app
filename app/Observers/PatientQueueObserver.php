@@ -15,7 +15,6 @@ class PatientQueueObserver
     public function created(PatientQueue $patientQueue): void
     {
         //
-        Log::info('Test ID: ' . $patientQueue->queue_id);
     }
 
     /**
