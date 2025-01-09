@@ -41,7 +41,7 @@
         </nav>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
         <!-- Left Column -->
         <div class="space-y-4 md:col-span-1">
             <div class="flex flex-col items-center text-center bg-white shadow rounded-lg p-6 self-start">
@@ -58,7 +58,12 @@
 
                 <form method="POST" action="{{ route('queue.store') }}" id="SendQueueForm" class="grid grid-cols-1 gap-y-6">
                     @csrf
+                    @role(['admin'])
+                    <input type="hidden" name="opd_id" value="O-00001">
+                    <input type="hidden" name="doctor_id" value="D-00001">
+                    @else
                     <input type="hidden" name="opd_id" value="{{ $user->user_id }}">
+                    @endrole
                     <input type="hidden" name="patient_id" value="{{ $profile->user_id }}">
                     <x-forms.primary-button
                         type="button"
