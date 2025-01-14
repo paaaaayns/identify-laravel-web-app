@@ -60,8 +60,8 @@ return new class extends Migration
             $table->string('doctor_notes')->nullable();
 
             $table->timestamp('queued_at')->nullable();
-            $table->timestamp('assessed_at')->nullable();
-            $table->timestamp('consulted_at')->nullable();
+            $table->timestamp('assessment_done_at')->nullable();
+            $table->timestamp('consultation_done_at')->nullable();
             $table->timestamp('cancelled_at')->nullable();
             $table->timestamps();
         });

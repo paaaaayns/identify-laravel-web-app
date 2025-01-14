@@ -23,7 +23,7 @@
                         name="findings"
                         rows="3"
                         :value="$queue->findings"
-                        :disabled="$queue->findings ? true : false" />
+                        :disabled="$queue->consultation_done_at ? true : false" />
                     <x-forms.error name="findings" />
                 </x-forms.field-container>
 
@@ -38,7 +38,7 @@
                         name="diagnosis"
                         rows="3"
                         :value="$queue->diagnosis"
-                        :disabled="$queue->diagnosis ? true : false" />
+                        :disabled="$queue->consultation_done_at ? true : false" />
                     <x-forms.error name="diagnosis" />
                 </x-forms.field-container>
 
@@ -53,7 +53,7 @@
                         name="recommended_treatment"
                         rows="3"
                         :value="$queue->recommended_treatment"
-                        :disabled="$queue->recommended_treatment ? true : false" />
+                        :disabled="$queue->consultation_done_at ? true : false" />
                     <x-forms.error name="recommended_treatment" />
                 </x-forms.field-container>
 
@@ -68,7 +68,7 @@
                         name="follow_up_instructions"
                         rows="3"
                         :value="$queue->follow_up_instructions"
-                        :disabled="$queue->follow_up_instructions ? true : false" />
+                        :disabled="$queue->consultation_done_at ? true : false" />
                     <x-forms.error name="follow_up_instructions" />
                 </x-forms.field-container>
 
@@ -83,7 +83,7 @@
                         name="referrals"
                         rows="3"
                         :value="$queue->referrals"
-                        :disabled="$queue->referrals ? true : false" />
+                        :disabled="$queue->consultation_done_at ? true : false" />
                     <x-forms.error name="referrals" />
                 </x-forms.field-container>
             </div>
@@ -104,14 +104,14 @@
                         name="doctor_notes"
                         rows="3"
                         :value="$queue->doctor_notes"
-                        :disabled="$queue->doctor_notes ? true : false" />
+                        :disabled="$queue->consultation_done_at ? true : false" />
                     <x-forms.error name="doctor_notes" />
                 </x-forms.field-container>
             </div>
         </div>
 
         @role(['admin', 'doctor'])
-        @if ($queue->queue_status != 'Completed')
+        @if (!$queue->consultation_done_at || !$queue->cancelled_at)
         <div class="p-6">
             <div class="flex items-center justify-end gap-x-6 border-t border-gray-900/10 pt-6">
                 <button

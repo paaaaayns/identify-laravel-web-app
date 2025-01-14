@@ -91,6 +91,8 @@ class PatientQueueTable extends DataTableComponent
                     fn($row, Column $column) => view('components.livewire.datatables.action-column')->with(
                         [
                             'viewLink' => route('queue.show', ['ulid' => $row->ulid]),
+                            'deleteLink' => route('queue.destroy', ['ulid' => $row->ulid]),
+                            'id' => $row->id, 
                             'queue_id' => $row->id,
                         ]
                     )->render()
