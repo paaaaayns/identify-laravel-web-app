@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DataTableController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\EmailVerificationController;
+use App\Http\Controllers\MedicalRecordController;
 use App\Http\Controllers\OpdController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PatientQueueController;
@@ -66,7 +67,6 @@ Route::middleware(['auth'])->group(function () {
 
     // Patient
     Route::get('/users/patient', [PatientController::class, 'index'])->name('users.patient.index');
-    Route::post('/users/patient/queue', [PatientController::class, 'queue'])->name('users.patient.queue'); // TODO: Implement this
     Route::post('/users/patient/validate-store-request', [PatientController::class, 'validateStoreRequest']);
     Route::post('/users/patient/store', [PatientController::class, 'store'])->name('users.patient.store');
     Route::get('/users/patient/{ulid}', [PatientController::class, 'show'])->name('users.patient.show');
@@ -93,6 +93,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/queue/store', [PatientQueueController::class, 'store'])->name('queue.store');
     Route::put('/queue/{ulid}', [PatientQueueController::class, 'update'])->name('queue.update');
     Route::get('/queue/{ulid}', [PatientQueueController::class, 'show'])->name('queue.show');
+    Route::delete('/queue/{ulid}', [PatientQueueController::class, 'destroy'])->name('queue.destroy');
+
+    // Medical Records
+    Route::get('/my-medical-record', [MedicalRecordController::class, 'index'])->name('medical-record.index');
+    Route::get('/medical-record/store', [MedicalRecordController::class, 'store'])->name('medical-record.store');
+    Route::get('/medical-record/{ulid}', [MedicalRecordController::class, 'show'])->name('medical-record.show');
+
 });
 
 
