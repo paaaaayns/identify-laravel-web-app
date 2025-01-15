@@ -22,6 +22,13 @@ class DoctorTable extends DataTableComponent
             ->setAdditionalSelects(['*']) // Additional columns to select
             ->setTrimSearchStringEnabled() // Will trim whitespace from either end of search strings
         ;
+
+        $this->setTableWrapperAttributes([
+            'class' => 'overflow-x-auto',
+        ]);
+        $this->setTheadAttributes([
+            'class' => 'relative'
+        ]);
     }
 
     // Add the refreshTable method
@@ -62,7 +69,7 @@ class DoctorTable extends DataTableComponent
                         [
                             'viewLink' => route('users.doctor.show', ['ulid' => $row->ulid]), // Pass the ULID to the route
                             'deleteLink' => route('users.doctor.destroy', ['user_id' => $row->user_id]), // Pass the USER_ID to the route
-                            'id' => $row->id, 
+                            'id' => $row->id,
                         ]
                     )
                 )->html(),

@@ -22,6 +22,13 @@ class OpdTable extends DataTableComponent
             ->setAdditionalSelects(['*']) // Additional columns to select
             ->setTrimSearchStringEnabled() // Will trim whitespace from either end of search strings
         ;
+
+        $this->setTableWrapperAttributes([
+            'class' => 'overflow-x-auto',
+        ]);
+        $this->setTheadAttributes([
+            'class' => 'relative'
+        ]);
     }
 
     // Add the refreshTable method
