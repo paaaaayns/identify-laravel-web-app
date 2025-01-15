@@ -111,7 +111,7 @@
         </div>
 
         @role(['admin', 'doctor'])
-        @if (!$queue->consultation_done_at || !$queue->cancelled_at)
+        @if (!$queue->consultation_done_at)
         <div class="p-6">
             <div class="flex items-center justify-end gap-x-6 border-t border-gray-900/10 pt-6">
                 <button

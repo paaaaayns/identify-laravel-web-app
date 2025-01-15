@@ -63,7 +63,7 @@
         </div>
 
         <div class="p-6">
-            <h3 class="text-xl font-semibold text-gray-800">Assessment</h3>
+            <h3 class="text-xl font-semibold text-gray-800">Vitals</h3>
             <div class="grid grid-cols-1 sm:grid-cols-12 gap-x-6 gap-y-6 mt-6">
 
                 <x-forms.field-container class="sm:col-span-3">
@@ -203,7 +203,7 @@
         </div>
 
         @role(['admin', 'doctor', 'opd'])
-        @if (!$queue->assessment_done_at || !$queue->cancelled_at)
+        @if (!$queue->assessment_done_at)
         <div class="p-6">
             <div class="flex items-center justify-end gap-x-4 border-t border-gray-900/10 pt-6">
                 <button
