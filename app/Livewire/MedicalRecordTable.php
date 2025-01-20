@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\MedicalRecord;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
@@ -51,9 +52,7 @@ class MedicalRecordTable extends DataTableComponent
         $doctorName = fn($row) => $this->getDoctorName($row);
         return [
             Column::make("Date", "created_at")
-                ->sortable(),
-
-            Column::make("MRID", "medical_record_id")
+                ->format(fn($value) => Carbon::parse($value)->format('Y-m-d')) // Format the date
                 ->sortable(),
 
             Column::make("Doctor")
@@ -65,10 +64,8 @@ class MedicalRecordTable extends DataTableComponent
                 ->label(
                     fn($row, Column $column) => view('components.livewire.action-columns.medical-record')->with(
                         [
-                            'viewLink' => route('queue.show', ['ulid' => $row->ulid]),
-                            'deleteLink' => route('queue.destroy', ['ulid' => $row->ulid]),
+                            'viewLink' => route('medical-record.show', ['ulid' => $row->ulid]),
                             'id' => $row->id,
-                            'queue_id' => $row->id,
                         ]
                     )->render()
                 )->html(),
