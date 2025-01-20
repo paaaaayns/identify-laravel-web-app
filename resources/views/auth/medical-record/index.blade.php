@@ -25,18 +25,9 @@
         </nav>
     </div>
 
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Left Column -->
-        <div class="flex flex-col bg-white shadow rounded-lg md:col-span-1 p-6 self-start gap-6">
-
-            <h3 class="text-xl font-semibold text-gray-800">Medical Records</h3>
+    <div>
+        <div>
             <livewire:medical-record-table />
-
-        </div>
-
-        <!-- Right Column -->
-        <div class="space-y-4 md:col-span-1">
         </div>
     </div>
 </x-layout>
