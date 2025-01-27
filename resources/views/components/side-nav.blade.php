@@ -597,7 +597,7 @@
     </li>
 
     <!-- Medical History -->
-    <li x-data="{ isActive: window.location.pathname.startsWith('/queue') }">
+    <li x-data="{ isActive: window.location.pathname.startsWith('/medical-record') }">
         <a
             href="{{ route('medical-record.index') }}"
             :class="isActive ? 'bg-background-dark text-white' : 'text-gray-700 hover:bg-gray-50'"
