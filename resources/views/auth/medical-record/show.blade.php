@@ -38,24 +38,29 @@
     <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
         <!-- Left Column -->
         <div class="hidden md:block space-y-4 md:col-span-2">
-            <livewire:medical-record-table />
+            <div class="bg-white shadow rounded-lg p-6">
+                <div class="pb-4 col-span-6 md:col-span-12">
+                    <h3 class="text-xl font-semibold text-gray-800">
+                        @role(['admin', 'doctor', 'opd'])
+                        My Past Patients
+                        @else
+                        My Medical Records
+                        @endrole
+                    </h3>
+                </div>
+                <livewire:medical-record-table />
+            </div>
         </div>
-
-
 
         <!-- Right Column -->
         <div class="space-y-4 col-span-1 md:col-span-3 break-words">
 
             <div class="bg-white shadow rounded-lg p-6">
 
-            
-
-
                 <!-- Personal Information -->
                 <div class="w-full grid grid-cols-6 md:grid-cols-12">
                     <div class="pb-4 col-span-6 md:col-span-12">
                         <h3 class="text-xl font-semibold text-gray-800"> {{ $record->medical_record_id }} </h3>
-                        
                     </div>
 
                     <div class="bg-gray-200 border border-gray-400 px-4 py-2 col-span-6 md:col-span-12">
@@ -306,4 +311,5 @@
 
         </div>
 
+    </div>
 </x-layout>
