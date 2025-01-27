@@ -42,15 +42,15 @@ class PatientQueueTable extends DataTableComponent
     public function builder(): Builder
     {
         $query = PatientQueue::query()
+            ->whereNotIn('queue_status', ['Cancelled', 'Completed'])
             ->with(['patient', 'doctor', 'opd']); // Eager load the relationships
 
         $user = Auth::user();
 
-        if ($user->role === 'doctor' || $user->role === 'opd') {
+        if ($user->role !== 'admin') {
             // Filter the queue based on the user's role
             // and queue status is not cancelled or completed
-            $query->whereBelongsTo($user, $user->role)
-                ->whereNotIn('queue_status', ['Cancelled', 'Completed']);
+            $query->whereBelongsTo($user, $user->role);
         }
 
         return $query;
