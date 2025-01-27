@@ -293,7 +293,12 @@
                      <a href="#" class="flex items-center gap-x-4 px-6 py-3 text-sm/6 font-semibold text-gray-900 hover:bg-gray-50">
                         <img class="h-8 w-8 rounded-full bg-gray-50" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
                         <span class="sr-only">Your profile</span>
-                        <span aria-hidden="true">{{ $user->first_name }} {{ $user->last_name }}</span>
+                        <!-- name and role on top of each other -->
+                        <div class="flex flex-col">
+                           <span aria-hidden="true">{{ $user->first_name }} {{ $user->last_name }}</span>
+                           <span aria-hidden="true" class="text-xs/6 text-gray-500">{{ ucfirst($user->role) }}</span>
+                        </div>
+
                      </a>
                   </li>
                </ul>
