@@ -26,7 +26,7 @@ class PatientQueueController extends Controller
         try {
             $validatedData = $request->validate([
                 'opd_id' => 'required|string|exists:opds,user_id',
-                'doctor_id' => 'required|string|exists:doctors,user_id',
+                'doctor_id' => 'nullable|string|exists:doctors,user_id',
                 'patient_id' => 'required|string|exists:patients,user_id',
             ]);
 
@@ -96,42 +96,50 @@ class PatientQueueController extends Controller
     {
         // dd($request->all(), $ulid);
         // Validate the incoming request data (optional, but recommended)
+
+        Log::info('Queue update request', [
+            'request_data' => $request->all(),
+            'ulid' => $ulid,
+        ]);
         try {
             $validatedData = $request->validate([
-                'queue_status' => 'string',
+                'queue_status' => 'string|nullable',
 
                 // Doctor Selection
-                'doctor_id' => 'exists:doctors,user_id',
+                'doctor_id' => 'exists:doctors,user_id|nullable',
 
                 // Assessment
-                'primary_complaint' => 'string',
-                'duration_of_symptoms' => 'string',
-                'intensity_and_frequency' => 'string',
-                'height' => 'string',
-                'weight' => 'string',
-                'blood_pressure' => 'string',
-                'temperature' => 'string',
-                'pulse_rate' => 'string',
-                'respiration_rate' => 'string',
-                'o2_sat' => 'string',
-                'other' => 'string|nullable',
+                'primary_complaint' => 'string|nullable',
+                'duration_of_symptoms' => 'string|nullable',
+                'intensity_and_frequency' => 'string|nullable',
+                'height' => 'string|nullable',
+                'weight' => 'string|nullable',
+                'blood_pressure' => 'string|nullable',
+                'temperature' => 'string|nullable',
+                'pulse_rate' => 'string|nullable',
+                'respiration_rate' => 'string|nullable',
+                'o2_sat' => 'string|nullable',
+                'other' => 'string|nullable|nullable',
 
-                'assessment_done_at' => 'date',
+                'assessment_done_at' => 'date|nullable',
 
                 // Consultation
-                'findings' => 'string',
-                'diagnosis' => 'string',
-                'recommended_treatment' => 'string',
-                'follow_up_instructions' => 'string',
-                'referrals' => 'string',
-                'doctor_notes' => 'string',
+                'findings' => 'string|nullable',
+                'diagnosis' => 'string|nullable',
+                'recommended_treatment' => 'string|nullable',
+                'follow_up_instructions' => 'string|nullable',
+                'referrals' => 'string|nullable',
+                'doctor_notes' => 'string|nullable',
 
-                'consultation_done_at' => 'date',
+                'consultation_done_at' => 'date|nullable',
             ]);
 
-            if ($validatedData['queue_status'] === 'Assessment Done') {
+            // Safely check and set timestamps based on queue_status
+            $queueStatus = $validatedData['queue_status'] ?? null;
+
+            if ($queueStatus === 'Assessment Done') {
                 $validatedData['assessment_done_at'] = now();
-            } elseif ($validatedData['queue_status'] === 'Completed') {
+            } elseif ($queueStatus === 'Completed') {
                 $validatedData['consultation_done_at'] = now();
             }
 
@@ -196,7 +204,7 @@ class PatientQueueController extends Controller
         // set the queue status to 'Cancelled'
         $queue->queue_status = 'Cancelled';
         $queue->save();
-        
+
         // Return a JSON response to inform the frontend that the deletion was successful
         return response()->json([
             'success' => true,
