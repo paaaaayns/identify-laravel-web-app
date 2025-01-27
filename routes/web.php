@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DataTableController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\EmailVerificationController;
+use App\Http\Controllers\BiometricsController;
 use App\Http\Controllers\MedicalRecordController;
 use App\Http\Controllers\OpdController;
 use App\Http\Controllers\PatientController;
@@ -19,6 +20,7 @@ use App\Http\Controllers\UserController;
 use App\Mail\TestMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -99,6 +101,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/my-medical-record', [MedicalRecordController::class, 'index'])->name('medical-record.index');
     Route::get('/medical-record/{ulid}', [MedicalRecordController::class, 'show'])->name('medical-record.show');
 
+    // Image Capture
+    Route::post('/biometrics/store', [BiometricsController::class, 'store'])->name('biometrics.store');
 });
 
 
