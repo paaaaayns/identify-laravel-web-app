@@ -98,7 +98,8 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/queue/{ulid}', [PatientQueueController::class, 'destroy'])->name('queue.destroy');
 
     // Medical Records
-    Route::get('/my-medical-record', [MedicalRecordController::class, 'index'])->name('medical-record.index');
+    Route::get('/medical-record', [MedicalRecordController::class, 'index'])->name('medical-record.index');
+    Route::get('/history', [MedicalRecordController::class, 'index'])->name('medical-record.index');
     Route::get('/medical-record/{ulid}', [MedicalRecordController::class, 'show'])->name('medical-record.show');
 
     // Image Capture
