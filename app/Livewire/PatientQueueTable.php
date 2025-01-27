@@ -46,9 +46,11 @@ class PatientQueueTable extends DataTableComponent
 
         $user = Auth::user();
 
-        if ($user->role === 'doctor' || $user->role === 'patient') {
+        if ($user->role === 'doctor' || $user->role === 'opd') {
             // Filter the queue based on the user's role
-            $query->whereBelongsTo($user, $user->role);
+            // and queue status is not cancelled or completed
+            $query->whereBelongsTo($user, $user->role)
+                ->whereNotIn('queue_status', ['Cancelled', 'Completed']);
         }
 
         return $query;
@@ -95,12 +97,16 @@ class PatientQueueTable extends DataTableComponent
 
             Column::make('Action') // TODO: Implement the action column
                 ->label(
-                    fn($row, Column $column) => view('components.livewire.datatables.action-column')->with(
+                    fn($row, Column $column) => view('components.livewire.action-columns.queue')->with(
                         [
-                            'viewLink' => route('queue.show', ['ulid' => $row->ulid]),
+                            'viewLinkOngoing' => route('queue.show', ['ulid' => $row->ulid]),
+                            'viewLinkCompleted' => $row->medicalRecord
+                                ? route('medical-record.show', ['ulid' => $row->medicalRecord->ulid])
+                                : null,
                             'deleteLink' => route('queue.destroy', ['ulid' => $row->ulid]),
-                            'id' => $row->id, 
+                            'id' => $row->id,
                             'queue_id' => $row->id,
+                            'queue' => $row,
                         ]
                     )->render()
                 )->html(),

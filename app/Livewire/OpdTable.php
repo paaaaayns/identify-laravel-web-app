@@ -61,7 +61,7 @@ class OpdTable extends DataTableComponent
 
             Column::make('Action')
                 ->label(
-                    fn($row, Column $column) => view('components.livewire.datatables.action-column')->with(
+                    fn($row, Column $column) => view('components.livewire.action-columns.default')->with(
                         [
                             'viewLink' => route('users.opd.show', ['ulid' => $row->ulid]), // Pass the ULID to the route
                             'deleteLink' => route('users.opd.destroy', ['user_id' => $row->user_id]), // Pass the USER_ID to the route

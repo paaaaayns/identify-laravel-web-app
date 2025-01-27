@@ -38,29 +38,26 @@ class MedicalRecordTable extends DataTableComponent
 
         $user = Auth::user();
 
-        if ($user->role === 'patient') {
-            // Filter the queue based on the user's role
-            $query->whereBelongsTo($user, $user->role);
+        if ($user->role === 'admin') {
+            // Return all records if the user is an admin
+            return $query;
         }
 
-        return $query;
+        // Filter the queue based on the user's role
+        return $query->whereBelongsTo($user, $user->role);
     }
 
     public function columns(): array
     {
-        // $patientName = fn($row) => $this->getPatientName($row);
+        $patientName = fn($row) => $this->getPatientName($row);
         $doctorName = fn($row) => $this->getDoctorName($row);
-        return [
+        $columns = [
             Column::make("Date", "created_at")
                 ->format(fn($value) => Carbon::parse($value)->format('Y-m-d')) // Format the date
                 ->sortable(),
 
-            Column::make("Doctor")
-                ->label($doctorName) // Display full name
-                ->sortable(fn($builder, $direction) => $builder->orderBy('last_name', $direction))
-                ->searchable(), // TODO: Implement the search functionality
-
-            Column::make('Action') // TODO: Implement the action column
+            // show doctor column if the user is a patient
+            Column::make("Action")
                 ->label(
                     fn($row, Column $column) => view('components.livewire.action-columns.medical-record')->with(
                         [
@@ -70,6 +67,40 @@ class MedicalRecordTable extends DataTableComponent
                     )->render()
                 )->html(),
         ];
+
+        $user = Auth::user();
+        // Add the "Doctor" column if the user is a patient
+        if ($user->role === 'patient') {
+            array_splice($columns, count($columns) - 1, 0, [
+                Column::make("Doctor")
+                    ->label($doctorName) // Display full name
+                    ->sortable(fn($builder, $direction) => $builder->orderBy('last_name', $direction))
+                    ->searchable(), // TODO: Implement the search functionality
+            ]);
+        } else {
+            array_splice($columns, count($columns) - 1, 0, [
+                Column::make("Patient")
+                    ->label($patientName) // Display full name
+                    ->sortable(fn($builder, $direction) => $builder->orderBy('last_name', $direction))
+                    ->searchable(), // TODO: Implement the search functionality
+            ]);
+        }
+
+        return $columns;
+    }
+
+    // Get the patient's name
+    public function getPatientName($row)
+    {
+        // Retrieve the patient using the relationships
+        $patient = $row->patient;
+
+        // Check if patient exist
+        if ($patient) {
+            return "{$patient->last_name}, {$patient->first_name} {$patient->middle_name}";
+        }
+
+        return 'N/A'; // Default value if no names found
     }
 
     // Get the doctor's name
