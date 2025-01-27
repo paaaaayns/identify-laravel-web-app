@@ -47,7 +47,8 @@
             <div class="flex flex-col items-center text-center bg-white shadow rounded-lg p-6 self-start">
                 <!-- Profile Picture -->
                 <div class="w-32 h-32 mb-4">
-                    <img src="https://via.placeholder.com/150" alt="Profile Picture" class="w-full h-full rounded-full shadow">
+                    <!-- $profile->ulid is the folder name, get the first image as the source of the image tag make it dynamic -->
+                    <img src="{{ Storage::url($profile->ulid . '/biometrics/face.png') }}" alt="Profile Picture" class="w-full h-full rounded-lg shadow">
                 </div>
                 <!-- User Info -->
                 <h2 class="text-lg font-semibold text-gray-800">{{ $profile->first_name }} {{ $profile->middle_name ?? '' }} {{ $profile->last_name }}</h2>
@@ -78,9 +79,11 @@
 
                 <div class="">
                     <x-forms.primary-button
-                        class="w-full"
                         type="button"
-                        onclick="captureImage()">
+                        onclick="openModal()"
+                        data-modal-target="camera-modal"
+                        data-modal-toggle="camera-modal"
+                        class="w-full">
                         Capture Iris
                     </x-forms.primary-button>
                 </div>
@@ -443,8 +446,11 @@
                             Right Iris
                         </x-forms.label>
 
-                        <div class="w-full">
-                            <img src="https://via.placeholder.com/200" alt="Profile Picture" class="w-full h-full rounded-lg shadow">
+                        <div class="w-48 h-48 rounded-lg shadow overflow-hiddent">
+                            <img
+                                src="{{ Storage::url($profile->ulid . '/biometrics/right_iris.png') }}"
+                                alt="Right Iris"
+                                class="w-full h-full object-cover">
                         </div>
                     </x-forms.field-container>
 
@@ -453,8 +459,11 @@
                             Face
                         </x-forms.label>
 
-                        <div class="w-full">
-                            <img src="https://via.placeholder.com/200" alt="Profile Picture" class="w-full h-full rounded-lg shadow">
+                        <div class="w-48 h-48 rounded-lg shadow overflow-hidden">
+                            <img
+                                src="{{ Storage::url($profile->ulid . '/biometrics/face.png') }}"
+                                alt="Face"
+                                class="w-full h-full object-cover">
                         </div>
                     </x-forms.field-container>
 
@@ -463,8 +472,11 @@
                             Left Iris
                         </x-forms.label>
 
-                        <div class="w-full">
-                            <img src="https://via.placeholder.com/200" alt="Profile Picture" class="w-full h-full rounded-lg shadow">
+                        <div class="w-48 h-48 rounded-lg shadow overflow-hidden">
+                            <img
+                                src="{{ Storage::url($profile->ulid . '/biometrics/left_iris.png') }}"
+                                alt="Left Iris"
+                                class="w-full h-full object-cover">
                         </div>
                     </x-forms.field-container>
 
@@ -473,15 +485,123 @@
         </form>
     </div>
 
-    <script>
-        function restrictLetterInput(input) {
-            input.value = input.value.replace(/[^0-9\-]/g, '');
+    <!-- Main modal -->
+    <div
+        id="camera-modal"
+        onclick="handleModalBackgroundClick(event)"
+        tabindex="-1"
+        aria-hidden="true"
+        class="hidden bg-gray-800 bg-opacity-75 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-2xl max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <!-- Modal header -->
+                <div class="flex justify-center items-center p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                        Look at the camera
+                    </h3>
+                </div>
+                <!-- Modal Body -->
+                <div class="p-4">
+                    <video id="video" class="w-full bg-gray-300 rounded-md" autoplay></video>
+                    <canvas id="canvas" class="hidden"></canvas>
+                </div>
+                <!-- Modal footer -->
+                <div class="flex justify-center items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+                    <button
+                        onclick="captureImage()"
+                        data-modal-hide="camera-modal"
+                        type="button"
+                        class="text-white bg-primary focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                        Capture
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script defer>
+        let videoStream;
+
+        function openModal() {
+            const modal = document.getElementById('camera-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+
+            openCamera();
+        }
+
+        async function openCamera() {
+            // Start the camera
+            const video = document.getElementById('video');
+            videoStream = await navigator.mediaDevices.getUserMedia({
+                video: true
+            });
+            video.srcObject = videoStream;
+            video.play();
+        }
+
+        function closeCamera() {
+            // Stop the camera
+            if (videoStream) {
+                const tracks = videoStream.getTracks();
+                tracks.forEach(track => track.stop());
+            }
+        }
+
+        function handleModalBackgroundClick(event) {
+            const modal = document.getElementById('camera-modal');
+            if (event.target === modal) {
+                closeCamera();
+            }
+        }
+
+        function captureImage() {
+            const canvas = document.getElementById('canvas');
+            const video = document.getElementById('video');
+            const context = canvas.getContext('2d');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            // Convert the canvas image to Base64
+            const imageData = canvas.toDataURL('image/png');
+
+            // Send the image to the server
+            fetch('/biometrics/store', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    },
+                    body: JSON.stringify({
+                        image: imageData,
+                        patient: '{{ $profile->ulid }}',
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showToast('toast-success', data.message);
+                        console.log('Image URL:', data.path);
+                        closeCamera();
+                    } else {
+                        showToast('toast-error', data.message);
+                        alert('Error storing image.');
+                        closeCamera();
+                    }
+                })
+                .catch(error => {
+                    showToast('toast-error', 'An error occurred while storing the image.');
+                    console.error('Error:', error);
+                    closeCamera();
+                });
         }
     </script>
 
     <script>
-        function captureImage() {
-            showToast('toast-success', 'Image captured successfully!');
+        function restrictLetterInput(input) {
+            input.value = input.value.replace(/[^0-9\-]/g, '');
         }
     </script>
 
@@ -516,7 +636,7 @@
                     method: 'POST',
                     body: formData,
                     headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'X-CSRF-TOKEN': document.querySelector('meta[name=" csrf-token"]').content,
                         'Accept': 'application/json',
                     },
                 });
