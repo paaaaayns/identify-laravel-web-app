@@ -152,12 +152,12 @@
                     console.log(response.status, result.message, result.queue);
                     location.reload();
                 } else {
-                    showToast('toast-error', 'Failed to update queue.');
-                    console.error(response.status, 'Failed to update queue.');
+                    showToast('toast-error', result.message);
+                    console.error(response.status, result.message);
                 }
             } catch (error) {
                 showToast('toast-error', 'An error occurred while processing the request.');
-                console.error(response.status, error);
+                console.error('Fetch error:', error);
                 return null;
             }
         }
