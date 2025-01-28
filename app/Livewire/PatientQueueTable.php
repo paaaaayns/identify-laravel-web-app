@@ -68,12 +68,12 @@ class PatientQueueTable extends DataTableComponent
             Column::make("Patient Name")
                 ->label($patientName) // Display full name
                 ->sortable(fn($builder, $direction) => $builder->orderBy('last_name', $direction))
-                ->searchable(), // TODO: Implement the search functionality
+                ->searchable(),
 
             Column::make("Doctor Name")
                 ->label($doctorName) // Display full name
                 ->sortable(fn($builder, $direction) => $builder->orderBy('last_name', $direction))
-                ->searchable(), // TODO: Implement the search functionality
+                ->searchable(),
 
 
             Column::make("Status", "queue_status")
@@ -95,7 +95,7 @@ class PatientQueueTable extends DataTableComponent
                 })
                 ->html(),
 
-            Column::make('Action') // TODO: Implement the action column
+            Column::make('Action')
                 ->label(
                     fn($row, Column $column) => view('components.livewire.action-columns.queue')->with(
                         [

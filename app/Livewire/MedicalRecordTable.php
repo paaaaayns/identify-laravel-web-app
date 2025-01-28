@@ -75,14 +75,18 @@ class MedicalRecordTable extends DataTableComponent
                 Column::make("Doctor")
                     ->label($doctorName) // Display full name
                     ->sortable(fn($builder, $direction) => $builder->orderBy('last_name', $direction))
-                    ->searchable(), // TODO: Implement the search functionality
+                    ->searchable(),
             ]);
         } else {
             array_splice($columns, count($columns) - 1, 0, [
+                Column::make("Doctor")
+                    ->label($doctorName) // Display full name
+                    ->sortable(fn($builder, $direction) => $builder->orderBy('last_name', $direction))
+                    ->searchable(),
                 Column::make("Patient")
                     ->label($patientName) // Display full name
                     ->sortable(fn($builder, $direction) => $builder->orderBy('last_name', $direction))
-                    ->searchable(), // TODO: Implement the search functionality
+                    ->searchable(),
             ]);
         }
 
