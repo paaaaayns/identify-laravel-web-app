@@ -47,7 +47,7 @@
             <div class="flex flex-col items-center text-center bg-white shadow rounded-lg p-6 self-start">
                 <!-- Profile Picture -->
                 <div class="w-32 h-32 mb-4">
-                    <img src="https://via.placeholder.com/150" alt="Profile Picture" class="w-full h-full rounded-full shadow">
+                    <img src="https://picsum.photos/200" alt="Profile Picture" class="w-full h-full rounded-full shadow">
                 </div>
                 <!-- User Info -->
                 <h2 class="text-lg font-semibold text-gray-800">{{ $profile->last_name }}, {{ $profile->first_name }} {{ $profile->middle_name ?? '' }}</h2>
@@ -441,7 +441,7 @@
                         </x-forms.label>
 
                         <div class="w-full">
-                            <img src="https://via.placeholder.com/200" alt="Profile Picture" class="w-full h-full rounded-lg shadow">
+                            <img src="https://picsum.photos/200" alt="Profile Picture" class="w-full h-full rounded-lg shadow">
                         </div>
                     </x-forms.field-container>
 
@@ -451,7 +451,7 @@
                         </x-forms.label>
 
                         <div class="w-full">
-                            <img src="https://via.placeholder.com/200" alt="Profile Picture" class="w-full h-full rounded-lg shadow">
+                            <img src="https://picsum.photos/200" alt="Profile Picture" class="w-full h-full rounded-lg shadow">
                         </div>
                     </x-forms.field-container>
 
@@ -461,7 +461,7 @@
                         </x-forms.label>
 
                         <div class="w-full">
-                            <img src="https://via.placeholder.com/200" alt="Profile Picture" class="w-full h-full rounded-lg shadow">
+                            <img src="https://picsum.photos/200" alt="Profile Picture" class="w-full h-full rounded-lg shadow">
                         </div>
                     </x-forms.field-container>
 

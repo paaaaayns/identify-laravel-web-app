@@ -44,8 +44,13 @@
     <div class="max-w-4xl w-full mx-auto">
 
         <div class="w-full flex flex-col items-center">
-            <form method="POST" action="{{ route('users.doctor.store') }}" id="RegistrationForm" class="w-full">
+            <form
+                id="RegistrationForm"
+                method="POST"
+                action="{{ route('users.doctor.store') }}"
+                class="w-full">
                 @csrf
+                
                 <div class="bg-white rounded-lg shadow">
                     <!-- Personal Information -->
                     <div class="p-6">
@@ -357,8 +362,9 @@
                     },
                 });
 
+                const result = await response.json();
+
                 if (response.ok) {
-                    const result = await response.json();
                     showToast('toast-success', result.message);
                     console.log(response.status, result.message);
                     console.log('User:', result.user);
@@ -366,13 +372,13 @@
                     // Return user data
                     return result.user;
                 } else {
-                    showToast('toast-error', 'Failed to create the account.');
-                    console.error(response.status, 'Failed to create the account.');
+                    showToast('toast-error', result.message);
+                    console.error(response.status, result.message);
                     return null;
                 }
             } catch (error) {
                 showToast('toast-error', 'An error occurred while processing the request.');
-                console.error(response.status, error);
+                console.error('Fetch error:', error);
                 return null;
             }
         }

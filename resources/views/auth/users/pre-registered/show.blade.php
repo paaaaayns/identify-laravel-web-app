@@ -48,7 +48,7 @@
                 <!-- Profile Picture -->
                 <div class="w-32 h-32 mb-4">
                     <!-- $profile->ulid is the folder name, get the first image as the source of the image tag make it dynamic -->
-                    <img src="{{ Storage::url($profile->ulid . '/biometrics/face.png') }}" alt="Profile Picture" class="w-full h-full rounded-lg shadow">
+                    <img src="{{ Storage::url($profile->ulid . '/biometrics/face.png') }}" alt="Profile Picture" class="w-full h-full rounded-full shadow">
                 </div>
                 <!-- User Info -->
                 <h2 class="text-lg font-semibold text-gray-800">{{ $profile->first_name }} {{ $profile->middle_name ?? '' }} {{ $profile->last_name }}</h2>
@@ -630,19 +630,22 @@
             const form = document.getElementById('RegistrationForm');
             const formData = new FormData(form);
 
+            console.log('Form data:', formData);
+
             try {
                 // Perform the POST request using Fetch API
                 const response = await fetch(form.action, {
                     method: 'POST',
                     body: formData,
                     headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name=" csrf-token"]').content,
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
                         'Accept': 'application/json',
                     },
                 });
 
+                const result = await response.json();
+
                 if (response.ok) {
-                    const result = await response.json();
                     showToast('toast-success', result.message);
                     console.log(response.status, result.message);
                     console.log('User:', result.user);
@@ -650,13 +653,13 @@
                     // Return user data
                     return result.user;
                 } else {
-                    showToast('toast-error', 'Failed to create the account.');
-                    console.error(response.status, 'Failed to create the account.');
+                    showToast('toast-error', result.message);
+                    console.error(response.status, result.message);
                     return null;
                 }
             } catch (error) {
                 showToast('toast-error', 'An error occurred while processing the request.');
-                console.error(response.status, error);
+                console.error('Fetch error:', error);
                 return null;
             }
         }
