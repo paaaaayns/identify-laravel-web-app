@@ -33,13 +33,17 @@
         </nav>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
         <!-- Left Column -->
         <div class="space-y-4 md:col-span-1">
             <div class="flex flex-col items-center text-center bg-white shadow rounded-lg p-6 self-start">
                 <!-- Profile Picture -->
                 <div class="w-32 h-32 mb-4">
-                    <img src="https://via.placeholder.com/150" alt="Profile Picture" class="w-full h-full rounded-full shadow">
+                    <!-- $profile->ulid is the folder name, get the first image as the source of the image tag make it dynamic -->
+                    <img
+                        id="profile_picture"
+                        alt="Profile Picture"
+                        class="w-full h-full rounded-full shadow">
                 </div>
                 <!-- User Info -->
                 <h2 class="text-lg font-semibold text-gray-800">{{ $patient->first_name }} {{ $patient->middle_name ?? '' }} {{ $patient->last_name }}</h2>

@@ -41,14 +41,17 @@
         </nav>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
         <!-- Left Column -->
         <div class="space-y-4 md:col-span-1">
             <div class="flex flex-col items-center text-center bg-white shadow rounded-lg p-6 self-start">
                 <!-- Profile Picture -->
                 <div class="w-32 h-32 mb-4">
                     <!-- $profile->ulid is the folder name, get the first image as the source of the image tag make it dynamic -->
-                    <img src="{{ Storage::url($profile->ulid . '/biometrics/face.png') }}" alt="Profile Picture" class="w-full h-full rounded-full shadow">
+                    <img
+                        id="profile_picture"
+                        alt="Profile Picture"
+                        class="w-full h-full rounded-full shadow">
                 </div>
                 <!-- User Info -->
                 <h2 class="text-lg font-semibold text-gray-800">{{ $profile->first_name }} {{ $profile->middle_name ?? '' }} {{ $profile->last_name }}</h2>
@@ -441,39 +444,39 @@
                 <div class="grid grid-cols-1 sm:grid-cols-12 gap-x-6 gap-y-6 mt-6">
 
                     <x-forms.field-container class="sm:col-span-4 grid place-items-center">
-                        <x-forms.label for="address">
+                        <x-forms.label for="right_iris">
                             Right Iris
                         </x-forms.label>
 
                         <div class="w-48 h-48 rounded-lg shadow overflow-hiddent">
                             <img
-                                src="{{ Storage::url($profile->ulid . '/biometrics/right_iris.png') }}"
+                                id="right_iris"
                                 alt="Right Iris"
                                 class="w-full h-full object-cover">
                         </div>
                     </x-forms.field-container>
 
                     <x-forms.field-container class="sm:col-span-4 grid place-items-center">
-                        <x-forms.label for="email">
+                        <x-forms.label for="face">
                             Face
                         </x-forms.label>
 
                         <div class="w-48 h-48 rounded-lg shadow overflow-hidden">
                             <img
-                                src="{{ Storage::url($profile->ulid . '/biometrics/face.png') }}"
+                                id="face"
                                 alt="Face"
                                 class="w-full h-full object-cover">
                         </div>
                     </x-forms.field-container>
 
                     <x-forms.field-container class="sm:col-span-4 grid place-items-center">
-                        <x-forms.label for="contact_number">
+                        <x-forms.label for="left_iris">
                             Left Iris
                         </x-forms.label>
 
                         <div class="w-48 h-48 rounded-lg shadow overflow-hidden">
                             <img
-                                src="{{ Storage::url($profile->ulid . '/biometrics/left_iris.png') }}"
+                                id="left_iris"
                                 alt="Left Iris"
                                 class="w-full h-full object-cover">
                         </div>
@@ -519,6 +522,17 @@
         </div>
     </div>
 
+    <script>
+        // on page load
+        window.addEventListener('DOMContentLoaded', (event) => {
+            // display images to img
+            document.getElementById('profile_picture').src = "{{ Storage::url('patients/' . $profile->ulid . '/biometrics/face.png') }}";
+            document.getElementById('face').src = "{{ Storage::url('patients/' . $profile->ulid . '/biometrics/face.png') }}";
+            document.getElementById('left_iris').src = "{{ Storage::url('patients/' . $profile->ulid . '/biometrics/left_iris.png') }}";
+            document.getElementById('right_iris').src = "{{ Storage::url('patients/' . $profile->ulid . '/biometrics/right_iris.png') }}";
+        });
+    </script>
+
     <script defer>
         let videoStream;
 
@@ -528,6 +542,14 @@
             modal.classList.add('flex');
 
             openCamera();
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('camera-modal');
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+
+            closeCamera();
         }
 
         async function openCamera() {
@@ -551,7 +573,7 @@
         function handleModalBackgroundClick(event) {
             const modal = document.getElementById('camera-modal');
             if (event.target === modal) {
-                closeCamera();
+                closeModal();
             }
         }
 
@@ -575,14 +597,21 @@
                     },
                     body: JSON.stringify({
                         image: imageData,
-                        patient: '{{ $profile->ulid }}',
+                        patient_ulid: '{{ $profile->ulid }}',
                     })
                 })
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
                         showToast('toast-success', data.message);
-                        console.log('Image URL:', data.path);
+                        console.log("Face Image Path:", "{{ Storage::url('patients/' . $profile->ulid . '/biometrics/face.png') }}");
+
+                        // refresh the page after 2 seconds
+                        setTimeout(() => {
+                            // refresh the page
+                            window.location.reload();
+                        }, 2000);
+
                         closeCamera();
                     } else {
                         showToast('toast-error', data.message);

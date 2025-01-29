@@ -47,7 +47,11 @@
             <div class="flex flex-col items-center text-center bg-white shadow rounded-lg p-6 self-start">
                 <!-- Profile Picture -->
                 <div class="w-32 h-32 mb-4">
-                    <img src="https://picsum.photos/200" alt="Profile Picture" class="w-full h-full rounded-full shadow">
+                    <!-- $profile->ulid is the folder name, get the first image as the source of the image tag make it dynamic -->
+                    <img
+                        id="profile_picture"
+                        alt="Profile Picture"
+                        class="w-full h-full rounded-full shadow">
                 </div>
                 <!-- User Info -->
                 <h2 class="text-lg font-semibold text-gray-800">{{ $profile->last_name }}, {{ $profile->first_name }} {{ $profile->middle_name ?? '' }}</h2>
@@ -440,8 +444,11 @@
                             Right Iris
                         </x-forms.label>
 
-                        <div class="w-full">
-                            <img src="https://picsum.photos/200" alt="Profile Picture" class="w-full h-full rounded-lg shadow">
+                        <div class="w-48 h-48 rounded-lg shadow overflow-hiddent">
+                            <img
+                                id="right_iris"
+                                alt="Right Iris"
+                                class="w-full h-full object-cover">
                         </div>
                     </x-forms.field-container>
 
@@ -450,8 +457,11 @@
                             Face
                         </x-forms.label>
 
-                        <div class="w-full">
-                            <img src="https://picsum.photos/200" alt="Profile Picture" class="w-full h-full rounded-lg shadow">
+                        <div class="w-48 h-48 rounded-lg shadow overflow-hidden">
+                            <img
+                                id="face"
+                                alt="Face"
+                                class="w-full h-full object-cover">
                         </div>
                     </x-forms.field-container>
 
@@ -460,8 +470,11 @@
                             Left Iris
                         </x-forms.label>
 
-                        <div class="w-full">
-                            <img src="https://picsum.photos/200" alt="Profile Picture" class="w-full h-full rounded-lg shadow">
+                        <div class="w-48 h-48 rounded-lg shadow overflow-hidden">
+                            <img
+                                id="left_iris"
+                                alt="Left Iris"
+                                class="w-full h-full object-cover">
                         </div>
                     </x-forms.field-container>
 
@@ -469,6 +482,18 @@
             </div>
         </div>
     </div>
+
+
+    <script>
+        // on page load
+        window.addEventListener('DOMContentLoaded', (event) => {
+            // display images to img
+            document.getElementById('profile_picture').src = "{{ Storage::url('patients/' . $profile->ulid . '/biometrics/face.png') }}";
+            document.getElementById('face').src = "{{ Storage::url('patients/' . $profile->ulid . '/biometrics/face.png') }}";
+            document.getElementById('left_iris').src = "{{ Storage::url('patients/' . $profile->ulid . '/biometrics/left_iris.png') }}";
+            document.getElementById('right_iris').src = "{{ Storage::url('patients/' . $profile->ulid . '/biometrics/right_iris.png') }}";
+        });
+    </script>
 
     <!-- Confirmation dialog -->
     <script>
