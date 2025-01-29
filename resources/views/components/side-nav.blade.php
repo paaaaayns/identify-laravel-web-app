@@ -315,7 +315,7 @@
     <!-- History -->
     <li x-data="{ isActive: window.location.pathname.startsWith('/history') }">
         <a
-            href="{{ route('medical-record.index') }}"
+            href="{{ route('history.index') }}"
             :class="isActive ? 'bg-background-dark text-white' : 'text-gray-700 hover:bg-gray-50'"
             class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold">
             <svg
@@ -467,7 +467,7 @@
     <!-- History -->
     <li x-data="{ isActive: window.location.pathname.startsWith('/history') }">
         <a
-            href="{{ route('medical-record.index') }}"
+            href="{{ route('history.index') }}"
             :class="isActive ? 'bg-background-dark text-white' : 'text-gray-700 hover:bg-gray-50'"
             class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold">
             <svg
@@ -562,7 +562,7 @@
     <!-- History -->
     <li x-data="{ isActive: window.location.pathname.startsWith('/history') }">
         <a
-            href="{{ route('medical-record.index') }}"
+            href="{{ route('history.index') }}"
             :class="isActive ? 'bg-background-dark text-white' : 'text-gray-700 hover:bg-gray-50'"
             class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold">
             <svg
