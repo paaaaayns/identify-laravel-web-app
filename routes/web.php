@@ -99,8 +99,9 @@ Route::middleware(['auth'])->group(function () {
 
     // Medical Records
     Route::get('/medical-record', [MedicalRecordController::class, 'index'])->name('medical-record.index');
-    Route::get('/history', [MedicalRecordController::class, 'index'])->name('medical-record.index');
     Route::get('/medical-record/{ulid}', [MedicalRecordController::class, 'show'])->name('medical-record.show');
+    Route::get('/history', [MedicalRecordController::class, 'index'])->name('history.index');
+    Route::get('/history/{ulid}', [MedicalRecordController::class, 'show'])->name('history.show');
 
     // Image Capture
     Route::post('/biometrics/store', [BiometricsController::class, 'store'])->name('biometrics.store');
