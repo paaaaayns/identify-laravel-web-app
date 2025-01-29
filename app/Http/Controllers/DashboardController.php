@@ -55,8 +55,11 @@ class DashboardController extends Controller
                     ->where('created_at', '>=', Carbon::now()->subHours(3))
                     ->count();
 
-                $queuedPatientsCount = PatientQueue::whereNotIn('queue_status', ['Completed', 'Cancelled'])->count();
-                $recentQueuedPatientsCount = PatientQueue::whereNotIn('queue_status', ['Completed', 'Cancelled'])
+                $queuedPatientsCount = PatientQueue::whereBelongsTo($user, $user->role)
+                    ->whereNotIn('queue_status', ['Completed', 'Cancelled'])
+                    ->count();
+                $recentQueuedPatientsCount = PatientQueue::whereBelongsTo($user, $user->role)
+                    ->whereNotIn('queue_status', ['Completed', 'Cancelled'])
                     ->where('created_at', '>=', Carbon::now()->subHours(3))
                     ->count();
 
