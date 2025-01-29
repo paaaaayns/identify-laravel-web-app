@@ -102,7 +102,9 @@ class PatientController extends Controller
 
         $user = new Patient();
         $user->fill($request->all());
-        // $user->ulid = $request->ulid;
+
+        // transfer old ulid to new ulid
+        $user->ulid = $request->ulid;
 
         // add the pre_registration_code to the user
         $user->registered_at = now();
