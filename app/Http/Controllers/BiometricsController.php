@@ -15,7 +15,7 @@ class BiometricsController extends Controller
     public function store(Request $request)
     {
         Log::info('BiometricsController@store: Request received.', [
-            'request' => $request->patient,
+            'patient_ulid' => $request->patient_ulid,
         ]);
 
         try {
@@ -25,7 +25,7 @@ class BiometricsController extends Controller
             ]);
 
             // Get the patient ULID
-            $ulid = $request->patient;
+            $ulid = $request->patient_ulid;
 
             // Decode the base64 image
             $imageData = $request->input('image');
@@ -36,24 +36,34 @@ class BiometricsController extends Controller
             // TODO: Iris Recognition Model Integration
             // Save the image to the public directory using the ULID as the directory name
             // 3 images: face, left iris, right iris for display in patient profile
+            // folder structure: 
+            // face/profile_picture = /public/patients/{ulid}/biometrics/face.png
+            // left_iris = /public/patients/{ulid}/biometrics/left_iris.png
+            // right_iris = /public/patients/{ulid}/biometrics/right_iris.png
 
 
             // Generate a unique filename
-            $directory = $ulid . '/biometrics';
+            $directory = 'patients/' . $ulid . '/biometrics';
             $fileName = 'face.png';
             $filePath = "{$directory}/{$fileName}";
 
             // Store the image in the public directory
-            $path = Storage::disk('public')->put($filePath, $imageData);
+            $faceImagePath = Storage::disk('public')->put($filePath, $imageData);
+            $leftIrisImagePath = Storage::disk('public')->put($filePath, $imageData);
+            $rightIrisImagePath = Storage::disk('public')->put($filePath, $imageData);
+            
 
             Log::info('Image stored successfully.', [
-                'path' => Storage::url($path),
+                'path' => Storage::url($filePath),
             ]);
 
             return response()->json([
                 'success' => true,
                 'message' => 'Image stored successfully.',
-                'path' => Storage::url($path),
+                'faceImagePath' => Storage::url($filePath),
+                'leftIrisImagePath' => Storage::url($filePath),
+                'rightIrisImagePath' => Storage::url($filePath),
+
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -61,5 +71,13 @@ class BiometricsController extends Controller
                 'message' => 'Error storing image: ' . $e->getMessage(),
             ], 500);
         }
+    }
+
+    /**
+     * Search for a patient using biometric data.
+     */
+    public function search(Request $request)
+    {
+        
     }
 }
