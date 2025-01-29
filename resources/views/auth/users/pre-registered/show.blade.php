@@ -82,7 +82,6 @@
                         type="button"
                         onclick="openModal()"
                         data-modal-target="camera-modal"
-                        data-modal-toggle="camera-modal"
                         class="w-full">
                         Capture Iris
                     </x-forms.primary-button>
