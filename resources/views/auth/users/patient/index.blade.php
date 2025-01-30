@@ -33,10 +33,148 @@
         </nav>
     </div>
 
-    <div>
+    <div class="flex flex-col space-y-4">
+
+        <x-forms.primary-button
+            type="button"
+            onclick="openModal()"
+            data-modal-target="camera-modal"
+            class="w-full">
+            Search Iris
+        </x-forms.primary-button>
+
         <div>
             <livewire:patient-table />
         </div>
     </div>
 
+    <!-- Main modal -->
+    <div
+        id="camera-modal"
+        onclick="handleModalBackgroundClick(event)"
+        tabindex="-1"
+        aria-hidden="true"
+        class="hidden bg-gray-800 bg-opacity-75 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-2xl max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <!-- Modal header -->
+                <div class="flex justify-center items-center p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                        Look at the camera
+                    </h3>
+                </div>
+                <!-- Modal Body -->
+                <div class="p-4">
+                    <video id="video" class="w-full bg-gray-300 rounded-md" autoplay></video>
+                    <canvas id="canvas" class="hidden"></canvas>
+                </div>
+                <!-- Modal footer -->
+                <div class="flex justify-center items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+                    <button
+                        onclick="captureImage()"
+                        data-modal-hide="camera-modal"
+                        type="button"
+                        class="text-white bg-primary focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                        Capture
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </x-layout>
+
+
+
+<script defer>
+    let videoStream;
+
+    function openModal() {
+        const modal = document.getElementById('camera-modal');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+
+        openCamera();
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('camera-modal');
+        modal.classList.remove('flex');
+        modal.classList.add('hidden');
+
+        closeCamera();
+    }
+
+    async function openCamera() {
+        // Start the camera
+        const video = document.getElementById('video');
+        videoStream = await navigator.mediaDevices.getUserMedia({
+            video: true
+        });
+        video.srcObject = videoStream;
+        video.play();
+    }
+
+    function closeCamera() {
+        // Stop the camera
+        if (videoStream) {
+            const tracks = videoStream.getTracks();
+            tracks.forEach(track => track.stop());
+        }
+    }
+
+    function handleModalBackgroundClick(event) {
+        const modal = document.getElementById('camera-modal');
+        if (event.target === modal) {
+            closeModal();
+        }
+    }
+
+    function captureImage() {
+        const canvas = document.getElementById('canvas');
+        const video = document.getElementById('video');
+        const context = canvas.getContext('2d');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        // Convert the canvas image to Base64
+        const imageData = canvas.toDataURL('image/png');
+
+        // Send the image to the server
+        fetch('/biometrics/search', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify({
+                    image: imageData,
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showToast('toast-success', data.message);
+
+                    // refresh the page after 2 seconds
+                    setTimeout(() => {
+                        // refresh the page
+                        window.location.reload();
+                    }, 2000);
+
+                    closeCamera();
+                } else {
+                    showToast('toast-error', data.message);
+                    alert('Error storing image.');
+                    closeCamera();
+                }
+            })
+            .catch(error => {
+                showToast('toast-error', 'An error occurred while storing the image.');
+                console.error('Error:', error);
+                closeCamera();
+            });
+    }
+</script>
