@@ -33,7 +33,7 @@ class BiometricsController extends Controller
             $imageData = base64_decode($imageData);
 
 
-            // TODO: Iris Recognition Model Integration
+            // TODO: Iris Recognition Model Integration (saving the image to the public directory)
             // Save the image to the public directory using the ULID as the directory name
             // 3 images: face, left iris, right iris for display in patient profile
             // folder structure: 
@@ -51,7 +51,7 @@ class BiometricsController extends Controller
             $faceImagePath = Storage::disk('public')->put($filePath, $imageData);
             $leftIrisImagePath = Storage::disk('public')->put($filePath, $imageData);
             $rightIrisImagePath = Storage::disk('public')->put($filePath, $imageData);
-            
+
 
             Log::info('Image stored successfully.', [
                 'path' => Storage::url($filePath),
@@ -78,6 +78,42 @@ class BiometricsController extends Controller
      */
     public function search(Request $request)
     {
-        
+        Log::info('BiometricsController@search: Request received.', [
+            'request' => $request,
+        ]);
+
+        try {
+            // Validate the request
+            $request->validate([
+                'image' => 'required|string', // Base64-encoded string
+            ]);
+
+            // Decode the base64 image
+            $imageData = $request->input('image');
+            $imageData = explode(',', $imageData)[1]; // Remove the base64 header
+            $imageData = base64_decode($imageData);
+
+            // Iris Recognition Model Integration
+            // TODO: Iris Recognition Model Integration (process biometric data)
+
+
+
+            // Return the patient ULID
+            return response()->json([
+                'success' => true,
+                'message' => 'Patient found.',
+                'patient_ulid' => 'ULID1234567890',
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error('Error validating request.', [
+                'error' => $e->getMessage(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Error validating request: ' . $e->getMessage(),
+            ], 400);
+        }
     }
 }
