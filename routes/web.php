@@ -104,7 +104,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/history/{ulid}', [MedicalRecordController::class, 'show'])->name('history.show');
 
     // Biometrics
+    // Store biometric data
     Route::post('/biometrics/store', [BiometricsController::class, 'store'])->name('biometrics.store');
+    // Search for a patient using biometric data
     Route::post('/biometrics/search', [BiometricsController::class, 'search'])->name('biometrics.search');
 });
 
