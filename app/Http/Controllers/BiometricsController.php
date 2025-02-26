@@ -104,7 +104,6 @@ class BiometricsController extends Controller
                 'message' => 'Patient found.',
                 'patient_ulid' => 'ULID1234567890',
             ]);
-
         } catch (\Exception $e) {
             Log::error('Error validating request.', [
                 'error' => $e->getMessage(),
