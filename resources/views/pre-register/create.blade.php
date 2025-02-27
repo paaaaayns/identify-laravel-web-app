@@ -27,23 +27,6 @@
 
                             <x-forms.field-container class="sm:col-span-4">
                                 <x-forms.label
-                                    for="last_name"
-                                    :required="true">
-                                    Last Name
-                                </x-forms.label>
-
-                                <x-forms.input
-                                    type="text"
-                                    id="last_name"
-                                    name="last_name"
-                                    :value="old('last_name')"
-                                    autocomplete="off" />
-
-                                <x-forms.error name="last_name" />
-                            </x-forms.field-container>
-
-                            <x-forms.field-container class="sm:col-span-4">
-                                <x-forms.label
                                     for="first_name"
                                     :required="true">
                                     First Name
@@ -72,6 +55,23 @@
                                     autocomplete="off" />
 
                                 <x-forms.error name="middle_name" />
+                            </x-forms.field-container>
+
+                            <x-forms.field-container class="sm:col-span-4">
+                                <x-forms.label
+                                    for="last_name"
+                                    :required="true">
+                                    Last Name
+                                </x-forms.label>
+
+                                <x-forms.input
+                                    type="text"
+                                    id="last_name"
+                                    name="last_name"
+                                    :value="old('last_name')"
+                                    autocomplete="off" />
+
+                                <x-forms.error name="last_name" />
                             </x-forms.field-container>
 
                             <x-forms.field-container class="sm:col-span-6">
