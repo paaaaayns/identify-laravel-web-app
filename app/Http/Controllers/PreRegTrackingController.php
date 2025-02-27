@@ -29,7 +29,7 @@ class PreRegTrackingController extends Controller
 
         // If no record is found, redirect back with an error message
         if (!$patient) {
-            return redirect()->route('pre-reg.tracking.index')->with('error', 'Invalid pre-registration code.');
+            return redirect()->route('pre-reg.tracking.search')->with('error', 'Invalid pre-registration code.');
         }
 
         // Pass the patient data to the view for displaying details
