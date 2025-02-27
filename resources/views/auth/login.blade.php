@@ -15,7 +15,7 @@
 <body class="h-full flex">
     <!-- Left Division -->
     <div class="fixed inset-y-0 w-1/2 z-50 flex flex-col items-center justify-center bg-background-dark text-white">
-        <h1 class="text-2xl">Left Side Content</h1>
+        <img class="h-80 w-auto" src="{{ asset('images/logo/primary-horizontal-light.png') }}" alt="Your Company">
     </div>
 
     <!-- Right Division -->
@@ -52,8 +52,12 @@
                     Not registered yet? <a href="{{ route('pre-reg.create') }}" class="text-primary">Register Now</a>
                 </p>
 
-                <p class="mt-6">
+                <!-- <p class="mt-6">
                     <a href="{{ route('pre-reg.create') }}" class="text-primary">Forget Password?</a>
+                </p> -->
+
+                <p class="mt-6">
+                    <a href="{{ route('pre-reg.tracking.search') }}" class="text-primary">Track your Pre-Registration</a>
                 </p>
             </form>
         </div>
