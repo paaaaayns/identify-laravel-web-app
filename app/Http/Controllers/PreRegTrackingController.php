@@ -13,8 +13,7 @@ class PreRegTrackingController extends Controller
      */
     public function index()
     {
-        //
-        return view('pre-register.tracking.index');
+        return view('pre-register.tracking.search');
     }
 
     /**
@@ -23,10 +22,10 @@ class PreRegTrackingController extends Controller
     public function show(Request $request)
     {
         // Retrieve the code from the query string
-        $id = $request->query('id');
+        $id = $request->query('code');
 
         // Find the record associated with the code
-        $patient = PreRegisteredPatient::where('id', $id)->first();
+        $patient = PreRegisteredPatient::where('pre_registration_code', $id)->first();
 
         // If no record is found, redirect back with an error message
         if (!$patient) {

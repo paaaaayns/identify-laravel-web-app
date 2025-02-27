@@ -68,27 +68,27 @@
 
 
             <!-- Next Steps Section -->
-            <div class="space-y-6">
+            <div class="space-y-6 h-full flex flex-col">
                 <!-- Step 1 -->
-                <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="flex-1 bg-white p-6 rounded-lg shadow-md">
                     <h3 class="text-xl font-semibold text-gray-800">1. Go to the Nearest Hospital</h3>
                     <p class="text-gray-600 mt-2">Visit the nearest hospital where you initiated the pre-registration process.</p>
                 </div>
 
                 <!-- Step 2 -->
-                <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="flex-1 bg-white p-6 rounded-lg shadow-md">
                     <h3 class="text-xl font-semibold text-gray-800">2. Show Your Pre-Registration Code</h3>
                     <p class="text-gray-600 mt-2">Upon arrival, provide the hospital staff with your unique Pre-Registration Code. This code confirms your registration.</p>
                 </div>
 
                 <!-- Step 3 -->
-                <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="flex-1 bg-white p-6 rounded-lg shadow-md">
                     <h3 class="text-xl font-semibold text-gray-800">3. Confirm Your Information</h3>
                     <p class="text-gray-600 mt-2">The hospital staff will verify your details. Please ensure that the information is correct and up-to-date.</p>
                 </div>
 
                 <!-- Step 4 -->
-                <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="flex-1 bg-white p-6 rounded-lg shadow-md">
                     <h3 class="text-xl font-semibold text-gray-800">4. Register Your Iris to the System</h3>
                     <p class="text-gray-600 mt-2">For security and identification purposes, you will be asked to register your iris in the hospital's system.</p>
                 </div>
