@@ -51,7 +51,7 @@ Route::get('/verify-email', [UserController::class, 'verifyEmail']);
 Route::get('/pre-register', [PreRegistrationController::class, 'create'])->name('pre-reg.create');
 Route::post('/pre-register/store', [PreRegistrationController::class, 'store'])->name('pre-reg.store'); // TOD0: Implement this
 
-Route::get('/pre-register/track', [PreRegTrackingController::class, 'index'])->name('pre-reg.tracking.index');
+Route::get('/pre-register/search', [PreRegTrackingController::class, 'index'])->name('pre-reg.tracking.search');
 Route::get('/pre-register/track/search', [PreRegTrackingController::class, 'show'])->name('pre-reg.tracking.show');
 
 Route::middleware(['auth'])->group(function () {

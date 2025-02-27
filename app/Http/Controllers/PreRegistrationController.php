@@ -117,6 +117,7 @@ class PreRegistrationController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Pre-registration successful.',
+            'code' => $code,
         ], 201);
     }
 }

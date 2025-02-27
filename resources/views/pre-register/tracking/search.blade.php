@@ -1,5 +1,10 @@
 <x-pre-reg-layout>
+    <div class="relative">
+        <a href="/login" class="absolute text-sm/6 font-semibold text-gray-900">Back</a>
+    </div>
+
     <div class="grid grid-cols-5 place-content-center h-full">
+
         <div class="col-start-2 col-span-3 bg-white p-6 rounded-lg shadow-lg">
             <h2 class="text-2xl font-semibold text-gray-900 text-center">Track Your Pre-Registration</h2>
             <p class="text-gray-600 text-center mt-2">Enter your pre-registration code below to track your status.</p>
@@ -16,7 +21,7 @@
             <form method="GET" action=" {{ route ('pre-reg.tracking.show') }} " class="mt-3 grid gap-4">
                 <x-forms.input
                     type="text"
-                    name="id"
+                    name="code"
                     placeholder="Enter Pre-Registration Code"
                     class="!p-3 !text-center !text-base" />
 

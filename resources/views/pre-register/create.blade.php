@@ -491,7 +491,9 @@
                         // Display the Swal success message with the code
                         Swal.fire({
                             title: 'Pre-registration Successful!',
-                            text: 'You have successfully pre-registered. Please check your email for confirmation and further details.',
+                            // text: 'You have successfully pre-registered. Please check your email for confirmation and further details.',
+                            // result.code should be bold
+                            html: `You have successfully pre-registered. <br><br>Your pre-registration code is: <strong>${result.code}</strong>`,
                             icon: 'success',
                             confirmButtonText: 'OK',
                             customClass: {
