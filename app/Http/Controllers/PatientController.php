@@ -9,6 +9,8 @@ use Faker\Factory as Faker;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class PatientController extends Controller
@@ -71,7 +73,6 @@ class PatientController extends Controller
             'emergency_contact2_name' => ['required', 'string', 'max:255'], // Second contact is optional
             'emergency_contact2_number' => ['required', 'regex:/^09[0-9]{7,13}$/', "min:11"],
             'emergency_contact2_relationship' => ['required', 'string', 'max:100'],
-
         ], [
             'required' => 'This field is required', // Overrides all required fields
             'accepted' => 'This field is required', // Overrides all accepted fields
@@ -97,8 +98,54 @@ class PatientController extends Controller
     public function store(Request $request)
     {
         // Validate the request and get validated data
-        // $response = $this->validateStoreRequest($request)->getData(true); // Use 'true' to get an associative array
-        // $data = $response['data']; // Access the 'data' key from the array
+        $response = $this->validateStoreRequest($request)->getData(true); // Use 'true' to get an associative array
+        $data = $response['data']; // Access the 'data' key from the array
+
+        // log left_iris and right_iris
+        Log::info('PatientController@store: Request received.', [
+            'data' => $data,
+        ]);
+
+        try {
+            // Get the patient ULID
+            $ulid = $request->ulid;
+
+            $request->validate([
+                'left_iris' => ['required', 'string', 'regex:/^data:image\/(jpeg|png|jpg|gif|svg);base64,/'], // Base64-encoded string
+                'right_iris' => ['required', 'string', 'regex:/^data:image\/(jpeg|png|jpg|gif|svg);base64,/'], // Base64-encoded string
+            ]);
+
+            // Decode the base64 image
+            $LeftImageData = $request->input('left_iris');
+            $LeftImageData = explode(',', $LeftImageData)[1]; // Remove the base64 header
+            $LeftImageData = base64_decode($LeftImageData);
+            $RightImageData = $request->input('right_iris');
+            $RightImageData = explode(',', $RightImageData)[1]; // Remove the base64 header
+            $RightImageData = base64_decode($RightImageData);
+
+            // Generate a unique filename
+            $LeftImageDirectory = 'patients/' . $ulid . '/biometrics';
+            $LeftImageFileName = 'left_iris.png';
+            $LeftImageFilePath = "{$LeftImageDirectory}/{$LeftImageFileName}";
+            $RightImageDirectory = 'patients/' . $ulid . '/biometrics';
+            $RightImageFileName = 'right_iris.png';
+            $RightImageFilePath = "{$RightImageDirectory}/{$RightImageFileName}";
+
+            // Store the image in the public directory
+            $LeftIrisImage = Storage::disk('public')->put($LeftImageFilePath, $LeftImageData);
+            $RightIrisImage = Storage::disk('public')->put($RightImageFilePath, $RightImageData);
+
+
+            Log::info('Image stored successfully.', [
+                'left_iris_image_path' => Storage::url($LeftImageFilePath),
+                'right_iris_image_path' => Storage::url($RightImageFilePath),
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error storing image: ' . $e->getMessage(),
+            ], 500);
+        }
 
         $user = new Patient();
         $user->fill($request->all());
@@ -114,6 +161,8 @@ class PatientController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Patient registered successfully.',
+            'leftIrisImagePath' => Storage::url($LeftIrisImage),
+            'rightIrisImagePath' => Storage::url($RightIrisImage),
             'user' => $user,
         ], 200);
     }

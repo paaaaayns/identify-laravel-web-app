@@ -59,34 +59,12 @@
             </div>
 
             <div class="grid grid-cols-1 text-center bg-white shadow rounded-lg gap-y-6 p-6 self-start">
-
-                @role(['admin'])
-                <div class="">
-                    <x-forms.primary-button
-                        type="submit"
-                        form="RegistrationForm"
-                        class="w-full">
-                        Override Registration
-                    </x-forms.primary-button>
-                </div>
-                @endrole
-
                 <div class="">
                     <x-forms.primary-button
                         class="w-full"
                         type="button"
                         onclick="confirmCreate()">
                         Complete Registration
-                    </x-forms.primary-button>
-                </div>
-
-                <div class="">
-                    <x-forms.primary-button
-                        type="button"
-                        onclick="openModal()"
-                        data-modal-target="camera-modal"
-                        class="w-full">
-                        Capture Iris
                     </x-forms.primary-button>
                 </div>
             </div>
@@ -443,43 +421,47 @@
                 <h3 class="text-xl font-semibold text-gray-800">Biometric Information</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-12 gap-x-6 gap-y-6 mt-6">
 
-                    <x-forms.field-container class="sm:col-span-4 grid place-items-center">
+                    <x-forms.field-container class="sm:col-span-6 grid place-items-center">
                         <x-forms.label for="right_iris">
                             Right Iris
                         </x-forms.label>
 
-                        <div class="w-48 h-48 rounded-lg shadow overflow-hiddent">
-                            <img
-                                id="right_iris"
-                                alt="Right Iris"
-                                class="w-full h-full object-cover">
-                        </div>
+                        <!-- Hidden File Input -->
+                        <input
+                            type="file"
+                            id="right_iris"
+                            name="right_iris"
+                            accept="image/*"
+                            class="hidden"
+                            onchange="previewIris(event, 'right_iris', 'right_iris_preview', 'right_iris_text')">
+
+                        <!-- Upload Box -->
+                        <label for="right_iris" class="cursor-pointer w-80 h-80 flex items-center justify-center border-2 border-dashed border-gray-300 rounded-lg shadow text-gray-500 hover:border-primary hover:text-primary overflow-hidden">
+                            <span id="right_iris_text">Click to upload an image</span>
+                            <img id="right_iris_preview" alt="Right Iris" class="hidden w-full h-full object-cover">
+                        </label>
                     </x-forms.field-container>
 
-                    <x-forms.field-container class="sm:col-span-4 grid place-items-center">
-                        <x-forms.label for="face">
-                            Face
-                        </x-forms.label>
-
-                        <div class="w-48 h-48 rounded-lg shadow overflow-hidden">
-                            <img
-                                id="face"
-                                alt="Face"
-                                class="w-full h-full object-cover">
-                        </div>
-                    </x-forms.field-container>
-
-                    <x-forms.field-container class="sm:col-span-4 grid place-items-center">
+                    <x-forms.field-container class="sm:col-span-6 grid place-items-center">
                         <x-forms.label for="left_iris">
                             Left Iris
                         </x-forms.label>
 
-                        <div class="w-48 h-48 rounded-lg shadow overflow-hidden">
-                            <img
-                                id="left_iris"
-                                alt="Left Iris"
-                                class="w-full h-full object-cover">
-                        </div>
+                        <!-- Hidden File Input -->
+                        <input
+                            type="file"
+                            id="left_iris"
+                            name="left_iris"
+                            accept="image/*"
+                            class="hidden"
+                            onchange="previewIris(event, 'left_iris', 'left_iris_preview', 'left_iris_text')">
+
+                        <!-- Upload Box -->
+                        <label for="left_iris"
+                            class="cursor-pointer w-80 h-80 flex items-center justify-center border-2 border-dashed border-gray-300 rounded-lg shadow text-gray-500 hover:border-primary hover:text-primary overflow-hidden">
+                            <span id="left_iris_text">Click to upload an image</span>
+                            <img id="left_iris_preview" alt="Left Iris" class="hidden w-full h-full object-cover">
+                        </label>
                     </x-forms.field-container>
 
                 </div>
@@ -487,143 +469,22 @@
         </form>
     </div>
 
-    <!-- Main modal -->
-    <div
-        id="camera-modal"
-        onclick="handleModalBackgroundClick(event)"
-        tabindex="-1"
-        aria-hidden="true"
-        class="hidden bg-gray-800 bg-opacity-75 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-        <div class="relative p-4 w-full max-w-2xl max-h-full">
-            <!-- Modal content -->
-            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                <!-- Modal header -->
-                <div class="flex justify-center items-center p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                        Look at the camera
-                    </h3>
-                </div>
-                <!-- Modal Body -->
-                <div class="p-4">
-                    <video id="video" class="w-full bg-gray-300 rounded-md" autoplay></video>
-                    <canvas id="canvas" class="hidden"></canvas>
-                </div>
-                <!-- Modal footer -->
-                <div class="flex justify-center items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                    <button
-                        onclick="captureImage()"
-                        data-modal-hide="camera-modal"
-                        type="button"
-                        class="text-white bg-primary focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                        Capture
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    <!-- Iris Preview Script -->
     <script>
-        // on page load
-        window.addEventListener('DOMContentLoaded', (event) => {
-            // display images to img
-            document.getElementById('profile_picture').src = "{{ Storage::url('patients/' . $profile->ulid . '/biometrics/face.png') }}";
-            document.getElementById('face').src = "{{ Storage::url('patients/' . $profile->ulid . '/biometrics/face.png') }}";
-            document.getElementById('left_iris').src = "{{ Storage::url('patients/' . $profile->ulid . '/biometrics/left_iris.png') }}";
-            document.getElementById('right_iris').src = "{{ Storage::url('patients/' . $profile->ulid . '/biometrics/right_iris.png') }}";
-        });
-    </script>
+        function previewIris(event, input_id, image_id, text_id) {
+            const file = event.target.files[0];
+            const preview = document.getElementById(image_id);
+            const uploadText = document.getElementById(text_id);
 
-    <script defer>
-        let videoStream;
-
-        function openModal() {
-            const modal = document.getElementById('camera-modal');
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-
-            openCamera();
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('camera-modal');
-            modal.classList.remove('flex');
-            modal.classList.add('hidden');
-
-            closeCamera();
-        }
-
-        async function openCamera() {
-            // Start the camera
-            const video = document.getElementById('video');
-            videoStream = await navigator.mediaDevices.getUserMedia({
-                video: true
-            });
-            video.srcObject = videoStream;
-            video.play();
-        }
-
-        function closeCamera() {
-            // Stop the camera
-            if (videoStream) {
-                const tracks = videoStream.getTracks();
-                tracks.forEach(track => track.stop());
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function() {
+                    preview.src = reader.result;
+                    preview.classList.remove('hidden');
+                    uploadText.classList.add('hidden');
+                };
+                reader.readAsDataURL(file);
             }
-        }
-
-        function handleModalBackgroundClick(event) {
-            const modal = document.getElementById('camera-modal');
-            if (event.target === modal) {
-                closeModal();
-            }
-        }
-
-        function captureImage() {
-            const canvas = document.getElementById('canvas');
-            const video = document.getElementById('video');
-            const context = canvas.getContext('2d');
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-            // Convert the canvas image to Base64
-            const imageData = canvas.toDataURL('image/png');
-
-            // Send the image to the server
-            fetch('/biometrics/store', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                    },
-                    body: JSON.stringify({
-                        image: imageData,
-                        patient_ulid: '{{ $profile->ulid }}',
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        showToast('toast-success', data.message);
-                        console.log("Face Image Path:", "{{ Storage::url('patients/' . $profile->ulid . '/biometrics/face.png') }}");
-
-                        // refresh the page after 2 seconds
-                        setTimeout(() => {
-                            // refresh the page
-                            window.location.reload();
-                        }, 2000);
-
-                        closeCamera();
-                    } else {
-                        showToast('toast-error', data.message);
-                        alert('Error storing image.');
-                        closeCamera();
-                    }
-                })
-                .catch(error => {
-                    showToast('toast-error', 'An error occurred while storing the image.');
-                    console.error('Error:', error);
-                    closeCamera();
-                });
         }
     </script>
 
@@ -658,6 +519,21 @@
             const form = document.getElementById('RegistrationForm');
             const formData = new FormData(form);
 
+            // Convert images to Base64
+            const rightIrisFile = document.getElementById('right_iris').files[0];
+            const leftIrisFile = document.getElementById('left_iris').files[0];
+
+
+            if (rightIrisFile) {
+                formData.delete('right_iris'); // Remove original file input
+                formData.append('right_iris', await toBase64(rightIrisFile));
+            }
+
+            if (leftIrisFile) {
+                formData.delete('left_iris'); // Remove original file input
+                formData.append('left_iris', await toBase64(leftIrisFile));
+            }
+
             console.log('Form data:', formData);
 
             try {
@@ -690,6 +566,15 @@
                 console.error('Fetch error:', error);
                 return null;
             }
+        }
+
+        function toBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = (error) => reject(error);
+            });
         }
     </script>
 
