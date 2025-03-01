@@ -102,6 +102,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/medical-record/{ulid}', [MedicalRecordController::class, 'show'])->name('medical-record.show');
     Route::get('/history', [MedicalRecordController::class, 'index'])->name('history.index');
     Route::get('/history/{ulid}', [MedicalRecordController::class, 'show'])->name('history.show');
+    Route::get('/api/medical-record/{record_ulid}', [MedicalRecordController::class, 'apiShow']);
 
     // Biometrics
     // Store biometric data

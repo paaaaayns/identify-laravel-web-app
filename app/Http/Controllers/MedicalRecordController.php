@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\MedicalRecord;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class MedicalRecordController extends Controller
 {
@@ -30,6 +31,34 @@ class MedicalRecordController extends Controller
     public function store(Request $request)
     {
         //
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function apiShow($ulid)
+    {
+        // dd($ulid);
+        Log::info('Medical Record API Show', ['ulid' => $ulid]);
+        // return records, eager load patient, doctor, opd
+        $record = MedicalRecord::query()
+            ->where('ulid', $ulid)
+            ->with(['patient', 'doctor', 'opd'])
+            ->first();
+        // dd($record);
+
+        if (!$record) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Medical Record not found.',
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Medical Record retrieved successfully.',
+            'data' => $record,
+        ]);
     }
 
     /**
