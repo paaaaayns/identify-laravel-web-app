@@ -66,6 +66,11 @@ class DoctorController extends Controller
             // Emergency Contacts
             'room' => ['required', 'string', 'max:255'],
             'type' => ['required', 'string', 'max:255'],
+            'license_number' => ['required', 'string', 'regex:/^[0-9]{7}$/', function ($attribute, $value, $fail) {
+                if (Doctor::where('license_number', $value)->exists()) {
+                    $fail('This license number is already taken.');
+                }
+            }],
         ], [
             'required' => 'This field is required', // Overrides all required fields
             'accepted' => 'This field is required', // Overrides all accepted fields

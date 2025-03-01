@@ -30,6 +30,7 @@ class DoctorSeeder extends Seeder
 
             'type' => 'Neurologist',
             'room' => 'B101',
+            'license_number' => '8025163',
         ]);
     }
 }
