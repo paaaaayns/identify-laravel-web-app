@@ -31,6 +31,7 @@ return new class extends Migration
             $table->string('room');
 
             $table->string('type');
+            $table->string('license_number')->unique();
 
             $table->timestamps();
             $table->softDeletes();

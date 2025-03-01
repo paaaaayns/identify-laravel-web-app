@@ -50,7 +50,7 @@
                 action="{{ route('users.doctor.store') }}"
                 class="w-full">
                 @csrf
-                
+
                 <div class="bg-white rounded-lg shadow">
                     <!-- Personal Information -->
                     <div class="p-6">
@@ -256,11 +256,11 @@
                         <h3 class="text-xl font-semibold text-gray-800">Job Information</h3>
                         <div class="grid grid-cols-1 sm:grid-cols-12 gap-x-6 gap-y-6 mt-6">
 
-                            <x-forms.field-container class="sm:col-span-6">
+                            <x-forms.field-container class="sm:col-span-4">
                                 <x-forms.label
                                     for="type"
                                     :required="true">
-                                    Department
+                                    Specialization
                                 </x-forms.label>
 
                                 <x-forms.input
@@ -272,7 +272,23 @@
                                 <x-forms.error name="type" />
                             </x-forms.field-container>
 
-                            <x-forms.field-container class="sm:col-span-6">
+                            <x-forms.field-container class="sm:col-span-4">
+                                <x-forms.label
+                                    for="license_number"
+                                    :required="true">
+                                    License Number
+                                </x-forms.label>
+
+                                <x-forms.input
+                                    type="text"
+                                    id="license_number"
+                                    name="license_number"
+                                    :value="old('license_number')"
+                                    autocomplete="off" />
+                                <x-forms.error name="license_number" />
+                            </x-forms.field-container>
+
+                            <x-forms.field-container class="sm:col-span-4">
                                 <x-forms.label
                                     for="room"
                                     :required="true">
@@ -405,6 +421,7 @@
 
                 room: "B102",
                 type: "Orthopedic",
+                license_number: "8067450"
             };
 
             // Fill fields using their IDs
@@ -423,6 +440,7 @@
 
             document.getElementById('type').value = testData.type;
             document.getElementById('room').value = testData.room;
+            document.getElementById('license_number').value = testData.license_number;
 
             console.log("Fields filled with test data!");
         }
