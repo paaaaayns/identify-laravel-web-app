@@ -26,44 +26,17 @@
                         <svg class="size-5 shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
                             <path fill-rule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
                         </svg>
-                        <a href="#" class="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700" aria-current="page">{{ $patient->user_id }}</a>
+                        <a href="#" class="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700" aria-current="page">{{ $queue->queue_id }}</a>
                     </div>
                 </li>
             </ol>
         </nav>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <!-- Left Column -->
-        <div class="space-y-4 md:col-span-1">
-            <div class="flex flex-col items-center text-center bg-white shadow rounded-lg p-6 self-start">
-                <!-- Profile Picture -->
-                <div class="w-32 h-32 mb-4">
-                    <!-- $profile->ulid is the folder name, get the first image as the source of the image tag make it dynamic -->
-                    <img
-                        id="profile_picture"
-                        alt="Profile Picture"
-                        class="w-full h-full rounded-full shadow">
-                </div>
-                <!-- User Info -->
-                <h2 class="text-lg font-semibold text-gray-800">{{ $patient->first_name }} {{ $patient->middle_name ?? '' }} {{ $patient->last_name }}</h2>
-                <p class="text-sm text-gray-500">{{ $patient->user_id }}</p>
-            </div>
-
-            <div class="grid grid-cols-1 text-center bg-white shadow rounded-lg gap-y-6 p-6 self-start">
-                <!-- Profile Picture -->
-                <div class="">
-                    OPD: {{ $opd->first_name ?? '' }} {{ $opd->middle_name ?? '' }} {{ $opd->last_name ?? '' }}
-                </div>
-
-                <div class="">
-                    Doctor: {{ $doctor->first_name ?? '' }} {{ $doctor->middle_name ?? '' }} {{ $doctor->last_name ?? '' }}
-                </div>
-            </div>
-        </div>
+    <div class="grid grid-cols-1 gap-4">
 
         <!-- Right Column -->
-        <div class="space-y-4 md:col-span-3">
+        <div class="space-y-4">
 
             <!-- Tabs -->
             <div class="flex flex-row justify-between">
@@ -84,6 +57,7 @@
                     <nav class="flex space-x-4" aria-label="Tabs">
                         <!-- Current: "bg-indigo-100 text-indigo-700", Default: "text-gray-500 hover:text-gray-700" -->
                         <a href="?tab=profile" data-target="profile" class="tab-link rounded-md bg-primary px-3 py-2 text-sm font-medium text-white" aria-current="page">Profile</a>
+                        <a href="?tab=history" data-target="history" class="tab-link rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">History</a>
                         <a href="?tab=doctor" data-target="doctor" class="tab-link rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Doctor</a>
                         <a href="?tab=assessment" data-target="assessment" class="tab-link rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Assessment</a>
                         <a href="?tab=consultation" data-target="consultation" class="tab-link rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Consultation</a>
@@ -114,6 +88,11 @@
             <!-- Profile Tab -->
             <div id="profile" class="tab-content space-y-4">
                 @include('auth.queue.tab-profile')
+            </div>
+
+            <!-- Patient Medical History Tab -->
+            <div id="history" class="tab-content hidden">
+                @include('auth.queue.tab-history')
             </div>
 
             <!-- Doctor Selection Tab -->
@@ -191,7 +170,12 @@
                 targetContent.classList.remove("hidden");
 
                 // Update the URL to include the active tab
-                history.pushState(null, "", `?tab=${targetId}`);
+                // history.pushState(null, "", `?tab=${targetId}`);
+                // Preserve existing query parameters
+                const urlParams = new URLSearchParams(window.location.search);
+                urlParams.set("tab", targetId); // Update tab
+                
+                history.pushState(null, "", `?${urlParams.toString()}`);
             }
         }
 

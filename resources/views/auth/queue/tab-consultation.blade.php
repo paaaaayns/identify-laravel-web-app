@@ -45,7 +45,7 @@
     <div class="w-full">
         <div class="grid grid-cols-1 text-center">
             <div class="p-6">
-                <h3 class="text-xl font-semibold text-gray-800">Please Fill Up Prep Form</h3>
+                <h3 class="text-xl font-semibold text-gray-800">Please Fill Up Assessment Form</h3>
             </div>
         </div>
     </div>

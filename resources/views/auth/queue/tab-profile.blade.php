@@ -4,22 +4,6 @@
     <div class="grid grid-cols-1 sm:grid-cols-12 gap-x-6 gap-y-6 mt-6">
         <x-forms.field-container class="sm:col-span-4">
             <x-forms.label
-                for="last_name">
-                Last Name
-            </x-forms.label>
-            @if (true)
-            <x-forms.input
-                type="text"
-                id="last_name"
-                name="last_name"
-                :value="$patient->last_name"
-                autocomplete="off"
-                disabled />
-            <x-forms.error name="last_name" />
-            @endif
-        </x-forms.field-container>
-        <x-forms.field-container class="sm:col-span-4">
-            <x-forms.label
                 for="first_name">
                 First Name
             </x-forms.label>
@@ -48,6 +32,22 @@
                 autocomplete="off"
                 disabled />
             <x-forms.error name="middle_name" />
+            @endif
+        </x-forms.field-container>
+        <x-forms.field-container class="sm:col-span-4">
+            <x-forms.label
+                for="last_name">
+                Last Name
+            </x-forms.label>
+            @if (true)
+            <x-forms.input
+                type="text"
+                id="last_name"
+                name="last_name"
+                :value="$patient->last_name"
+                autocomplete="off"
+                disabled />
+            <x-forms.error name="last_name" />
             @endif
         </x-forms.field-container>
         <x-forms.field-container class="sm:col-span-6">
@@ -308,44 +308,3 @@
         </x-forms.field-container>
     </div>
 </div>
-<!-- Biometric Information -->
-<div class="bg-white shadow rounded-lg p-6">
-    <h3 class="text-xl font-semibold text-gray-800">Biometric Information</h3>
-    <div class="grid grid-cols-1 sm:grid-cols-12 gap-x-6 gap-y-6 mt-6">
-        <x-forms.field-container class="sm:col-span-6 grid place-items-center">
-            <x-forms.label for="right_iris">
-                Right Iris
-            </x-forms.label>
-
-            <div class="w-80 h-80 rounded-lg shadow overflow-hidden">
-                <img
-                    id="right_iris"
-                    alt="Right Iris"
-                    class="w-full h-full object-cover">
-            </div>
-        </x-forms.field-container>
-
-        <x-forms.field-container class="sm:col-span-6 grid place-items-center">
-            <x-forms.label for="left_iris">
-                Left Iris
-            </x-forms.label>
-
-            <div class="w-80 h-80 rounded-lg shadow overflow-hidden">
-                <img
-                    id="left_iris"
-                    alt="Left Iris"
-                    class="w-full h-full object-cover">
-            </div>
-        </x-forms.field-container>
-    </div>
-</div>
-
-<script>
-    // on page load
-    window.addEventListener('DOMContentLoaded', (event) => {
-        // display images to img
-            document.getElementById('profile_picture').src = "{{ Storage::url('patients/' . $patient->ulid . '/biometrics/face.png') }}";
-            document.getElementById('left_iris').src = "{{ Storage::url('patients/' . $patient->ulid . '/biometrics/left_iris.png') }}";
-            document.getElementById('right_iris').src = "{{ Storage::url('patients/' . $patient->ulid . '/biometrics/right_iris.png') }}";
-    });
-</script>
