@@ -475,7 +475,6 @@
         // on page load
         window.addEventListener('DOMContentLoaded', (event) => {
             // display images to img
-            document.getElementById('profile_picture').src = "{{ Storage::url('patients/' . $profile->ulid . '/biometrics/face.png') }}";
             document.getElementById('left_iris').src = "{{ Storage::url('patients/' . $profile->ulid . '/biometrics/left_iris.png') }}";
             document.getElementById('right_iris').src = "{{ Storage::url('patients/' . $profile->ulid . '/biometrics/right_iris.png') }}";
         });
