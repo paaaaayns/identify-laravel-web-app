@@ -18,22 +18,6 @@ class MedicalRecordController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      */
     public function apiShow($ulid)
@@ -54,10 +38,13 @@ class MedicalRecordController extends Controller
             ], 404);
         }
 
+        $pdfPath = asset("storage/patients/{$record->patient->ulid}/medical_records/{$record->ulid}.pdf");
+
         return response()->json([
             'success' => true,
             'message' => 'Medical Record retrieved successfully.',
             'data' => $record,
+            'pdfPath' => $pdfPath,
         ]);
     }
 
@@ -74,64 +61,45 @@ class MedicalRecordController extends Controller
         $doctor = $record->doctor;
         $opd = $record->opd;
 
+        $RecordDirectory = "patients/{$patient->ulid}/medical_records/{$record->ulid}";
+        $RecordFileName = "{$record->ulid}.pdf";
+        $RecordFilePath = "{$RecordDirectory}/{$RecordFileName}";
+
+
+        if (!file_exists(storage_path($RecordFilePath))) {
+            $pdfPath = null;
+            Log::info('Medical Record PDF not found', ['ulid' => $ulid]);
+        } else {
+            $pdfPath = asset("storage/patients/{$patient->ulid}/medical_records/{$record->ulid}.pdf");
+            Log::info('Medical Record PDF found', ['ulid' => $ulid]);
+        }
+
         return view('auth.medical-record.show', [
             'record' => $record,
             'patient' => $patient,
             'doctor' => $doctor,
             'opd' => $opd,
+            'pdfPath' => $pdfPath,
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function download(string $ulid)
     {
-        //
-    }
+        $record = MedicalRecord::where('ulid', $ulid)->firstOrFail();
+        $patient = $record->patient;
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $ulid)
-    {
-        //
-        // dd($request->all());
-        $validatedData = $request->validate([
-            // Doctor Selection
-            'doctor_id' => 'exists:doctors,user_id',
+        // Construct the actual file path
+        $filePath = public_path("storage/patients/{$patient->ulid}/medical_records/{$record->ulid}/{$record->ulid}.pdf");
 
-            // Patient Vitals
-            'height' => 'string',
-            'weight' => 'string',
-            'blood_pressure' => 'string',
-            'temperature' => 'string',
-            'pulse_rate' => 'string',
-            'respiration_rate' => 'string',
-            'o2_sat' => 'string',
-            'other' => 'string',
+        // Check if the file exists
+        if (!file_exists($filePath)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'File not found.'
+            ], 404);
+        }
 
-            // Findings
-            'primary_complaint' => 'string',
-            'duration_of_symptoms' => 'string',
-            'intensity_and_frequency' => 'string',
-
-            'findings' => 'string',
-            'diagnosis' => 'string',
-            'recommended_treatment' => 'string',
-            'follow_up_instructions' => 'string',
-            'referrals' => 'string',
-
-            'doctor_notes' => 'string',
-        ]);
-        dd($validatedData);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        // Return file as a download response
+        return response()->download($filePath, "{$record->ulid}.pdf");
     }
 }
