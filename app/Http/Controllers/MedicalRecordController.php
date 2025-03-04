@@ -38,13 +38,10 @@ class MedicalRecordController extends Controller
             ], 404);
         }
 
-        $pdfPath = asset("storage/patients/{$record->patient->ulid}/medical_records/{$record->ulid}.pdf");
-
         return response()->json([
             'success' => true,
             'message' => 'Medical Record retrieved successfully.',
             'data' => $record,
-            'pdfPath' => $pdfPath,
         ]);
     }
 
@@ -93,11 +90,14 @@ class MedicalRecordController extends Controller
 
         // Check if the file exists
         if (!file_exists($filePath)) {
+            Log::error('MedicalRecordController@download: Medical Record PDF not found', ['ulid' => $ulid]);
             return response()->json([
                 'success' => false,
                 'message' => 'File not found.'
             ], 404);
         }
+
+        Log::info('MedicalRecordController@download: Medical Record PDF found', ['ulid' => $ulid]);
 
         // Return file as a download response
         return response()->download($filePath, "{$record->ulid}.pdf");

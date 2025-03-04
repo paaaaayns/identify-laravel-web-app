@@ -7,13 +7,6 @@
 </div>
 
 <script>
-    function displayULID(record_ulid) {
-        showToast('toast-success', record_ulid);
-
-        // displayULID('{{ $record_ulid }}')
-    }
-
-
     async function getRecord(record_ulid) {
         // console.log("record_ulid", record_ulid);
         try {
@@ -45,6 +38,11 @@
 
     function updateFields(data) {
         console.log("@updateFields: data", data);
+
+        const downloadBtn = document.querySelector("#download-btn");
+        downloadBtn.addEventListener("click", function() {
+            downloadPdf(data.ulid);
+        });
 
         // Mapping Patient fields to their corresponding HTML element IDs
         const patientFields = {
@@ -103,5 +101,18 @@
         updateFieldsFromMap(patientFields);
         updateFieldsFromMap(doctorFields);
         updateFieldsFromMap(recordFields);
+    }
+</script>
+
+
+<script>
+    function downloadPdf(ulid) {
+        // Create a direct download link
+        const link = document.createElement('a');
+        link.href = `/api/medical-record/${ulid}/download`;
+        link.setAttribute('download', `${ulid}.pdf`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     }
 </script>
