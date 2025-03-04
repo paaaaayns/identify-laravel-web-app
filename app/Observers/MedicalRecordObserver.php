@@ -39,6 +39,8 @@ class MedicalRecordObserver
             $queue = $medicalRecord->queue;
             $queue->medical_record_id = $medicalRecord->medical_record_id;
             $queue->saveQuietly(); // Save without triggering model events
+            
+            $patient = $medicalRecord->patient;
 
             Log::info('Medical Record created successfully.', [
                 'medical_record_id' => $medicalRecord->medical_record_id,
@@ -48,15 +50,18 @@ class MedicalRecordObserver
                 // Generate a customized PDF
                 $pdf = Pdf::loadView('pdfs.medical-record', ['medicalRecord' => $medicalRecord]);
 
+                $RecordDirectory = "patients/{$patient->ulid}/medical_records/{$medicalRecord->ulid}";
+                $RecordFileName = "{$medicalRecord->ulid}.pdf";
+                $RecordFilePath = "{$RecordDirectory}/{$RecordFileName}";
+
                 // Save the PDF to storage
                 $fileName = "medical_records/{$medicalRecord->ulid}.pdf";
-                Storage::put($fileName, $pdf->output());
-                
-                Log::info('PDF generated successfully.', [
+                $file = Storage::disk('public')->put($RecordFilePath, $pdf->output());
+
+                Log::info('MedicalRecordObserver@created: PDF generated successfully.', [
                     'medical_record_id' => $medicalRecord->medical_record_id,
                     'file_name' => $fileName,
                 ]);
-
             } catch (\Exception $e) {
                 // Log the error
                 Log::error('Error generating PDF: ' . $e->getMessage(), [
