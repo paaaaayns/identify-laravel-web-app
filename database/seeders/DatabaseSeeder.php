@@ -4,13 +4,11 @@ namespace Database\Seeders;
 
 use App\Models\Doctor;
 use App\Models\Opd;
-use App\Models\Patient;
-use App\Models\PatientQueue;
 use App\Models\PreRegisteredPatient;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\User;
 use Database\Seeders\AdminSeeder;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,8 +17,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(20)->create();
-        
+        // Delete all files in public/patients
+        $this->deletePatientsFolder();
+
         // Call the RoleSeeder
         $this->call(RoleSeeder::class);
         // Call the AdminSeeder
@@ -41,5 +40,21 @@ class DatabaseSeeder extends Seeder
 
         // Seed user records
         // php artisan migrate:rollback && php artisan migrate:fresh --seed
+    }
+
+    /**
+     * Delete all files inside public/patients directory.
+     */
+    private function deletePatientsFolder()
+    {
+        $folderPath = public_path('storage/patients');
+
+        if (File::exists($folderPath)) {
+            File::cleanDirectory($folderPath); // Deletes all files but keeps the folder
+            // File::deleteDirectory($folderPath); // Use this instead if you want to remove the folder entirely
+            Log::info('All files in the patients folder have been deleted.');
+        } else {
+            Log::info('The patients folder does not exist.');
+        }
     }
 }
