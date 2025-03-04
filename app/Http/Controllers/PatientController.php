@@ -73,6 +73,10 @@ class PatientController extends Controller
             'emergency_contact2_name' => ['required', 'string', 'max:255'], // Second contact is optional
             'emergency_contact2_number' => ['required', 'regex:/^09[0-9]{7,13}$/', "min:11"],
             'emergency_contact2_relationship' => ['required', 'string', 'max:100'],
+
+            // Biometrics
+            'left_iris' => ['required'], // Base64-encoded string
+            'right_iris' => ['required'], // Base64-encoded string
         ], [
             'required' => 'This field is required', // Overrides all required fields
             'accepted' => 'This field is required', // Overrides all accepted fields
