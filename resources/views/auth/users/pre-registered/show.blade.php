@@ -434,9 +434,12 @@
                             accept="image/*"
                             class="hidden"
                             onchange="previewIris(event, 'right_iris', 'right_iris_preview', 'right_iris_text')">
+                        <x-forms.error name="right_iris" />
 
                         <!-- Upload Box -->
-                        <label for="right_iris" class="cursor-pointer w-80 h-80 flex items-center justify-center border-2 border-dashed border-gray-300 rounded-lg shadow text-gray-500 hover:border-primary hover:text-primary overflow-hidden">
+                        <label
+                            for="right_iris"
+                            class="cursor-pointer w-80 h-80 flex items-center justify-center border-2 border-dashed border-gray-300 rounded-lg shadow text-gray-500 hover:border-primary hover:text-primary overflow-hidden">
                             <span id="right_iris_text">Click to upload an image</span>
                             <img id="right_iris_preview" alt="Right Iris" class="hidden w-full h-full object-cover">
                         </label>
@@ -455,9 +458,11 @@
                             accept="image/*"
                             class="hidden"
                             onchange="previewIris(event, 'left_iris', 'left_iris_preview', 'left_iris_text')">
+                        <x-forms.error name="left_iris" class="!mt-0 !mb-4"/>
 
                         <!-- Upload Box -->
-                        <label for="left_iris"
+                        <label
+                            for="left_iris"
                             class="cursor-pointer w-80 h-80 flex items-center justify-center border-2 border-dashed border-gray-300 rounded-lg shadow text-gray-500 hover:border-primary hover:text-primary overflow-hidden">
                             <span id="left_iris_text">Click to upload an image</span>
                             <img id="left_iris_preview" alt="Left Iris" class="hidden w-full h-full object-cover">
