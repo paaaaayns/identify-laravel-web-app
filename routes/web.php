@@ -1,10 +1,10 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\DataTableController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\EmailVerificationController;
 use App\Http\Controllers\BiometricsController;
+use App\Http\Controllers\IrisBiometricsController;
 use App\Http\Controllers\MedicalRecordController;
 use App\Http\Controllers\OpdController;
 use App\Http\Controllers\PatientController;
@@ -12,18 +12,11 @@ use App\Http\Controllers\PatientQueueController;
 use App\Http\Controllers\PreRegisteredPatientController;
 use App\Http\Controllers\PreRegistrationController;
 use App\Http\Controllers\PreRegTrackingController;
-use App\Http\Controllers\RegisterDoctorController;
-use App\Http\Controllers\RegisterOpdController;
-use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UserController;
 use App\Mail\TestMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
-
-
-
-
 
 
 
@@ -107,10 +100,8 @@ Route::middleware(['auth'])->group(function () {
         ->name('medical-record.download');
 
     // Biometrics
-    // Store biometric data
     Route::post('/biometrics/store', [BiometricsController::class, 'store'])->name('biometrics.store');
-    // Search for a patient using biometric data
-    Route::post('/biometrics/search', [BiometricsController::class, 'search'])->name('biometrics.search');
+    Route::post('/biometrics/compare', [BiometricsController::class, 'compare'])->name('biometrics.compare');
 });
 
 
