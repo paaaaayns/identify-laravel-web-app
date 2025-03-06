@@ -104,11 +104,19 @@ class PatientController extends Controller
         // Validate the request and get validated data
         $response = $this->validateStoreRequest($request)->getData(true); // Use 'true' to get an associative array
         $data = $response['data']; // Access the 'data' key from the array
+        // remove the left_iris and right_iris from the data
+        unset($data['left_iris']);
+        unset($data['right_iris']);
 
         // log left_iris and right_iris
         Log::info('PatientController@store: Request received.', [
             'data' => $data,
         ]);
+        
+
+
+
+
 
         try {
             // Get the patient ULID
@@ -140,7 +148,7 @@ class PatientController extends Controller
             $RightIrisImage = Storage::disk('public')->put($RightImageFilePath, $RightImageData);
 
 
-            Log::info('Image stored successfully.', [
+            Log::info('PatientController@store: Image stored successfully.', [
                 'left_iris_image_path' => Storage::url($LeftImageFilePath),
                 'right_iris_image_path' => Storage::url($RightImageFilePath),
             ]);
@@ -152,7 +160,7 @@ class PatientController extends Controller
         }
 
         $user = new Patient();
-        $user->fill($request->all());
+        $user->fill(collect($request->all())->except('left_iris', 'right_iris')->toArray());
 
         // transfer old ulid to new ulid
         $user->ulid = $request->ulid;
