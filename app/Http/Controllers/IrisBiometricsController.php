@@ -9,57 +9,6 @@ use Illuminate\Support\Str;
 
 class IrisBiometricsController extends Controller
 {
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        $validatedData = $request->validate([
-            'patient_id' => 'required',
-            'left_iris_image' => 'required',
-            'right_iris_image' => 'required',
-        ]);
-
-        // make a post request to http://127.0.0.1:8000/store
-        // $response = Http::post('http://127.0.0.1:8000/store', [
-        //     'left_iris_image' => $validatedData['left_iris_image'],
-        //     'right_iris_image' => $validatedData['right_iris_image'],
-        // ]);
-
-        // $response->validate([
-        //     'left_iris_code' => 'required',
-        //     'right_iris_code' => 'required',
-        //     'left_iris_mask_code' => 'required',
-        //     'right_iris_mask_code' => 'required',
-        // ]);
-
-        // store the response in the database
-        // $irisBiometrics = new IrisBiometrics();
-        // $irisBiometrics->ulid = Str::ulid();
-        // $irisBiometrics->patient_id = $validatedData['patient_id'];
-        // $irisBiometrics->left_iris_code = $response['left_iris_code'];
-        // $irisBiometrics->right_iris_code = $response['right_iris_code'];
-        // $irisBiometrics->left_iris_mask_code = $response['left_iris_mask_code'];
-        // $irisBiometrics->right_iris_mask_code = $response['right_iris_mask_code'];
-        // $irisBiometrics->save();
-
-        $irisBiometrics = new IrisBiometrics();
-        $irisBiometrics->ulid = Str::ulid();
-        $irisBiometrics->patient_id = $validatedData['patient_id'];
-        $irisBiometrics->left_iris_code = "test";
-        $irisBiometrics->right_iris_code = "test";
-        $irisBiometrics->left_iris_mask_code = "test";
-        $irisBiometrics->right_iris_mask_code = "test";
-        $irisBiometrics->save();
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Iris biometrics stored successfully.',
-            'data' => $irisBiometrics,
-        ], 200);
-    }
-
-
     public function compare(Request $request)
     {
         $validatedData = $request->validate([
