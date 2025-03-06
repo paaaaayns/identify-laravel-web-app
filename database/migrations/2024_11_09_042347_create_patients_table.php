@@ -39,10 +39,6 @@ return new class extends Migration
             $table->string('emergency_contact2_number');
             $table->string('emergency_contact2_relationship');
 
-            $table->string('left_iris')->nullable();
-            $table->string('face')->nullable();
-            $table->string('right_iris')->nullable();
-
             $table->timestamp('pre_registered_at')->nullable();
             $table->timestamp('registered_at')->nullable();
             $table->timestamps();
