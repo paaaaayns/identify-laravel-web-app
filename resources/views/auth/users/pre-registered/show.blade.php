@@ -458,7 +458,7 @@
                             accept="image/*"
                             class="hidden"
                             onchange="previewIris(event, 'left_iris', 'left_iris_preview', 'left_iris_text')">
-                        <x-forms.error name="left_iris" class="!mt-0 !mb-4"/>
+                        <x-forms.error name="left_iris" class="!mt-0 !mb-4" />
 
                         <!-- Upload Box -->
                         <label
@@ -507,13 +507,10 @@
 
             const isFormValidated = await validateForm('RegistrationForm', '/users/patient/validate-store-request');
             if (isFormValidated) {
-                const isVerified = await promptForPassword();
-                if (isVerified) {
-                    const user = await createUser();
-                    if (user) {
-                        // redirect to the users.patient.show with ulid
-                        window.location.href = `/users/patient/${user.ulid}`;
-                    }
+                const user = await createUser();
+                if (user) {
+                    // redirect to the users.patient.show with ulid
+                    window.location.href = `/users/patient/${user.ulid}`;
                 }
                 return;
             }
