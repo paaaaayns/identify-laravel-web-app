@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('ulid')->unique();
 
-            $table->string('patient_id');
+            $table->string('patient_ulid');
 
             $table->string('orientation');
-            $table->string('iris_code');
-            $table->string('iris_mask_code');
+            $table->binary('iris_code');
+            $table->binary('mask_code');
             $table->timestamps();
         });
     }
