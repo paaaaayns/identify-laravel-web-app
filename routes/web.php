@@ -101,7 +101,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Biometrics
     Route::post('/biometrics/store', [BiometricsController::class, 'store'])->name('biometrics.store');
-    Route::post('/biometrics/compare', [BiometricsController::class, 'compare'])->name('biometrics.compare');
+    Route::post('/biometrics/search', [BiometricsController::class, 'search'])->name('biometrics.search');
 });
 
 
