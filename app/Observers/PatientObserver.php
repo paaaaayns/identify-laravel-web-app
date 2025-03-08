@@ -36,12 +36,22 @@ class PatientObserver
             ]);
         }
 
+        $rightIrisImage = public_path("storage/patients/{$patient->ulid}/biometrics/right_iris.png");
+        if (!file_exists($rightIrisImage)) {
+            Log::error('PatientObserver@created: Right iris image does not exist.', [
+                'image_path' => $rightIrisImage,
+                'patient_id' => $patient->id,
+                'email' => $patient->email,
+            ]);
+        }
+
         try {
             // make a post request to http://127.0.0.1:8000/store
 
             $response = Http::asMultipart()
-                ->attach('file', file_get_contents($leftIrisImage), 'left_iris.png')
-                ->post('http://127.0.0.1:8000/upload', []);
+                ->attach('left_iris', file_get_contents($leftIrisImage), 'left_iris.png')
+                ->attach('right_iris', file_get_contents($rightIrisImage), 'right_iris.png')
+                ->post('http://127.0.0.1:8000/fast-api/store', []);
 
             // Convert JSON response to an array
             $responseData = $response->json();
@@ -56,17 +66,36 @@ class PatientObserver
                 throw new \Exception("API Error: " . ($responseData['message'] ?? 'Unknown error'));
             }
 
-            $irisBiometrics = new IrisBiometrics();
-            $irisBiometrics->ulid = Str::ulid();
-            $irisBiometrics->patient_id = $patient->ulid;
-            $irisBiometrics->orientation = "left";
-            $irisBiometrics->iris_code = $responseData["data"]["iris_code"];
-            $irisBiometrics->iris_mask_code = $responseData["data"]["iris_mask_code"];
-            $irisBiometrics->save();
+            Log::info('PatientObserver@creating: Left Iris Biometric Details', [
+                'left_iris_code' => $responseData["data"]["left_iris_code"],
+                'left_mask_code' => $responseData["data"]["left_mask_code"],
+            ]);
+            
+            Log::info('PatientObserver@creating: Right Iris Biometric Details', [
+                'right_iris_code' => $responseData["data"]["right_iris_code"],
+                'right_mask_code' => $responseData["data"]["right_mask_code"],
+            ]);
+
+            $leftIrisBiometrics = new IrisBiometrics();
+            $leftIrisBiometrics->ulid = Str::ulid();
+            $leftIrisBiometrics->patient_ulid = $patient->ulid;
+            $leftIrisBiometrics->orientation = "left";
+            $leftIrisBiometrics->iris_code = gzdecode(base64_decode($responseData["data"]["left_iris_code"]));
+            $leftIrisBiometrics->mask_code = gzdecode(base64_decode($responseData["data"]["left_mask_code"]));
+
+            $rightIrisBiometrics = new IrisBiometrics();
+            $rightIrisBiometrics->ulid = Str::ulid();
+            $rightIrisBiometrics->patient_ulid = $patient->ulid;
+            $rightIrisBiometrics->orientation = "right";
+            $rightIrisBiometrics->iris_code = gzdecode(base64_decode($responseData["data"]["right_iris_code"]));
+            $rightIrisBiometrics->mask_code = gzdecode(base64_decode($responseData["data"]["right_mask_code"]));
+
+            $leftIrisBiometrics->save();
+            $rightIrisBiometrics->save();
 
 
         } catch (\Exception $e) {
-            Log::error('PatientObserver@created: Error storing iris biometrics: ' . $e->getMessage());
+            Log::error('PatientObserver@creating: Error storing iris biometrics: ' . $e->getMessage());
 
             // cancel creating the patient
             return false;
