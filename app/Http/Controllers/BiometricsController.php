@@ -17,11 +17,6 @@ class BiometricsController extends Controller
      */
     public function search(Request $request)
     {
-        Log::info('BiometricsController@search: Request received.', [
-            'has_iris' => $request->has('iris'),
-        ]);
-
-        // Validate the request
         $request->validate([
             'iris' => 'required|image|mimes:jpeg,png,jpg,bmp|max:2048',
         ]);
@@ -53,14 +48,9 @@ class BiometricsController extends Controller
                     'stored_irises' => json_encode($irisBiometrics),
                 ]);
 
-            // Convert JSON response to an array
             $responseData = $response->json();
-            Log::info('BiometricsController@search: Response received.', [
-                'response' => $responseData,
-            ]);
 
             if ($responseData['success'] === true) {
-                // Get the best match
                 $ulid = $responseData['data']['patient_ulid'];
 
                 $patient = Patient::where('ulid', $ulid)->first();

@@ -103,7 +103,7 @@ class PatientController extends Controller
     {
         // Validate the request and get validated data
         $response = $this->validateStoreRequest($request)->getData(true); // Use 'true' to get an associative array
-        $data = $response['data']; // Access the 'data' key from the array
+        $data = $response['data'];
         // remove the left_iris and right_iris from the data
         unset($data['left_iris']);
         unset($data['right_iris']);
@@ -119,7 +119,6 @@ class PatientController extends Controller
 
 
         try {
-            // Get the patient ULID
             $ulid = $request->ulid;
 
             $request->validate([
@@ -129,10 +128,10 @@ class PatientController extends Controller
 
             // Decode the base64 image
             $LeftImageData = $request->input('left_iris');
-            $LeftImageData = explode(',', $LeftImageData)[1]; // Remove the base64 header
+            $LeftImageData = explode(',', $LeftImageData)[1];
             $LeftImageData = base64_decode($LeftImageData);
             $RightImageData = $request->input('right_iris');
-            $RightImageData = explode(',', $RightImageData)[1]; // Remove the base64 header
+            $RightImageData = explode(',', $RightImageData)[1];
             $RightImageData = base64_decode($RightImageData);
 
             // Generate a unique filename
@@ -146,7 +145,6 @@ class PatientController extends Controller
             // Store the image in the public directory
             $LeftIrisImage = Storage::disk('public')->put($LeftImageFilePath, $LeftImageData);
             $RightIrisImage = Storage::disk('public')->put($RightImageFilePath, $RightImageData);
-
 
             Log::info('PatientController@store: Image stored successfully.', [
                 'left_iris_image_path' => Storage::url($LeftImageFilePath),
@@ -168,7 +166,6 @@ class PatientController extends Controller
         // add the pre_registration_code to the user
         $user->registered_at = now();
         $user->save();
-        // dd($user);
 
         return response()->json([
             'success' => true,
@@ -214,13 +211,11 @@ class PatientController extends Controller
      */
     public function destroy(string $user_id)
     {
-        // dd($user_id);
         $user = Patient::where('user_id', $user_id)->firstOrFail();
         $user->delete();
         $creds = User::where('user_id', $user_id)->firstOrFail();
         $creds->delete();
-        // dd($user);
-
+        
         // Return a JSON response to inform the frontend that the deletion was successful
         return response()->json([
             'success' => true,
