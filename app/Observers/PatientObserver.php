@@ -26,7 +26,7 @@ class PatientObserver
             $patient->user_id = $generatedId;
             $patient->saveQuietly();
 
-            $pre_reg = PreRegisteredPatient::where('email', $patient->email)->first();
+            $pre_reg = PreRegisteredPatient::where('ulid', $patient->ulid)->first();
             if ($pre_reg) {
                 $pre_reg->delete();
             }
