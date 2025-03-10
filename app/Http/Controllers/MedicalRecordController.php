@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\MedicalRecord;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Spatie\LaravelPdf\Facades\Pdf;
 
 class MedicalRecordController extends Controller
 {
@@ -82,24 +84,28 @@ class MedicalRecordController extends Controller
 
     public function download(string $ulid)
     {
-        $record = MedicalRecord::where('ulid', $ulid)->firstOrFail();
-        $patient = $record->patient;
+        $record = MedicalRecord::where('ulid', $ulid)->firstOrFail()->load('patient', 'doctor');
 
-        // Construct the actual file path
-        $filePath = public_path("storage/patients/{$patient->ulid}/medical_records/{$record->ulid}/{$record->ulid}.pdf");
+        try {
+            // Generate a customized PDF
+            $pdf = Pdf::view('pdfs.medical-record', ['record' => $record]);
 
-        // Check if the file exists
-        if (!file_exists($filePath)) {
-            Log::error('MedicalRecordController@download: Medical Record PDF not found', ['ulid' => $ulid]);
+            Log::info('MedicalRecordObserver@created: PDF generated successfully.', [
+                'medical_record_id' => $record->medical_record_id,
+            ]);
+
+            // Return PDF as a download response directly
+            return $pdf->download("{$record->ulid}.pdf");
+        } catch (\Exception $e) {
+            // Log the error
+            Log::error('MedicalRecordObserver@created: Error generating PDF: ' . $e->getMessage(), [
+                'medical_record_id' => $record->medical_record_id ?? 'N/A',
+            ]);
+
             return response()->json([
                 'success' => false,
-                'message' => 'File not found.'
-            ], 404);
+                'message' => 'Error generating PDF.',
+            ], 500);
         }
-
-        Log::info('MedicalRecordController@download: Medical Record PDF found', ['ulid' => $ulid]);
-
-        // Return file as a download response
-        return response()->download($filePath, "{$record->ulid}.pdf");
     }
 }

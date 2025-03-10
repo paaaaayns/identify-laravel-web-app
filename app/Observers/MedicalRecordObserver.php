@@ -45,29 +45,6 @@ class MedicalRecordObserver
             Log::info('MedicalRecordObserver@created: Medical Record created successfully.', [
                 'medical_record_id' => $medicalRecord->medical_record_id,
             ]);
-
-            try {
-                // Generate a customized PDF
-                $pdf = Pdf::loadView('pdfs.medical-record', ['medicalRecord' => $medicalRecord]);
-
-                $RecordDirectory = "patients/{$patient->ulid}/medical_records/{$medicalRecord->ulid}";
-                $RecordFileName = "{$medicalRecord->ulid}.pdf";
-                $RecordFilePath = "{$RecordDirectory}/{$RecordFileName}";
-
-                // Save the PDF to storage
-                $fileName = "medical_records/{$medicalRecord->ulid}.pdf";
-                $file = Storage::disk('public')->put($RecordFilePath, $pdf->output());
-
-                Log::info('MedicalRecordObserver@created: PDF generated successfully.', [
-                    'medical_record_id' => $medicalRecord->medical_record_id,
-                    'file_name' => $fileName,
-                ]);
-            } catch (\Exception $e) {
-                // Log the error
-                Log::error('MedicalRecordObserver@created: Error generating PDF: ' . $e->getMessage(), [
-                    'medical_record_id' => $medicalRecord->medical_record_id ?? 'N/A',
-                ]);
-            }
         } catch (\Exception $e) {
             // Log any issues during record creation
             Log::error('MedicalRecordObserver@created: Error creating Medical Record: ' . $e->getMessage(), [
