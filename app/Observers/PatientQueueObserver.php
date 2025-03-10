@@ -53,7 +53,7 @@ class PatientQueueObserver
                     'doctor_notes' => $queue->doctor_notes,
                 ]);
             } catch (\Exception $e) {
-                Log::error('Error creating Medical Record: ' . $e->getMessage(), [
+                Log::error('PatientQueueObserver@updated: Error creating Medical Record: ' . $e->getMessage(), [
                     'queue_id' => $queue->id,
                     'patient_id' => $queue->patient_id,
                 ]);

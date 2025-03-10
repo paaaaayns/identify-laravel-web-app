@@ -41,7 +41,7 @@ class PatientQueueController extends Controller
             ], 200);
         } catch (ValidationException $e) {
             // Log validation errors
-            Log::error('Validation failed', [
+            Log::error('PatientQueueController@store: Validation failed', [
                 'errors' => $e->errors(),
                 'request_data' => $request->all(),
             ]);
@@ -54,7 +54,7 @@ class PatientQueueController extends Controller
             ], 422);
         } catch (\Exception $e) {
             // Log unexpected errors
-            Log::error('An unexpected error occurred', [
+            Log::error('PatientQueueController@store: An unexpected error occurred', [
                 'error_message' => $e->getMessage(),
                 'request_data' => $request->all(),
             ]);
@@ -97,7 +97,7 @@ class PatientQueueController extends Controller
         // dd($request->all(), $ulid);
         // Validate the incoming request data (optional, but recommended)
 
-        Log::info('Queue update request', [
+        Log::info('PatientQueueController@update: Queue update request', [
             'request_data' => $request->all(),
             'ulid' => $ulid,
         ]);
@@ -158,7 +158,7 @@ class PatientQueueController extends Controller
             ], 200);
         } catch (ValidationException $e) {
             // Log validation errors
-            Log::error('Validation failed', [
+            Log::error('PatientQueueController@update: Validation failed', [
                 'errors' => $e->errors(),
                 'request_data' => $request->all(),
             ]);
@@ -171,7 +171,7 @@ class PatientQueueController extends Controller
             ], 422);
         } catch (\Exception $e) {
             // Log any unexpected errors
-            Log::error('Unexpected error occurred', [
+            Log::error('PatientQueueController@update: Unexpected error occurred', [
                 'error_message' => $e->getMessage(),
                 'request_data' => $request->all(),
             ]);

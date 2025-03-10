@@ -27,7 +27,7 @@ class BiometricsController extends Controller
         try {
             Storage::disk('public')->put($imagePath, file_get_contents($imageData->getRealPath()));
         } catch (\Exception $e) {
-            Log::error('Failed to store uploaded image.', ['error' => $e->getMessage()]);
+            Log::error('BiometricsController@search: Failed to store uploaded image.', ['error' => $e->getMessage()]);
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to store uploaded image.',
@@ -84,7 +84,7 @@ class BiometricsController extends Controller
                 ], 404);
             }
         } catch (\Exception $e) {
-            Log::error('Error validating request.', [
+            Log::error('BiometricsController@search: Error validating request.', [
                 'error' => $e->getMessage(),
             ]);
 

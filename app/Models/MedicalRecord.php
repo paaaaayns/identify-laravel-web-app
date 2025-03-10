@@ -34,12 +34,12 @@ class MedicalRecord extends Model
                 $medical_record->ulid = Str::ulid();
                 $medical_record->saveQuietly(); // Save without triggering model events
 
-                Log::info('Medical Record created successfully.', [
+                Log::info('MedicalRecord@booted: Medical Record created successfully.', [
                     'medical_record_id' => $medical_record->medical_record_id,
                 ]);
             } catch (\Exception $e) {
                 // Log any issues during record creation
-                Log::error('Error creating User for opd: ' . $e->getMessage(), [
+                Log::error('MedicalRecord@booted: Error creating User for opd: ' . $e->getMessage(), [
                     'medical_record_id' => $medical_record->medical_record_id,
                 ]);
 

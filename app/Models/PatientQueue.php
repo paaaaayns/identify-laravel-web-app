@@ -30,14 +30,14 @@ class PatientQueue extends Model
                 $queue->ulid = Str::ulid();
                 $queue->saveQuietly(); // Save without triggering model events
 
-                Log::info('Queue created successfully.', [
+                Log::info('PatientQueue@booted: Queue created successfully.', [
                     'queue_id' => $queue->queue_id,
                     'opd_id' => $queue->opd_id,
                     'patient_id' => $queue->patient_id,
                 ]);
             } catch (\Exception $e) {
                 // Log any issues during user creation
-                Log::error('Error creating User for opd: ' . $e->getMessage(), [
+                Log::error('PatientQueue@booted: QError creating User for opd: ' . $e->getMessage(), [
                     'queue_id' => $queue->queue_id,
                     'opd_id' => $queue->opd_id,
                     'patient_id' => $queue->patient_id,

@@ -52,9 +52,9 @@ class DatabaseSeeder extends Seeder
         if (File::exists($folderPath)) {
             File::cleanDirectory($folderPath); // Deletes all files but keeps the folder
             // File::deleteDirectory($folderPath); // Use this instead if you want to remove the folder entirely
-            Log::info('All files in the patients folder have been deleted.');
+            Log::info('DatabaseSeeder@deletePatientsFolder: All files in the patients folder have been deleted.');
         } else {
-            Log::info('The patients folder does not exist.');
+            Log::info('DatabaseSeeder@deletePatientsFolder: The patients folder does not exist.');
         }
     }
 }

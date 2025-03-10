@@ -23,7 +23,7 @@ class MedicalRecordController extends Controller
     public function apiShow($ulid)
     {
         // dd($ulid);
-        Log::info('Medical Record API Show', ['ulid' => $ulid]);
+        Log::info('MedicalRecordController@apiShow: Medical Record API Show', ['ulid' => $ulid]);
         // return records, eager load patient, doctor, opd
         $record = MedicalRecord::query()
             ->where('ulid', $ulid)
@@ -65,10 +65,10 @@ class MedicalRecordController extends Controller
 
         if (!file_exists(storage_path($RecordFilePath))) {
             $pdfPath = null;
-            Log::info('Medical Record PDF not found', ['ulid' => $ulid]);
+            Log::info('MedicalRecordController@show: Medical Record PDF not found', ['ulid' => $ulid]);
         } else {
             $pdfPath = asset("storage/patients/{$patient->ulid}/medical_records/{$record->ulid}.pdf");
-            Log::info('Medical Record PDF found', ['ulid' => $ulid]);
+            Log::info('MedicalRecordController@show: Medical Record PDF found', ['ulid' => $ulid]);
         }
 
         return view('auth.medical-record.show', [
