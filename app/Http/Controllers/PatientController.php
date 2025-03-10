@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\IrisBiometrics;
 use App\Models\Patient;
 use App\Models\PreRegisteredPatient;
 use App\Models\User;
@@ -9,9 +10,13 @@ use Faker\Factory as Faker;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
+
+use function PHPUnit\Framework\fileExists;
 
 class PatientController extends Controller
 {
@@ -75,8 +80,8 @@ class PatientController extends Controller
             'emergency_contact2_relationship' => ['required', 'string', 'max:100'],
 
             // Biometrics
-            'left_iris' => ['required'], // Base64-encoded string
-            'right_iris' => ['required'], // Base64-encoded string
+            'left_iris' => ['required', 'image', 'mimes:bmp', 'max:2048'], // Base64-encoded string
+            'right_iris' => ['required', 'image', 'mimes:bmp', 'max:2048'], // Base64-encoded string
         ], [
             'required' => 'This field is required', // Overrides all required fields
             'accepted' => 'This field is required', // Overrides all accepted fields
@@ -104,75 +109,92 @@ class PatientController extends Controller
         // Validate the request and get validated data
         $response = $this->validateStoreRequest($request)->getData(true); // Use 'true' to get an associative array
         $data = $response['data'];
-        // remove the left_iris and right_iris from the data
-        unset($data['left_iris']);
-        unset($data['right_iris']);
 
-        // log left_iris and right_iris
-        Log::info('PatientController@store: Request received.', [
-            'data' => $data,
+        // log the request
+        Log::info('PatientController@store: Request received.', []);
+
+
+        $leftIrisImage = $request->file('left_iris');
+        $rightIrisImage = $request->file('right_iris');
+
+        $patient_ulid = $request->ulid;
+
+        Log::info('PatientController@store: Image mimetype:', [
+            'left_iris' => $leftIrisImage->getMimeType(),
+            'right_iris' => $rightIrisImage->getMimeType(),
         ]);
-        
-
-
-
-
 
         try {
-            $ulid = $request->ulid;
+            $response = Http::asMultipart()
+                ->attach('left_iris', file_get_contents($leftIrisImage), 'left_iris.bmp')
+                ->attach('right_iris', file_get_contents($rightIrisImage), 'right_iris.bmp')
+                ->post('http://127.0.0.1:8000/fast-api/store', []);
 
-            $request->validate([
-                'left_iris' => ['required', 'string', 'regex:/^data:image\/(jpeg|png|jpg|gif|svg);base64,/'], // Base64-encoded string
-                'right_iris' => ['required', 'string', 'regex:/^data:image\/(jpeg|png|jpg|gif|svg);base64,/'], // Base64-encoded string
-            ]);
+            $responseData = $response->json();
 
-            // Decode the base64 image
-            $LeftImageData = $request->input('left_iris');
-            $LeftImageData = explode(',', $LeftImageData)[1];
-            $LeftImageData = base64_decode($LeftImageData);
-            $RightImageData = $request->input('right_iris');
-            $RightImageData = explode(',', $RightImageData)[1];
-            $RightImageData = base64_decode($RightImageData);
+            if ($responseData['success'] === true) {
+                Log::info('PatientObserver@creating: Iris biometrics processed successfully.', [
+                    'response' => $responseData,
+                ]);
+            } else {
+                throw new \Exception("API Error: " . ($responseData['message'] ?? 'Unknown error'));
+            }
 
-            // Generate a unique filename
-            $LeftImageDirectory = 'patients/' . $ulid . '/biometrics';
-            $LeftImageFileName = 'left_iris.png';
-            $LeftImageFilePath = "{$LeftImageDirectory}/{$LeftImageFileName}";
-            $RightImageDirectory = 'patients/' . $ulid . '/biometrics';
-            $RightImageFileName = 'right_iris.png';
-            $RightImageFilePath = "{$RightImageDirectory}/{$RightImageFileName}";
+            $leftIrisBiometrics = new IrisBiometrics();
+            $leftIrisBiometrics->ulid = Str::ulid();
+            $leftIrisBiometrics->patient_ulid = $patient_ulid;
+            $leftIrisBiometrics->orientation = "left";
+            $leftIrisBiometrics->iris_code = gzdecode(base64_decode($responseData["data"]["left_iris_code"]));
+            $leftIrisBiometrics->mask_code = gzdecode(base64_decode($responseData["data"]["left_mask_code"]));
 
-            // Store the image in the public directory
-            $LeftIrisImage = Storage::disk('public')->put($LeftImageFilePath, $LeftImageData);
-            $RightIrisImage = Storage::disk('public')->put($RightImageFilePath, $RightImageData);
-
-            Log::info('PatientController@store: Image stored successfully.', [
-                'left_iris_image_path' => Storage::url($LeftImageFilePath),
-                'right_iris_image_path' => Storage::url($RightImageFilePath),
-            ]);
+            $rightIrisBiometrics = new IrisBiometrics();
+            $rightIrisBiometrics->ulid = Str::ulid();
+            $rightIrisBiometrics->patient_ulid = $patient_ulid;
+            $rightIrisBiometrics->orientation = "right";
+            $rightIrisBiometrics->iris_code = gzdecode(base64_decode($responseData["data"]["right_iris_code"]));
+            $rightIrisBiometrics->mask_code = gzdecode(base64_decode($responseData["data"]["right_mask_code"]));
         } catch (\Exception $e) {
+            Log::error('PatientObserver@creating: Error storing iris biometrics: ' . $e->getMessage());
+
             return response()->json([
                 'success' => false,
-                'message' => 'Error storing image: ' . $e->getMessage(),
+                'message' => 'Error making FastAPI request: ' . $e->getMessage(),
             ], 500);
         }
 
-        $user = new Patient();
-        $user->fill(collect($request->all())->except('left_iris', 'right_iris')->toArray());
+        $patient = new Patient();
+        $patient->fill(collect($request->all())->except('left_iris', 'right_iris')->toArray());
 
         // transfer old ulid to new ulid
-        $user->ulid = $request->ulid;
+        $patient->ulid = $patient_ulid;
 
-        // add the pre_registration_code to the user
-        $user->registered_at = now();
-        $user->save();
+        // add the pre_registration_code to the patient
+        $patient->registered_at = now();
+
+
+        try {
+            $patient->save();
+            $leftIrisBiometrics->save();
+            $rightIrisBiometrics->save();
+            $leftIrisImageFilePath = "patients/{$patient_ulid}/biometrics/left_iris." . $leftIrisImage->getClientOriginalExtension();
+            $rightIrisImageFilePath = "patients/{$patient_ulid}/biometrics/right_iris." . $rightIrisImage->getClientOriginalExtension();
+            Storage::disk('public')->put($leftIrisImageFilePath, file_get_contents($leftIrisImage->getRealPath()));
+            Storage::disk('public')->put($rightIrisImageFilePath, file_get_contents($rightIrisImage->getRealPath()));
+        } catch (\Exception $e) {
+            Log::error('PatientController@store: Error storing patient record.', [
+                'error' => $e->getMessage(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Error storing patient record.',
+            ], 500);
+        }
 
         return response()->json([
             'success' => true,
             'message' => 'Patient registered successfully.',
-            'leftIrisImagePath' => Storage::url($LeftIrisImage),
-            'rightIrisImagePath' => Storage::url($RightIrisImage),
-            'user' => $user,
+            'user' => $patient,
         ], 200);
     }
 
@@ -215,7 +237,7 @@ class PatientController extends Controller
         $user->delete();
         $creds = User::where('user_id', $user_id)->firstOrFail();
         $creds->delete();
-        
+
         // Return a JSON response to inform the frontend that the deletion was successful
         return response()->json([
             'success' => true,
