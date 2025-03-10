@@ -45,7 +45,7 @@ class OpdObserver
 
             $user->assignRole('opd');
 
-            Log::info('OPD created successfully.', [
+            Log::info('OpdObserver@created: OPD created successfully.', [
                 'opd_id' => $opd->user_id,
             ]);
 
@@ -53,7 +53,7 @@ class OpdObserver
             // event(new Registered($user));
         } catch (\Exception $e) {
             // Log any issues during user creation
-            Log::error('Error creating User for opd: ' . $e->getMessage(), [
+            Log::error('OpdObserver@created: Error creating User for opd: ' . $e->getMessage(), [
                 'opd_id' => $opd->user_id,
                 'email' => $opd->email,
             ]);

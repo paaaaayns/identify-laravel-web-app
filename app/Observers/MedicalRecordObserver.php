@@ -42,7 +42,7 @@ class MedicalRecordObserver
             
             $patient = $medicalRecord->patient;
 
-            Log::info('Medical Record created successfully.', [
+            Log::info('MedicalRecordObserver@created: Medical Record created successfully.', [
                 'medical_record_id' => $medicalRecord->medical_record_id,
             ]);
 
@@ -64,13 +64,13 @@ class MedicalRecordObserver
                 ]);
             } catch (\Exception $e) {
                 // Log the error
-                Log::error('Error generating PDF: ' . $e->getMessage(), [
+                Log::error('MedicalRecordObserver@created: Error generating PDF: ' . $e->getMessage(), [
                     'medical_record_id' => $medicalRecord->medical_record_id ?? 'N/A',
                 ]);
             }
         } catch (\Exception $e) {
             // Log any issues during record creation
-            Log::error('Error creating Medical Record: ' . $e->getMessage(), [
+            Log::error('MedicalRecordObserver@created: Error creating Medical Record: ' . $e->getMessage(), [
                 'medical_record_id' => $medicalRecord->medical_record_id,
             ]);
 

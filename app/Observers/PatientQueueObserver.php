@@ -23,7 +23,7 @@ class PatientQueueObserver
     public function updated(PatientQueue $queue)
     {
         if ($queue->queue_status === 'Completed') {
-            Log::info('Creating medical record for queue ID: ' . $queue->queue_id);
+            Log::info('PatientQueueObserver@updated: Creating medical record for queue ID: ' . $queue->queue_id);
             $queue = PatientQueue::find($queue->id);
 
             try {

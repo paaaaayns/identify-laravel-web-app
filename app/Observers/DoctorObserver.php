@@ -45,7 +45,7 @@ class DoctorObserver
 
             $user->assignRole('doctor');
 
-            Log::info('Doctor created successfully.', [
+            Log::info('DoctorObserver@created: Doctor created successfully.', [
                 'doctor_id' => $doctor->user_id,
             ]);
 
@@ -53,7 +53,7 @@ class DoctorObserver
             // event(new Registered($user));
         } catch (\Exception $e) {
             // Log any issues during user creation
-            Log::error('Error creating User for doctor: ' . $e->getMessage(), [
+            Log::error('DoctorObserver@created: Error creating User for doctor: ' . $e->getMessage(), [
                 'doctor_id' => $doctor->user_id,
                 'email' => $doctor->email,
             ]);

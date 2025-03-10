@@ -32,13 +32,13 @@ class PreRegisteredPatientObserver
             $patient->ulid = Str::ulid();
             $patient->saveQuietly(); // Save without triggering model events
 
-            Log::info('Pre-registered patient created successfully.', [
+            Log::info('PreRegisteredPatientObserver@updated: Pre-registered patient created successfully.', [
                 'patient_id' => $patient->ulid,
             ]);
             
         } catch (\Exception $e) {
             // Log any issues during pre-registration record creation
-            Log::error('Error creating record for pre-registration: ' . $e->getMessage(), [
+            Log::error('PreRegisteredPatientObserver@updated: Error creating record for pre-registration: ' . $e->getMessage(), [
                 'patient_id' => $patient->id,
                 'email' => $patient->email,
             ]);

@@ -45,7 +45,7 @@ class AdminObserver
 
             $user->assignRole('admin');
 
-            Log::info('Admin created successfully.', [
+            Log::info('AdminObserver@created: Admin created successfully.', [
                 'admin_id' => $admin->user_id,
             ]);
 
@@ -53,7 +53,7 @@ class AdminObserver
             // event(new Registered($user));
         } catch (\Exception $e) {
             // Log any issues during user creation
-            Log::error('Error creating User for admin: ' . $e->getMessage(), [
+            Log::error('AdminObserver@created: Error creating User for admin: ' . $e->getMessage(), [
                 'admin_id' => $admin->user_id,
                 'email' => $admin->email,
             ]);
