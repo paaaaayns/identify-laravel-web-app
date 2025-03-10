@@ -1,4 +1,9 @@
 <x-pre-reg-layout>
+
+    <div class="relative">
+        <a href="/pre-register/search" class="absolute text-sm/6 font-semibold text-gray-900">Back</a>
+    </div>
+
     <div class="container mx-auto p-6">
         <!-- Header Section -->
         <div class="text-center mb-8">

@@ -412,7 +412,7 @@
                                 <label
                                     for="terms_and_conditions"
                                     class="ms-2 text-sm font-medium text-gray-900">
-                                    I agree with the <a href="#" class="text-primary hover:underline">Terms and Conditions</a>. <span class="text-red-500">*</span>
+                                    I agree with the <a href="{{ asset('files/Thesisinism - Terms & Condition.pdf') }}" target="_blank" class="text-primary hover:underline">Terms and Conditions</a>. <span class="text-red-500">*</span>
                                 </label>
 
                                 <x-forms.error name="terms_and_conditions" />
