@@ -525,17 +525,6 @@
             const rightIrisFile = document.getElementById('right_iris').files[0];
             const leftIrisFile = document.getElementById('left_iris').files[0];
 
-
-            if (rightIrisFile) {
-                formData.delete('right_iris'); // Remove original file input
-                formData.append('right_iris', await toBase64(rightIrisFile));
-            }
-
-            if (leftIrisFile) {
-                formData.delete('left_iris'); // Remove original file input
-                formData.append('left_iris', await toBase64(leftIrisFile));
-            }
-
             console.log('Form data:', formData);
 
             try {
@@ -568,15 +557,6 @@
                 console.error('Fetch error:', error);
                 return null;
             }
-        }
-
-        function toBase64(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = (error) => reject(error);
-            });
         }
     </script>
 
