@@ -11,6 +11,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class PreRegisteredPatient extends Model
 {
     /** @use HasFactory<\Database\Factories\PreRegisteredPatientFactory> */
-    use HasFactory, SoftDeletes;
+    use HasFactory;
     protected $guarded = [];
 }
