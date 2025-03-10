@@ -18,13 +18,21 @@ class BiometricsController extends Controller
     public function search(Request $request)
     {
         $request->validate([
-            'iris' => 'required|image|mimes:jpeg,png,jpg,bmp|max:2048',
+            'iris' => 'required|image|mimes:bmp|max:2048',
         ]);
 
         $imageData = $request->file('iris');
-        $imagePath = 'search/iris.png';
+        $imagePath = 'search/iris.bmp';
 
-        Storage::disk('public')->put($imagePath, file_get_contents($imageData->getRealPath()));
+        try {
+            Storage::disk('public')->put($imagePath, file_get_contents($imageData->getRealPath()));
+        } catch (\Exception $e) {
+            Log::error('Failed to store uploaded image.', ['error' => $e->getMessage()]);
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to store uploaded image.',
+            ], 500);
+        }
 
         $imagePath = public_path("storage/{$imagePath}");
         if (!file_exists($imagePath)) {
@@ -43,7 +51,7 @@ class BiometricsController extends Controller
             });
 
             $response = Http::asMultipart()
-                ->attach('iris', file_get_contents($imageData), 'iris.png')
+                ->attach('iris', file_get_contents($imageData), 'iris.bmp')
                 ->post('http://127.0.0.1:8000/fast-api/search', [
                     'stored_irises' => json_encode($irisBiometrics),
                 ]);
