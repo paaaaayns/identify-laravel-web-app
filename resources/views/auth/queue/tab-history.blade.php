@@ -18,9 +18,7 @@
 
         <div class="bg-white shadow rounded-lg p-6">
 
-            <!-- Personal Information -->
             <div class="w-full grid grid-cols-6 md:grid-cols-12">
-                <!-- center vertically the children-->
                 <div class="flex justify-between items-center pb-4 col-span-6 md:col-span-12">
                     <span id="mr-created_at" class="text-xl font-semibold text-gray-800"></span>
                     <button
@@ -36,177 +34,176 @@
                     </button>
                 </div>
 
-                <div class="bg-gray-200 border border-gray-400 px-4 py-2 col-span-6 md:col-span-12">
-                    <h3 class="text-sm font-semibold text-gray-800">Personal Information</h3>
-                </div>
-                <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-3">
-                    <div class="flex flex-col">
-                        <label class="text-sm">Patient ID</label>
-                        <span id="p-user_id" class="text-sm font-semibold"></span>
+                <!-- Personal Information -->
+                <div class="w-full grid grid-cols-6 md:grid-cols-12 col-span-6 md:col-span-12">
+                    <div class="bg-gray-200 border border-gray-400 px-4 py-2 col-span-6 md:col-span-12">
+                        <h3 class="text-sm font-semibold text-gray-800">Personal Information</h3>
                     </div>
-                </div>
-                <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
-                    <div class="flex flex-col">
-                        <label class="text-sm">First Name</label>
-                        <span id="p-first_name" class="text-sm font-semibold"></span>
+                    <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-3">
+                        <div class="flex flex-col">
+                            <label class="text-sm">Patient ID</label>
+                            <span id="p-user_id" class="text-sm font-semibold"></span>
+                        </div>
                     </div>
-                </div>
-                <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
-                    <div class="flex flex-col">
-                        <label class="text-sm">Middle Name</label>
-                        <span id="p-middle_name" class="text-sm font-semibold"></span>
+                    <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
+                        <div class="flex flex-col">
+                            <label class="text-sm">First Name</label>
+                            <span id="p-first_name" class="text-sm font-semibold"></span>
+                        </div>
                     </div>
-                </div>
-                <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
-                    <div class="flex flex-col">
-                        <label class="text-sm">Last Name</label>
-                        <span id="p-last_name" class="text-sm font-semibold"></span>
+                    <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
+                        <div class="flex flex-col">
+                            <label class="text-sm">Middle Name</label>
+                            <span id="p-middle_name" class="text-sm font-semibold"></span>
+                        </div>
                     </div>
-                </div>
-                <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-3">
-                    <div class="flex flex-col">
-                        <label class="text-sm">Sex</label>
-                        <span id="p-sex" class="text-sm font-semibold"></span>
+                    <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
+                        <div class="flex flex-col">
+                            <label class="text-sm">Last Name</label>
+                            <span id="p-last_name" class="text-sm font-semibold"></span>
+                        </div>
                     </div>
-                </div>
-                <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
-                    <div class="flex flex-col">
-                        <label class="text-sm">Birthdate</label>
-                        <span id="p-birthdate" class="text-sm font-semibold"></span>
+                    <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-3">
+                        <div class="flex flex-col">
+                            <label class="text-sm">Sex</label>
+                            <span id="p-sex" class="text-sm font-semibold"></span>
+                        </div>
                     </div>
-                </div>
-                <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
-                    <div class="flex flex-col">
-                        <label class="text-sm">Religion</label>
-                        <span id="p-religion" class="text-sm font-semibold"></span>
+                    <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
+                        <div class="flex flex-col">
+                            <label class="text-sm">Birthdate</label>
+                            <span id="p-birthdate" class="text-sm font-semibold"></span>
+                        </div>
                     </div>
-                </div>
-                <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
-                    <div class="flex flex-col">
-                        <label class="text-sm">Citizenship</label>
-                        <span id="p-citizenship" class="text-sm font-semibold"></span>
+                    <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
+                        <div class="flex flex-col">
+                            <label class="text-sm">Religion</label>
+                            <span id="p-religion" class="text-sm font-semibold"></span>
+                        </div>
+                    </div>
+                    <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
+                        <div class="flex flex-col">
+                            <label class="text-sm">Citizenship</label>
+                            <span id="p-citizenship" class="text-sm font-semibold"></span>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Consultation Information -->
-                <div class="bg-gray-200 border-t-0 border border-gray-400 px-4 py-2 col-span-6 md:col-span-12">
-                    <h3 class="text-sm font-semibold text-gray-800">Consultation Information</h3>
-                </div>
-                <div class="bg-gray-200 border-t-0 border border-gray-400 px-4 py-2 col-span-6 md:col-span-12">
-                    <h3 class="text-sm font-semibold text-gray-800">Doctor</h3>
-                </div>
-
-                <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-6">
-                    <div class="flex flex-col">
-                        <label class="text-sm">Name</label>
-                        <span id="d-name" class="text-sm font-semibold"></span>
+                <div class="w-full grid grid-cols-6 md:grid-cols-12 col-span-6 md:col-span-12">
+                    <div class="bg-gray-200 border-t-0 border border-gray-400 px-4 py-2 col-span-6 md:col-span-12">
+                        <h3 class="text-sm font-semibold text-gray-800">Consultation Information</h3>
                     </div>
-                </div>
-                <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-6">
-                    <div class="flex flex-col">
-                        <label class="text-sm">Specialization</label>
-                        <span id="d-specialization" class="text-sm font-semibold"></span>
+                    <div class="bg-gray-200 border-t-0 border border-gray-400 px-4 py-2 col-span-6 md:col-span-12">
+                        <h3 class="text-sm font-semibold text-gray-800">Doctor</h3>
                     </div>
-                </div>
-                <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-6">
-                    <div class="flex flex-col">
-                        <label class="text-sm">Contact No.</label>
-                        <span id="d-contact_number" class="text-sm font-semibold"></span>
+                    <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-6">
+                        <div class="flex flex-col">
+                            <label class="text-sm">Name</label>
+                            <span id="d-name" class="text-sm font-semibold"></span>
+                        </div>
                     </div>
-                </div>
-                <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-6">
-                    <div class="flex flex-col">
-                        <label class="text-sm">Email</label>
-                        <span id="d-email" class="text-sm font-semibold"></span>
+                    <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-6">
+                        <div class="flex flex-col">
+                            <label class="text-sm">Specialization</label>
+                            <span id="d-specialization" class="text-sm font-semibold"></span>
+                        </div>
                     </div>
-                </div>
-
-
-                <!-- Concerns -->
-                <div class="bg-gray-200 border-t-0 border border-gray-400 px-4 py-2 col-span-6 md:col-span-12">
-                    <h3 class="text-sm font-semibold text-gray-800">Concerns</h3>
-                </div>
-                <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-4">
-                    <div class="flex flex-col">
-                        <label class="text-sm">Primary Complaint</label>
-                        <span id="mr-primary_complaint" class="text-sm font-semibold"></span>
+                    <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-6">
+                        <div class="flex flex-col">
+                            <label class="text-sm">Contact No.</label>
+                            <span id="d-contact_number" class="text-sm font-semibold"></span>
+                        </div>
                     </div>
-                </div>
-                <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-4">
-                    <div class="flex flex-col">
-                        <label class="text-sm">Duration of Symptoms</label>
-                        <span id="mr-duration_of_symptoms" class="text-sm font-semibold"></span>
+                    <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-6">
+                        <div class="flex flex-col">
+                            <label class="text-sm">Email</label>
+                            <span id="d-email" class="text-sm font-semibold"></span>
+                        </div>
                     </div>
-                </div>
-                <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-4">
-                    <div class="flex flex-col">
-                        <label class="text-sm">Intensity & Frequency</label>
-                        <span id="mr-intensity_and_frequency" class="text-sm font-semibold"></span>
+                    <!-- Concerns -->
+                    <div class="bg-gray-200 border-t-0 border border-gray-400 px-4 py-2 col-span-6 md:col-span-12">
+                        <h3 class="text-sm font-semibold text-gray-800">Concerns</h3>
                     </div>
-                </div>
-
-                <!-- Concerns -->
-                <div class="bg-gray-200 border-t-0 border border-gray-400 px-4 py-2 col-span-6 md:col-span-12">
-                    <h3 class="text-sm font-semibold text-gray-800">Concerns</h3>
-                </div>
-                <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-4">
-                    <div class="flex flex-col">
-                        <label class="text-sm">Primary Complaint</label>
-                        <span id="mr-primary_complaint" class="text-sm font-semibold"></span>
+                    <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-4">
+                        <div class="flex flex-col">
+                            <label class="text-sm">Primary Complaint</label>
+                            <span id="mr-primary_complaint" class="text-sm font-semibold"></span>
+                        </div>
                     </div>
-                </div>
-                <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-4">
-                    <div class="flex flex-col">
-                        <label class="text-sm">Duration of Symptoms</label>
-                        <span id="mr-duration_of_symptoms" class="text-sm font-semibold"></span>
+                    <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-4">
+                        <div class="flex flex-col">
+                            <label class="text-sm">Duration of Symptoms</label>
+                            <span id="mr-duration_of_symptoms" class="text-sm font-semibold"></span>
+                        </div>
                     </div>
-                </div>
-                <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-4">
-                    <div class="flex flex-col">
-                        <label class="text-sm">Intensity & Frequency</label>
-                        <span id="mr-intensity_and_frequency" class="text-sm font-semibold"></span>
+                    <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-4">
+                        <div class="flex flex-col">
+                            <label class="text-sm">Intensity & Frequency</label>
+                            <span id="mr-intensity_and_frequency" class="text-sm font-semibold"></span>
+                        </div>
                     </div>
-                </div>
-
-
-                <!-- Findings -->
-                <div class="bg-gray-200 border-t-0 border border-gray-400 px-4 py-2 col-span-6 md:col-span-12">
-                    <h3 class="text-sm font-semibold text-gray-800">Findings</h3>
-                </div>
-                <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
-                    <div class="flex flex-col">
-                        <label class="text-sm">Findings</label>
-                        <span id="mr-findings" class="text-sm font-semibold"></span>
+                    <!-- Concerns -->
+                    <div class="bg-gray-200 border-t-0 border border-gray-400 px-4 py-2 col-span-6 md:col-span-12">
+                        <h3 class="text-sm font-semibold text-gray-800">Concerns</h3>
                     </div>
-                </div>
-                <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
-                    <div class="flex flex-col">
-                        <label class="text-sm">Diagnosis</label>
-                        <span id="mr-diagnosis" class="text-sm font-semibold"></span>
+                    <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-4">
+                        <div class="flex flex-col">
+                            <label class="text-sm">Primary Complaint</label>
+                            <span id="mr-primary_complaint" class="text-sm font-semibold"></span>
+                        </div>
                     </div>
-                </div>
-                <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
-                    <div class="flex flex-col">
-                        <label class="text-sm">Recommended Treatment</label>
-                        <span id="mr-recommended_treatment" class="text-sm font-semibold"></span>
+                    <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-4">
+                        <div class="flex flex-col">
+                            <label class="text-sm">Duration of Symptoms</label>
+                            <span id="mr-duration_of_symptoms" class="text-sm font-semibold"></span>
+                        </div>
                     </div>
-                </div>
-                <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
-                    <div class="flex flex-col">
-                        <label class="text-sm">Follow-Up Instructions</label>
-                        <span id="mr-follow_up_instructions" class="text-sm font-semibold"></span>
+                    <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-4">
+                        <div class="flex flex-col">
+                            <label class="text-sm">Intensity & Frequency</label>
+                            <span id="mr-intensity_and_frequency" class="text-sm font-semibold"></span>
+                        </div>
                     </div>
-                </div>
-                <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
-                    <div class="flex flex-col">
-                        <label class="text-sm">Referrals</label>
-                        <span id="mr-referrals" class="text-sm font-semibold"></span>
+                    <!-- Findings -->
+                    <div class="bg-gray-200 border-t-0 border border-gray-400 px-4 py-2 col-span-6 md:col-span-12">
+                        <h3 class="text-sm font-semibold text-gray-800">Findings</h3>
                     </div>
-                </div>
-                <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
-                    <div class="flex flex-col">
-                        <label class="text-sm">Doctor's Notes</label>
-                        <span id="mr-doctor_notes" class="text-sm font-semibold"></span>
+                    <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
+                        <div class="flex flex-col">
+                            <label class="text-sm">Findings</label>
+                            <span id="mr-findings" class="text-sm font-semibold"></span>
+                        </div>
+                    </div>
+                    <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
+                        <div class="flex flex-col">
+                            <label class="text-sm">Diagnosis</label>
+                            <span id="mr-diagnosis" class="text-sm font-semibold"></span>
+                        </div>
+                    </div>
+                    <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
+                        <div class="flex flex-col">
+                            <label class="text-sm">Recommended Treatment</label>
+                            <span id="mr-recommended_treatment" class="text-sm font-semibold"></span>
+                        </div>
+                    </div>
+                    <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
+                        <div class="flex flex-col">
+                            <label class="text-sm">Follow-Up Instructions</label>
+                            <span id="mr-follow_up_instructions" class="text-sm font-semibold"></span>
+                        </div>
+                    </div>
+                    <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
+                        <div class="flex flex-col">
+                            <label class="text-sm">Referrals</label>
+                            <span id="mr-referrals" class="text-sm font-semibold"></span>
+                        </div>
+                    </div>
+                    <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
+                        <div class="flex flex-col">
+                            <label class="text-sm">Doctor's Notes</label>
+                            <span id="mr-doctor_notes" class="text-sm font-semibold"></span>
+                        </div>
                     </div>
                 </div>
             </div>

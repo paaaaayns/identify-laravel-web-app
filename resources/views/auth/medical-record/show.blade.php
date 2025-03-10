@@ -55,9 +55,8 @@
         <!-- Right Column -->
         <div class="space-y-4 col-span-1 md:col-span-3 break-words">
 
-            <div class="bg-white shadow rounded-lg p-6">
+            <div class="bg-white shadow rounded-lg p-6 space-y-4 ">
 
-                <!-- Personal Information -->
                 <div class="w-full grid grid-cols-6 md:grid-cols-12">
                     <!-- center vertically the children-->
                     <div class="flex justify-between items-center pb-4 col-span-6 md:col-span-12">
@@ -74,247 +73,194 @@
                         </button>
                     </div>
 
-                    <div class="bg-gray-200 border border-gray-400 px-4 py-2 col-span-6 md:col-span-12">
-                        <h3 class="text-sm font-semibold text-gray-800">Personal Information</h3>
-                    </div>
-                    <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-3">
-                        <div class="flex flex-col">
-                            <label class="text-sm">Patient ID</label>
-                            <span class="text-sm font-semibold">{{ $patient->user_id ?? 'N/A' }}</span>
+                    <!-- Personal Information -->
+                    <div class="w-full grid grid-cols-6 md:grid-cols-12 col-span-6 md:col-span-12">
+                        <div class="bg-gray-200 border border-gray-400 px-4 py-2 col-span-6 md:col-span-12">
+                            <h3 class="text-sm font-semibold text-gray-800">Personal Information</h3>
                         </div>
-                    </div>
-                    <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
-                        <div class="flex flex-col">
-                            <label class="text-sm">First Name</label>
-                            <span class="text-sm font-semibold">{{ $patient->first_name ?? 'N/A' }}</span>
+                        <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-3">
+                            <div class="flex flex-col">
+                                <label class="text-sm">Patient ID</label>
+                                <span class="text-sm font-semibold">{{ $patient->user_id ?? 'N/A' }}</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
-                        <div class="flex flex-col">
-                            <label class="text-sm">Middle Name</label>
-                            <span class="text-sm font-semibold">{{ $patient->middle_name ?? 'N/A' }}</span>
+                        <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-9">
+                            <div class="flex flex-col">
+                                <label class="text-sm">Name</label>
+                                <span class="text-sm font-semibold">{{ $patient->first_name ?? 'N/A' }} {{ $patient->middle_name ?? '' }} {{ $patient->last_name ?? 'N/A' }}</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
-                        <div class="flex flex-col">
-                            <label class="text-sm">Last Name</label>
-                            <span class="text-sm font-semibold">{{ $patient->last_name ?? 'N/A' }}</span>
+                        <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-3">
+                            <div class="flex flex-col">
+                                <label class="text-sm">Sex</label>
+                                <span class="text-sm font-semibold">{{ $patient->sex ?? 'N/A' }}</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-3">
-                        <div class="flex flex-col">
-                            <label class="text-sm">Sex</label>
-                            <span class="text-sm font-semibold">{{ $patient->sex ?? 'N/A' }}</span>
+                        <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
+                            <div class="flex flex-col">
+                                <label class="text-sm">Birthdate</label>
+                                <span class="text-sm font-semibold">{{ $patient->birthdate ?? 'N/A' }}</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
-                        <div class="flex flex-col">
-                            <label class="text-sm">Birthdate</label>
-                            <span class="text-sm font-semibold">{{ $patient->birthdate ?? 'N/A' }}</span>
+                        <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
+                            <div class="flex flex-col">
+                                <label class="text-sm">Religion</label>
+                                <span class="text-sm font-semibold">{{ $patient->religion ?? 'N/A' }}</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
-                        <div class="flex flex-col">
-                            <label class="text-sm">Religion</label>
-                            <span class="text-sm font-semibold">{{ $patient->religion ?? 'N/A' }}</span>
-                        </div>
-                    </div>
-                    <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
-                        <div class="flex flex-col">
-                            <label class="text-sm">Citizenship</label>
-                            <span class="text-sm font-semibold">{{ $patient->citizenship ?? 'N/A' }}</span>
-                        </div>
-                    </div>
-
-                    <!-- Emergency Contact -->
-                    <div class="bg-gray-200 border-t-0 border border-gray-400 px-4 py-2 col-span-6 md:col-span-12">
-                        <h3 class="text-sm font-semibold text-gray-800">Emergency Contact</h3>
-                    </div>
-                    <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-4">
-                        <div class="flex flex-col">
-                            <label class="text-sm">Name</label>
-                            <span class="text-sm font-semibold">{{ $patient->emergency_contact1_name ?? 'N/A' }}</span>
-                        </div>
-                    </div>
-                    <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-4">
-                        <div class="flex flex-col">
-                            <label class="text-sm">Contact No.</label>
-                            <span class="text-sm font-semibold">{{ $patient->emergency_contact1_number ?? 'N/A' }}</span>
-                        </div>
-                    </div>
-                    <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-4">
-                        <div class="flex flex-col">
-                            <label class="text-sm">Relationship</label>
-                            <span class="text-sm font-semibold">{{ $patient->emergency_contact1_relationship ?? 'N/A' }}</span>
-                        </div>
-                    </div>
-
-                    <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-4">
-                        <div class="flex flex-col">
-                            <label class="text-sm">Name</label>
-                            <span class="text-sm font-semibold">{{ $patient->emergency_contact2_name ?? 'N/A' }}</span>
-                        </div>
-                    </div>
-                    <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-4">
-                        <div class="flex flex-col">
-                            <label class="text-sm">Contact No.</label>
-                            <span class="text-sm font-semibold">{{ $patient->emergency_contact2_number ?? 'N/A' }}</span>
-                        </div>
-                    </div>
-                    <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-4">
-                        <div class="flex flex-col">
-                            <label class="text-sm">Relationship</label>
-                            <span class="text-sm font-semibold">{{ $patient->emergency_contact2_relationship ?? 'N/A' }}</span>
+                        <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
+                            <div class="flex flex-col">
+                                <label class="text-sm">Citizenship</label>
+                                <span class="text-sm font-semibold">{{ $patient->citizenship ?? 'N/A' }}</span>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Consultation Information -->
-                    <div class="bg-gray-200 border-t-0 border border-gray-400 px-4 py-2 col-span-6 md:col-span-12">
-                        <h3 class="text-sm font-semibold text-gray-800">Consultation Information</h3>
-                    </div>
-                    <div class="bg-gray-200 border-t-0 border border-gray-400 px-4 py-2 col-span-6 md:col-span-12">
-                        <h3 class="text-sm font-semibold text-gray-800">Doctor</h3>
-                    </div>
-
-                    <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-3">
-                        <div class="flex flex-col">
-                            <label class="text-sm">Name</label>
-                            <span class="text-sm font-semibold">Dr. {{ $doctor->first_name . ' ' . $doctor->last_name ?? 'N/A' }}</span>
+                    <div class="w-full grid grid-cols-6 md:grid-cols-12 col-span-6 md:col-span-12">
+                        <div class="bg-gray-200 border-t-0 border border-gray-400 px-4 py-2 col-span-6 md:col-span-12">
+                            <h3 class="text-sm font-semibold text-gray-800">Consultation Information</h3>
                         </div>
-                    </div>
-                    <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
-                        <div class="flex flex-col">
-                            <label class="text-sm">Specialization</label>
-                            <span class="text-sm font-semibold">{{ $doctor->type ?? 'N/A' }}</span>
+                        <div class="bg-gray-200 border-t-0 border border-gray-400 px-4 py-2 col-span-6 md:col-span-12">
+                            <h3 class="text-sm font-semibold text-gray-800">Doctor</h3>
                         </div>
-                    </div>
-                    <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
-                        <div class="flex flex-col">
-                            <label class="text-sm">Contact No.</label>
-                            <span class="text-sm font-semibold">{{ $doctor->contact_number ?? 'N/A' }}</span>
+                        <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-3">
+                            <div class="flex flex-col">
+                                <label class="text-sm">Name</label>
+                                <span class="text-sm font-semibold">Dr. {{ $doctor->first_name . ' ' . $doctor->last_name ?? 'N/A' }}</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
-                        <div class="flex flex-col">
-                            <label class="text-sm">Email</label>
-                            <span class="text-sm font-semibold">{{ $doctor->email ?? 'N/A' }}</span>
+                        <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
+                            <div class="flex flex-col">
+                                <label class="text-sm">Specialization</label>
+                                <span class="text-sm font-semibold">{{ $doctor->type ?? 'N/A' }}</span>
+                            </div>
                         </div>
-                    </div>
-
-                    <!-- Concerns -->
-                    <div class="bg-gray-200 border-t-0 border border-gray-400 px-4 py-2 col-span-6 md:col-span-12">
-                        <h3 class="text-sm font-semibold text-gray-800">Concerns</h3>
-                    </div>
-                    <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-4">
-                        <div class="flex flex-col">
-                            <label class="text-sm">Primary Complaint</label>
-                            <span class="text-sm font-semibold">{{ $record->primary_complaint ?? 'N/A' }}</span>
+                        <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
+                            <div class="flex flex-col">
+                                <label class="text-sm">Contact No.</label>
+                                <span class="text-sm font-semibold">{{ $doctor->contact_number ?? 'N/A' }}</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-4">
-                        <div class="flex flex-col">
-                            <label class="text-sm">Duration of Symptoms</label>
-                            <span class="text-sm font-semibold">{{ $record->duration_of_symptoms ?? 'N/A' }}</span>
+                        <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
+                            <div class="flex flex-col">
+                                <label class="text-sm">Email</label>
+                                <span class="text-sm font-semibold">{{ $doctor->email ?? 'N/A' }}</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-4">
-                        <div class="flex flex-col">
-                            <label class="text-sm">Intensity & Frequency</label>
-                            <span class="text-sm font-semibold">{{ $record->intensity_and_frequency ?? 'N/A' }}</span>
+                        <!-- Concerns -->
+                        <div class="bg-gray-200 border-t-0 border border-gray-400 px-4 py-2 col-span-6 md:col-span-12">
+                            <h3 class="text-sm font-semibold text-gray-800">Concerns</h3>
                         </div>
-                    </div>
-
-                    <!-- Vitals -->
-                    <div class="bg-gray-200 border-t-0 border border-gray-400 px-4 py-2 col-span-6 md:col-span-12">
-                        <h3 class="text-sm font-semibold text-gray-800">Vitals</h3>
-                    </div>
-                    <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-3">
-                        <div class="flex flex-col">
-                            <label class="text-sm">Height</label>
-                            <span class="text-sm font-semibold">{{ $record->height ?? 'N/A' }} cm</span>
+                        <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-4">
+                            <div class="flex flex-col">
+                                <label class="text-sm">Primary Complaint</label>
+                                <span class="text-sm font-semibold">{{ $record->primary_complaint ?? 'N/A' }}</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
-                        <div class="flex flex-col">
-                            <label class="text-sm">Weight</label>
-                            <span class="text-sm font-semibold">{{ $record->weight ?? 'N/A' }} kg</span>
+                        <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-4">
+                            <div class="flex flex-col">
+                                <label class="text-sm">Duration of Symptoms</label>
+                                <span class="text-sm font-semibold">{{ $record->duration_of_symptoms ?? 'N/A' }}</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
-                        <div class="flex flex-col">
-                            <label class="text-sm">Blood Pressure</label>
-                            <span class="text-sm font-semibold">{{ $record->blood_pressure ?? 'N/A' }} mmHg</span>
+                        <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-4">
+                            <div class="flex flex-col">
+                                <label class="text-sm">Intensity & Frequency</label>
+                                <span class="text-sm font-semibold">{{ $record->intensity_and_frequency ?? 'N/A' }}</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
-                        <div class="flex flex-col">
-                            <label class="text-sm">Temperature</label>
-                            <span class="text-sm font-semibold">{{ $record->temperature ?? 'N/A' }} °C</span>
+                        <!-- Vitals -->
+                        <div class="bg-gray-200 border-t-0 border border-gray-400 px-4 py-2 col-span-6 md:col-span-12">
+                            <h3 class="text-sm font-semibold text-gray-800">Vitals</h3>
                         </div>
-                    </div>
-                    <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-4">
-                        <div class="flex flex-col">
-                            <label class="text-sm">Pulse Rate</label>
-                            <span class="text-sm font-semibold">{{ $record->pulse_rate ?? 'N/A' }} bpm</span>
+                        <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-3">
+                            <div class="flex flex-col">
+                                <label class="text-sm">Height</label>
+                                <span class="text-sm font-semibold">{{ $record->height ?? 'N/A' }} cm</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-4">
-                        <div class="flex flex-col">
-                            <label class="text-sm">Respiration Rate</label>
-                            <span class="text-sm font-semibold">{{ $record->respiration_rate ?? 'N/A' }} bpm</span>
+                        <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
+                            <div class="flex flex-col">
+                                <label class="text-sm">Weight</label>
+                                <span class="text-sm font-semibold">{{ $record->weight ?? 'N/A' }} kg</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-4">
-                        <div class="flex flex-col">
-                            <label class="text-sm">O2 Saturation</label>
-                            <span class="text-sm font-semibold">{{ $record->o2_sat ?? 'N/A' }} %</span>
+                        <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
+                            <div class="flex flex-col">
+                                <label class="text-sm">Blood Pressure</label>
+                                <span class="text-sm font-semibold">{{ $record->blood_pressure ?? 'N/A' }} mmHg</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
-                        <div class="flex flex-col">
-                            <label class="text-sm">Other</label>
-                            <span class="text-sm font-semibold">{{ $record->other ?? 'N/A' }}</span>
+                        <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
+                            <div class="flex flex-col">
+                                <label class="text-sm">Temperature</label>
+                                <span class="text-sm font-semibold">{{ $record->temperature ?? 'N/A' }} °C</span>
+                            </div>
                         </div>
-                    </div>
-
-                    <!-- Findings -->
-                    <div class="bg-gray-200 border-t-0 border border-gray-400 px-4 py-2 col-span-6 md:col-span-12">
-                        <h3 class="text-sm font-semibold text-gray-800">Findings</h3>
-                    </div>
-                    <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
-                        <div class="flex flex-col">
-                            <label class="text-sm">Findings</label>
-                            <span class="text-sm font-semibold">{{ $record->findings ?? 'N/A' }}</span>
+                        <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-4">
+                            <div class="flex flex-col">
+                                <label class="text-sm">Pulse Rate</label>
+                                <span class="text-sm font-semibold">{{ $record->pulse_rate ?? 'N/A' }} bpm</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
-                        <div class="flex flex-col">
-                            <label class="text-sm">Diagnosis</label>
-                            <span class="text-sm font-semibold">{{ $record->diagnosis ?? 'N/A' }}</span>
+                        <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-4">
+                            <div class="flex flex-col">
+                                <label class="text-sm">Respiration Rate</label>
+                                <span class="text-sm font-semibold">{{ $record->respiration_rate ?? 'N/A' }} bpm</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
-                        <div class="flex flex-col">
-                            <label class="text-sm">Recommended Treatment</label>
-                            <span class="text-sm font-semibold">{{ $record->recommended_treatment ?? 'N/A' }}</span>
+                        <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-4">
+                            <div class="flex flex-col">
+                                <label class="text-sm">O2 Saturation</label>
+                                <span class="text-sm font-semibold">{{ $record->o2_sat ?? 'N/A' }} %</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
-                        <div class="flex flex-col">
-                            <label class="text-sm">Follow-Up Instructions</label>
-                            <span class="text-sm font-semibold">{{ $record->follow_up_instructions ?? 'N/A' }}</span>
+                        <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
+                            <div class="flex flex-col">
+                                <label class="text-sm">Other</label>
+                                <span class="text-sm font-semibold">{{ $record->other ?? 'N/A' }}</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
-                        <div class="flex flex-col">
-                            <label class="text-sm">Referrals</label>
-                            <span class="text-sm font-semibold">{{ $record->referrals ?? 'N/A' }}</span>
+                        <!-- Findings -->
+                        <div class="bg-gray-200 border-t-0 border border-gray-400 px-4 py-2 col-span-6 md:col-span-12">
+                            <h3 class="text-sm font-semibold text-gray-800">Findings</h3>
                         </div>
-                    </div>
-                    <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
-                        <div class="flex flex-col">
-                            <label class="text-sm">Doctor's Notes</label>
-                            <span class="text-sm font-semibold">{{ $record->doctor_notes ?? 'N/A' }}</span>
+                        <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
+                            <div class="flex flex-col">
+                                <label class="text-sm">Findings</label>
+                                <span class="text-sm font-semibold">{{ $record->findings ?? 'N/A' }}</span>
+                            </div>
+                        </div>
+                        <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
+                            <div class="flex flex-col">
+                                <label class="text-sm">Diagnosis</label>
+                                <span class="text-sm font-semibold">{{ $record->diagnosis ?? 'N/A' }}</span>
+                            </div>
+                        </div>
+                        <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
+                            <div class="flex flex-col">
+                                <label class="text-sm">Recommended Treatment</label>
+                                <span class="text-sm font-semibold">{{ $record->recommended_treatment ?? 'N/A' }}</span>
+                            </div>
+                        </div>
+                        <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
+                            <div class="flex flex-col">
+                                <label class="text-sm">Follow-Up Instructions</label>
+                                <span class="text-sm font-semibold">{{ $record->follow_up_instructions ?? 'N/A' }}</span>
+                            </div>
+                        </div>
+                        <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
+                            <div class="flex flex-col">
+                                <label class="text-sm">Referrals</label>
+                                <span class="text-sm font-semibold">{{ $record->referrals ?? 'N/A' }}</span>
+                            </div>
+                        </div>
+                        <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
+                            <div class="flex flex-col">
+                                <label class="text-sm">Doctor's Notes</label>
+                                <span class="text-sm font-semibold">{{ $record->doctor_notes ?? 'N/A' }}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
