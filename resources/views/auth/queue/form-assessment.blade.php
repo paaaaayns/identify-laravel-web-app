@@ -204,7 +204,7 @@
 
         @role(['admin', 'doctor', 'opd'])
         @if (!$queue->assessment_done_at)
-        <div class="p-6">
+        <div class="p-6 !pt-0">
             <div class="flex items-center justify-end gap-x-4 border-t border-gray-900/10 pt-6">
                 <button
                     id="fill"

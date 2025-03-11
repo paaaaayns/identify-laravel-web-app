@@ -204,7 +204,7 @@
                     </div>
 
                     <!-- Contact Information -->
-                    <div class="p-6">
+                    <div class="p-6 !pt-0">
                         <h3 class="text-xl font-semibold text-gray-800">Contact Information</h3>
                         <div class="grid grid-cols-1 sm:grid-cols-12 gap-x-6 gap-y-6 mt-6">
 
@@ -262,7 +262,7 @@
                     </div>
 
                     <!-- Emergency Contact Information -->
-                    <div class="p-6">
+                    <div class="p-6 !pt-0">
                         <h3 class="text-xl font-semibold text-gray-800">Emergency Contact Information</h3>
                         <div class="grid grid-cols-1 sm:grid-cols-12 gap-x-6 gap-y-6 mt-6">
 
@@ -370,7 +370,7 @@
                     </div>
 
                     <!-- Actions -->
-                    <div class="p-6">
+                    <div class="p-6 !pt-0">
                         <div class="flex items-center justify-end gap-x-6 border-t border-gray-900/10 pt-6">
                             <button
                                 id="fill"
