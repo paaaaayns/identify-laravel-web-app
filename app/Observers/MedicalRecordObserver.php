@@ -32,7 +32,7 @@ class MedicalRecordObserver
         try {
             // Set the medical record ID and ULID after creation
             $medicalRecord->medical_record_id = 'M-' . str_pad($medicalRecord->id, 8, '0', STR_PAD_LEFT);
-            $medicalRecord->ulid = Str::ulid();
+            $medicalRecord->ulid = $medicalRecord->queue->ulid;
             $medicalRecord->saveQuietly(); // Save without triggering model events
 
             // Update the queue with the medical record ID
