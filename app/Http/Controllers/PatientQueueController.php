@@ -7,6 +7,7 @@ use App\Models\Patient;
 use App\Models\PatientQueue;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class PatientQueueController extends Controller
 {
@@ -94,9 +95,6 @@ class PatientQueueController extends Controller
      */
     public function update(Request $request, string $ulid)
     {
-        // dd($request->all(), $ulid);
-        // Validate the incoming request data (optional, but recommended)
-
         Log::info('PatientQueueController@update: Queue update request', [
             'request_data' => $request->all(),
             'ulid' => $ulid,
@@ -130,9 +128,36 @@ class PatientQueueController extends Controller
                 'follow_up_instructions' => 'string|nullable',
                 'referrals' => 'string|nullable',
                 'doctor_notes' => 'string|nullable',
+                'attachments' => 'array|nullable',
 
                 'consultation_done_at' => 'date|nullable',
             ]);
+
+            $attachments = $validatedData['attachments'] ?? null;
+            unset($validatedData['attachments']);
+
+            if ($attachments) {
+                Log::info('PatientQueueController@update: Attachments', [
+                    'count' => count($attachments),
+                    'attachments' => $attachments,
+                ]);
+
+                $record = PatientQueue::where('ulid', $ulid)->firstOrFail();
+                $patient_ulid = $record->patient->ulid;
+                $record_ulid = $record->ulid;
+
+                // save the attachments
+                if ($attachments) {
+                    foreach ($attachments as $attachment) {
+                        Storage::disk('public')->put("patients/{$patient_ulid}/medical-records/{$record_ulid}/attachments/{$attachment->getClientOriginalName()}", $attachment->get());
+                        $attachment->storeAs("patients/{$patient_ulid}/medical-records/{$record_ulid}/attachments", $attachment->getClientOriginalName());
+                        Log::info('PatientQueueController@update: Attachment saved', [
+                            'path' => $attachment->getClientOriginalName(),
+                        ]);
+                    }
+                }
+            }
+
 
             // Safely check and set timestamps based on queue_status
             $queueStatus = $validatedData['queue_status'] ?? null;
@@ -155,6 +180,7 @@ class PatientQueueController extends Controller
                 'success' => true,
                 'message' => 'Queue updated successfully.',
                 'queue' => $queue,
+                'isConsultationDone' => $queue->queue_status === 'Completed',
             ], 200);
         } catch (ValidationException $e) {
             // Log validation errors
