@@ -28,7 +28,6 @@ class PatientQueueObserver
 
             try {
                 MedicalRecord::create([
-                    'ulid' => Str::ulid(),
                     'medical_record_id' => 'M-' . now()->format('Ymd') . '-' . Str::upper(Str::random(5)),
                     'queue_id' => $queue->queue_id,
                     'patient_id' => $queue->patient_id,
