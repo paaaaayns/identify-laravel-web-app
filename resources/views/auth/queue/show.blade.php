@@ -133,7 +133,11 @@
                     const result = await response.json();
                     showToast('toast-success', result.message);
                     console.log(response.status, result.message, result.queue);
-                    location.reload();
+                    if (result.isConsultationDone) {
+                        window.location.href = `{{ route('queue.index') }}`;
+                    } else {
+                        location.reload();
+                    }
                 } else {
                     showToast('toast-error', result.message);
                     console.error(response.status, result.message);
@@ -174,7 +178,7 @@
                 // Preserve existing query parameters
                 const urlParams = new URLSearchParams(window.location.search);
                 urlParams.set("tab", targetId); // Update tab
-                
+
                 history.pushState(null, "", `?${urlParams.toString()}`);
             }
         }

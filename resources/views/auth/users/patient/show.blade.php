@@ -484,15 +484,21 @@
             // Prevent the default form submission
             event.preventDefault();
 
-            const isVerified = await promptForPassword();
-            if (isVerified) {
-                console.log("Sending to queue..." + '{{ $profile->user_id }}');
+            // const isVerified = await promptForPassword();
+            // if (isVerified) {
+            //     console.log("Sending to queue..." + '{{ $profile->user_id }}');
 
-                const queue = await createQueue();
-                if (queue) {
-                    // Redirect to the queue show page passing queue_id
-                    window.location.href = `/queue/${queue.ulid}`;
-                }
+            //     const queue = await createQueue();
+            //     if (queue) {
+            //         // Redirect to the queue show page passing queue_id
+            //         window.location.href = `/queue/${queue.ulid}`;
+            //     }
+            // }
+
+            const queue = await createQueue();
+            if (queue) {
+                // Redirect to the queue show page passing queue_id
+                window.location.href = `/queue/${queue.ulid}`;
             }
             return;
         }
