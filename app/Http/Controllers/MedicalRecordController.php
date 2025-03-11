@@ -90,7 +90,7 @@ class MedicalRecordController extends Controller
             // Generate a customized PDF
             $pdf = Pdf::view('pdfs.medical-record', ['record' => $record]);
 
-            Log::info('MedicalRecordObserver@created: PDF generated successfully.', [
+            Log::info('MedicalRecordController@download: PDF generated successfully.', [
                 'medical_record_id' => $record->medical_record_id,
             ]);
 
@@ -98,7 +98,7 @@ class MedicalRecordController extends Controller
             return $pdf->download("{$record->ulid}.pdf");
         } catch (\Exception $e) {
             // Log the error
-            Log::error('MedicalRecordObserver@created: Error generating PDF: ' . $e->getMessage(), [
+            Log::error('MedicalRecordController@download: Error generating PDF: ' . $e->getMessage(), [
                 'medical_record_id' => $record->medical_record_id ?? 'N/A',
             ]);
 
