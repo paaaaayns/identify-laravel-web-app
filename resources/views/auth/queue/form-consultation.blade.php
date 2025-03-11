@@ -110,6 +110,31 @@
             </div>
         </div>
 
+        <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-800">Attachments</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-12 gap-x-6 gap-y-6 mt-6">
+
+                <x-forms.field-container class="sm:col-span-12">
+                    <x-forms.label
+                        for="doctor_notes">
+                        Upload attachemnt/s
+                    </x-forms.label>
+                    <div class="mb-4">
+                        <input
+                            type="file"
+                            id="attachments"
+                            name="attachments[]"
+                            multiple class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm">
+
+                        <ul id="attachmentList" class="mt-2 text-sm text-gray-600 list-disc pl-5 space-y-1">
+                            <!-- Uploaded file names will appear here -->
+                        </ul>
+                    </div>
+
+                </x-forms.field-container>
+            </div>
+        </div>
+
         @role(['admin', 'doctor'])
         @if (!$queue->consultation_done_at)
         <div class="p-6">
@@ -133,3 +158,25 @@
         @endrole
     </div>
 </form>
+
+<script>
+    const attachments = document.getElementById('attachments');
+    const attachmentList = document.getElementById('attachmentList');
+
+    attachments.addEventListener('change', () => {
+        attachmentList.innerHTML = ''; // Clear previous list
+        const files = attachments.files;
+
+        if (files.length === 0) {
+            const li = document.createElement('li');
+            li.textContent = 'No files selected.';
+            attachmentList.appendChild(li);
+        } else {
+            Array.from(files).forEach(file => {
+                const li = document.createElement('li');
+                li.textContent = file.name;
+                attachmentList.appendChild(li);
+            });
+        }
+    });
+</script>
