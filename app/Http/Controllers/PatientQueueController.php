@@ -150,7 +150,6 @@ class PatientQueueController extends Controller
                 if ($attachments) {
                     foreach ($attachments as $attachment) {
                         Storage::disk('public')->put("patients/{$patient_ulid}/medical-records/{$record_ulid}/attachments/{$attachment->getClientOriginalName()}", $attachment->get());
-                        $attachment->storeAs("patients/{$patient_ulid}/medical-records/{$record_ulid}/attachments", $attachment->getClientOriginalName());
                         Log::info('PatientQueueController@update: Attachment saved', [
                             'path' => $attachment->getClientOriginalName(),
                         ]);
