@@ -100,7 +100,6 @@ Route::middleware(['auth'])->group(function () {
         ->name('medical-record.download');
 
     // Biometrics
-    Route::post('/biometrics/store', [BiometricsController::class, 'store'])->name('biometrics.store');
     Route::post('/biometrics/search', [BiometricsController::class, 'search'])->name('biometrics.search');
 });
 
