@@ -3,10 +3,10 @@
 namespace App\Observers;
 
 use App\Models\MedicalRecord;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Spatie\LaravelPdf\Facades\Pdf;
 
 class MedicalRecordObserver
 {
@@ -39,8 +39,17 @@ class MedicalRecordObserver
             $queue = $medicalRecord->queue;
             $queue->medical_record_id = $medicalRecord->medical_record_id;
             $queue->saveQuietly(); // Save without triggering model events
-            
-            $patient = $medicalRecord->patient;
+
+            // generate a PDF file using spatie/laravel-pdf
+            $record = $medicalRecord->load(['patient', 'doctor', 'opd']);
+            $patient_ulid = $record->patient->ulid;
+            $record_ulid = $record->ulid;
+
+            $pdfPath = "patients/{$patient_ulid}/medical-records/{$record_ulid}/{$record_ulid}.pdf";
+
+            Pdf::view('pdfs.medical-record', ['record' => $record])
+                ->disk('public')
+                ->save($pdfPath);
 
             Log::info('MedicalRecordObserver@created: Medical Record created successfully.', [
                 'medical_record_id' => $medicalRecord->medical_record_id,

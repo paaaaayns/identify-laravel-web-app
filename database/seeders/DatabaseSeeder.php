@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // Delete all files in public/patients
-        // $this->deletePatientsFolder();
+        $this->deletePatientsFolder();
 
         // Call the RoleSeeder
         $this->call(RoleSeeder::class);
