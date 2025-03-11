@@ -6,17 +6,16 @@ use App\Models\IrisBiometrics;
 use App\Models\Patient;
 use App\Models\PreRegisteredPatient;
 use App\Models\User;
-use Faker\Factory as Faker;
+use App\Rules\ValidIrisImage;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
-
-use function PHPUnit\Framework\fileExists;
 
 class PatientController extends Controller
 {
@@ -80,8 +79,8 @@ class PatientController extends Controller
             'emergency_contact2_relationship' => ['required', 'string', 'max:100'],
 
             // Biometrics
-            'left_iris' => ['required', 'image', 'mimes:bmp', 'max:2048'], // Base64-encoded string
-            'right_iris' => ['required', 'image', 'mimes:bmp', 'max:2048'], // Base64-encoded string
+            'left_iris' => ['required', new ValidIrisImage()],
+            'right_iris' => ['required', new ValidIrisImage()],
         ], [
             'required' => 'This field is required', // Overrides all required fields
             'accepted' => 'This field is required', // Overrides all accepted fields
@@ -171,15 +170,17 @@ class PatientController extends Controller
         // add the pre_registration_code to the patient
         $patient->registered_at = now();
 
+        $leftIrisImageFilePath = "patients/{$patient_ulid}/biometrics/left_iris." . $leftIrisImage->getClientOriginalExtension();
+        $rightIrisImageFilePath = "patients/{$patient_ulid}/biometrics/right_iris." . $rightIrisImage->getClientOriginalExtension();
+        Storage::disk('public')->put($leftIrisImageFilePath, file_get_contents($leftIrisImage->getRealPath()));
+        Storage::disk('public')->put($rightIrisImageFilePath, file_get_contents($rightIrisImage->getRealPath()));
 
         try {
-            $patient->save();
-            $leftIrisBiometrics->save();
-            $rightIrisBiometrics->save();
-            $leftIrisImageFilePath = "patients/{$patient_ulid}/biometrics/left_iris." . $leftIrisImage->getClientOriginalExtension();
-            $rightIrisImageFilePath = "patients/{$patient_ulid}/biometrics/right_iris." . $rightIrisImage->getClientOriginalExtension();
-            Storage::disk('public')->put($leftIrisImageFilePath, file_get_contents($leftIrisImage->getRealPath()));
-            Storage::disk('public')->put($rightIrisImageFilePath, file_get_contents($rightIrisImage->getRealPath()));
+            DB::transaction(function () use ($patient, $leftIrisBiometrics, $rightIrisBiometrics) {
+                $patient->save();
+                $leftIrisBiometrics->save();
+                $rightIrisBiometrics->save();
+            });
         } catch (\Exception $e) {
             Log::error('PatientController@store: Error storing patient record.', [
                 'error' => $e->getMessage(),
