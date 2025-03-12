@@ -1,5 +1,6 @@
 <input {{ $attributes->merge([
     'class' => '
+        field-input
         block w-full py-1.5 mt-2
         text-gray-900 sm:text-sm/6
         border-0 rounded-md shadow-sm
