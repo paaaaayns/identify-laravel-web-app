@@ -24,63 +24,40 @@ class DashboardController extends Controller
         switch ($user->role) {
             case 'admin':
                 $preRegPatientsCount = PreRegisteredPatient::count();
-                $recentPreRegPatientsCount = PreRegisteredPatient::where('created_at', '>=', Carbon::now()->subHours(3))->count();
-
                 $patientsCount = Patient::count();
-                $recentPatientsCount = Patient::where('created_at', '>=', Carbon::now()->subHours(3))->count();
-
                 $opdsCount = Opd::count();
-                $recentOpdsCount = Opd::where('created_at', '>=', Carbon::now()->subHours(3))->count();
-
                 $doctorsCount = Doctor::count();
-                $recentDoctorsCount  = Doctor::where('created_at', '>=', Carbon::now()->subHours(3))->count();
+                $ongoingQueuesCount = PatientQueue::whereNotIn('queue_status', ['Completed', 'Cancelled'])->count();
+                $historyCount = PatientQueue::whereIn('queue_status', ['Completed', 'Cancelled'])->count();
 
                 return view('auth.dashboard.admin', [
                     'preRegPatientsCount' => $preRegPatientsCount,
-                    'recentPreRegPatientsCount' => $recentPreRegPatientsCount,
-
                     'patientsCount' => $patientsCount,
-                    'recentPatientsCount' => $recentPatientsCount,
-
                     'opdsCount' => $opdsCount,
-                    'recentOpdsCount' => $recentOpdsCount,
-
                     'doctorsCount' => $doctorsCount,
-                    'recentDoctorsCount' => $recentDoctorsCount,
+                    'ongoingQueuesCount' => $ongoingQueuesCount,
+                    'historyCount' => $historyCount,
                 ]);
 
             case 'opd':
                 $preRegPatientsCount = PreRegisteredPatient::count();
-                $recentPreRegPatientsCount = PreRegisteredPatient::query()
-                    ->where('created_at', '>=', Carbon::now()->subHours(3))
-                    ->count();
-
+                $patientsCount = Patient::count();
                 $queuedPatientsCount = PatientQueue::whereBelongsTo($user, $user->role)
                     ->whereNotIn('queue_status', ['Completed', 'Cancelled'])
-                    ->count();
-                $recentQueuedPatientsCount = PatientQueue::whereBelongsTo($user, $user->role)
-                    ->whereNotIn('queue_status', ['Completed', 'Cancelled'])
-                    ->where('created_at', '>=', Carbon::now()->subHours(3))
                     ->count();
 
                 return view('auth.dashboard.opd', [
                     'preRegPatientsCount' => $preRegPatientsCount,
-                    'recentPreRegPatientsCount' => $recentPreRegPatientsCount,
-
+                    'patientsCount' => $patientsCount,
                     'queuedPatientsCount' => $queuedPatientsCount,
-                    'recentQueuedPatientsCount' => $recentQueuedPatientsCount,
                 ]);
             case 'doctor':
                 $queuedPatientsCount = PatientQueue::whereNotIn('queue_status', ['Completed', 'Cancelled'])
                     ->wherebelongsto($user, $user->role)
                     ->count();
-                $recentQueuedPatientsCount = PatientQueue::whereNotIn('queue_status', ['Completed', 'Cancelled'])
-                    ->where('created_at', '>=', Carbon::now()->subHours(3))
-                    ->count();
 
                 return view('auth.dashboard.doctor', [
                     'queuedPatientsCount' => $queuedPatientsCount,
-                    'recentQueuedPatientsCount' => $recentQueuedPatientsCount,
                 ]);
             case 'patient':
                 return view('auth.dashboard.patient');
