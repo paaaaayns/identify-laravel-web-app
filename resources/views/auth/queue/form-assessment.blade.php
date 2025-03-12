@@ -62,7 +62,7 @@
             </div>
         </div>
 
-        <div class="p-6">
+        <div class="p-6 !pt-0">
             <h3 class="text-xl font-semibold text-gray-800">Vitals</h3>
             <div class="grid grid-cols-1 sm:grid-cols-12 gap-x-6 gap-y-6 mt-6">
 
