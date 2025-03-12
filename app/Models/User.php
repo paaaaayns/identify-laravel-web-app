@@ -45,7 +45,7 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
-    public function personalInfo(): MorphTo
+    public function profile(): MorphTo
     {
         return $this->morphTo(null, 'role', 'user_id', 'user_id'); // Fallback to default behavior if the role is invalid
     }
