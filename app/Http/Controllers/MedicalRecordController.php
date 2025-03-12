@@ -15,36 +15,7 @@ class MedicalRecordController extends Controller
      */
     public function index()
     {
-        //
         return view('auth.medical-record.index');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function apiShow($ulid)
-    {
-        // dd($ulid);
-        Log::info('MedicalRecordController@apiShow: Medical Record API Show', ['ulid' => $ulid]);
-        // return records, eager load patient, doctor, opd
-        $record = MedicalRecord::query()
-            ->where('ulid', $ulid)
-            ->with(['patient', 'doctor', 'opd'])
-            ->first();
-        // dd($record);
-
-        if (!$record) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Medical Record not found.',
-            ], 404);
-        }
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Medical Record retrieved successfully.',
-            'data' => $record,
-        ]);
     }
 
     /**
@@ -52,9 +23,7 @@ class MedicalRecordController extends Controller
      */
     public function show(string $ulid)
     {
-        // dd($ulid);
         $record = MedicalRecord::where('ulid', $ulid)->first();
-        // dd($record);
 
         $patient = $record->patient;
         $doctor = $record->doctor;
@@ -85,27 +54,38 @@ class MedicalRecordController extends Controller
     public function download(string $ulid)
     {
         $record = MedicalRecord::where('ulid', $ulid)->firstOrFail()->load('patient', 'doctor');
+        $record_ulid = $record->ulid;
+        $patient_ulid = $record->patient->ulid;
+        $pdfPath = "storage/patients/{$patient_ulid}/medical-records/{$record_ulid}/{$record_ulid}.pdf";
+        $savePath = "patients/{$patient_ulid}/medical-records/{$record_ulid}/{$record_ulid}.pdf";
 
-        try {
-            // Generate a customized PDF
-            $pdf = Pdf::view('pdfs.medical-record', ['record' => $record]);
-
-            Log::info('MedicalRecordController@download: PDF generated successfully.', [
+        $pdf = public_path($pdfPath);
+        
+        if (!file_exists($pdf)) {
+            Log::error('MedicalRecordController@download: PDF not found.', [
+                'pdf' => $pdf,
                 'medical_record_id' => $record->medical_record_id,
             ]);
 
-            // Return PDF as a download response directly
-            return $pdf->download("{$record->ulid}.pdf");
-        } catch (\Exception $e) {
-            // Log the error
-            Log::error('MedicalRecordController@download: Error generating PDF: ' . $e->getMessage(), [
-                'medical_record_id' => $record->medical_record_id ?? 'N/A',
-            ]);
+            try {
+                Pdf::view('pdfs.medical-record', ['record' => $record])
+                    ->disk('public')
+                    ->save($savePath);
 
-            return response()->json([
-                'success' => false,
-                'message' => 'Error generating PDF.',
-            ], 500);
+                Log::info('MedicalRecordObserver@created: Medical Record created successfully.', [
+                    'medical_record_id' => $record->medical_record_id,
+                ]);
+            } catch (\Exception $e) {
+                // Log any issues during record creation
+                Log::error('MedicalRecordObserver@created: Error creating Medical Record: ' . $e->getMessage(), [
+                    'medical_record_id' => $record->medical_record_id,
+                ]);
+            }
         }
+
+        // Return PDF as a download response directly
+        return response($pdf)
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', "attachment; filename={$record_ulid}.pdf");
     }
 }
