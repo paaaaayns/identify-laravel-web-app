@@ -61,9 +61,7 @@ class MedicalRecordTable extends DataTableComponent
                 ->label(
                     fn($row, Column $column) => view('components.livewire.action-columns.medical-record')->with(
                         [
-                            'viewLinkMedicalRecord' => route('medical-record.show', ['ulid' => $row->ulid]),
-                            'viewLinkHistory' => route('history.show', ['ulid' => $row->ulid]),
-                            'id' => $row->id,
+                            "record_ulid" => $row->ulid,
                         ]
                     )->render()
                 )->html(),
