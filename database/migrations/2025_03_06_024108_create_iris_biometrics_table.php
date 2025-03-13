@@ -21,6 +21,7 @@ return new class extends Migration
             $table->binary('iris_code');
             $table->binary('mask_code');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
