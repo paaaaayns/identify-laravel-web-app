@@ -92,7 +92,7 @@
                            <x-side-nav />
                         </li>
                         <li class="-mx-6 mt-auto">
-                           <a href="#" class="flex items-center gap-x-4 px-6 pt-3 text-sm/6 font-semibold text-gray-900 hover:bg-gray-50">
+                           <a href="/profile" class="flex items-center gap-x-4 px-6 pt-3 text-sm/6 font-semibold text-gray-900 hover:bg-gray-50">
                               <img class="h-8 w-8 rounded-full bg-gray-50" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
                               <span class="sr-only">Your profile</span>
                               <!-- name and role on top of each other -->
@@ -125,7 +125,7 @@
                      <x-side-nav />
                   </li>
                   <li class="-mx-6 mt-auto">
-                     <a href="#" class="flex items-center gap-x-4 px-6 pt-3 text-sm/6 font-semibold text-gray-900 hover:bg-gray-50">
+                     <a href="/profile" class="flex items-center gap-x-4 px-6 pt-3 text-sm/6 font-semibold text-gray-900 hover:bg-gray-50">
                         <img class="h-8 w-8 rounded-full bg-gray-50" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
                         <span class="sr-only">Your profile</span>
                         <!-- name and role on top of each other -->
@@ -200,7 +200,7 @@
                         aria-labelledby="user-menu-button"
                         tabindex="-1">
                         <!-- Active: "bg-gray-50 outline-none", Not Active: "" -->
-                        <a href="#" class="block px-3 py-1 text-sm/6 text-gray-900" role="menuitem" tabindex="-1" id="user-menu-item-0">Your profile</a>
+                        <a href="/profile" class="block px-3 py-1 text-sm/6 text-gray-900" role="menuitem" tabindex="-1" id="user-menu-item-0">Your profile</a>
                         <form method="POST" action="/logout">
                            @csrf
                            <button type="submit" class="block w-full px-3 py-1 text-left text-sm/6 text-gray-900 hover:bg-gray-50" role="menuitem" tabindex="-1">
