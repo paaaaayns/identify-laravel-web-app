@@ -79,8 +79,8 @@
                 console.log('Success:', result.message);
                 Livewire.dispatch('refreshTable'); // Dispatch the Livewire event to refresh the table
             } else {
-                showToast('toast-error', 'Failed to delete the record.');
-                console.error('Error:', 'Failed to delete the record.');
+                showToast('toast-error', result.message);
+                console.error('Error:', result.message);
             }
         } catch (error) {
             showToast('toast-error', 'An error occurred while processing the request.');
