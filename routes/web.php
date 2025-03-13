@@ -12,9 +12,11 @@ use App\Http\Controllers\PatientQueueController;
 use App\Http\Controllers\PreRegisteredPatientController;
 use App\Http\Controllers\PreRegistrationController;
 use App\Http\Controllers\PreRegTrackingController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UserController;
 use App\Mail\TestMail;
+use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
@@ -51,6 +53,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard')
         ->middleware(['role:admin|opd|doctor|patient']);
 
+    // Profile
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+    Route::post('users/{user_id}/profile', [UserController::class, 'updateProfile'])->name('users.updateProfile');
+    Route::post('users/{user_id}/password', [UserController::class, 'updatePassword'])->name('users.updatePassword');
+
     // Pre-Registered Patient
     Route::get('/users/pre-reg', [PreRegisteredPatientController::class, 'index'])->name('users.pre-reg.index');
     Route::get('/users/pre-reg/create', [PreRegisteredPatientController::class, 'create'])->name('users.pre-reg.create');
@@ -67,6 +74,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/users/patient/{ulid}', [PatientController::class, 'show'])->name('users.patient.show');
     Route::delete('/users/patient/{user_id}', [PatientController::class, 'destroy'])->name('users.patient.destroy');
 
+
     // OPD
     Route::get('/users/opd', [OpdController::class, 'index'])->name('users.opd.index');
     Route::get('/users/opd/create', [OpdController::class, 'create'])->name('users.opd.create');
@@ -74,6 +82,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/users/opd/store', [OpdController::class, 'store'])->name('users.opd.store');
     Route::get('/users/opd/{ulid}', [OpdController::class, 'show'])->name('users.opd.show');
     Route::delete('/users/opd/{user_id}', [OpdController::class, 'destroy'])->name('users.opd.destroy');
+
 
     // Doctor
     Route::get('/users/doctor', [DoctorController::class, 'index'])->name('users.doctor.index');
@@ -83,12 +92,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/users/doctor/{ulid}', [DoctorController::class, 'show'])->name('users.doctor.show');
     Route::delete('/users/doctor/{user_id}', [DoctorController::class, 'destroy'])->name('users.doctor.destroy');
 
+
     // Queued Patient
     Route::get('/queue', [PatientQueueController::class, 'index'])->name('queue.index');
     Route::post('/queue/store', [PatientQueueController::class, 'store'])->name('queue.store');
     Route::put('/queue/{ulid}', [PatientQueueController::class, 'update'])->name('queue.update');
     Route::get('/queue/{ulid}', [PatientQueueController::class, 'show'])->name('queue.show');
     Route::delete('/queue/{ulid}', [PatientQueueController::class, 'destroy'])->name('queue.destroy');
+
 
     // Medical Records
     Route::get('/medical-record', [MedicalRecordController::class, 'index'])->name('medical-record.index');

@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateAdminProfileRequest;
+use App\Http\Requests\UpdateDoctorProfileRequest;
+use App\Http\Requests\UpdateOpdProfileRequest;
+use App\Http\Requests\UpdatePatientProfileRequest;
+use App\Http\Requests\UpdatOpdProfileRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -28,6 +33,40 @@ class UserController extends Controller
         }
     }
 
+    public function updateProfile(Request $request, string $user_id)
+    {
+        $user = Auth::user();
+
+        switch ($user->role) {
+            case 'admin':
+                $validated = app(UpdateAdminProfileRequest::class)->validated();
+                break;
+
+            case 'opd':
+                $validated = app(UpdateOpdProfileRequest::class)->validated();
+                break;
+
+            case 'doctor':
+                $validated = app(UpdateDoctorProfileRequest::class)->validated();
+                break;
+
+            case 'patient':
+                $validated = app(UpdatePatientProfileRequest::class)->validated();
+                break;
+
+            default:
+                break;
+        }
+
+        $userToUpdate = User::where('user_id', $user_id)->first();
+        $userToUpdate->profile->update($validated);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Profile updated successfully.',
+        ], 200);
+    }
+
     public function updatePassword(Request $request, string $user_id)
     {
         $authenticatedUser = Auth::user();
@@ -45,13 +84,20 @@ class UserController extends Controller
                         }
                     },
                 ],
-    
+
                 'password' => [
                     'required',
                     'string',
                     Password::min(8)->mixedCase()->numbers()->symbols(),
                     'confirmed',
                 ],
+
+                'password_confirmation' => [
+                    'required',
+                    'string',
+                ],
+            ], [
+                'required' => 'This field is required', // Overrides all required fields
             ]);
         } catch (ValidationException $e) {
             return response()->json([
@@ -64,7 +110,7 @@ class UserController extends Controller
         $userToUpdate = User::where('user_id', $user_id)->first();
         $userToUpdate->password = Hash::make($validatedData['password']);
         $userToUpdate->save();
-        
+
         return response()->json([
             'success' => true,
             'message' => 'Password updated successfully.',
