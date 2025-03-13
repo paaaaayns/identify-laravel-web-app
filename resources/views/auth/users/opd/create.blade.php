@@ -55,23 +55,6 @@
 
                             <x-forms.field-container class="sm:col-span-4">
                                 <x-forms.label
-                                    for="last_name"
-                                    :required="true">
-                                    Last Name
-                                </x-forms.label>
-
-                                <x-forms.input
-                                    type="text"
-                                    id="last_name"
-                                    name="last_name"
-                                    :value="old('last_name')"
-                                    autocomplete="off" />
-                                <x-forms.error name="last_name" />
-
-                            </x-forms.field-container>
-
-                            <x-forms.field-container class="sm:col-span-4">
-                                <x-forms.label
                                     for="first_name"
                                     :required="true">
                                     First Name
@@ -84,7 +67,6 @@
                                     :value="old('first_name')"
                                     autocomplete="off" />
                                 <x-forms.error name="first_name" />
-
                             </x-forms.field-container>
 
                             <x-forms.field-container class="sm:col-span-4">
@@ -100,7 +82,22 @@
                                     :value="old('middle_name') ?? ''"
                                     autocomplete="off" />
                                 <x-forms.error name="middle_name" />
+                            </x-forms.field-container>
 
+                            <x-forms.field-container class="sm:col-span-4">
+                                <x-forms.label
+                                    for="last_name"
+                                    :required="true">
+                                    Last Name
+                                </x-forms.label>
+
+                                <x-forms.input
+                                    type="text"
+                                    id="last_name"
+                                    name="last_name"
+                                    :value="old('last_name')"
+                                    autocomplete="off" />
+                                <x-forms.error name="last_name" />
                             </x-forms.field-container>
 
                             <x-forms.field-container class="sm:col-span-6">
@@ -121,7 +118,6 @@
                                     datepicker-autohide
                                     datepicker-format="yyyy-mm-dd" />
                                 <x-forms.error name="birthdate" />
-
                             </x-forms.field-container>
 
                             <x-forms.field-container class="sm:col-span-6">
@@ -139,7 +135,6 @@
                                     <option value="Female" {{ old('sex') === 'Female' ? 'selected' : '' }}>Female</option>
                                 </x-forms.select>
                                 <x-forms.error name="sex" />
-
                             </x-forms.field-container>
 
                             <x-forms.field-container class="sm:col-span-4">
@@ -156,7 +151,6 @@
                                     :value="old('religion')"
                                     autocomplete="off" />
                                 <x-forms.error name="religion" />
-
                             </x-forms.field-container>
 
                             <x-forms.field-container class="sm:col-span-4">
@@ -175,7 +169,6 @@
                                     <option value="Divorced" {{ old('civil_status') === 'Divorced' ? 'selected' : '' }}>Divorced</option>
                                 </x-forms.select>
                                 <x-forms.error name="civil_status" />
-
                             </x-forms.field-container>
 
                             <x-forms.field-container class="sm:col-span-4">
@@ -192,7 +185,6 @@
                                     :value="old('citizenship')"
                                     autocomplete="off" />
                                 <x-forms.error name="citizenship" />
-
                             </x-forms.field-container>
                         </div>
                     </div>
@@ -216,7 +208,6 @@
                                     :value="old('address')"
                                     autocomplete="off" />
                                 <x-forms.error name="address" />
-
                             </x-forms.field-container>
 
                             <x-forms.field-container class="sm:col-span-6">
@@ -233,7 +224,6 @@
                                     :value="old('email')"
                                     autocomplete="off" />
                                 <x-forms.error name="email" />
-
                             </x-forms.field-container>
 
                             <x-forms.field-container class="sm:col-span-6">
@@ -252,7 +242,6 @@
                                     oninput="restrictLetterInput(this)"
                                     autocomplete="off" />
                                 <x-forms.error name="contact_number" />
-
                             </x-forms.field-container>
 
                         </div>
@@ -277,7 +266,6 @@
                                     :value="old('type')"
                                     autocomplete="off" />
                                 <x-forms.error name="type" />
-
                             </x-forms.field-container>
 
                         </div>
@@ -302,10 +290,10 @@
 
                             <!-- Override submission -->
                             @if (false)
-                                <x-forms.primary-button
-                                    type="submit">
-                                    Override Submit
-                                </x-forms.primary-button>
+                            <x-forms.primary-button
+                                type="submit">
+                                Override Submit
+                            </x-forms.primary-button>
                             @endif
                         </div>
                     </div>
