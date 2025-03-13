@@ -15,8 +15,10 @@ use App\Http\Controllers\PreRegTrackingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UserController;
+use App\Mail\PreRegistrationMail;
 use App\Mail\TestMail;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
@@ -138,14 +140,31 @@ Route::post('/email/verification-notification', [EmailVerificationController::cl
 
 
 // Test email
-Route::get('/test-email', function () {
+Route::get('/test-prereg-mail', function () {
+    $email = '';
 
     $data = [
-        'subject' => 'Test Email',
-        'message' => 'This is a test email.'
+        'code' => 'test-code',
+        'trackingLink' => route('pre-reg.tracking.search'),
     ];
 
-    Mail::to('ejpines21@gmail.com')->send(new TestMail($data));
+    try {
+        Mail::to($email)->send(new PreRegistrationMail($data));
+    } catch (\Exception $e) {
+        Log::error('web@test-prereg-mail: ', [
+            'message' => $e->getMessage(),
+            'line' => $e->getLine(),
+            'file' => $e->getFile(),
+        ]);
+        return response()->json([
+            'success' => false,
+            'message' => 'Failed to send test email!',
+            'error' => $e->getMessage(),
+        ], 500);
+    }
 
-    return 'Test email sent successfully!';
+    return response()->json([
+        'success' => true,
+        'message' => 'Test email sent!',
+    ], 200);
 });
