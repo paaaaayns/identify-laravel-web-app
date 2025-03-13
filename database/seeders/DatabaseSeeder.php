@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
         $this->call(OpdSeeder::class);
         $this->call(DoctorSeeder::class);
 
-        // Seed pre-registered patient records
+        // DEV NOTE (TESTING): Uncomment the lines below to seed dummy data during testing
         // PreRegisteredPatient::factory(5)->create();
         // Opd::factory(5)->create();
         // Doctor::factory(5)->create();

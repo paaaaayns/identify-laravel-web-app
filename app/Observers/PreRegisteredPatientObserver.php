@@ -44,6 +44,7 @@ class PreRegisteredPatientObserver
                 'trackingLink' => route('pre-reg.tracking.search'),
             ];
 
+            // DEV NOTE (TESTING): Comment out the line below to prevent sending emails during testing
             Mail::to($patient->email)->send(new PreRegistrationMail($data));
         } catch (\Exception $e) {
             // Log any issues during pre-registration record creation
