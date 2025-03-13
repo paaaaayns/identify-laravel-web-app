@@ -34,7 +34,7 @@ class PatientObserver
             $user = User::create([
                 'user_id' => $patient->user_id,
                 'email' => $patient->email,
-                'password' => Hash::make('patient'),
+                'password' => Hash::make('Password@123'),
                 'role' => 'patient',
             ]);
 

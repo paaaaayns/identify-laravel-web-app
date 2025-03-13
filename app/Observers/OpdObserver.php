@@ -39,7 +39,7 @@ class OpdObserver
             $user = User::create([
                 'user_id' => $opd->user_id,  // Use the custom user_id
                 'email' => $opd->email, // opd's email
-                'password' => Hash::make('opd'), // Default password
+                'password' => Hash::make('Password@123'), // Default password
                 'role' => 'opd',  // Define user type
             ]);
 

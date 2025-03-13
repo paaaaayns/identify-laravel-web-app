@@ -39,7 +39,7 @@ class AdminObserver
             $user = User::create([
                 'user_id' => $admin->user_id,  // Use the custom user_id
                 'email' => $admin->email, // admin's email
-                'password' => Hash::make('admin'), // Default password
+                'password' => Hash::make('Password@123'), // Default password
                 'role' => 'admin',  // Define user type
             ]);
 

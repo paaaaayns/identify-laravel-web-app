@@ -39,7 +39,7 @@ class DoctorObserver
             $user = User::create([
                 'user_id' => $doctor->user_id,  // Use the custom user_id
                 'email' => $doctor->email, // doctor's email
-                'password' => Hash::make('doctor'), // Default password
+                'password' => Hash::make('Password@123'), // Default password
                 'role' => 'doctor',  // Define user type
             ]);
 
