@@ -275,7 +275,7 @@
             <div class="bg-white shadow rounded-lg p-6">
                 <h3 class="text-xl font-semibold text-gray-800">Job Information</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-12 gap-x-6 gap-y-6 mt-6">
-                    <x-forms.field-container class="sm:col-span-6">
+                    <x-forms.field-container class="sm:col-span-4">
                         <x-forms.label
                             for="type">
                             Profession
@@ -293,7 +293,22 @@
                         @endif
                     </x-forms.field-container>
 
-                    <x-forms.field-container class="sm:col-span-6">
+                    <x-forms.field-container class="sm:col-span-4">
+                        <x-forms.label
+                            for="license_number">
+                            License Number
+                        </x-forms.label>
+                        <x-forms.input
+                            type="text"
+                            id="license_number"
+                            name="license_number"
+                            :value="$profile->license_number"
+                            autocomplete="off"
+                            disabled />
+                        <x-forms.error name="license_number" />
+                    </x-forms.field-container>
+
+                    <x-forms.field-container class="sm:col-span-4">
                         <x-forms.label
                             for="room">
                             Room
