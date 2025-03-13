@@ -22,6 +22,7 @@ export default {
             colors: {
                 primary: {
                     DEFAULT: "#1F555F", // Main primary color
+                    hover: "#A0B5BA", // Lighter hover color
                 },
                 secondary: {
                     DEFAULT: "#DDE9F1", // Main primary color
