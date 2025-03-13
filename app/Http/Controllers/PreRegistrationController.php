@@ -96,7 +96,7 @@ class PreRegistrationController extends Controller
 
         // dd($code);
 
-        // Exclude terms and privacy policy from the validated data
+        // Exclude terms and data privacy policy from the validated data
         $validatedData = Arr::except($validatedData, ['terms_and_conditions', 'privacy_policy']);
 
         // Add additional fields not in validated data

@@ -427,7 +427,7 @@
                                 <label
                                     for="privacy_policy"
                                     class="ms-2 text-sm font-medium text-gray-900">
-                                    I agree with the <a href="#" class="text-primary hover:underline">Privacy Policy</a>. <span class="text-red-500">*</span>
+                                    I agree with the <a href="{{ asset('files/Thesisinism - Data Privacy Policy.pdf') }}" class="text-primary hover:underline">Data Privacy Policy</a>. <span class="text-red-500">*</span>
                                 </label>
 
                                 <x-forms.error name="privacy_policy" />
