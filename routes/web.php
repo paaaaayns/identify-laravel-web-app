@@ -109,8 +109,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/api/medical-record/{ulid}/download', [MedicalRecordController::class, 'download'])
         ->name('medical-record.download');
 
-    // Biometrics
-    Route::post('/biometrics/search', [BiometricsController::class, 'search'])->name('biometrics.search');
+    // Iris Biometrics
+    Route::post('/iris-biometrics/search', [IrisBiometricsController::class, 'search'])->name('iris-biometrics.search');
 });
 
 

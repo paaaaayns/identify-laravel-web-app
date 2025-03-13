@@ -170,12 +170,12 @@ class PatientController extends Controller
         // add the pre_registration_code to the patient
         $patient->registered_at = now();
 
-        $leftIrisImageFilePath = "patients/{$patient_ulid}/biometrics/left_iris." . $leftIrisImage->getClientOriginalExtension();
-        $rightIrisImageFilePath = "patients/{$patient_ulid}/biometrics/right_iris." . $rightIrisImage->getClientOriginalExtension();
-        Storage::disk('public')->put($leftIrisImageFilePath, file_get_contents($leftIrisImage->getRealPath()));
-        Storage::disk('public')->put($rightIrisImageFilePath, file_get_contents($rightIrisImage->getRealPath()));
-
         try {
+            $leftIrisImageFilePath = "patients/{$patient_ulid}/biometrics/left_iris." . $leftIrisImage->getClientOriginalExtension();
+            $rightIrisImageFilePath = "patients/{$patient_ulid}/biometrics/right_iris." . $rightIrisImage->getClientOriginalExtension();
+            Storage::disk('public')->put($leftIrisImageFilePath, file_get_contents($leftIrisImage->getRealPath()));
+            Storage::disk('public')->put($rightIrisImageFilePath, file_get_contents($rightIrisImage->getRealPath()));
+
             DB::transaction(function () use ($patient, $leftIrisBiometrics, $rightIrisBiometrics) {
                 $patient->save();
                 $leftIrisBiometrics->save();

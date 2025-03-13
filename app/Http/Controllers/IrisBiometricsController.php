@@ -3,53 +3,95 @@
 namespace App\Http\Controllers;
 
 use App\Models\IrisBiometrics;
+use App\Models\Patient;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class IrisBiometricsController extends Controller
 {
-    public function compare(Request $request)
+    /**
+     * Search for a patient using biometric data.
+     */
+    public function search(Request $request)
     {
-        $validatedData = $request->validate([
-            'iris_image' => 'required',
+        $request->validate([
+            'iris' => 'required|image|mimes:bmp|max:2048',
         ]);
 
-        $response = Http::post('http://127.0.0.1:8000/upload', [
-            'iris_image' => $validatedData['iris_image'],
-        ]);
+        $imageData = $request->file('iris');
+        $imagePath = 'search/iris.bmp';
 
-        $response->validate([
-            'iris_code' => 'required',
-            'iris_mask_code' => 'required',
-        ]);
-
-        // iterate through the iris biometrics in the database
-        // and compute the hamming distance
-        // threshold is 0.32
-
-
-        $irisBiometrics = IrisBiometrics::where('left_iris_code', $response['iris_code'])
-            ->orWhere('right_iris_code', $response['iris_code'])
-            ->orWhere('left_iris_mask_code', $response['iris_code'])
-            ->orWhere('right_iris_mask_code', $response['iris_code'])
-            ->first();
-
-
-    }
-
-    public function computeHammingDistance($code1, $code2)
-    {
-        $hammingDistance = 0;
-        $code1 = str_split($code1);
-        $code2 = str_split($code2);
-
-        for ($i = 0; $i < count($code1); $i++) {
-            if ($code1[$i] !== $code2[$i]) {
-                $hammingDistance++;
-            }
+        try {
+            Storage::disk('public')->put($imagePath, file_get_contents($imageData->getRealPath()));
+        } catch (\Exception $e) {
+            Log::error('BiometricsController@search: Failed to store uploaded image.', ['error' => $e->getMessage()]);
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to store uploaded image.',
+            ], 500);
         }
 
-        return $hammingDistance;
+        $imagePath = public_path("storage/{$imagePath}");
+        if (!file_exists($imagePath)) {
+            Log::error('BiometricsController@search: Image does not exist.', [
+                'image_path' => $imagePath,
+            ]);
+        }
+
+        try {
+            $irisBiometrics = IrisBiometrics::all()->map(function ($iris) {
+                return [
+                    'patient_ulid' => $iris->patient_ulid,
+                    'iris_code' => base64_encode(gzencode($iris->iris_code)),
+                    'mask_code' => base64_encode(gzencode($iris->mask_code)),
+                ];
+            });
+
+            $response = Http::asMultipart()
+                ->attach('iris', file_get_contents($imageData), 'iris.bmp')
+                ->post('http://127.0.0.1:8000/fast-api/search', [
+                    'stored_irises' => json_encode($irisBiometrics),
+                ]);
+
+            $responseData = $response->json();
+
+            if ($responseData['success'] === true) {
+                $ulid = $responseData['data']['patient_ulid'];
+
+                $patient = Patient::where('ulid', $ulid)->first();
+
+                if ($patient) {
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Patient found.',
+                        'data' => [
+                            'patient' => $patient,
+                        ],
+                    ], 200);
+                } else {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Patient not found.',
+                    ], 404);
+                }
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Patient not found.',
+                ], 404);
+            }
+        } catch (\Exception $e) {
+            Log::error('BiometricsController@search: Error validating request.', [
+                'error' => $e->getMessage(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Error validating request: ' . $e->getMessage(),
+            ], 400);
+        }
     }
 }

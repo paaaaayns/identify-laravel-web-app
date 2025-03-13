@@ -38,7 +38,7 @@
         <form
             id="SearchForm"
             method="POST"
-            action="{{ route('biometrics.search') }}"
+            action="{{ route('iris-biometrics.search') }}"
             class="flex flex-col space-y-4 bg-white rounded-lg shadow p-6">
             <x-forms.field-container class="sm:col-span-6 grid place-items-center">
                 <x-forms.label for="iris">
