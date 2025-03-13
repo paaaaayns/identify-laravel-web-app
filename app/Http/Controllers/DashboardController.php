@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Doctor;
+use App\Models\MedicalRecord;
 use App\Models\Opd;
 use App\Models\Patient;
 use App\Models\PatientQueue;
@@ -60,8 +61,11 @@ class DashboardController extends Controller
                     'queuedPatientsCount' => $queuedPatientsCount,
                 ]);
             case 'patient':
-                return view('auth.dashboard.patient');
-                // Add more roles if necessary
+                $medicalRecordsCount = MedicalRecord::where('patient_id', $user->user_id)
+                    ->count();
+                return view('auth.dashboard.patient', [
+                    'medicalRecordsCount' => $medicalRecordsCount,
+                ]);
             default:
                 return abort(403);  // Default dashboard view
         }
