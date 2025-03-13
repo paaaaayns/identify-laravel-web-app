@@ -131,13 +131,11 @@ class PatientController extends Controller
 
             $responseData = $response->json();
 
-            if ($responseData['success'] === true) {
-                Log::info('PatientObserver@creating: Iris biometrics processed successfully.', [
-                    'response' => $responseData,
-                ]);
-            } else {
+            if (! $responseData['success']) {
                 throw new \Exception("API Error: " . ($responseData['message'] ?? 'Unknown error'));
             }
+
+            Log::info('PatientController@store: Iris biometrics processed successfully.');
 
             $leftIrisBiometrics = new IrisBiometrics();
             $leftIrisBiometrics->ulid = Str::ulid();
@@ -153,7 +151,7 @@ class PatientController extends Controller
             $rightIrisBiometrics->iris_code = gzdecode(base64_decode($responseData["data"]["right_iris_code"]));
             $rightIrisBiometrics->mask_code = gzdecode(base64_decode($responseData["data"]["right_mask_code"]));
         } catch (\Exception $e) {
-            Log::error('PatientObserver@creating: Error storing iris biometrics: ' . $e->getMessage());
+            Log::error('PatientController@store: Error storing iris biometrics: ' . $e->getMessage());
 
             return response()->json([
                 'success' => false,
@@ -171,15 +169,15 @@ class PatientController extends Controller
         $patient->registered_at = now();
 
         try {
-            $leftIrisImageFilePath = "patients/{$patient_ulid}/biometrics/left_iris." . $leftIrisImage->getClientOriginalExtension();
-            $rightIrisImageFilePath = "patients/{$patient_ulid}/biometrics/right_iris." . $rightIrisImage->getClientOriginalExtension();
-            Storage::disk('public')->put($leftIrisImageFilePath, file_get_contents($leftIrisImage->getRealPath()));
-            Storage::disk('public')->put($rightIrisImageFilePath, file_get_contents($rightIrisImage->getRealPath()));
-
-            DB::transaction(function () use ($patient, $leftIrisBiometrics, $rightIrisBiometrics) {
+            DB::transaction(function () use ($patient, $leftIrisBiometrics, $rightIrisBiometrics, $patient_ulid, $leftIrisImage, $rightIrisImage) {
                 $patient->save();
                 $leftIrisBiometrics->save();
                 $rightIrisBiometrics->save();
+
+                $leftIrisImageFilePath = "patients/{$patient_ulid}/biometrics/left_iris." . $leftIrisImage->getClientOriginalExtension();
+                $rightIrisImageFilePath = "patients/{$patient_ulid}/biometrics/right_iris." . $rightIrisImage->getClientOriginalExtension();
+                Storage::disk('public')->put($leftIrisImageFilePath, file_get_contents($leftIrisImage->getRealPath()));
+                Storage::disk('public')->put($rightIrisImageFilePath, file_get_contents($rightIrisImage->getRealPath()));
             });
         } catch (\Exception $e) {
             Log::error('PatientController@store: Error storing patient record.', [
@@ -235,9 +233,13 @@ class PatientController extends Controller
     public function destroy(string $user_id)
     {
         $user = Patient::where('user_id', $user_id)->firstOrFail();
-        $user->delete();
         $creds = User::where('user_id', $user_id)->firstOrFail();
-        $creds->delete();
+
+        DB::transaction(function () use ($user, $creds) {
+            $user->delete();
+            $creds->delete();
+            $user->irisBiometrics()->delete();
+        });
 
         // Return a JSON response to inform the frontend that the deletion was successful
         return response()->json([

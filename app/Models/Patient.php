@@ -28,6 +28,6 @@ class Patient extends Model
 
     public function irisBiometrics(): HasMany
     {
-        return $this->hasMany(IrisBiometrics::class, 'patient_id', 'ulid');
+        return $this->hasMany(IrisBiometrics::class, 'patient_ulid', 'ulid');
     }
 }
