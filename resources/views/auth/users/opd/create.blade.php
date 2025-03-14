@@ -274,6 +274,7 @@
                     <!-- Actions -->
                     <div class="p-6 !pt-0">
                         <div class="flex items-center justify-end gap-x-6 border-t border-gray-900/10 pt-6">
+                            @role(['admin'])
                             <button
                                 id="fill"
                                 type="button"
@@ -281,6 +282,7 @@
                                 class="rounded-md px-3 py-2 text-sm font-semibold text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
                                 Test
                             </button>
+                            @endrole
 
                             <x-forms.primary-button
                                 type="button"
