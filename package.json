@@ -25,6 +25,7 @@
         "alpinejs": "^3.14.3",
         "datatables.net": "^2.1.8",
         "datatables.net-dt": "^2.1.8",
+        "dotenv": "^16.4.7",
         "flowbite": "^2.5.2",
         "puppeteer": "^24.4.0",
         "sweetalert2": "^11.14.5"
