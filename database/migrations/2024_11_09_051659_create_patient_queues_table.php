@@ -33,12 +33,14 @@ return new class extends Migration
 
             // Define queue_status as an ENUM field
             $table->enum('queue_status', [
-                'Waiting',
-                'Assessment Done',
+                'Awaiting Doctor Selection',
+                'Awaiting Assessment',
+                'Assessing',
+                'Awaiting Consultation',
                 'Consulting',
                 'Completed',
                 'Cancelled'
-            ])->default('Waiting');
+            ])->default('Awaiting Doctor Selection');
 
             $table->string('height')->nullable();
             $table->string('weight')->nullable();
@@ -60,7 +62,10 @@ return new class extends Migration
             $table->string('doctor_notes')->nullable();
 
             $table->timestamp('queued_at')->nullable();
+            $table->timestamp('doctor_selected_at')->nullable();
+            $table->timestamp('assessment_started_at')->nullable();
             $table->timestamp('assessment_done_at')->nullable();
+            $table->timestamp('consultation_started_at')->nullable();
             $table->timestamp('consultation_done_at')->nullable();
             $table->timestamp('cancelled_at')->nullable();
             $table->timestamps();
