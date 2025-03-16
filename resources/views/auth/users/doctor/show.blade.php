@@ -284,7 +284,7 @@
                     <x-forms.field-container class="sm:col-span-4">
                         <x-forms.label
                             for="type">
-                            Profession
+                            Specialization
                         </x-forms.label>
 
                         @if (true)

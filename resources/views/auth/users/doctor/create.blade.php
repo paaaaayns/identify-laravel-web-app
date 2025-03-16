@@ -259,7 +259,7 @@
                                 <x-forms.label
                                     for="type"
                                     :required="true">
-                                    Profession
+                                    Specialization
                                 </x-forms.label>
 
                                 <x-forms.input

@@ -78,7 +78,7 @@
                 </div>
                 <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
                     <div class="flex flex-col">
-                        <label class="text-sm">Profession</label>
+                        <label class="text-sm">Specialization</label>
                         <span class="text-sm font-semibold">{{ $record->doctor->type ?? 'N/A' }}</span>
                     </div>
                 </div>
