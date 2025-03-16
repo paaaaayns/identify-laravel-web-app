@@ -68,13 +68,22 @@ class PatientQueueTable extends DataTableComponent
             Column::make("Patient Name")
                 ->label($patientName) // Display full name
                 ->sortable(fn($builder, $direction) => $builder->orderBy('last_name', $direction))
-                ->searchable(),
+                ->searchable(
+                    fn(Builder $query, $searchTerm) =>
+                    $query->orWhere('first_name', 'like', '%' . trim($searchTerm) . '%')
+                        ->orWhere('middle_name', 'like', '%' . trim($searchTerm) . '%')
+                        ->orWhere('last_name', 'like', '%' . trim($searchTerm) . '%')
+                ),
 
             Column::make("Doctor Name")
                 ->label($doctorName) // Display full name
                 ->sortable(fn($builder, $direction) => $builder->orderBy('last_name', $direction))
-                ->searchable(),
-
+                ->searchable(
+                    fn(Builder $query, $searchTerm) =>
+                    $query->orWhere('first_name', 'like', '%' . trim($searchTerm) . '%')
+                        ->orWhere('middle_name', 'like', '%' . trim($searchTerm) . '%')
+                        ->orWhere('last_name', 'like', '%' . trim($searchTerm) . '%')
+                ),
 
             Column::make("Status", "queue_status")
                 ->sortable()

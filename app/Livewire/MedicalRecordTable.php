@@ -54,7 +54,8 @@ class MedicalRecordTable extends DataTableComponent
         $columns = [
             Column::make("Date", "created_at")
                 ->format(fn($value) => Carbon::parse($value)->format('Y-m-d')) // Format the date
-                ->sortable(),
+                ->sortable()
+                ->searchable(),
 
             // show doctor column if the user is a patient
             Column::make("Action")
@@ -74,18 +75,33 @@ class MedicalRecordTable extends DataTableComponent
                 Column::make("Doctor")
                     ->label($doctorName) // Display full name
                     ->sortable(fn($builder, $direction) => $builder->orderBy('last_name', $direction))
-                    ->searchable(),
+                ->searchable(
+                    fn(Builder $query, $searchTerm) =>
+                    $query->orWhere('first_name', 'like', '%' . trim($searchTerm) . '%')
+                        ->orWhere('middle_name', 'like', '%' . trim($searchTerm) . '%')
+                        ->orWhere('last_name', 'like', '%' . trim($searchTerm) . '%')
+                ),
             ]);
         } else {
             array_splice($columns, count($columns) - 1, 0, [
                 Column::make("Patient")
                     ->label($patientName) // Display full name
                     ->sortable(fn($builder, $direction) => $builder->orderBy('last_name', $direction))
-                    ->searchable(),
+                ->searchable(
+                    fn(Builder $query, $searchTerm) =>
+                    $query->orWhere('first_name', 'like', '%' . trim($searchTerm) . '%')
+                        ->orWhere('middle_name', 'like', '%' . trim($searchTerm) . '%')
+                        ->orWhere('last_name', 'like', '%' . trim($searchTerm) . '%')
+                ),
                 Column::make("Doctor")
                     ->label($doctorName) // Display full name
                     ->sortable(fn($builder, $direction) => $builder->orderBy('last_name', $direction))
-                    ->searchable(),
+                ->searchable(
+                    fn(Builder $query, $searchTerm) =>
+                    $query->orWhere('first_name', 'like', '%' . trim($searchTerm) . '%')
+                        ->orWhere('middle_name', 'like', '%' . trim($searchTerm) . '%')
+                        ->orWhere('last_name', 'like', '%' . trim($searchTerm) . '%')
+                ),
             ]);
         }
 
