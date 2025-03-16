@@ -90,8 +90,10 @@ class PatientQueueTable extends DataTableComponent
                 ->searchable()
                 ->label(function ($row) {
                     $statusColors = [
-                        'Waiting' => 'bg-yellow-500 text-white',
-                        'Assessment Done' => 'bg-blue-500 text-white',
+                        'Awaiting Doctor Selection' => 'bg-yellow-500 text-white',
+                        'Awaiting Assessment' => 'bg-amber-400 text-white',
+                        'Assessing' => 'bg-blue-500 text-white',
+                        'Awaiting Consultation' => 'bg-cyan-500 text-white',
                         'Consulting' => 'bg-orange-500 text-white',
                         'Completed' => 'bg-green-500 text-white',
                         'Cancelled' => 'bg-red-500 text-white',
