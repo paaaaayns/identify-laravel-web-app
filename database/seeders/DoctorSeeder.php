@@ -15,9 +15,9 @@ class DoctorSeeder extends Seeder
     {
         //
         Doctor::create([
-            'first_name' => 'Exiquiel John',
-            'middle_name' => 'Aldave',
-            'last_name' => 'Pines',
+            'first_name' => 'Test',
+            'middle_name' => '',
+            'last_name' => 'Doctor',
             'birthdate' => '2001-10-26',
             'sex' => 'Male',
             'religion' => 'Catholic',

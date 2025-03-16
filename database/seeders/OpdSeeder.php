@@ -15,9 +15,9 @@ class OpdSeeder extends Seeder
     {
         //
         Opd::create([
-            'first_name' => 'Exiquiel John',
-            'middle_name' => 'Aldave',
-            'last_name' => 'Pines',
+            'first_name' => 'Test',
+            'middle_name' => '',
+            'last_name' => 'OPD',
             'birthdate' => '2001-10-26',
             'sex' => 'Male',
             'religion' => 'Catholic',

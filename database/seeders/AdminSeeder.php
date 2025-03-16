@@ -15,9 +15,9 @@ class AdminSeeder extends Seeder
     {
         //
         Admin::create([
-            'first_name' => 'Exiquiel John',
-            'middle_name' => 'Aldave',
-            'last_name' => 'Pines',
+            'first_name' => 'Test',
+            'middle_name' => '',
+            'last_name' => 'Admin',
             'birthdate' => '2001-10-26',
             'sex' => 'Male',
             'religion' => 'Catholic',
