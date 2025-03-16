@@ -6,6 +6,7 @@
         action="{{ route('queue.update', ['ulid' => $queue->ulid]) }}">
         @csrf
         @method('PUT')
+        <input type="hidden" name="queue_action" value="Doctor Assigned">
         <button
             type="button"
             onclick="updateDoctor('{{ $doctor_id }}')"
@@ -31,7 +32,7 @@
                     'Accept': 'application/json',
                 },
             });
-            
+
             const result = await response.json();
 
             if (response.ok) {

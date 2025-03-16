@@ -1,55 +1,6 @@
 <!-- Consultation -->
 <div class="w-full flex flex-col items-center bg-white rounded-lg shadow">
-
-
-    @if ($queue->queue_status == 'Completed')
-    @include('auth.queue.form-consultation')
-
-    @elseif ($queue->queue_status == 'Consulting')
-    @role(['admin', 'doctor'])
-    @include('auth.queue.form-consultation')
-
-    @else
-    <div class="w-full">
-        <div class="grid grid-cols-1 text-center">
-            <div class="p-6">
-                <h3 class="text-xl font-semibold text-gray-800">Ongoing Consultation</h3>
-            </div>
-        </div>
-    </div>
-    @endrole
-
-    @elseif ($queue->queue_status == 'Assessment Done')
-    <form id="StartConsultingForm"
-        method="POST"
-        action="{{ route('queue.update', ['ulid' => $queue->ulid]) }}"
-        class="w-full">
-        @csrf
-        @method('PUT')
-
-        <input type="hidden" name="queue_status" value="Consulting">
-
-        <div class="grid grid-cols-1 text-center">
-            <div class="p-6">
-                <x-forms.primary-button
-                    type="button"
-                    onclick="updateQueue('StartConsultingForm')">
-                    Start Consultation
-                </x-forms.primary-button>
-            </div>
-        </div>
-    </form>
-
-    @else
-    @if ($queue->doctor != null)
-    <div class="w-full">
-        <div class="grid grid-cols-1 text-center">
-            <div class="p-6">
-                <h3 class="text-xl font-semibold text-gray-800">Please Fill Up Assessment Form</h3>
-            </div>
-        </div>
-    </div>
-    @else
+    @if ($queue->doctor_selected_at === null)
     <div class="w-full">
         <div class="grid grid-cols-1 text-center">
             <div class="p-6">
@@ -57,7 +8,53 @@
             </div>
         </div>
     </div>
-    @endif
+
+    @elseif ($queue->assessment_started_at === null || $queue->assessment_done_at === null)
+    <div class="w-full">
+        <div class="grid grid-cols-1 text-center">
+            <div class="p-6">
+                <h3 class="text-xl font-semibold text-gray-800">Please Fill Up Assessment Form</h3>
+            </div>
+        </div>
+    </div>
+
+    @elseif ($queue->consultation_started_at === null)
+    <form id="StartConsultingForm"
+        method="POST"
+        action="{{ route('queue.update', ['ulid' => $queue->ulid]) }}"
+        class="w-full">
+        @csrf
+        @method('PUT')
+
+        <input type="hidden" name="queue_action" value="Start Consultation">
+
+        <div class="grid grid-cols-1 text-center">
+            <div class="p-6">
+                <x-forms.primary-button
+                    type="button"
+                    onclick="updateQueue('StartConsultingForm')"
+                    :disabled="!in_array(auth()->user()->role, ['admin', 'doctor'])">
+                    Start Consultation
+                </x-forms.primary-button>
+            </div>
+        </div>
+    </form>
+
+    @elseif ($queue->consultation_started_at != null)
+
+    @role(['admin', 'doctor'])
+    @include('auth.queue.form-consultation')
+
+    @else
+    <div class="w-full">
+        <div class="grid grid-cols-1 text-center">
+            <div class="p-6">
+                <h3 class="text-xl font-semibold text-gray-800">Consultation in Progress</h3>
+            </div>
+        </div>
+    </div>
+    @endrole
+
 
 
     @endif

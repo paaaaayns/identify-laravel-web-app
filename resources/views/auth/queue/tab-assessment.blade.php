@@ -1,8 +1,30 @@
 <!-- Assessment -->
 <div class="w-full flex flex-col items-center bg-white rounded-lg shadow">
 
-    @if ($queue->doctor != null)
+    @if ($queue->assessment_started_at != null)
     @include('auth.queue.form-assessment')
+
+
+    @elseif ($queue->doctor_selected_at != null)
+    <form id="StartAssessingForm"
+        method="POST"
+        action="{{ route('queue.update', ['ulid' => $queue->ulid]) }}"
+        class="w-full">
+        @csrf
+        @method('PUT')
+
+        <input type="hidden" name="queue_action" value="Start Assessment">
+
+        <div class="grid grid-cols-1 text-center">
+            <div class="p-6">
+                <x-forms.primary-button
+                    type="button"
+                    onclick="updateQueue('StartAssessingForm')">
+                    Start Assessment
+                </x-forms.primary-button>
+            </div>
+        </div>
+    </form>
 
     @else
     <div class="w-full">
