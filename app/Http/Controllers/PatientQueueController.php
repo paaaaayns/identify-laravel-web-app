@@ -96,12 +96,12 @@ class PatientQueueController extends Controller
     public function update(Request $request, string $ulid)
     {
         Log::info('PatientQueueController@update: Queue update request', [
-            'request_data' => $request->all(),
             'ulid' => $ulid,
+            'request_data' => $request->all(),
         ]);
         try {
             $validatedData = $request->validate([
-                'queue_status' => 'string|nullable',
+                'queue_action' => 'string|nullable',
 
                 // Doctor Selection
                 'doctor_id' => 'exists:doctors,user_id|nullable',
@@ -159,17 +159,47 @@ class PatientQueueController extends Controller
 
 
             // Safely check and set timestamps based on queue_status
-            $queueStatus = $validatedData['queue_status'] ?? null;
+            $queue_action = $validatedData['queue_action'] ?? null;
+            Log::info('PatientQueueController@update: queue_Action', [
+                'queue_action' => $queue_action,
+            ]);
 
-            if ($queueStatus === 'Assessment Done') {
-                $validatedData['assessment_done_at'] = now();
-            } elseif ($queueStatus === 'Completed') {
-                $validatedData['consultation_done_at'] = now();
+            switch ($queue_action) {
+                case 'Doctor Assigned':
+                    $validatedData['queue_status'] = 'Awaiting Assessment';
+                    $validatedData['doctor_selected_at'] = now();
+                    break;
+
+                case 'Start Assessment':
+                    $validatedData['queue_status'] = 'Assessing';
+                    $validatedData['assessment_started_at'] = now();
+                    break;
+
+                case 'Assessment Done':
+                    $validatedData['queue_status'] = 'Awaiting Consultation';
+                    $validatedData['assessment_done_at'] = now();
+                    break;
+
+                case 'Start Consultation':
+                    $validatedData['queue_status'] = 'Consulting';
+                    $validatedData['consultation_started_at'] = now();
+                    break;
+
+                case 'Consultation Done':
+                    $validatedData['queue_status'] = 'Completed';
+                    $validatedData['consultation_done_at'] = now();
+                    break;
             }
+
+            unset($validatedData['queue_action']);
+
+            Log::info('PatientQueueController@update: Validated data', [
+                'validatedData' => $validatedData,
+            ]);
 
             // Fetch the queue based on the ulid
             $queue = PatientQueue::where('ulid', $ulid)->first();
-            // dd($queue->ulid);
+
 
             // Update only the fields present in the request
             $queue->update($validatedData);
