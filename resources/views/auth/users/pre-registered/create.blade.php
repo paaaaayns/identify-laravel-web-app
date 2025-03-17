@@ -138,8 +138,7 @@
 
                             <x-forms.field-container class="sm:col-span-4">
                                 <x-forms.label
-                                    for="religion"
-                                    :required="true">
+                                    for="religion">
                                     Religion
                                 </x-forms.label>
 
