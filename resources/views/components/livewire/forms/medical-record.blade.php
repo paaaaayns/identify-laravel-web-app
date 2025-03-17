@@ -1,4 +1,4 @@
-<div class="w-full grid grid-cols-6 md:grid-cols-12">
+<div class="w-full grid grid-cols-1">
     @php
     $record_ulid = $record ? $record->ulid : '';
     @endphp
@@ -22,180 +22,180 @@
     @endif
 
 
-    <!-- Personal Information -->
-    <div class="w-full grid grid-cols-6 md:grid-cols-12 col-span-6 md:col-span-12">
-        <div class="bg-gray-200 border border-gray-400 px-4 py-2 col-span-6 md:col-span-12">
-            <h3 class="text-sm font-semibold text-gray-800">Personal Information</h3>
-        </div>
-        <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-3">
-            <div class="flex flex-col">
-                <label class="text-sm">Patient ID</label>
-                <span id="p-user_id" class="text-sm font-semibold">{{ $record?->patient ? $record->patient->user_id : '' }}</span>
+    <div class="">
+        <!-- Personal Information -->
+        <div class="w-full grid grid-cols-6 md:grid-cols-12 col-span-6 md:col-span-12">
+            <div class="bg-gray-200 border border-gray-400 px-4 py-2 col-span-6 md:col-span-12">
+                <h3 class="text-sm font-semibold text-gray-800">Personal Information</h3>
             </div>
-        </div>
-        <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-9">
-            <div class="flex flex-col">
-                <label class="text-sm">Name</label>
-                <span id="p-first_name" class="text-sm font-semibold">{{ $record?->patient ? trim("{$record->patient->first_name} {$record->patient->middle_name} {$record->patient->last_name}") : '' }}</span>
+            <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-3">
+                <div class="flex flex-col">
+                    <label class="text-sm">Patient ID</label>
+                    <span id="p-user_id" class="text-sm font-semibold">{{ $record?->patient ? $record->patient->user_id : '' }}</span>
+                </div>
             </div>
-        </div>
-        <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-3">
-            <div class="flex flex-col">
-                <label class="text-sm">Sex</label>
-                <span id="p-sex" class="text-sm font-semibold">{{ $record?->patient ? $record->patient->sex : '' }}</span>
+            <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-9">
+                <div class="flex flex-col">
+                    <label class="text-sm">Name</label>
+                    <span id="p-first_name" class="text-sm font-semibold">{{ $record?->patient ? trim("{$record->patient->first_name} {$record->patient->middle_name} {$record->patient->last_name}") : '' }}</span>
+                </div>
             </div>
-        </div>
-        <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
-            <div class="flex flex-col">
-                <label class="text-sm">Birthdate</label>
-                <span id="p-birthdate" class="text-sm font-semibold">{{ $record?->patient ? $record->patient->birthdate : '' }}</span>
+            <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-3">
+                <div class="flex flex-col">
+                    <label class="text-sm">Sex</label>
+                    <span id="p-sex" class="text-sm font-semibold">{{ $record?->patient ? $record->patient->sex : '' }}</span>
+                </div>
             </div>
-        </div>
-        <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
-            <div class="flex flex-col">
-                <label class="text-sm">Religion</label>
-                <span id="p-religion" class="text-sm font-semibold">{{ $record?->patient ? $record->patient->religion : '' }}</span>
+            <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
+                <div class="flex flex-col">
+                    <label class="text-sm">Birthdate</label>
+                    <span id="p-birthdate" class="text-sm font-semibold">{{ $record?->patient ? $record->patient->birthdate : '' }}</span>
+                </div>
             </div>
-        </div>
-        <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
-            <div class="flex flex-col">
-                <label class="text-sm">Citizenship</label>
-                <span id="p-citizenship" class="text-sm font-semibold">{{ $record?->patient ? $record->patient->citizenship : '' }}</span>
+            <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
+                <div class="flex flex-col">
+                    <label class="text-sm">Religion</label>
+                    <span id="p-religion" class="text-sm font-semibold">{{ $record?->patient ? $record->patient->religion : '' }}</span>
+                </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Consultation Information -->
-    <div class="w-full grid grid-cols-6 md:grid-cols-12 col-span-6 md:col-span-12">
-        <div class="bg-gray-200 border-t-0 border border-gray-400 px-4 py-2 col-span-6 md:col-span-12">
-            <h3 class="text-sm font-semibold text-gray-800">Consultation Information</h3>
-        </div>
-        <div class="bg-gray-200 border-t-0 border border-gray-400 px-4 py-2 col-span-6 md:col-span-12">
-            <h3 class="text-sm font-semibold text-gray-800">Doctor</h3>
-        </div>
-        <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-6">
-            <div class="flex flex-col">
-                <label class="text-sm">Name</label>
-                <span id="d-name" class="text-sm font-semibold">{{ $record?->doctor ? 'Dr. ' . $record->doctor->first_name . ' ' . $record->doctor->last_name : '' }}</span>
-            </div>
-        </div>
-        <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-6">
-            <div class="flex flex-col">
-                <label class="text-sm">Specialization</label>
-                <span id="d-specialization" class="text-sm font-semibold">{{ $record?->doctor ? $record->doctor->type : '' }}</span>
-            </div>
-        </div>
-        <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-6">
-            <div class="flex flex-col">
-                <label class="text-sm">Contact No.</label>
-                <span id="d-contact_number" class="text-sm font-semibold">{{ $record?->doctor ? $record->doctor->contact_number : '' }}</span>
-            </div>
-        </div>
-        <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-6">
-            <div class="flex flex-col">
-                <label class="text-sm">Email</label>
-                <span id="d-email" class="text-sm font-semibold">{{ $record?->doctor ? $record->doctor->email : '' }}</span>
-            </div>
-        </div>
-        <!-- Concerns -->
-        <div class="bg-gray-200 border-t-0 border border-gray-400 px-4 py-2 col-span-6 md:col-span-12">
-            <h3 class="text-sm font-semibold text-gray-800">Concerns</h3>
-        </div>
-        <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-4">
-            <div class="flex flex-col">
-                <label class="text-sm">Primary Complaint</label>
-                <span id="mr-primary_complaint" class="text-sm font-semibold">{{ $record ? ($record->primary_complaint ?? 'N/A') : '' }}</span>
-            </div>
-        </div>
-        <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-4">
-            <div class="flex flex-col">
-                <label class="text-sm">Duration of Symptoms</label>
-                <span id="mr-duration_of_symptoms" class="text-sm font-semibold">{{ $record ? ($record->duration_of_symptoms ?? 'N/A') : '' }}</span>
-            </div>
-        </div>
-        <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-4">
-            <div class="flex flex-col">
-                <label class="text-sm">Intensity & Frequency</label>
-                <span id="mr-intensity_and_frequency" class="text-sm font-semibold">{{ $record ? ($record->intensity_and_frequency ?? 'N/A') : '' }}</span>
-            </div>
-        </div>
-        <!-- Findings -->
-        <div class="bg-gray-200 border-t-0 border border-gray-400 px-4 py-2 col-span-6 md:col-span-12">
-            <h3 class="text-sm font-semibold text-gray-800">Findings</h3>
-        </div>
-        <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
-            <div class="flex flex-col">
-                <label class="text-sm">Findings</label>
-                <span id="mr-findings" class="text-sm font-semibold">{{ $record ? ($record->findings ?? 'N/A') : '' }}</span>
-            </div>
-        </div>
-        <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
-            <div class="flex flex-col">
-                <label class="text-sm">Diagnosis</label>
-                <span id="mr-diagnosis" class="text-sm font-semibold">{{ $record ? ($record->diagnosis ?? 'N/A') : '' }}</span>
-            </div>
-        </div>
-        <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
-            <div class="flex flex-col">
-                <label class="text-sm">Recommended Treatment</label>
-                <span id="mr-recommended_treatment" class="text-sm font-semibold">{{ $record ? ($record->recommended_treatment ?? 'N/A') : '' }}</span>
-            </div>
-        </div>
-        <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
-            <div class="flex flex-col">
-                <label class="text-sm">Follow-Up Instructions</label>
-                <span id="mr-follow_up_instructions" class="text-sm font-semibold">{{ $record ? ($record->follow_up_instructions ?? 'N/A') : '' }}</span>
-            </div>
-        </div>
-        <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
-            <div class="flex flex-col">
-                <label class="text-sm">Referrals</label>
-                <span id="mr-referrals" class="text-sm font-semibold">{{ $record ? ($record->referrals ?? 'N/A') : '' }}</span>
-            </div>
-        </div>
-        <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
-            <div class="flex flex-col">
-                <label class="text-sm">Doctor's Notes</label>
-                <span id="mr-doctor_notes" class="text-sm font-semibold">{{ $record ? ($record->doctor_notes ?? 'N/A') : '' }}</span>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- Attachments -->
-    <div class="w-full grid grid-cols-6 md:grid-cols-12 col-span-6 md:col-span-12">
-        <div class="bg-gray-200 border-t-0 border border-gray-400 px-4 py-2 col-span-6 md:col-span-12">
-            <h3 class="text-sm font-semibold text-gray-800">Attachments</h3>
-        </div>
-
-        <!-- check if $record exists -->
-        @if (!empty($record))
-        @php
-        $attachmentsPath = "patients/{$record->patient->ulid}/medical-records/{$record->ulid}/attachments";
-        $files = Storage::disk('public')->files($attachmentsPath);
-
-        @endphp
-
-        @if (count($files) > 0)
-        @foreach ($files as $file)
-        <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
-            <div class="flex justify-between items-center">
-                <span class="text-sm font-semibold">{{ basename($file) }}</span>
-                <div class="space-x-2">
-                    <a href="{{ Storage::url($file) }}" target="_blank" class="text-primary text-sm">View</a>
-                    <a href="{{ Storage::url($file) }}" download class="text-primary text-sm">Download</a>
+            <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-3">
+                <div class="flex flex-col">
+                    <label class="text-sm">Citizenship</label>
+                    <span id="p-citizenship" class="text-sm font-semibold">{{ $record?->patient ? $record->patient->citizenship : '' }}</span>
                 </div>
             </div>
         </div>
-        @endforeach
-        @else
-        <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
-            <div class="flex justify-between items-center">
-                <span class="text-sm font-semibold">No attachments uploaded.</span>
+
+        <!-- Consultation Information -->
+        <div class="w-full grid grid-cols-6 md:grid-cols-12 col-span-6 md:col-span-12">
+            <div class="bg-gray-200 border-t-0 border border-gray-400 px-4 py-2 col-span-6 md:col-span-12">
+                <h3 class="text-sm font-semibold text-gray-800">Consultation Information</h3>
+            </div>
+            <div class="bg-gray-200 border-t-0 border border-gray-400 px-4 py-2 col-span-6 md:col-span-12">
+                <h3 class="text-sm font-semibold text-gray-800">Doctor</h3>
+            </div>
+            <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-6">
+                <div class="flex flex-col">
+                    <label class="text-sm">Name</label>
+                    <span id="d-name" class="text-sm font-semibold">{{ $record?->doctor ? 'Dr. ' . $record->doctor->first_name . ' ' . $record->doctor->last_name : '' }}</span>
+                </div>
+            </div>
+            <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-6">
+                <div class="flex flex-col">
+                    <label class="text-sm">Specialization</label>
+                    <span id="d-specialization" class="text-sm font-semibold">{{ $record?->doctor ? $record->doctor->type : '' }}</span>
+                </div>
+            </div>
+            <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-6">
+                <div class="flex flex-col">
+                    <label class="text-sm">Contact No.</label>
+                    <span id="d-contact_number" class="text-sm font-semibold">{{ $record?->doctor ? $record->doctor->contact_number : '' }}</span>
+                </div>
+            </div>
+            <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-6">
+                <div class="flex flex-col">
+                    <label class="text-sm">Email</label>
+                    <span id="d-email" class="text-sm font-semibold">{{ $record?->doctor ? $record->doctor->email : '' }}</span>
+                </div>
+            </div>
+
+            <!-- Concerns -->
+            <div class="bg-gray-200 border-t-0 border border-gray-400 px-4 py-2 col-span-6 md:col-span-12">
+                <h3 class="text-sm font-semibold text-gray-800">Concerns</h3>
+            </div>
+            <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-4">
+                <div class="flex flex-col">
+                    <label class="text-sm">Primary Complaint</label>
+                    <span id="mr-primary_complaint" class="text-sm font-semibold">{{ $record ? ($record->primary_complaint ?? 'N/A') : '' }}</span>
+                </div>
+            </div>
+            <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-4">
+                <div class="flex flex-col">
+                    <label class="text-sm">Duration of Symptoms</label>
+                    <span id="mr-duration_of_symptoms" class="text-sm font-semibold">{{ $record ? ($record->duration_of_symptoms ?? 'N/A') : '' }}</span>
+                </div>
+            </div>
+            <div class="border-t-0 border-l-0 border border-gray-400 px-4 py-2 md:col-span-4">
+                <div class="flex flex-col">
+                    <label class="text-sm">Intensity & Frequency</label>
+                    <span id="mr-intensity_and_frequency" class="text-sm font-semibold">{{ $record ? ($record->intensity_and_frequency ?? 'N/A') : '' }}</span>
+                </div>
+            </div>
+
+            <!-- Findings -->
+            <div class="bg-gray-200 border-t-0 border border-gray-400 px-4 py-2 col-span-6 md:col-span-12">
+                <h3 class="text-sm font-semibold text-gray-800">Findings</h3>
+            </div>
+            <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
+                <div class="flex flex-col">
+                    <label class="text-sm">Findings</label>
+                    <span id="mr-findings" class="text-sm font-semibold">{{ $record ? ($record->findings ?? 'N/A') : '' }}</span>
+                </div>
+            </div>
+            <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
+                <div class="flex flex-col">
+                    <label class="text-sm">Diagnosis</label>
+                    <span id="mr-diagnosis" class="text-sm font-semibold">{{ $record ? ($record->diagnosis ?? 'N/A') : '' }}</span>
+                </div>
+            </div>
+            <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
+                <div class="flex flex-col">
+                    <label class="text-sm">Recommended Treatment</label>
+                    <span id="mr-recommended_treatment" class="text-sm font-semibold">{{ $record ? ($record->recommended_treatment ?? 'N/A') : '' }}</span>
+                </div>
+            </div>
+            <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
+                <div class="flex flex-col">
+                    <label class="text-sm">Follow-Up Instructions</label>
+                    <span id="mr-follow_up_instructions" class="text-sm font-semibold">{{ $record ? ($record->follow_up_instructions ?? 'N/A') : '' }}</span>
+                </div>
+            </div>
+            <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
+                <div class="flex flex-col">
+                    <label class="text-sm">Referrals</label>
+                    <span id="mr-referrals" class="text-sm font-semibold">{{ $record ? ($record->referrals ?? 'N/A') : '' }}</span>
+                </div>
+            </div>
+            <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
+                <div class="flex flex-col">
+                    <label class="text-sm">Doctor's Notes</label>
+                    <span id="mr-doctor_notes" class="text-sm font-semibold">{{ $record ? ($record->doctor_notes ?? 'N/A') : '' }}</span>
+                </div>
             </div>
         </div>
-        @endif
-        @endif
+        
+        <!-- Attachments -->
+        <div class="w-full grid grid-cols-6 md:grid-cols-12 col-span-6 md:col-span-12">
+            <div class="bg-gray-200 border-t-0 border border-gray-400 px-4 py-2 col-span-6 md:col-span-12">
+                <h3 class="text-sm font-semibold text-gray-800">Attachments</h3>
+            </div>
+            <!-- check if $record exists -->
+            @if (!empty($record))
+            @php
+            $attachmentsPath = "patients/{$record->patient->ulid}/medical-records/{$record->ulid}/attachments";
+            $files = Storage::disk('public')->files($attachmentsPath);
+            @endphp
+            @if (count($files) > 0)
+            @foreach ($files as $file)
+            <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
+                <div class="flex justify-between items-center">
+                    <span class="text-sm font-semibold">{{ basename($file) }}</span>
+                    <div class="space-x-2">
+                        <a href="{{ Storage::url($file) }}" target="_blank" class="text-primary text-sm">View</a>
+                        <a href="{{ Storage::url($file) }}" download class="text-primary text-sm">Download</a>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+            @else
+            <div class="border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
+                <div class="flex justify-between items-center">
+                    <span class="text-sm font-semibold">No attachments uploaded.</span>
+                </div>
+            </div>
+            @endif
+            @endif
+        </div>
     </div>
 </div>
 
