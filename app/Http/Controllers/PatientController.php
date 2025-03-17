@@ -56,7 +56,7 @@ class PatientController extends Controller
                 }
             }], // Ensure birthdate is a valid date in the past
             'sex' => ['required', Rule::in(['Male', 'Female'])],
-            'religion' => ['required', 'string', 'max:255'], // Optional but validated if present
+            'religion' => ['nullable', 'string', 'max:255'], // Optional but validated if present
             'civil_status' => ['required', Rule::in(['Single', 'Married', 'Divorced'])],
             'citizenship' => ['required', 'string', 'max:255'],
             'healthcard_number' => ['nullable', 'string', 'max:50'], // Assuming healthcard_number is alphanumeric
@@ -85,12 +85,12 @@ class PatientController extends Controller
             'required' => 'This field is required', // Overrides all required fields
             'accepted' => 'This field is required', // Overrides all accepted fields
 
-            'contact_number.regex' => 'Invalid contact number',
-            'contact_number.min' => 'Invalid contact number',
-            'emergency_contact1_number.regex' => 'Invalid contact number',
-            'emergency_contact1_number.min' => 'Invalid contact number',
-            'emergency_contact2_number.regex' => 'Invalid contact number',
-            'emergency_contact2_number.min' => 'Invalid contact number',
+            'contact_number.regex' => 'Invalid contact number, Ex. 09123456789',
+            'contact_number.min' => 'Invalid contact number, Ex. 09123456789',
+            'emergency_contact1_number.regex' => 'Invalid contact number, Ex. 09123456789',
+            'emergency_contact1_number.min' => 'Invalid contact number, Ex. 09123456789',
+            'emergency_contact2_number.regex' => 'Invalid contact number, Ex. 09123456789',
+            'emergency_contact2_number.min' => 'Invalid contact number, Ex. 09123456789',
         ]);
 
         return response()->json([

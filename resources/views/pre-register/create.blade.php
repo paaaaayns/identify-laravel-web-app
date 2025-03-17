@@ -176,6 +176,8 @@
                                     id="healthcard_number"
                                     name="healthcard_number"
                                     :value="old('healthcard_number')"
+                                    placeholder="1234567"
+                                    maxlength="7"
                                     autocomplete="off" />
 
                                 <x-forms.error name="healthcard_number" />
@@ -230,6 +232,7 @@
                                     id="email"
                                     name="email"
                                     :value="old('email')"
+                                    placeholder="sample@email.com"
                                     autocomplete="off" />
 
                                 <x-forms.error name="email" />
@@ -247,6 +250,7 @@
                                     id="contact_number"
                                     name="contact_number"
                                     :value="old('contact_number')"
+                                    placeholder="09123456789"
                                     maxlength="11"
                                     autocomplete="off"
                                     oninput="restrictLetterInput(this)" />
@@ -320,6 +324,7 @@
                                     id="emergency_contact1_number"
                                     name="emergency_contact1_number"
                                     :value="old('emergency_contact1_number')"
+                                    placeholder="09123456789"
                                     autocomplete="off"
                                     maxlength="11"
                                     oninput="restrictLetterInput(this)" />
@@ -373,6 +378,7 @@
                                     id="emergency_contact2_number"
                                     name="emergency_contact2_number"
                                     :value="old('emergency_contact2_number')"
+                                    placeholder="09123456789"
                                     autocomplete="off"
                                     maxlength="11"
                                     oninput="restrictLetterInput(this)" />
@@ -435,7 +441,7 @@
                     </div>
 
                     <div class="flex items-center justify-end gap-x-6 border-t border-gray-900/10 px-4 py-4 sm:px-8">
-                        @role(['admin'])
+                        @if(true)
                         <button
                             id="fill"
                             type="button"
@@ -443,7 +449,7 @@
                             class="rounded-md px-3 py-2 text-sm font-semibold text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
                             Test
                         </button>
-                        @endrole
+                        @endif
 
                         <x-forms.primary-button type="submit">
                             Submit

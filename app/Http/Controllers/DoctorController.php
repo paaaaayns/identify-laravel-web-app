@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Doctor;
 use App\Models\User;
+use App\Rules\LettersAndSpaceOnly;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -36,9 +37,9 @@ class DoctorController extends Controller
     {
         $validatedData = $request->validate([
             // Personal Information
-            'first_name' => ['required', 'string', 'max:255'],
-            'middle_name' => ['nullable', 'string', 'max:255'], // Allow middle name to be optional
-            'last_name' => ['required', 'string', 'max:255'],
+            'first_name' => ['required', 'string', 'max:255', new LettersAndSpaceOnly()],
+            'middle_name' => ['nullable', 'string', 'max:255', new LettersAndSpaceOnly()], // Allow middle name to be optional
+            'last_name' => ['required', 'string', 'max:255', new LettersAndSpaceOnly()],
             'birthdate' => ['required', 'date_format:Y-m-d', function ($attribute, $value, $fail) {
                 // Convert to Carbon instance
                 $date = Carbon::createFromFormat('Y-m-d', $value);
@@ -48,11 +49,10 @@ class DoctorController extends Controller
                     $fail('The birthdate must be before today.');
                 }
             }], // Ensure birthdate is a valid date in the past
-            'sex' => ['required', Rule::in(['Male', 'Female'])],
-            'religion' => ['required', 'string', 'max:255'], // Optional but validated if present
+            'sex' => ['required', Rule::in(['Male', 'Female']), new LettersAndSpaceOnly()],
+            'religion' => ['nullable', 'string', 'max:255', new LettersAndSpaceOnly()], // Optional but validated if present
             'civil_status' => ['required', Rule::in(['Single', 'Married', 'Divorced'])],
-            'citizenship' => ['required', 'string', 'max:255'],
-            'healthcard_number' => ['nullable', 'string', 'max:50'], // Assuming healthcard_number is alphanumeric
+            'citizenship' => ['required', 'string', 'max:255', new LettersAndSpaceOnly()],
 
             // Contact Information
             'address' => ['required', 'string', 'max:500'],
@@ -65,7 +65,7 @@ class DoctorController extends Controller
 
             // Emergency Contacts
             'room' => ['required', 'string', 'max:255'],
-            'type' => ['required', 'string', 'max:255'],
+            'type' => ['required', 'string', 'max:255', new LettersAndSpaceOnly()],
             'license_number' => ['required', 'string', 'regex:/^[0-9]{7}$/', function ($attribute, $value, $fail) {
                 if (Doctor::where('license_number', $value)->exists()) {
                     $fail('This license number is already taken.');
@@ -75,8 +75,11 @@ class DoctorController extends Controller
             'required' => 'This field is required', // Overrides all required fields
             'accepted' => 'This field is required', // Overrides all accepted fields
 
-            'contact_number.regex' => 'Invalid contact number',
-            'contact_number.min' => 'Invalid contact number',
+            'license_number.regex' => 'Invalid license number, Ex. 1234567',
+
+            'email.email' => 'Invalid email address, Ex. 1234567',
+            'contact_number.regex' => 'Invalid mobile number, Ex. 09123456789',
+            'contact_number.min' => 'Invalid mobile number, Ex. 09123456789',
         ]);
 
         return response()->json([

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PreRegisteredPatient;
 use App\Models\User;
+use App\Rules\LettersAndSpaceOnly;
 use Faker\Factory as Faker;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -33,9 +34,9 @@ class PreRegistrationController extends Controller
 
         $validatedData = $request->validate([
             // Personal Information
-            'first_name' => ['required', 'string', 'max:255'],
-            'middle_name' => ['nullable', 'string', 'max:255'], // Allow middle name to be optional
-            'last_name' => ['required', 'string', 'max:255'],
+            'first_name' => ['required', 'string', 'max:255', new LettersAndSpaceOnly()],
+            'middle_name' => ['nullable', 'string', 'max:255', new LettersAndSpaceOnly()], // Allow middle name to be optional
+            'last_name' => ['required', 'string', 'max:255', new LettersAndSpaceOnly()],
             'birthdate' => ['required', 'date_format:Y-m-d', function ($attribute, $value, $fail) {
                 // Convert to Carbon instance
                 $date = Carbon::createFromFormat('Y-m-d', $value);
@@ -46,9 +47,9 @@ class PreRegistrationController extends Controller
                 }
             }], // Ensure birthdate is a valid date in the past
             'sex' => ['required', Rule::in(['Male', 'Female'])],
-            'religion' => ['required', 'string', 'max:255'], // Optional but validated if present
+            'religion' => ['nullable', 'string', 'max:255', new LettersAndSpaceOnly()], // Optional but validated if present
             'civil_status' => ['required', Rule::in(['Single', 'Married', 'Divorced'])],
-            'citizenship' => ['required', 'string', 'max:255'],
+            'citizenship' => ['required', 'string', 'max:255', new LettersAndSpaceOnly()],
             'healthcard_number' => ['nullable', 'string', 'max:50'], // Assuming healthcard_number is alphanumeric
 
             // Contact Information
@@ -61,12 +62,12 @@ class PreRegistrationController extends Controller
             'contact_number' => ['required', 'regex:/^09[0-9]{7,13}$/', "min:11"], // Validate phone number format (e.g., +123456789)
 
             // Emergency Contacts
-            'emergency_contact1_name' => ['required', 'string', 'max:255'],
+            'emergency_contact1_name' => ['required', 'string', 'max:255', new LettersAndSpaceOnly()],
             'emergency_contact1_number' => ['required', 'regex:/^09[0-9]{7,13}$/', "min:11"], // Validate phone number
-            'emergency_contact1_relationship' => ['required', 'string', 'max:100'],
-            'emergency_contact2_name' => ['required', 'string', 'max:255'], // Second contact is optional
+            'emergency_contact1_relationship' => ['required', 'string', 'max:100', new LettersAndSpaceOnly()],
+            'emergency_contact2_name' => ['required', 'string', 'max:255', new LettersAndSpaceOnly()], // Second contact is optional
             'emergency_contact2_number' => ['required', 'regex:/^09[0-9]{7,13}$/', "min:11"],
-            'emergency_contact2_relationship' => ['required', 'string', 'max:100'],
+            'emergency_contact2_relationship' => ['required', 'string', 'max:100', new LettersAndSpaceOnly()],
 
             // Terms
             'terms_and_conditions' => ['accepted', 'required',], // 'accepted' ensures it's checked
@@ -75,12 +76,12 @@ class PreRegistrationController extends Controller
             'required' => 'This field is required', // Overrides all required fields
             'accepted' => 'This field is required', // Overrides all accepted fields
 
-            'contact_number.regex' => 'Invalid contact number',
-            'contact_number.min' => 'Invalid contact number',
-            'emergency_contact1_number.regex' => 'Invalid contact number',
-            'emergency_contact1_number.min' => 'Invalid contact number',
-            'emergency_contact2_number.regex' => 'Invalid contact number',
-            'emergency_contact2_number.min' => 'Invalid contact number',
+            'contact_number.regex' => 'Invalid contact number, Ex. 09123456789',
+            'contact_number.min' => 'Invalid contact number, Ex. 09123456789',
+            'emergency_contact1_number.regex' => 'Invalid contact number, Ex. 09123456789',
+            'emergency_contact1_number.min' => 'Invalid contact number, Ex. 09123456789',
+            'emergency_contact2_number.regex' => 'Invalid contact number, Ex. 09123456789',
+            'emergency_contact2_number.min' => 'Invalid contact number, Ex. 09123456789',
         ]);
 
         // dd($validatedData);
