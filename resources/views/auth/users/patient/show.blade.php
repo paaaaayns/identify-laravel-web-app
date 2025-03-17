@@ -62,7 +62,6 @@
                     @csrf
                     @role(['admin'])
                     <input type="hidden" name="opd_id" value="O-00001">
-                    <input type="hidden" name="doctor_id" value="D-00001">
                     @else
                     <input type="hidden" name="opd_id" value="{{ $user->user_id }}">
                     @endrole
