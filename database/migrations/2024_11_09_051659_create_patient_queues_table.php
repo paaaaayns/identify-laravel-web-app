@@ -20,16 +20,12 @@ return new class extends Migration
             $table->string('queue_id')->unique()->nullable();
 
             $table->string('medical_record_id')->nullable(); // Foreign key for the medical_record (medical_record_id)
-            $table->foreign('medical_record_id')->references('medical_record_id')->on('medical_records');
 
             $table->string('patient_id')->nullable(); // Foreign key for the patient (user_id)
-            $table->foreign('patient_id')->references('user_id')->on('patients');
 
             $table->string('opd_id')->nullable(); // Foreign key for the opd (user_id)
-            $table->foreign('opd_id')->references('user_id')->on('opds');
 
             $table->string('doctor_id')->nullable(); // Foreign key for the doctor (user_id)
-            $table->foreign('doctor_id')->references('user_id')->on('doctors');
 
             // Define queue_status as an ENUM field
             $table->enum('queue_status', [

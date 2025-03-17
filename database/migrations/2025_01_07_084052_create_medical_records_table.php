@@ -17,16 +17,12 @@ return new class extends Migration
             $table->string('medical_record_id')->unique()->nullable();
 
             $table->string('queue_id')->nullable(); // Foreign key for the queue (queue_id)
-            $table->foreign('queue_id')->references('queue_id')->on('patient_queues');
 
             $table->string('patient_id')->nullable(); // Foreign key for the patient (user_id)
-            $table->foreign('patient_id')->references('user_id')->on('patients');
 
             $table->string('opd_id')->nullable(); // Foreign key for the opd (user_id)
-            $table->foreign('opd_id')->references('user_id')->on('opds');
 
             $table->string('doctor_id')->nullable(); // Foreign key for the doctor (user_id)
-            $table->foreign('doctor_id')->references('user_id')->on('doctors');
 
             $table->string('height')->nullable();
             $table->string('weight')->nullable();
