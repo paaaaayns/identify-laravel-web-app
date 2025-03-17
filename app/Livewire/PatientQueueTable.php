@@ -65,29 +65,31 @@ class PatientQueueTable extends DataTableComponent
                 ->sortable()
                 ->searchable(),
 
-            Column::make("Patient Name")
+            Column::make("Patient")
                 ->label($patientName) // Display full name
-                ->sortable(fn($builder, $direction) => $builder->orderBy('last_name', $direction))
-                ->searchable(
-                    fn(Builder $query, $searchTerm) =>
-                    $query->orWhere('first_name', 'like', '%' . trim($searchTerm) . '%')
-                        ->orWhere('middle_name', 'like', '%' . trim($searchTerm) . '%')
-                        ->orWhere('last_name', 'like', '%' . trim($searchTerm) . '%')
-                ),
-
-            Column::make("Doctor Name")
-                ->label($doctorName) // Display full name
-                ->sortable(fn($builder, $direction) => $builder->orderBy('last_name', $direction))
-                ->searchable(
-                    fn(Builder $query, $searchTerm) =>
-                    $query->orWhere('first_name', 'like', '%' . trim($searchTerm) . '%')
-                        ->orWhere('middle_name', 'like', '%' . trim($searchTerm) . '%')
-                        ->orWhere('last_name', 'like', '%' . trim($searchTerm) . '%')
-                ),
+                ->searchable(function (Builder $query, string $searchTerm) {
+                    $searchTerm = "%{$searchTerm}%";
+                    $query->orWhereHas('patient', function (Builder $q) use ($searchTerm) {
+                        $q->where('first_name', 'like', $searchTerm)
+                            ->orWhere('middle_name', 'like', $searchTerm)
+                            ->orWhere('last_name', 'like', $searchTerm);
+                    });
+                }),
+            Column::make("Doctor")
+                ->label($doctorName)
+                ->searchable(function (Builder $query, string $searchTerm) {
+                    $searchTerm = "%{$searchTerm}%";
+                    $query->orWhereHas('doctor', function (Builder $q) use ($searchTerm) {
+                        $q->where('first_name', 'like', $searchTerm)
+                            ->orWhere('middle_name', 'like', $searchTerm)
+                            ->orWhere('last_name', 'like', $searchTerm);
+                    });
+                }),
 
             Column::make("Status", "queue_status")
-                ->sortable()
-                ->searchable()
+                ->searchable(function (Builder $query, $term) {
+                    $query->orWhere('queue_status', 'like', '%' . $term . '%');
+                })
                 ->label(function ($row) {
                     $statusColors = [
                         'Awaiting Doctor Selection' => 'bg-yellow-500 text-white',
@@ -102,7 +104,7 @@ class PatientQueueTable extends DataTableComponent
                     $status = $row->queue_status;
                     $colorClass = $statusColors[$status] ?? 'bg-gray-500 text-white';
 
-                    return '<span class="px-2 py-1 rounded ' . $colorClass . '">' . ucfirst($status) . '</span>';
+                    return '<span class="px-2 py-1 rounded ' . $colorClass . '">' . e($status) . '</span>';
                 })
                 ->html(),
 

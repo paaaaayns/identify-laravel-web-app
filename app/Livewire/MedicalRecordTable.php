@@ -53,9 +53,33 @@ class MedicalRecordTable extends DataTableComponent
         $doctorName = fn($row) => $this->getDoctorName($row);
         $columns = [
             Column::make("Date", "created_at")
-                ->format(fn($value) => Carbon::parse($value)->format('Y-m-d')) // Format the date
+                ->format(fn($value) => \Carbon\Carbon::parse($value)->format('M d, Y'))
                 ->sortable()
-                ->searchable(),
+                ->searchable(function (Builder $query, $term) {
+                    $term = strtolower(trim($term));
+            
+                    $months = [
+                        'jan' => '01', 'january' => '01',
+                        'feb' => '02', 'february' => '02',
+                        'mar' => '03', 'march' => '03',
+                        'apr' => '04', 'april' => '04',
+                        'may' => '05',
+                        'jun' => '06', 'june' => '06',
+                        'jul' => '07', 'july' => '07',
+                        'aug' => '08', 'august' => '08',
+                        'sep' => '09', 'september' => '09',
+                        'oct' => '10', 'october' => '10',
+                        'nov' => '11', 'november' => '11',
+                        'dec' => '12', 'december' => '12',
+                    ];
+            
+                    if (array_key_exists($term, $months)) {
+                        $query->orWhereMonth('created_at', $months[$term]);
+                    }
+            
+                    // Optional: also allow basic string matching (if users type 2025 or 01)
+                    $query->orWhereDate('created_at', 'like', "%$term%");
+                }),
 
             // show doctor column if the user is a patient
             Column::make("Action")
@@ -73,35 +97,38 @@ class MedicalRecordTable extends DataTableComponent
         if ($user->role === 'patient') {
             array_splice($columns, count($columns) - 1, 0, [
                 Column::make("Doctor")
-                    ->label($doctorName) // Display full name
-                    ->sortable(fn($builder, $direction) => $builder->orderBy('last_name', $direction))
-                ->searchable(
-                    fn(Builder $query, $searchTerm) =>
-                    $query->orWhere('first_name', 'like', '%' . trim($searchTerm) . '%')
-                        ->orWhere('middle_name', 'like', '%' . trim($searchTerm) . '%')
-                        ->orWhere('last_name', 'like', '%' . trim($searchTerm) . '%')
-                ),
+                    ->label($doctorName)
+                    ->searchable(function (Builder $query, string $searchTerm) {
+                        $searchTerm = "%{$searchTerm}%";
+                        $query->orWhereHas('patient', function (Builder $q) use ($searchTerm) {
+                            $q->where('first_name', 'like', $searchTerm)
+                                ->orWhere('middle_name', 'like', $searchTerm)
+                                ->orWhere('last_name', 'like', $searchTerm);
+                        });
+                    }),
             ]);
         } else {
             array_splice($columns, count($columns) - 1, 0, [
                 Column::make("Patient")
                     ->label($patientName) // Display full name
-                    ->sortable(fn($builder, $direction) => $builder->orderBy('last_name', $direction))
-                ->searchable(
-                    fn(Builder $query, $searchTerm) =>
-                    $query->orWhere('first_name', 'like', '%' . trim($searchTerm) . '%')
-                        ->orWhere('middle_name', 'like', '%' . trim($searchTerm) . '%')
-                        ->orWhere('last_name', 'like', '%' . trim($searchTerm) . '%')
-                ),
+                    ->searchable(function (Builder $query, string $searchTerm) {
+                        $searchTerm = "%{$searchTerm}%";
+                        $query->orWhereHas('patient', function (Builder $q) use ($searchTerm) {
+                            $q->where('first_name', 'like', $searchTerm)
+                                ->orWhere('middle_name', 'like', $searchTerm)
+                                ->orWhere('last_name', 'like', $searchTerm);
+                        });
+                    }),
                 Column::make("Doctor")
-                    ->label($doctorName) // Display full name
-                    ->sortable(fn($builder, $direction) => $builder->orderBy('last_name', $direction))
-                ->searchable(
-                    fn(Builder $query, $searchTerm) =>
-                    $query->orWhere('first_name', 'like', '%' . trim($searchTerm) . '%')
-                        ->orWhere('middle_name', 'like', '%' . trim($searchTerm) . '%')
-                        ->orWhere('last_name', 'like', '%' . trim($searchTerm) . '%')
-                ),
+                    ->label($doctorName)
+                    ->searchable(function (Builder $query, string $searchTerm) {
+                        $searchTerm = "%{$searchTerm}%";
+                        $query->orWhereHas('doctor', function (Builder $q) use ($searchTerm) {
+                            $q->where('first_name', 'like', $searchTerm)
+                                ->orWhere('middle_name', 'like', $searchTerm)
+                                ->orWhere('last_name', 'like', $searchTerm);
+                        });
+                    }),
             ]);
         }
 
