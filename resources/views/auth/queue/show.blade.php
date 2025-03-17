@@ -34,81 +34,120 @@
     </div>
 
     <div class="grid grid-cols-1 gap-4">
-
-        <!-- Right Column -->
         <div class="space-y-4">
-
-            <!-- Tabs -->
-            <div class="flex flex-row justify-between">
-                <div class="grid grid-cols-1 sm:hidden">
-                    <!-- Use an "onChange" listener to redirect the user to the selected tab URL. -->
-                    <select aria-label="Select a tab" class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-2 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600">
-                        <option>My Account</option>
-                        <option>Company</option>
-                        <option selected>Team Members</option>
-                        <option>Billing</option>
-                    </select>
-                    <svg class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end fill-gray-500" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
-                        <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
-                    </svg>
+            <div class="grid grid-cols-1 lg:grid-cols-3 bg-white shadow rounded-lg p-6">
+                <div class="border border-gray-400 divide-y divide-gray-400">
+                    <div class="bg-gray-200 px-4 py-2">
+                        <h3 class="text-sm font-semibold text-gray-800">Patient</h3>
+                    </div>
+                    <div class=" px-4 py-2">
+                        <div class="flex flex-col">
+                            <label class="text-sm">Name</label>
+                            <span id="p-user_id" class="text-sm font-semibold">{{ $queue?->patient ? trim("{$queue->patient->first_name} {$queue->patient->middle_name} {$queue->patient->last_name}") : '' }}</span>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="hidden sm:block">
-                    <nav class="flex space-x-4" aria-label="Tabs">
-                        <!-- Current: "bg-indigo-100 text-indigo-700", Default: "text-gray-500 hover:text-gray-700" -->
-                        <a href="?tab=profile" data-target="profile" class="tab-link rounded-md bg-primary px-3 py-2 text-sm font-medium text-white" aria-current="page">Profile</a>
-                        <a href="?tab=history" data-target="history" class="tab-link rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">History</a>
-                        <a href="?tab=doctor" data-target="doctor" class="tab-link rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Doctor</a>
-                        <a href="?tab=assessment" data-target="assessment" class="tab-link rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Assessment</a>
-                        <a href="?tab=consultation" data-target="consultation" class="tab-link rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Consultation</a>
-                    </nav>
+                <div class="!border-l-0 border border-gray-400 divide-y divide-gray-400">
+                    <div class="bg-gray-200 px-4 py-2">
+                        <h3 class="text-sm font-semibold text-gray-800">Doctor</h3>
+                    </div>
+                    <div class="px-4 py-2">
+                        <div class="flex flex-col">
+                            <label class="text-sm">Name</label>
+                            <span id="p-user_id" class="text-sm font-semibold">{{ $queue?->doctor ? trim("Dr. {$queue->doctor->first_name} {$queue->doctor->middle_name} {$queue->doctor->last_name}") : 'Not yet selected' }}</span>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="hidden sm:flex flex-row gap-6">
-                    <div class="flex flex-row">
-                        <span class="rounded-md px-3 py-2 text-sm font-medium text-gray-500">Status</span>
-
-                        @php
-                        $statusClass = match ($queue->queue_status) {
-                        'Waiting' => 'bg-yellow-500 text-white',
-                        'Assessment Done' => 'bg-blue-500 text-white',
-                        'Consulting' => 'bg-orange-500 text-white',
-                        'Completed' => 'bg-green-500 text-white',
-                        'Cancelled' => 'bg-red-500 text-white',
-                        default => 'text-gray-500',
-                        };
-                        @endphp
-                        <span class="rounded-md px-3 py-2 text-sm font-medium {{ $statusClass }}">
-                            {{ $queue->queue_status }}
-                        </span>
+                <div class="!border-l-0 border border-gray-400 divide-y divide-gray-400">
+                    <div class="bg-gray-200 px-4 py-2">
+                        <h3 class="text-sm font-semibold text-gray-800">OPD</h3>
+                    </div>
+                    <div class="px-4 py-2">
+                        <div class="flex flex-col">
+                            <label class="text-sm">Name</label>
+                            <span id="p-user_id" class="text-sm font-semibold">{{ $queue?->opd ? trim("{$queue->opd->first_name} {$queue->opd->middle_name} {$queue->opd->last_name}") : 'Not yet selected' }}</span>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Profile Tab -->
-            <div id="profile" class="tab-content space-y-4">
-                @include('auth.queue.tab-profile')
+
+        <!-- Tabs -->
+        <div class="flex flex-row justify-between">
+            <!-- Mobile Tab Select -->
+            <div class="grid grid-cols-1 sm:hidden relative">
+                <select id="mobile-tab-select" aria-label="Select a tab"
+                    class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-2 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-primary">
+                    <option value="profile">Profile</option>
+                    <option value="history">History</option>
+                    @if ($queue->doctor_selected_at === null)
+                    <option value="doctor">Doctor</option>
+                    @endif
+                    <option value="assessment">Assessment</option>
+                    <option value="consultation">Consultation</option>
+                </select>
             </div>
 
-            <!-- Patient Medical History Tab -->
-            <div id="history" class="tab-content hidden">
-                @include('auth.queue.tab-history')
+            <div class="hidden sm:block">
+                <nav class="flex space-x-4" aria-label="Tabs">
+                    <!-- Current: "bg-indigo-100 text-indigo-700", Default: "text-gray-500 hover:text-gray-700" -->
+                    <a href="?tab=profile" data-target="profile" class="tab-link rounded-md bg-primary px-3 py-2 text-sm font-medium text-white" aria-current="page">Profile</a>
+                    <a href="?tab=history" data-target="history" class="tab-link rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">History</a>
+                    @if ($queue->doctor_selected_at === null)
+                    <a href="?tab=doctor" data-target="doctor" class="tab-link rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Doctor</a>
+                    @endif
+                    <a href="?tab=assessment" data-target="assessment" class="tab-link rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Assessment</a>
+                    <a href="?tab=consultation" data-target="consultation" class="tab-link rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Consultation</a>
+                </nav>
             </div>
 
-            <!-- Doctor Selection Tab -->
-            <div id="doctor" class="tab-content hidden">
-                @include('auth.queue.tab-doctor')
-            </div>
 
-            <!-- Assessment Tab -->
-            <div id="assessment" class="tab-content hidden">
-                @include('auth.queue.tab-assessment')
+            <div class="flex flex-row">
+                <span class="rounded-md px-3 py-2 text-sm font-medium text-gray-500">Status</span>
+                @php
+                $statusClass = match ($queue->queue_status) {
+                'Awaiting Doctor Selection' => 'bg-yellow-500 text-white',
+                'Awaiting Assessment' => 'bg-amber-400 text-white',
+                'Assessing' => 'bg-blue-500 text-white',
+                'Awaiting Consultation' => 'bg-cyan-500 text-white',
+                'Consulting' => 'bg-orange-500 text-white',
+                'Completed' => 'bg-green-500 text-white',
+                'Cancelled' => 'bg-red-500 text-white',
+                default => 'text-gray-500',
+                };
+                @endphp
+                <span class="rounded-md px-3 py-2 text-sm font-medium {{ $statusClass }}">
+                    {{ $queue->queue_status }}
+                </span>
             </div>
+        </div>
 
-            <!-- Consultation Tab -->
-            <div id="consultation" class="tab-content hidden">
-                @include('auth.queue.tab-consultation')
-            </div>
+        <!-- Profile Tab -->
+        <div id="profile" class="tab-content space-y-4">
+            @include('auth.queue.tab-profile')
+        </div>
+
+        <!-- Patient Medical History Tab -->
+        <div id="history" class="tab-content hidden">
+            @include('auth.queue.tab-history')
+        </div>
+
+        <!-- Doctor Selection Tab -->
+        <div id="doctor" class="tab-content hidden">
+            @include('auth.queue.tab-doctor')
+        </div>
+
+        <!-- Assessment Tab -->
+        <div id="assessment" class="tab-content hidden">
+            @include('auth.queue.tab-assessment')
+        </div>
+
+        <!-- Consultation Tab -->
+        <div id="consultation" class="tab-content hidden">
+            @include('auth.queue.tab-consultation')
         </div>
     </div>
 
@@ -129,8 +168,9 @@
                     },
                 });
 
+                const result = await response.json();
+
                 if (response.ok) {
-                    const result = await response.json();
                     showToast('toast-success', result.message);
                     console.log(response.status, result.message, result.queue);
                     if (result.isConsultationDone) {
@@ -197,4 +237,79 @@
         const initialTab = urlParams.get("tab") || tabLinks[0].getAttribute("data-target"); // Default to the first tab
         showTab(initialTab);
     </script>
+
+    <!-- JavaScript to handle tabs -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabLinks = document.querySelectorAll('.tab-link');
+            const tabContents = document.querySelectorAll('.tab-content');
+            const mobileSelect = document.getElementById('mobile-tab-select');
+
+            function showTab(target) {
+                // Hide all tab contents
+                tabContents.forEach(tab => tab.classList.add('hidden'));
+                // Remove active class from all desktop links
+                tabLinks.forEach(link => link.classList.remove('bg-primary', 'text-white'));
+                tabLinks.forEach(link => link.classList.add('text-gray-500'));
+
+                // Show selected tab content
+                const selectedTab = document.getElementById(target);
+                if (selectedTab) {
+                    selectedTab.classList.remove('hidden');
+                }
+
+                // Highlight active tab in desktop view
+                tabLinks.forEach(link => {
+                    if (link.dataset.target === target) {
+                        link.classList.add('bg-primary', 'text-white');
+                        link.classList.remove('text-gray-500');
+                    }
+                });
+
+                // Set mobile select to correct value
+                if (mobileSelect) {
+                    mobileSelect.value = target;
+                }
+            }
+
+            // Desktop tab clicks
+            tabLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    const target = link.getAttribute('data-target');
+                    showTab(target);
+                });
+            });
+
+            // Mobile select change
+            if (mobileSelect) {
+                mobileSelect.addEventListener('change', (e) => {
+                    showTab(e.target.value);
+                });
+            }
+
+            // On page load, optionally set initial tab (e.g., via query string ?tab=assessment)
+            const urlParams = new URLSearchParams(window.location.search);
+            const initialTab = urlParams.get('tab') || 'profile';
+            showTab(initialTab);
+        });
+    </script>
+
+    <script>
+        const mobileTabSelect = document.getElementById("mobile-tab-select");
+
+        // Listen to mobile select change
+        if (mobileTabSelect) {
+            mobileTabSelect.addEventListener("change", (e) => {
+                const selectedTab = e.target.value;
+                showTab(selectedTab);
+            });
+
+            // Pre-select the correct value on page load
+            const currentTab = new URLSearchParams(window.location.search).get("tab");
+            if (currentTab) {
+                mobileTabSelect.value = currentTab;
+            }
+        }
+    </script>
+
 </x-layout>
