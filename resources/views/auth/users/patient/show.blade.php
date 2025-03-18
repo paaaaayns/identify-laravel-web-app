@@ -56,6 +56,8 @@
                 <p class="text-sm text-gray-500">{{ $profile->user_id }}</p>
             </div>
 
+
+            @role(['admin', 'opd'])
             <div class="grid grid-cols-1 text-center bg-white shadow rounded-lg gap-y-6 p-6 self-start">
 
                 <form method="POST" action="{{ route('queue.store') }}" id="SendQueueForm" class="grid grid-cols-1 gap-y-6">
@@ -74,6 +76,7 @@
                     </x-forms.primary-button>
                 </form>
             </div>
+            @endrole
         </div>
 
         <!-- Right Column -->

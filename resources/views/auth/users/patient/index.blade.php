@@ -35,6 +35,8 @@
 
     <div class="flex flex-col space-y-4">
 
+
+        @role(['admin', 'opd'])
         <form
             id="SearchForm"
             method="POST"
@@ -69,6 +71,7 @@
                 Search Iris
             </x-forms.primary-button>
         </form>
+        @endrole
 
         <div>
             <livewire:patient-table />
