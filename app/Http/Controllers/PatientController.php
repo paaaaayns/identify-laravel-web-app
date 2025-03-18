@@ -203,11 +203,11 @@ class PatientController extends Controller
     public function show(string $ulid)
     {
         // Fetch the user based on the ulid
-        $profile = Patient::where('ulid', $ulid)->firstOrFail();
+        $patient = Patient::where('ulid', $ulid)->firstOrFail();
         // dd($profile->ulid);
 
         return view('auth.users.patient.show', [
-            'profile' => $profile,
+            'patient' => $patient,
         ]);
     }
 

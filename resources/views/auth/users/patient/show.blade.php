@@ -34,7 +34,7 @@
                         <svg class="size-5 shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
                             <path fill-rule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
                         </svg>
-                        <a href="#" class="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700" aria-current="page">{{ $profile->user_id }}</a>
+                        <a href="#" class="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700" aria-current="page">{{ $patient->user_id }}</a>
                     </div>
                 </li>
             </ol>
@@ -52,8 +52,8 @@
                     </svg>
                 </div>
                 <!-- User Info -->
-                <h2 class="text-lg font-semibold text-gray-800">{{ $profile->last_name }}, {{ $profile->first_name }} {{ $profile->middle_name ?? '' }}</h2>
-                <p class="text-sm text-gray-500">{{ $profile->user_id }}</p>
+                <h2 class="text-lg font-semibold text-gray-800">{{ $patient->last_name }}, {{ $patient->first_name }} {{ $patient->middle_name ?? '' }}</h2>
+                <p class="text-sm text-gray-500">{{ $patient->user_id }}</p>
             </div>
 
 
@@ -67,7 +67,7 @@
                     @else
                     <input type="hidden" name="opd_id" value="{{ $user->user_id }}">
                     @endrole
-                    <input type="hidden" name="patient_id" value="{{ $profile->user_id }}">
+                    <input type="hidden" name="patient_id" value="{{ $patient->user_id }}">
                     <x-forms.primary-button
                         type="button"
                         class="w-full"
@@ -81,391 +81,35 @@
 
         <!-- Right Column -->
         <div class="space-y-4 md:col-span-3">
-            <!-- Personal Information -->
-            <div class="bg-white shadow rounded-lg p-6">
-                <h3 class="text-xl font-semibold text-gray-800">Personal Information</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-12 gap-x-6 gap-y-6 mt-6">
 
-                    <x-forms.field-container class="sm:col-span-4">
-                        <x-forms.label
-                            for="last_name">
-                            Last Name
-                        </x-forms.label>
+            <!-- Tabs -->
+            <div class="flex flex-row justify-between">
+                <!-- Mobile Tab Select -->
+                <div class="grid grid-cols-1 sm:hidden relative">
+                    <select id="mobile-tab-select" aria-label="Select a tab"
+                        class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-2 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-primary">
+                        <option value="profile">Profile</option>
+                        <option value="history">History</option>
+                    </select>
+                </div>
 
-                        @if (true)
-                        <x-forms.input
-                            type="text"
-                            id="last_name"
-                            name="last_name"
-                            :value="$profile->last_name"
-                            autocomplete="off"
-                            disabled />
-                        <x-forms.error name="last_name" />
-                        @endif
-                    </x-forms.field-container>
-
-                    <x-forms.field-container class="sm:col-span-4">
-                        <x-forms.label
-                            for="first_name">
-                            First Name
-                        </x-forms.label>
-
-                        @if (true)
-                        <x-forms.input
-                            type="text"
-                            id="first_name"
-                            name="first_name"
-                            :value="$profile->first_name"
-                            autocomplete="off"
-                            disabled />
-                        <x-forms.error name="first_name" />
-                        @endif
-                    </x-forms.field-container>
-
-                    <x-forms.field-container class="sm:col-span-4">
-                        <x-forms.label
-                            for="middle_name">
-                            Middle Name
-                        </x-forms.label>
-
-                        @if (true)
-                        <x-forms.input
-                            type="text"
-                            id="middle_name"
-                            name="middle_name"
-                            :value="$profile->middle_name ?? ''"
-                            autocomplete="off"
-                            disabled />
-                        <x-forms.error name="middle_name" />
-                        @endif
-                    </x-forms.field-container>
-
-                    <x-forms.field-container class="sm:col-span-6">
-                        <x-forms.label
-                            for="birthdate">
-                            Birthdate
-                        </x-forms.label>
-
-                        @if (true)
-                        <x-forms.input
-                            type="text"
-                            id="birthdate"
-                            name="birthdate"
-                            :value="$profile->birthdate"
-                            autocomplete="off"
-                            oninput="restrictLetterInput(this)"
-                            datepicker
-                            datepicker-autohide
-                            datepicker-format="yyyy-mm-dd"
-                            disabled />
-                        @endif
-                    </x-forms.field-container>
-
-                    <x-forms.field-container class="sm:col-span-6">
-                        <x-forms.label
-                            for="sex">
-                            Sex
-                        </x-forms.label>
-
-                        @if (true)
-                        <x-forms.select
-                            id="sex"
-                            name="sex"
-                            disabled>
-                            <option disabled {{ $profile->sex === null ? 'selected' : '' }} value="">Select</option>
-                            <option value="Male" {{ $profile->sex === 'Male' ? 'selected' : '' }}>Male</option>
-                            <option value="Female" {{ $profile->sex === 'Female' ? 'selected' : '' }}>Female</option>
-                        </x-forms.select>
-                        <x-forms.error name="sex" />
-                        @endif
-                    </x-forms.field-container>
-
-                    <x-forms.field-container class="sm:col-span-4">
-                        <x-forms.label
-                            for="religion">
-                            Religion
-                        </x-forms.label>
-
-                        @if (true)
-                        <x-forms.input
-                            type="text"
-                            id="religion"
-                            name="religion"
-                            :value="$profile->religion"
-                            autocomplete="off"
-                            disabled />
-                        <x-forms.error name="religion" />
-                        @endif
-                    </x-forms.field-container>
-
-                    <x-forms.field-container class="sm:col-span-4">
-                        <x-forms.label
-                            for="civil_status">
-                            Civil Status
-                        </x-forms.label>
-
-                        @if (true)
-                        <x-forms.select
-                            id="civil_status"
-                            name="civil_status"
-                            disabled>
-                            <option disabled {{ $profile->civil_status === null ? 'selected' : '' }} value="">Select</option>
-                            <option value="Single" {{ $profile->civil_status === 'Single' ? 'selected' : '' }}>Single</option>
-                            <option value="Married" {{ $profile->civil_status === 'Married' ? 'selected' : '' }}>Married</option>
-                            <option value="Divorced" {{ $profile->civil_status === 'Divorced' ? 'selected' : '' }}>Divorced</option>
-                        </x-forms.select>
-                        <x-forms.error name="civil_status" />
-                        @endif
-                    </x-forms.field-container>
-
-                    <x-forms.field-container class="sm:col-span-4">
-                        <x-forms.label
-                            for="citizenship">
-                            Citizenship
-                        </x-forms.label>
-
-                        @if (true)
-                        <x-forms.input
-                            type="text"
-                            id="citizenship"
-                            name="citizenship"
-                            :value="$profile->citizenship"
-                            autocomplete="off"
-                            disabled />
-                        <x-forms.error name="citizenship" />
-                        @endif
-                    </x-forms.field-container>
-
-                    <x-forms.field-container class="sm:col-span-4">
-                        <x-forms.label
-                            for="healthcard_number">
-                            Health Card No.
-                        </x-forms.label>
-
-                        @if (true)
-                        <x-forms.input
-                            type="text"
-                            id="healthcard_number"
-                            name="healthcard_number"
-                            :value="$profile->healthcard_number ?? 'N/A'"
-                            autocomplete="off"
-                            disabled />
-                        <x-forms.error name="healthcard_number" />
-                        @endif
-                    </x-forms.field-container>
+                <div class="hidden sm:block">
+                    <nav class="flex space-x-4" aria-label="Tabs">
+                        <!-- Current: "bg-indigo-100 text-indigo-700", Default: "text-gray-500 hover:text-gray-700" -->
+                        <a href="?tab=profile" data-target="profile" class="tab-link rounded-md bg-primary px-3 py-2 text-sm font-medium text-white" aria-current="page">Profile</a>
+                        <a href="?tab=history" data-target="history" class="tab-link rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">History</a>
+                    </nav>
                 </div>
             </div>
 
-            <!-- Contact Information -->
-            <div class="bg-white shadow rounded-lg p-6">
-                <h3 class="text-xl font-semibold text-gray-800">Contact Information</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-12 gap-x-6 gap-y-6 mt-6">
-
-                    <x-forms.field-container class="sm:col-span-12">
-                        <x-forms.label
-                            for="address">
-                            Complete Address
-                        </x-forms.label>
-
-                        @if (true)
-                        <x-forms.input
-                            type="text"
-                            id="address"
-                            name="address"
-                            :value="$profile->address"
-                            autocomplete="off"
-                            disabled />
-                        <x-forms.error name="address" />
-                        @endif
-                    </x-forms.field-container>
-
-                    <x-forms.field-container class="sm:col-span-6">
-                        <x-forms.label
-                            for="email">
-                            Email
-                        </x-forms.label>
-
-                        @if (true)
-                        <x-forms.input
-                            type="text"
-                            id="email"
-                            name="email"
-                            :value="$profile->email"
-                            autocomplete="off"
-                            disabled />
-                        <x-forms.error name="email" />
-                        @endif
-                    </x-forms.field-container>
-
-                    <x-forms.field-container class="sm:col-span-6">
-                        <x-forms.label
-                            for="contact_number">
-                            Contact Number
-                        </x-forms.label>
-
-                        @if (true)
-                        <x-forms.input
-                            type="text"
-                            id="contact_number"
-                            name="contact_number"
-                            :value="$profile->contact_number"
-                            autocomplete="off"
-                            disabled />
-                        <x-forms.error name="contact_number" />
-                        @endif
-                    </x-forms.field-container>
-
-                </div>
+            <!-- Profile Tab -->
+            <div id="profile" class="tab-content space-y-4">
+                @include('auth.users.patient.tab-profile')
             </div>
 
-            <!-- Emergency Contact Information -->
-            <div class="bg-white shadow rounded-lg p-6">
-                <h3 class="text-xl font-semibold text-gray-800">Emergency Contact Information</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-12 gap-x-6 gap-y-6 mt-6">
-
-                    <x-forms.field-container class="sm:col-span-4">
-                        <x-forms.label
-                            for="emergency_contact1_name">
-                            Name
-                        </x-forms.label>
-
-                        @if (true)
-                        <x-forms.input
-                            type="text"
-                            id="emergency_contact1_name"
-                            name="emergency_contact1_name"
-                            :value="$profile->emergency_contact1_name"
-                            autocomplete="off"
-                            disabled />
-                        <x-forms.error name="emergency_contact1_name" />
-                        @endif
-                    </x-forms.field-container>
-
-                    <x-forms.field-container class="sm:col-span-4">
-                        <x-forms.label
-                            for="emergency_contact1_relationship">
-                            Relationship
-                        </x-forms.label>
-
-                        @if (true)
-                        <x-forms.input
-                            type="text"
-                            id="emergency_contact1_relationship"
-                            name="emergency_contact1_relationship"
-                            :value="$profile->emergency_contact1_relationship"
-                            autocomplete="off"
-                            disabled />
-                        <x-forms.error name="emergency_contact1_relationship" />
-                        @endif
-                    </x-forms.field-container>
-
-                    <x-forms.field-container class="sm:col-span-4">
-                        <x-forms.label
-                            for="emergency_contact1_number">
-                            Contact Number
-                        </x-forms.label>
-
-                        @if (true)
-                        <x-forms.input
-                            type="text"
-                            id="emergency_contact1_number"
-                            name="emergency_contact1_number"
-                            :value="$profile->emergency_contact1_number"
-                            autocomplete="off"
-                            disabled />
-                        <x-forms.error name="emergency_contact1_number" />
-                        @endif
-                    </x-forms.field-container>
-
-                    <x-forms.field-container class="sm:col-span-4">
-                        <x-forms.label
-                            for="emergency_contact2_name">
-                            Name
-                        </x-forms.label>
-
-                        @if (true)
-                        <x-forms.input
-                            type="text"
-                            id="emergency_contact2_name"
-                            name="emergency_contact2_name"
-                            :value="$profile->emergency_contact2_name"
-                            autocomplete="off"
-                            disabled />
-                        <x-forms.error name="emergency_contact2_name" />
-                        @endif
-                    </x-forms.field-container>
-
-                    <x-forms.field-container class="sm:col-span-4">
-                        <x-forms.label
-                            for="emergency_contact2_relationship">
-                            Relationship
-                        </x-forms.label>
-
-                        @if (true)
-                        <x-forms.input
-                            type="text"
-                            id="emergency_contact2_relationship"
-                            name="emergency_contact2_relationship"
-                            :value="$profile->emergency_contact2_relationship"
-                            autocomplete="off"
-                            disabled />
-                        <x-forms.error name="emergency_contact2_relationship" />
-                        @endif
-                    </x-forms.field-container>
-
-                    <x-forms.field-container class="sm:col-span-4">
-                        <x-forms.label
-                            for="emergency_contact2_number">
-                            Contact Number
-                        </x-forms.label>
-
-                        @if (true)
-                        <x-forms.input
-                            type="text"
-                            id="emergency_contact2_number"
-                            name="emergency_contact2_number"
-                            :value="$profile->emergency_contact2_number"
-                            autocomplete="off"
-                            disabled />
-                        <x-forms.error name="emergency_contact2_number" />
-                        @endif
-                    </x-forms.field-container>
-
-                </div>
-            </div>
-
-            <!-- Biometric Information -->
-            <div class="bg-white shadow rounded-lg p-6">
-                <h3 class="text-xl font-semibold text-gray-800">Biometric Information</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-12 gap-x-6 gap-y-6 mt-6">
-
-                    <x-forms.field-container class="sm:col-span-6 grid place-items-center">
-                        <x-forms.label for="right_iris">
-                            Right Iris
-                        </x-forms.label>
-
-                        <div class="w-80 h-80 rounded-lg shadow overflow-hidden">
-                            <img
-                                id="right_iris"
-                                alt="Right Iris"
-                                class="w-full h-full object-cover">
-                        </div>
-                    </x-forms.field-container>
-
-                    <x-forms.field-container class="sm:col-span-6 grid place-items-center">
-                        <x-forms.label for="left_iris">
-                            Left Iris
-                        </x-forms.label>
-
-                        <div class="w-80 h-80 rounded-lg shadow overflow-hidden">
-                            <img
-                                id="left_iris"
-                                alt="Left Iris"
-                                class="w-full h-full object-cover">
-                        </div>
-                    </x-forms.field-container>
-
-                </div>
+            <!-- Patient Medical History Tab -->
+            <div id="history" class="tab-content hidden">
+                @include('auth.users.patient.tab-history')
             </div>
         </div>
     </div>
@@ -474,8 +118,8 @@
     <script>
         // on page load
         window.addEventListener('DOMContentLoaded', (event) => {
-            document.getElementById('left_iris').src = "{{ Storage::url('patients/' . $profile->ulid . '/biometrics/left_iris.bmp') }}";
-            document.getElementById('right_iris').src = "{{ Storage::url('patients/' . $profile->ulid . '/biometrics/right_iris.bmp') }}";
+            document.getElementById('left_iris').src = "{{ Storage::url('patients/' . $patient->ulid . '/biometrics/left_iris.bmp') }}";
+            document.getElementById('right_iris').src = "{{ Storage::url('patients/' . $patient->ulid . '/biometrics/right_iris.bmp') }}";
         });
     </script>
 
@@ -488,7 +132,7 @@
 
             // const isVerified = await promptForPassword();
             // if (isVerified) {
-            //     console.log("Sending to queue..." + '{{ $profile->user_id }}');
+            //     console.log("Sending to queue..." + '{{ $patient->user_id }}');
 
             //     const queue = await createQueue();
             //     if (queue) {
@@ -538,6 +182,130 @@
                 showToast('toast-error', 'An error occurred while processing the request.');
                 console.error(response.status, error);
                 return null;
+            }
+        }
+    </script>
+
+
+
+    <script>
+        const tabLinks = document.querySelectorAll(".tab-link");
+        const tabContents = document.querySelectorAll(".tab-content");
+
+        function showTab(targetId) {
+            // Remove active state from all tabs
+            tabLinks.forEach((link) => {
+                link.classList.remove("bg-primary", "text-white");
+                link.classList.add("text-gray-500", "hover:text-gray-700");
+            });
+
+            // Hide all tab contents
+            tabContents.forEach((content) => content.classList.add("hidden"));
+
+            // Activate the correct tab and show its content
+            const activeTab = document.querySelector(`[data-target="${targetId}"]`);
+            const targetContent = document.getElementById(targetId);
+
+            if (activeTab && targetContent) {
+                activeTab.classList.add("bg-primary", "text-white");
+                activeTab.classList.remove("text-gray-500", "hover:text-gray-700");
+                targetContent.classList.remove("hidden");
+
+                // Update the URL to include the active tab
+                // history.pushState(null, "", `?tab=${targetId}`);
+                // Preserve existing query parameters
+                const urlParams = new URLSearchParams(window.location.search);
+                urlParams.set("tab", targetId); // Update tab
+
+                history.pushState(null, "", `?${urlParams.toString()}`);
+            }
+        }
+
+        // Add click event listeners to all tabs
+        tabLinks.forEach((tab) => {
+            tab.addEventListener("click", (e) => {
+                e.preventDefault();
+                const target = tab.getAttribute("data-target");
+                showTab(target);
+            });
+        });
+
+        // Handle initial load or reload
+        const urlParams = new URLSearchParams(window.location.search);
+        const initialTab = urlParams.get("tab") || tabLinks[0].getAttribute("data-target"); // Default to the first tab
+        showTab(initialTab);
+    </script>
+
+    <!-- JavaScript to handle tabs -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabLinks = document.querySelectorAll('.tab-link');
+            const tabContents = document.querySelectorAll('.tab-content');
+            const mobileSelect = document.getElementById('mobile-tab-select');
+
+            function showTab(target) {
+                // Hide all tab contents
+                tabContents.forEach(tab => tab.classList.add('hidden'));
+                // Remove active class from all desktop links
+                tabLinks.forEach(link => link.classList.remove('bg-primary', 'text-white'));
+                tabLinks.forEach(link => link.classList.add('text-gray-500'));
+
+                // Show selected tab content
+                const selectedTab = document.getElementById(target);
+                if (selectedTab) {
+                    selectedTab.classList.remove('hidden');
+                }
+
+                // Highlight active tab in desktop view
+                tabLinks.forEach(link => {
+                    if (link.dataset.target === target) {
+                        link.classList.add('bg-primary', 'text-white');
+                        link.classList.remove('text-gray-500');
+                    }
+                });
+
+                // Set mobile select to correct value
+                if (mobileSelect) {
+                    mobileSelect.value = target;
+                }
+            }
+
+            // Desktop tab clicks
+            tabLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    const target = link.getAttribute('data-target');
+                    showTab(target);
+                });
+            });
+
+            // Mobile select change
+            if (mobileSelect) {
+                mobileSelect.addEventListener('change', (e) => {
+                    showTab(e.target.value);
+                });
+            }
+
+            // On page load, optionally set initial tab (e.g., via query string ?tab=assessment)
+            const urlParams = new URLSearchParams(window.location.search);
+            const initialTab = urlParams.get('tab') || 'profile';
+            showTab(initialTab);
+        });
+    </script>
+
+    <script>
+        const mobileTabSelect = document.getElementById("mobile-tab-select");
+
+        // Listen to mobile select change
+        if (mobileTabSelect) {
+            mobileTabSelect.addEventListener("change", (e) => {
+                const selectedTab = e.target.value;
+                showTab(selectedTab);
+            });
+
+            // Pre-select the correct value on page load
+            const currentTab = new URLSearchParams(window.location.search).get("tab");
+            if (currentTab) {
+                mobileTabSelect.value = currentTab;
             }
         }
     </script>
