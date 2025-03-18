@@ -19,9 +19,12 @@ class ValidIrisImage implements ValidationRule
     {
         $attribute = str_replace('_', ' ', $attribute);
 
-        //
+        // Check if the value is a file
         if (!$value || !is_file($value->getRealPath())) {
             $fail("The {$attribute} is not a valid image file.");
+            Log::info("ValidIrisImage@validate: {$attribute} is not a valid image file.", [
+                'value' => $value->getRealPath(),
+            ]);
             return;
         }
 
@@ -29,11 +32,18 @@ class ValidIrisImage implements ValidationRule
         $mimeType = $value->getMimeType();
         if (!str_starts_with($mimeType, 'image/')) {
             $fail("The {$attribute} must be an image file.");
+            Log::info("ValidIrisImage@validate: {$attribute} is not an image file.", [
+                'mimeType' => $mimeType,
+            ]);
             return;
         }
 
+        // Check if the image is a BMP image
         if ($mimeType !== 'image/bmp') {
             $fail("The {$attribute} must be a BMP image.");
+            Log::info("ValidIrisImage@validate: {$attribute} is not a BMP image.", [
+                'mimeType' => $mimeType,
+            ]);
             return;
         }
 
