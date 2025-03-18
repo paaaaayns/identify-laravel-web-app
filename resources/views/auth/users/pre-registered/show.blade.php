@@ -429,7 +429,7 @@
                             type="file"
                             id="right_iris"
                             name="right_iris"
-                            accept="image/*"
+                            accept="image/bmp"
                             class="hidden"
                             onchange="previewIris(event, 'right_iris', 'right_iris_preview', 'right_iris_text')">
                         <x-forms.error name="right_iris" />
