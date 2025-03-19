@@ -45,7 +45,7 @@ class PatientObserver
             ]);
 
             // Send email verification notification
-            // event(new Registered($user));
+            event(new Registered($user));
         } catch (\Exception $e) {
             Log::error('PatientObserver@created: Error creating User for patient: ' . $e->getMessage(), [
                 'patient_ulid' => $patient->ulid,
