@@ -86,6 +86,7 @@
                     @if ($queue->doctor_selected_at === null)
                     <option value="doctor">Doctor</option>
                     @endif
+                    <option value="files">Files</option>
                     <option value="assessment">Assessment</option>
                     <option value="consultation">Consultation</option>
                 </select>
@@ -99,6 +100,7 @@
                     @if ($queue->doctor_selected_at === null)
                     <a href="?tab=doctor" data-target="doctor" class="tab-link rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Doctor</a>
                     @endif
+                    <a href="?tab=files" data-target="files" class="tab-link rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Files</a>
                     <a href="?tab=assessment" data-target="assessment" class="tab-link rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Assessment</a>
                     <a href="?tab=consultation" data-target="consultation" class="tab-link rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700">Consultation</a>
                 </nav>
@@ -138,6 +140,11 @@
         <!-- Doctor Selection Tab -->
         <div id="doctor" class="tab-content hidden">
             @include('auth.queue.tab-doctor')
+        </div>
+        
+        <!-- File Upload Tab -->
+        <div id="files" class="tab-content hidden">
+            @include('auth.queue.tab-files')
         </div>
 
         <!-- Assessment Tab -->
