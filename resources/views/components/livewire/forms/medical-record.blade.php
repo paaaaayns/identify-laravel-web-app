@@ -181,7 +181,6 @@
                 <div class="flex justify-between items-center">
                     <span class="text-sm font-semibold">{{ basename($file) }}</span>
                     <div class="space-x-2">
-                        <a href="{{ Storage::url($file) }}" target="_blank" class="text-primary text-sm">View</a>
                         <a href="{{ Storage::url($file) }}" download class="text-primary text-sm">Download</a>
                     </div>
                 </div>
