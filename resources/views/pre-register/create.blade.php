@@ -559,7 +559,7 @@
                 sex: "Male",
                 religion: "Catholic",
                 civil_status: "Single",
-                citizenship: "Male",
+                citizenship: "Filipino",
 
                 address: "4527 Colonial Drive High Hill Texas",
                 email: "john.doe@gmail.com",
