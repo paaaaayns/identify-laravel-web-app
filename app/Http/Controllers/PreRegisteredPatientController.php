@@ -115,7 +115,19 @@ class PreRegisteredPatientController extends Controller
             // Use regexify to generate an 8-character alphanumeric code (uppercase letters and numbers)
             $code = $faker->regexify('[A-Z0-9]{8}');
         } while (PreRegisteredPatient::where('pre_registration_code', $code)->exists()); // Ensure uniqueness by checking if the pre_registration_code already exists
-        // dd($code);
+
+        $fieldsToCapitalize = [
+            'first_name', 'middle_name', 'last_name', 'religion',
+            'citizenship', 'address',
+            'emergency_contact1_name', 'emergency_contact1_relationship',
+            'emergency_contact2_name', 'emergency_contact2_relationship',
+        ];
+        foreach ($fieldsToCapitalize as $field) {
+            if (isset($data[$field])) {
+                $data[$field] = ucwords(strtolower($data[$field]));
+            }
+        }
+        $data['email'] = strtolower($data['email']);
 
         $user = new PreRegisteredPatient();
         $user->fill($data);

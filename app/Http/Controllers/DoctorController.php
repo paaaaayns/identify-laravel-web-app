@@ -98,6 +98,18 @@ class DoctorController extends Controller
         $response = $this->validateStoreRequest($request)->getData(true); // Use 'true' to get an associative array
         $data = $response['data']; // Access the 'data' key from the array
 
+        
+        $fieldsToCapitalize = [
+            'first_name', 'middle_name', 'last_name', 'religion',
+            'citizenship', 'address', 'type',
+        ];
+        foreach ($fieldsToCapitalize as $field) {
+            if (isset($data[$field])) {
+                $data[$field] = ucwords(strtolower($data[$field]));
+            }
+        }
+        $data['email'] = strtolower($data['email']);
+
         $user = new Doctor();
         $user->fill($data);
         $user->save();
