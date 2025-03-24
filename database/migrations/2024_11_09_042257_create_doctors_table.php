@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('birthdate');
             $table->string('sex');
-            $table->string('religion')->nullable();
+            $table->string('religion');
             $table->string('civil_status');
             $table->string('citizenship');
 
