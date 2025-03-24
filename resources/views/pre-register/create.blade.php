@@ -115,7 +115,8 @@
 
                             <x-forms.field-container class="sm:col-span-4">
                                 <x-forms.label
-                                    for="religion">
+                                    for="religion"
+                                    :required="true">
                                     Religion
                                 </x-forms.label>
 

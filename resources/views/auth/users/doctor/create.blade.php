@@ -126,7 +126,8 @@
 
                             <x-forms.field-container class="sm:col-span-6">
                                 <x-forms.label
-                                    for="sex">
+                                    for="sex"
+                                    :required="true">
                                     Sex
                                 </x-forms.label>
 
@@ -142,7 +143,8 @@
 
                             <x-forms.field-container class="sm:col-span-4">
                                 <x-forms.label
-                                    for="religion">
+                                    for="religion"
+                                    :required="true">
                                     Religion
                                 </x-forms.label>
 
