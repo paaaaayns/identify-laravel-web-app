@@ -47,7 +47,7 @@ class PreRegistrationController extends Controller
                 }
             }], // Ensure birthdate is a valid date in the past
             'sex' => ['required', Rule::in(['Male', 'Female'])],
-            'religion' => ['string', 'max:255', new LettersAndSpaceOnly()], // Optional but validated if present
+            'religion' => ['required', 'string', 'max:255', new LettersAndSpaceOnly()],
             'civil_status' => ['required', Rule::in(['Single', 'Married', 'Divorced'])],
             'citizenship' => ['required', 'string', 'max:255', new LettersAndSpaceOnly()],
             'healthcard_number' => ['nullable', 'string', 'max:50'], // Assuming healthcard_number is alphanumeric
