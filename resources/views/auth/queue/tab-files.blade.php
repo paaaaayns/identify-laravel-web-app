@@ -37,7 +37,7 @@
     @endif
 
 
-    @role(['admin', 'doctor'])
+    @role(['admin', 'opd', 'doctor'])
     @include('auth.queue.form-files')
     @endrole
 </div>
