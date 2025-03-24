@@ -53,7 +53,7 @@ class OpdController extends Controller
                 }
             }], // Ensure birthdate is a valid date in the past
             'sex' => ['required', Rule::in(['Male', 'Female']), new LettersAndSpaceOnly()],
-            'religion' => ['nullable', 'string', 'max:255', new LettersAndSpaceOnly()], // Optional but validated if present
+            'religion' => ['string', 'max:255', new LettersAndSpaceOnly()], // Optional but validated if present
             'civil_status' => ['required', Rule::in(['Single', 'Married', 'Divorced'])],
             'citizenship' => ['required', 'string', 'max:255', new LettersAndSpaceOnly()],
 
