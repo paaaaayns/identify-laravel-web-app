@@ -95,7 +95,18 @@ class PreRegistrationController extends Controller
             $code = $faker->regexify('[A-Z0-9]{8}');
         } while (PreRegisteredPatient::where('pre_registration_code', $code)->exists()); // Ensure uniqueness by checking if the pre_registration_code already exists
 
-        // dd($code);
+        $fieldsToCapitalize = [
+            'first_name', 'middle_name', 'last_name', 'religion',
+            'citizenship', 'address',
+            'emergency_contact1_name', 'emergency_contact1_relationship',
+            'emergency_contact2_name', 'emergency_contact2_relationship',
+        ];
+        foreach ($fieldsToCapitalize as $field) {
+            if (isset($validatedData[$field])) {
+                $validatedData[$field] = ucwords(strtolower($validatedData[$field]));
+            }
+        }
+        $validatedData['email'] = strtolower($validatedData['email']);
 
         // Exclude terms and data privacy policy from the validated data
         $validatedData = Arr::except($validatedData, ['terms_and_conditions', 'privacy_policy']);
