@@ -60,7 +60,7 @@ class MedicalRecordController extends Controller
         $savePath = "patients/{$patient_ulid}/medical-records/{$record_ulid}/{$record_ulid}.pdf";
 
         $pdf = public_path($pdfPath);
-        
+
         if (!file_exists($pdf)) {
             Log::error('MedicalRecordController@download: PDF not found.', [
                 'pdf' => $pdf,
@@ -83,9 +83,10 @@ class MedicalRecordController extends Controller
             }
         }
 
-        // Return PDF as a download response directly
-        return response($pdf)
-            ->header('Content-Type', 'application/pdf')
-            ->header('Content-Disposition', "attachment; filename={$record_ulid}.pdf");
+        // Return the PDF file as a download
+        return response()->file($pdf, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => "attachment; filename={$record_ulid}.pdf",
+        ]);
     }
 }

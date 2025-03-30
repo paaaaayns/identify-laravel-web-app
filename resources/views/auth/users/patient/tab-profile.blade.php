@@ -352,6 +352,7 @@
 </div>
 
 <!-- Biometric Information -->
+@role(['admin'])
 <div class="bg-white shadow rounded-lg p-6">
     <h3 class="text-xl font-semibold text-gray-800">Biometric Information</h3>
     <div class="grid grid-cols-1 sm:grid-cols-12 gap-x-6 gap-y-6 mt-6">
@@ -384,3 +385,4 @@
 
     </div>
 </div>
+@endrole
