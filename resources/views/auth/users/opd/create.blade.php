@@ -221,6 +221,7 @@
                                     id="email"
                                     name="email"
                                     :value="old('email')"
+                                    placeholder="sample@email.com"
                                     autocomplete="off" />
                                 <x-forms.error name="email" />
                             </x-forms.field-container>
@@ -237,6 +238,7 @@
                                     id="contact_number"
                                     name="contact_number"
                                     :value="old('contact_number')"
+                                    placeholder="09123456789"
                                     maxlength="11"
                                     oninput="restrictLetterInput(this)"
                                     autocomplete="off" />
@@ -262,10 +264,32 @@
                                     type="text"
                                     id="type"
                                     name="type"
+                                    list="departments"
                                     :value="old('type')"
-                                    autocomplete="off" />
+                                    autocomplete="off"
+                                    class="no-arrow" />
+
+                                <datalist id="departments">
+                                    <option value="Cardiology"></option>
+                                    <option value="Dermatology"></option>
+                                    <option value="Pediatrics"></option>
+                                    <option value="Orthopedics"></option>
+                                    <option value="Gynecology"></option>
+                                    <option value="Neurology"></option>
+                                    <option value="Psychiatry"></option>
+                                    <option value="Dentistry"></option>
+                                    <option value="Ophthalmology"></option>
+                                    <option value="General Medicine"></option>
+                                    <option value="Surgery"></option>
+                                    <option value="Radiology"></option>
+                                    <option value="Emergency Medicine"></option>
+                                    <option value="Oncology"></option>
+                                    <option value="Endocrinology"></option>
+                                </datalist>
+
                                 <x-forms.error name="type" />
                             </x-forms.field-container>
+
 
                         </div>
                     </div>

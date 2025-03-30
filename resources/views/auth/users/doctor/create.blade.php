@@ -225,6 +225,7 @@
                                     id="email"
                                     name="email"
                                     :value="old('email')"
+                                    placeholder="sample@email.com"
                                     autocomplete="off" />
                                 <x-forms.error name="email" />
                             </x-forms.field-container>
@@ -241,6 +242,7 @@
                                     id="contact_number"
                                     name="contact_number"
                                     :value="old('contact_number')"
+                                    placeholder="09123456789"
                                     maxlength="11"
                                     oninput="restrictLetterInput(this)"
                                     autocomplete="off" />
@@ -266,8 +268,23 @@
                                     type="text"
                                     id="type"
                                     name="type"
+                                    list="specializations"
                                     :value="old('type')"
                                     autocomplete="off" />
+
+                                <datalist id="specializations">
+                                    <option value="General Practitioner"></option>
+                                    <option value="Cardiologist"></option>
+                                    <option value="Dermatologist"></option>
+                                    <option value="Pediatrician"></option>
+                                    <option value="Orthopedic Surgeon"></option>
+                                    <option value="Gynecologist"></option>
+                                    <option value="Neurologist"></option>
+                                    <option value="Psychiatrist"></option>
+                                    <option value="Dentist"></option>
+                                    <option value="Ophthalmologist"></option>
+                                </datalist>
+
                                 <x-forms.error name="type" />
                             </x-forms.field-container>
 
@@ -283,6 +300,7 @@
                                     id="license_number"
                                     name="license_number"
                                     :value="old('license_number')"
+                                    placeholder="8067450"
                                     autocomplete="off" />
                                 <x-forms.error name="license_number" />
                             </x-forms.field-container>
