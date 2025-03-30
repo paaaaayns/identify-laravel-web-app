@@ -27,3 +27,7 @@ html {
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
+
+input::-webkit-calendar-picker-indicator {
+    opacity: 0;
+}
