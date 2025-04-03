@@ -10,16 +10,10 @@ use Illuminate\Support\Facades\Log;
 
 class ValidIrisImage implements ValidationRule
 {
-    /**
-     * Run the validation rule.
-     *
-     * @param  \Closure(string, ?string=): \Illuminate\Translation\PotentiallyTranslatedString  $fail
-     */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         $attribute = str_replace('_', ' ', $attribute);
 
-        // Check if the value is a file
         if (!$value || !is_file($value->getRealPath())) {
             $fail("The {$attribute} is not a valid image file.");
             Log::info("ValidIrisImage@validate: {$attribute} is not a valid image file.", [
@@ -28,7 +22,6 @@ class ValidIrisImage implements ValidationRule
             return;
         }
 
-        // Check the MIME type manually
         $mimeType = $value->getMimeType();
         if (!str_starts_with($mimeType, 'image/')) {
             $fail("The {$attribute} must be an image file.");
@@ -38,7 +31,6 @@ class ValidIrisImage implements ValidationRule
             return;
         }
 
-        // Check if the image is a BMP image
         if ($mimeType !== 'image/bmp') {
             $fail("The {$attribute} must be a BMP image.");
             Log::info("ValidIrisImage@validate: {$attribute} is not a BMP image.", [
