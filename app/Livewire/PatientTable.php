@@ -11,30 +11,30 @@ class PatientTable extends DataTableComponent
 {
     protected $model = Patient::class;
 
-    protected $listeners = ['refreshTable' => '$refresh'];  // Listen for the event and refresh the table
+    protected $listeners = ['refreshTable' => '$refresh'];
 
     public function configure(): void
     {
         $this->setPrimaryKey('id')
             ->setDefaultSort('created_at', 'desc')
-            ->setRefreshTime(60000) // Component refreshes every 60 seconds
-            ->setPerPageAccepted([10, 25, 50, 100, -1]) // Options for pagination
-            ->setAdditionalSelects(['*']) // Additional columns to select
-            ->setTrimSearchStringEnabled() // Will trim whitespace from either end of search strings
+            ->setRefreshTime(60000)
+            ->setPerPageAccepted([10, 25, 50, 100, -1])
+            ->setAdditionalSelects(['*'])
+            ->setTrimSearchStringEnabled()
         ;
 
         $this->setTableWrapperAttributes([
             'class' => 'overflow-x-auto',
         ]);
+
         $this->setTheadAttributes([
             'class' => 'relative'
         ]);
     }
 
-    // Add the refreshTable method
     public function refreshTable()
     {
-        $this->emitSelf('refresh'); // Trigger the table refresh
+        $this->emitSelf('refresh');
     }
 
     public function columns(): array
@@ -66,9 +66,9 @@ class PatientTable extends DataTableComponent
                 ->label(
                     fn($row, Column $column) => view('components.livewire.action-columns.default')->with(
                         [
-                            'viewLink' => route('users.patient.show', ['ulid' => $row->ulid]), // Pass the ULID to the route
-                            'deleteLink' => route('users.patient.destroy', ['user_id' => $row->user_id]), // Pass the USER_ID to the route
-                            'id' => $row->id, 
+                            'viewLink' => route('users.patient.show', ['ulid' => $row->ulid]),
+                            'deleteLink' => route('users.patient.destroy', ['user_id' => $row->user_id]),
+                            'id' => $row->id,
                         ]
                     )
                 )->html(),
