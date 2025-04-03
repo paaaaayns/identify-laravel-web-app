@@ -13,37 +13,24 @@ use Illuminate\Support\Str;
 
 class PatientQueue extends Model
 {
-    /** @use HasFactory<\Database\Factories\PatientQueueFactory> */
     use HasFactory;
+
     protected $guarded = [];
 
-    // Hook into the creating and created model events
     protected static function booted()
     {
-        static::creating(function (PatientQueue $queue) {
-            // No user_id yet; ID will be available after creation.
-        });
-
         static::created(function (PatientQueue $queue) {
             try {
                 $queue->queue_id = 'Q-' . now()->format('Ymd') . '-' . Str::upper(Str::random(5));
                 $queue->ulid = Str::ulid();
-                $queue->saveQuietly(); // Save without triggering model events
-
-                Log::info('PatientQueue@booted: Queue created successfully.', [
-                    'queue_id' => $queue->queue_id,
-                    'opd_id' => $queue->opd_id,
-                    'patient_id' => $queue->patient_id,
-                ]);
+                $queue->saveQuietly();
             } catch (\Exception $e) {
-                // Log any issues during user creation
                 Log::error('PatientQueue@booted: QError creating User for opd: ' . $e->getMessage(), [
                     'queue_id' => $queue->queue_id,
                     'opd_id' => $queue->opd_id,
                     'patient_id' => $queue->patient_id,
                 ]);
 
-                // Delete the opd record to maintain data consistency
                 $queue->delete();
             }
         });
@@ -51,17 +38,17 @@ class PatientQueue extends Model
 
     public function opd(): BelongsTo
     {
-        return $this->belongsTo(Opd::class, 'opd_id', 'user_id'); // Adjust based on actual foreign key
+        return $this->belongsTo(Opd::class, 'opd_id', 'user_id');
     }
 
     public function patient()
     {
-        return $this->belongsTo(Patient::class, 'patient_id', 'user_id'); // Adjust based on actual foreign key
+        return $this->belongsTo(Patient::class, 'patient_id', 'user_id');
     }
 
     public function doctor(): BelongsTo
     {
-        return $this->belongsTo(Doctor::class, 'doctor_id', 'user_id'); // Adjust based on actual foreign key
+        return $this->belongsTo(Doctor::class, 'doctor_id', 'user_id');
     }
 
     public function medicalRecord()

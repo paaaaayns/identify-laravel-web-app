@@ -7,9 +7,6 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Opd extends Model
@@ -25,6 +22,6 @@ class Opd extends Model
 
     public function patientQueue()
     {
-        return $this->hasMany(PatientQueue::class, 'opd_id', 'user_id'); // Adjust based on actual foreign key
+        return $this->hasMany(PatientQueue::class, 'opd_id', 'user_id');
     }
 }
