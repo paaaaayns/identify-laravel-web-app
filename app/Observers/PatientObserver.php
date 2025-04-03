@@ -11,12 +11,6 @@ use Illuminate\Support\Facades\Log;
 
 class PatientObserver
 {
-    /**
-     * Handle the Patient "created" event.
-     *
-     * @param  \App\Models\Patient  $patient
-     * @return void
-     */
     public function created(Patient $patient)
     {
         try {
@@ -42,7 +36,6 @@ class PatientObserver
                 'patient_id' => $patient->user_id,
             ]);
 
-            // Send email verification notification
             event(new Registered($user));
         } catch (\Exception $e) {
             Log::error('PatientObserver@created: Error creating User for patient: ' . $e->getMessage(), [
@@ -50,10 +43,8 @@ class PatientObserver
                 'email' => $patient->email,
             ]);
 
-            // Delete the patient record to maintain data consistency
             $patient->delete();
 
-            // Check if $user exists before deleting it
             if (isset($user)) {
                 $user->delete();
             }
