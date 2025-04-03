@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Validation\ValidationException;
-use App\Models\Patient;
 use App\Models\PatientQueue;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -11,17 +10,11 @@ use Illuminate\Support\Facades\Storage;
 
 class PatientQueueController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         return view('auth.queue.index');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         try {
@@ -41,26 +34,22 @@ class PatientQueueController extends Controller
                 'queue' => $queue,
             ], 200);
         } catch (ValidationException $e) {
-            // Log validation errors
             Log::error('PatientQueueController@store: Validation failed', [
                 'errors' => $e->errors(),
                 'request_data' => $request->all(),
             ]);
 
-            // Return a response to the client with validation errors
             return response()->json([
                 'success' => false,
                 'message' => 'Validation error',
                 'errors' => $e->errors(),
             ], 422);
         } catch (\Exception $e) {
-            // Log unexpected errors
             Log::error('PatientQueueController@store: An unexpected error occurred', [
                 'error_message' => $e->getMessage(),
                 'request_data' => $request->all(),
             ]);
 
-            // Return a generic error response
             return response()->json([
                 'success' => false,
                 'message' => 'An unexpected error occurred. Please try again later.',
@@ -68,19 +57,13 @@ class PatientQueueController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $ulid)
     {
-        // Fetch the queue based on the ulid
         $queue = PatientQueue::with(['patient', 'opd', 'doctor'])->where('ulid', $ulid)->first();
-        // dd($queue);
 
         $patient = $queue->patient;
         $opd = $queue->opd;
         $doctor = $queue->doctor;
-        // $patient = Patient::where('user_id', $queue->patient_id)->first();
 
         return view('auth.queue.show', [
             'queue' => $queue,
@@ -90,9 +73,6 @@ class PatientQueueController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $ulid)
     {
         Log::info('PatientQueueController@update: Queue update request', [
@@ -103,7 +83,6 @@ class PatientQueueController extends Controller
             $validatedData = $request->validate([
                 'queue_action' => 'string|nullable',
 
-                // Doctor Selection
                 'doctor_id' => 'exists:doctors,user_id|nullable',
 
                 // Assessment
@@ -146,7 +125,6 @@ class PatientQueueController extends Controller
                 $patient_ulid = $record->patient->ulid;
                 $record_ulid = $record->ulid;
 
-                // save the attachments
                 if ($attachments) {
                     foreach ($attachments as $attachment) {
                         Storage::disk('public')->put("patients/{$patient_ulid}/medical-records/{$record_ulid}/attachments/{$attachment->getClientOriginalName()}", $attachment->get());
@@ -157,8 +135,6 @@ class PatientQueueController extends Controller
                 }
             }
 
-
-            // Safely check and set timestamps based on queue_status
             $queue_action = $validatedData['queue_action'] ?? null;
             Log::info('PatientQueueController@update: queue_Action', [
                 'queue_action' => $queue_action,
@@ -197,13 +173,9 @@ class PatientQueueController extends Controller
                 'validatedData' => $validatedData,
             ]);
 
-            // Fetch the queue based on the ulid
             $queue = PatientQueue::where('ulid', $ulid)->first();
 
-
-            // Update only the fields present in the request
             $queue->update($validatedData);
-            // dd($queue->doctor_id);
 
             return response()->json([
                 'success' => true,
@@ -212,26 +184,22 @@ class PatientQueueController extends Controller
                 'isConsultationDone' => $queue->queue_status === 'Completed',
             ], 200);
         } catch (ValidationException $e) {
-            // Log validation errors
             Log::error('PatientQueueController@update: Validation failed', [
                 'errors' => $e->errors(),
                 'request_data' => $request->all(),
             ]);
 
-            // Return a response to the client with validation errors
             return response()->json([
                 'success' => false,
                 'message' => 'Validation error',
                 'errors' => $e->errors(),
             ], 422);
         } catch (\Exception $e) {
-            // Log any unexpected errors
             Log::error('PatientQueueController@update: Unexpected error occurred', [
                 'error_message' => $e->getMessage(),
                 'request_data' => $request->all(),
             ]);
 
-            // Return a generic error response
             return response()->json([
                 'success' => false,
                 'message' => 'An unexpected error occurred. Please try again later.',
@@ -239,28 +207,12 @@ class PatientQueueController extends Controller
         }
     }
 
-    /**
-     * Update Assessment
-     */
-    public function updateAssessment(Request $request, string $ulid)
-    {
-        //
-    }
-
-
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $ulid)
     {
-        // dd($ulid);
         $queue = PatientQueue::where('ulid', $ulid)->firstOrFail();
-        // set the queue status to 'Cancelled'
         $queue->queue_status = 'Cancelled';
         $queue->save();
 
-        // Return a JSON response to inform the frontend that the deletion was successful
         return response()->json([
             'success' => true,
             'message' => 'Record successfully deleted.'

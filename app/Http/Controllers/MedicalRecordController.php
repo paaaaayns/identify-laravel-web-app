@@ -10,17 +10,11 @@ use Spatie\LaravelPdf\Facades\Pdf;
 
 class MedicalRecordController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         return view('auth.medical-record.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $ulid)
     {
         $record = MedicalRecord::where('ulid', $ulid)->first();
@@ -83,7 +77,6 @@ class MedicalRecordController extends Controller
             }
         }
 
-        // Return the PDF file as a download
         return response()->file($pdf, [
             'Content-Type' => 'application/pdf',
             'Content-Disposition' => "attachment; filename={$record_ulid}.pdf",

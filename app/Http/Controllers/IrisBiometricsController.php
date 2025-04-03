@@ -12,9 +12,6 @@ use Illuminate\Support\Facades\Storage;
 
 class IrisBiometricsController extends Controller
 {
-    /**
-     * Search for a patient using biometric data.
-     */
     public function search(Request $request)
     {
         $request->validate([

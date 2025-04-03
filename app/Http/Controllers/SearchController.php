@@ -15,15 +15,13 @@ use Yajra\DataTables\Facades\DataTables;
 
 class SearchController extends Controller
 {
-    //
     public function index($type)
     {
         if (strtoupper($type)) {
             return view('auth.search.index', [
                 'type' => strtoupper($type),
             ]);
-        }
-        else {
+        } else {
             abort(404);
         }
     }
@@ -31,19 +29,8 @@ class SearchController extends Controller
 
     public function indexPreReg()
     {
-        // $list = PreRegisteredPatient::latest()->get();
-
-        // return view('auth.search.index', [
-        //     'list' => $list
-        // ]);
-
-        // return view('auth.search.index');
-
         return view('auth.search.index');
     }
-
-
-
 
     public function show(Request $request)
     {
@@ -56,7 +43,7 @@ class SearchController extends Controller
                     return $query->where('first_name', 'like', "%$name%")
                         ->orWhere('middle_name', 'like', "%$name%")
                         ->orWhere('last_name', 'like', "%$name%");
-                })->latest()->paginate(1); // <-- Make sure paginate() is used here
+                })->latest()->paginate(1);
                 break;
 
             case 'REGISTERED':
@@ -85,7 +72,6 @@ class SearchController extends Controller
                 break;
         }
 
-        // Return the table body partial view with pagination data
         return response()->view('auth.search.partials.table-body', [
             'data' => $data,
             'role' => $role,
@@ -93,5 +79,3 @@ class SearchController extends Controller
         ]);
     }
 }
-
-

@@ -97,7 +97,7 @@ class UserController extends Controller
                     'string',
                 ],
             ], [
-                'required' => 'This field is required', // Overrides all required fields
+                'required' => 'This field is required',
             ]);
         } catch (ValidationException $e) {
             return response()->json([
