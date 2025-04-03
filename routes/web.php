@@ -55,6 +55,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('users/{user_id}/profile', [UserController::class, 'updateProfile'])->name('users.updateProfile');
     Route::post('users/{user_id}/password', [UserController::class, 'updatePassword'])->name('users.updatePassword');
 
+
     // Pre-Registered Patient
     Route::get('/users/pre-reg', [PreRegisteredPatientController::class, 'index'])->name('users.pre-reg.index');
     Route::get('/users/pre-reg/create', [PreRegisteredPatientController::class, 'create'])->name('users.pre-reg.create');
@@ -104,6 +105,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/api/medical-record/{ulid}/download', [MedicalRecordController::class, 'download'])
         ->name('medical-record.download');
 
+        
     // Iris Biometrics
     Route::post('/iris-biometrics/search', [IrisBiometricsController::class, 'search'])->name('iris-biometrics.search');
 });

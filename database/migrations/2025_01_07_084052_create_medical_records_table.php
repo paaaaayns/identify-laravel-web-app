@@ -6,23 +6,16 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('medical_records', function (Blueprint $table) {
             $table->id();
             $table->string('ulid')->nullable();
             $table->string('medical_record_id')->unique()->nullable();
-
-            $table->string('queue_id')->nullable(); // Foreign key for the queue (queue_id)
-
-            $table->string('patient_id')->nullable(); // Foreign key for the patient (user_id)
-
-            $table->string('opd_id')->nullable(); // Foreign key for the opd (user_id)
-
-            $table->string('doctor_id')->nullable(); // Foreign key for the doctor (user_id)
+            $table->string('queue_id')->nullable();
+            $table->string('patient_id')->nullable();
+            $table->string('opd_id')->nullable();
+            $table->string('doctor_id')->nullable();
 
             $table->string('height')->nullable();
             $table->string('weight')->nullable();
@@ -48,9 +41,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('medical_records');
