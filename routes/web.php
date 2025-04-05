@@ -41,7 +41,7 @@ Route::get('/verify-email', [UserController::class, 'verifyEmail']);
 
 // Pre-Registration Public Routes
 Route::get('/pre-register', [PreRegistrationController::class, 'create'])->name('pre-reg.create');
-Route::post('/pre-register/store', [PreRegistrationController::class, 'store'])->name('pre-reg.store'); // TOD0: Implement this
+Route::post('/pre-register/store', [PreRegistrationController::class, 'store'])->name('pre-reg.store');
 
 Route::get('/pre-register/search', [PreRegTrackingController::class, 'index'])->name('pre-reg.tracking.search');
 Route::get('/pre-register/track/search', [PreRegTrackingController::class, 'show'])->name('pre-reg.tracking.show');
@@ -105,7 +105,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/api/medical-record/{ulid}/download', [MedicalRecordController::class, 'download'])
         ->name('medical-record.download');
 
-        
+
     // Iris Biometrics
     Route::post('/iris-biometrics/search', [IrisBiometricsController::class, 'search'])->name('iris-biometrics.search');
 });

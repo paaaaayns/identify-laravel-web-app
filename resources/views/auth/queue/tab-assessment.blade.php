@@ -42,7 +42,6 @@
 <!-- Validation -->
 <script>
     function restrictLetterInput(input) {
-        // Remove non-numeric characters
         input.value = input.value.replace(/[^0-9\-\/]/g, '');
     }
 </script>
@@ -50,7 +49,6 @@
 <!-- Test -->
 <script>
     function fillAssessmentFields() {
-        // Predefined values for testing
         const testData = {
             primary_complaint: "Headache and nausea",
             duration_of_symptoms: "3 days",
@@ -67,7 +65,6 @@
             other: "N/A",
         };
 
-        // Fill fields using their IDs
         document.getElementById('primary_complaint').value = testData.primary_complaint;
         document.getElementById('duration_of_symptoms').value = testData.duration_of_symptoms;
         document.getElementById('intensity_and_frequency').value = testData.intensity_and_frequency;

@@ -17,15 +17,12 @@ class RoleMiddleware
      */
     public function handle($request, Closure $next, $role)
     {
-        // Check if the user is authenticated
         if (Auth::check()) {
-            // Check if the user's role matches the required role
             if (Auth::user()->role === $role) {
-                return $next($request); // Allow access
+                return $next($request);
             }
         }
 
-        // Redirect if the role does not match
         return redirect('/')->with('error', 'You do not have access to this page');
     }
 }

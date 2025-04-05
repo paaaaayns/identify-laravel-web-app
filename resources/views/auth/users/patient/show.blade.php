@@ -116,7 +116,6 @@
 
 
     <script>
-        // on page load
         window.addEventListener('DOMContentLoaded', (event) => {
             document.getElementById('left_iris').src = "{{ Storage::url('patients/' . $patient->ulid . '/biometrics/left_iris.bmp') }}";
             document.getElementById('right_iris').src = "{{ Storage::url('patients/' . $patient->ulid . '/biometrics/right_iris.bmp') }}";
@@ -125,37 +124,21 @@
 
     <!-- Confirmation dialog -->
     <script>
-        // Confirmation dialog
         async function confirmSend() {
-            // Prevent the default form submission
             event.preventDefault();
-
-            // const isVerified = await promptForPassword();
-            // if (isVerified) {
-            //     console.log("Sending to queue..." + '{{ $patient->user_id }}');
-
-            //     const queue = await createQueue();
-            //     if (queue) {
-            //         // Redirect to the queue show page passing queue_id
-            //         window.location.href = `/queue/${queue.ulid}`;
-            //     }
-            // }
 
             const queue = await createQueue();
             if (queue) {
-                // Redirect to the queue show page passing queue_id
                 window.location.href = `/queue/${queue.ulid}`;
             }
             return;
         }
 
-        // Creation process
         async function createQueue() {
             const form = document.getElementById('SendQueueForm');
             const formData = new FormData(form);
 
             try {
-                // Perform the POST request using Fetch API
                 const response = await fetch(form.action, {
                     method: 'POST',
                     body: formData,
@@ -171,7 +154,6 @@
                     console.log(response.status, result.message);
                     console.log('Queue:', result.queue);
 
-                    // Return queue data
                     return result.queue;
                 } else {
                     showToast('toast-error', 'Failed to create queue.');
@@ -193,16 +175,13 @@
         const tabContents = document.querySelectorAll(".tab-content");
 
         function showTab(targetId) {
-            // Remove active state from all tabs
             tabLinks.forEach((link) => {
                 link.classList.remove("bg-primary", "text-white");
                 link.classList.add("text-gray-500", "hover:text-gray-700");
             });
 
-            // Hide all tab contents
             tabContents.forEach((content) => content.classList.add("hidden"));
 
-            // Activate the correct tab and show its content
             const activeTab = document.querySelector(`[data-target="${targetId}"]`);
             const targetContent = document.getElementById(targetId);
 
@@ -211,17 +190,13 @@
                 activeTab.classList.remove("text-gray-500", "hover:text-gray-700");
                 targetContent.classList.remove("hidden");
 
-                // Update the URL to include the active tab
-                // history.pushState(null, "", `?tab=${targetId}`);
-                // Preserve existing query parameters
                 const urlParams = new URLSearchParams(window.location.search);
-                urlParams.set("tab", targetId); // Update tab
+                urlParams.set("tab", targetId);
 
                 history.pushState(null, "", `?${urlParams.toString()}`);
             }
         }
 
-        // Add click event listeners to all tabs
         tabLinks.forEach((tab) => {
             tab.addEventListener("click", (e) => {
                 e.preventDefault();
@@ -230,9 +205,8 @@
             });
         });
 
-        // Handle initial load or reload
         const urlParams = new URLSearchParams(window.location.search);
-        const initialTab = urlParams.get("tab") || tabLinks[0].getAttribute("data-target"); // Default to the first tab
+        const initialTab = urlParams.get("tab") || tabLinks[0].getAttribute("data-target");
         showTab(initialTab);
     </script>
 
@@ -244,19 +218,16 @@
             const mobileSelect = document.getElementById('mobile-tab-select');
 
             function showTab(target) {
-                // Hide all tab contents
                 tabContents.forEach(tab => tab.classList.add('hidden'));
-                // Remove active class from all desktop links
+
                 tabLinks.forEach(link => link.classList.remove('bg-primary', 'text-white'));
                 tabLinks.forEach(link => link.classList.add('text-gray-500'));
 
-                // Show selected tab content
                 const selectedTab = document.getElementById(target);
                 if (selectedTab) {
                     selectedTab.classList.remove('hidden');
                 }
 
-                // Highlight active tab in desktop view
                 tabLinks.forEach(link => {
                     if (link.dataset.target === target) {
                         link.classList.add('bg-primary', 'text-white');
@@ -264,13 +235,11 @@
                     }
                 });
 
-                // Set mobile select to correct value
                 if (mobileSelect) {
                     mobileSelect.value = target;
                 }
             }
 
-            // Desktop tab clicks
             tabLinks.forEach(link => {
                 link.addEventListener('click', () => {
                     const target = link.getAttribute('data-target');
@@ -278,14 +247,12 @@
                 });
             });
 
-            // Mobile select change
             if (mobileSelect) {
                 mobileSelect.addEventListener('change', (e) => {
                     showTab(e.target.value);
                 });
             }
 
-            // On page load, optionally set initial tab (e.g., via query string ?tab=assessment)
             const urlParams = new URLSearchParams(window.location.search);
             const initialTab = urlParams.get('tab') || 'profile';
             showTab(initialTab);
@@ -295,19 +262,16 @@
     <script>
         const mobileTabSelect = document.getElementById("mobile-tab-select");
 
-        // Listen to mobile select change
         if (mobileTabSelect) {
             mobileTabSelect.addEventListener("change", (e) => {
                 const selectedTab = e.target.value;
                 showTab(selectedTab);
             });
 
-            // Pre-select the correct value on page load
             const currentTab = new URLSearchParams(window.location.search).get("tab");
             if (currentTab) {
                 mobileTabSelect.value = currentTab;
             }
         }
     </script>
-
 </x-layout>

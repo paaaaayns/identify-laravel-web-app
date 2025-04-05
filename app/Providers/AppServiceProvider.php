@@ -43,7 +43,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Register the observers
         Admin::observe(AdminObserver::class);
         Doctor::observe(DoctorObserver::class);
         Opd::observe(OpdObserver::class);
@@ -53,8 +52,6 @@ class AppServiceProvider extends ServiceProvider
         PatientQueue::observe(PatientQueueObserver::class);
         MedicalRecord::observe(MedicalRecordObserver::class);
 
-
-        // Share the admin instance globally if the user is authenticated
         view()->composer('*', function ($view) {
             $user = null;
 
@@ -86,6 +83,5 @@ class AppServiceProvider extends ServiceProvider
             'doctor' => 'App\Models\Doctor',
             'patient' => 'App\Models\Patient',
         ]);
-        
     }
 }

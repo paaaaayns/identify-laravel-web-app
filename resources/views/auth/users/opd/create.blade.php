@@ -331,16 +331,13 @@
     <!-- Validation -->
     <script>
         function restrictLetterInput(input) {
-            // Allow only numbers and dash "-" (for date format like mm-dd-yyyy)
             input.value = input.value.replace(/[^0-9\-\/]/g, '');
         }
     </script>
 
     <!-- Confirmation dialog -->
     <script>
-        // Confirmation dialog
         async function confirmCreate() {
-            // Prevent the default form submission
             event.preventDefault();
 
             const isFormValidated = await validateForm('RegistrationForm', '/users/opd/validate-store-request');
@@ -349,9 +346,7 @@
                 if (isVerified) {
                     const user = await createUser();
                     if (user) {
-                        // Scroll to top
                         window.scrollTo(0, 0);
-                        // Reset form fields
                         clearForm('RegistrationForm');
                     }
                 }
@@ -359,13 +354,11 @@
             }
         }
 
-        // Creation process
         async function createUser() {
             const form = document.getElementById('RegistrationForm');
             const formData = new FormData(form);
 
             try {
-                // Perform the POST request using Fetch API
                 const response = await fetch(form.action, {
                     method: 'POST',
                     body: formData,
@@ -381,7 +374,6 @@
                     console.log(response.status, result.message);
                     console.log('User:', result.user);
 
-                    // Return user data
                     return result.user;
                 } else {
                     showToast('toast-error', 'Failed to create the account.');
@@ -399,7 +391,6 @@
     <!-- Test -->
     <script>
         function fillFields() {
-            // Predefined values for testing
             const testData = {
                 first_name: "John",
                 middle_name: "James",
@@ -418,7 +409,6 @@
                 type: "Pediatrics",
             };
 
-            // Fill fields using their IDs
             document.getElementById('first_name').value = testData.first_name;
             document.getElementById('middle_name').value = testData.middle_name;
             document.getElementById('last_name').value = testData.last_name;

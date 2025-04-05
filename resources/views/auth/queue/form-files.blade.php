@@ -44,7 +44,7 @@
     const attachmentList = document.getElementById('attachmentList');
 
     attachments.addEventListener('change', () => {
-        attachmentList.innerHTML = ''; // Clear previous list
+        attachmentList.innerHTML = '';
         const files = attachments.files;
 
         if (files.length === 0) {

@@ -20,7 +20,7 @@
         const form = document.getElementById('DoctorSelectionForm');
         const formAction = form.action;
         const formData = new FormData(form);
-        // Append the doctor_id to the form data
+
         formData.append('doctor_id', doctor_id);
 
         try {

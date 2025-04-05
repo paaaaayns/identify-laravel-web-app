@@ -465,7 +465,6 @@
     <!-- Validation -->
     <script>
         function restrictLetterInput(input) {
-            // Allow only numbers and dash "-" (for date format like mm-dd-yyyy)
             input.value = input.value.replace(/[^0-9\-\/]/g, '');
         }
     </script>
@@ -479,7 +478,6 @@
 
             const formData = new FormData(form);
 
-            // Clear existing error messages before submitting the form
             document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
 
             try {
@@ -488,18 +486,15 @@
                     body: formData,
                     headers: {
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                        'Accept': 'application/json', // Ensures JSON response
+                        'Accept': 'application/json',
                     },
                 });
 
                 if (response.ok) {
                     const result = await response.json();
                     if (result.success) {
-                        // Display the Swal success message with the code
                         Swal.fire({
                             title: 'Pre-registration Successful!',
-                            // text: 'You have successfully pre-registered. Please check your email for confirmation and further details.',
-                            // result.code should be bold
                             html: `You have successfully pre-registered. <br><br>Your pre-registration code is: <strong>${result.code}</strong>`,
                             icon: 'success',
                             confirmButtonText: 'OK',
@@ -507,17 +502,16 @@
                                 confirmButton: 'bg-primary text-white px-6 py-3',
                             },
                         }).then(() => {
-                            window.location.href = "{{ route('login') }}"; // Redirect to login page
+                            window.location.href = "{{ route('login') }}";
                         });
                     }
                 } else if (response.status === 422) {
                     const errors = await response.json();
 
-                    // Loop through errors and display them in the appropriate field
                     for (const [field, messages] of Object.entries(errors.errors)) {
                         const errorElement = document.querySelector(`#${field}-error`);
                         if (errorElement) {
-                            errorElement.textContent = messages[0]; // Show first error message
+                            errorElement.textContent = messages[0];
                         }
                     }
 
@@ -549,7 +543,6 @@
     <!-- Test -->
     <script>
         function fillFields() {
-            // Predefined values for testing
             const testData = {
                 first_name: "John",
                 middle_name: "James",
@@ -573,7 +566,6 @@
                 emergency_contact2_relationship: "Friend",
             };
 
-            // Fill fields using their IDs
             document.getElementById('first_name').value = testData.first_name;
             document.getElementById('middle_name').value = testData.middle_name;
             document.getElementById('last_name').value = testData.last_name;

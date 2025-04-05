@@ -163,7 +163,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Attachments -->
         <div class="w-full grid grid-cols-1 md:grid-cols-12">
             <div class="bg-gray-200 border-t-0 border border-gray-400 px-4 py-2 md:col-span-12">
@@ -214,7 +214,6 @@
                 }
             });
 
-            // If response is JSON (e.g., error)
             const contentType = response.headers.get('content-type');
 
             if (contentType && contentType.includes('application/json')) {
@@ -224,7 +223,6 @@
                 return;
             }
 
-            // If the file exists and response is a PDF, create blob and trigger download
             const blob = await response.blob();
             const url = window.URL.createObjectURL(blob);
 

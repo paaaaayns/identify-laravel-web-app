@@ -105,14 +105,6 @@
         const form = document.getElementById('SearchForm');
         const formData = new FormData(form);
 
-
-        // Convert images to Base64
-        // const IrisFile = document.getElementById('iris').files[0];
-        // if (IrisFile) {
-        //     formData.delete('iris'); // Remove original file input
-        //     formData.append('iris', await toBase64(IrisFile));
-        // }
-
         console.log("formData", formData);
 
         try {
@@ -132,7 +124,6 @@
                 console.log(response.status, result.message);
                 console.log('Data:', result.data.patient.ulid);
 
-                // redirect to the patient profile page
                 window.location.href = `/users/patient/${result.data.patient.ulid}`;
             } else {
                 showToast('toast-error', result.message);

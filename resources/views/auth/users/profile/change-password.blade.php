@@ -144,7 +144,6 @@
         const form = document.getElementById('ChangePasswordForm');
         const formData = new FormData(form);
 
-        // Clear existing error messages
         clearErrorMessages();
 
         try {

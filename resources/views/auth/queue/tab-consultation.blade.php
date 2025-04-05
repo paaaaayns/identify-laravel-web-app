@@ -64,7 +64,6 @@
 <!-- Validation -->
 <script>
     function restrictLetterInput(input) {
-        // Remove non-numeric characters
         input.value = input.value.replace(/[^0-9\-\/]/g, '');
     }
 </script>
@@ -73,7 +72,6 @@
 <!-- Test -->
 <script>
     function fillConsultationFields() {
-        // Predefined values for testing
         const testData = {
             findings: "Normal vitals except for slight dehydration",
             diagnosis: "Migraine",
@@ -84,7 +82,6 @@
             doctor_notes: "Patient advised to rest and monitor symptoms",
         };
 
-        // Fill fields using their IDs
         document.getElementById('findings').value = testData.findings;
         document.getElementById('diagnosis').value = testData.diagnosis;
         document.getElementById('recommended_treatment').value = testData.recommended_treatment;

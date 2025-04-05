@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\MedicalRecord;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 use Spatie\LaravelPdf\Facades\Pdf;
 
 class MedicalRecordController extends Controller
@@ -65,12 +63,7 @@ class MedicalRecordController extends Controller
                 Pdf::view('pdfs.medical-record', ['record' => $record])
                     ->disk('public')
                     ->save($savePath);
-
-                Log::info('MedicalRecordObserver@created: Medical Record created successfully.', [
-                    'medical_record_id' => $record->medical_record_id,
-                ]);
             } catch (\Exception $e) {
-                // Log any issues during record creation
                 Log::error('MedicalRecordObserver@created: Error creating Medical Record: ' . $e->getMessage(), [
                     'medical_record_id' => $record->medical_record_id,
                 ]);
