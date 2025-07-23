@@ -1,8 +1,30 @@
 <!-- Assessment -->
 <div class="w-full flex flex-col items-center bg-white rounded-lg shadow">
 
-    @if ($queue->doctor != null)
+    @if ($queue->assessment_started_at != null)
     @include('auth.queue.form-assessment')
+
+
+    @elseif ($queue->doctor_selected_at != null)
+    <form id="StartAssessingForm"
+        method="POST"
+        action="{{ route('queue.update', ['ulid' => $queue->ulid]) }}"
+        class="w-full">
+        @csrf
+        @method('PUT')
+
+        <input type="hidden" name="queue_action" value="Start Assessment">
+
+        <div class="grid grid-cols-1 text-center">
+            <div class="p-6">
+                <x-forms.primary-button
+                    type="button"
+                    onclick="updateQueue('StartAssessingForm')">
+                    Start Assessment
+                </x-forms.primary-button>
+            </div>
+        </div>
+    </form>
 
     @else
     <div class="w-full">
@@ -20,7 +42,6 @@
 <!-- Validation -->
 <script>
     function restrictLetterInput(input) {
-        // Remove non-numeric characters
         input.value = input.value.replace(/[^0-9\-\/]/g, '');
     }
 </script>
@@ -28,7 +49,6 @@
 <!-- Test -->
 <script>
     function fillAssessmentFields() {
-        // Predefined values for testing
         const testData = {
             primary_complaint: "Headache and nausea",
             duration_of_symptoms: "3 days",
@@ -45,7 +65,6 @@
             other: "N/A",
         };
 
-        // Fill fields using their IDs
         document.getElementById('primary_complaint').value = testData.primary_complaint;
         document.getElementById('duration_of_symptoms').value = testData.duration_of_symptoms;
         document.getElementById('intensity_and_frequency').value = testData.intensity_and_frequency;

@@ -15,18 +15,11 @@ class TestMail extends Mailable
 
     public $data;
 
-    /**
-     * Create a new message instance.
-     */
     public function __construct(array $data)
     {
-        //
         $this->data = $data;
     }
 
-    /**
-     * Get the message envelope.
-     */
     public function envelope(): Envelope
     {
         return new Envelope(
@@ -34,22 +27,14 @@ class TestMail extends Mailable
         );
     }
 
-    /**
-     * Get the message content definition.
-     */
     public function content(): Content
     {
         return new Content(
             view: 'mails.test-mail',
-            with: ['data' => $this->data], // Pass data to the view
+            with: ['data' => $this->data],
         );
     }
 
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
     public function attachments(): array
     {
         return [];

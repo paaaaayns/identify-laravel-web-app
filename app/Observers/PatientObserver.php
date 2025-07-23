@@ -2,23 +2,15 @@
 
 namespace App\Observers;
 
-use App\Models\IrisBiometrics;
 use App\Models\Patient;
 use App\Models\PreRegisteredPatient;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 
 class PatientObserver
 {
-    /**
-     * Handle the Patient "created" event.
-     *
-     * @param  \App\Models\Patient  $patient
-     * @return void
-     */
     public function created(Patient $patient)
     {
         try {
@@ -44,18 +36,15 @@ class PatientObserver
                 'patient_id' => $patient->user_id,
             ]);
 
-            // Send email verification notification
-            // event(new Registered($user));
+            event(new Registered($user));
         } catch (\Exception $e) {
             Log::error('PatientObserver@created: Error creating User for patient: ' . $e->getMessage(), [
                 'patient_ulid' => $patient->ulid,
                 'email' => $patient->email,
             ]);
 
-            // Delete the patient record to maintain data consistency
             $patient->delete();
 
-            // Check if $user exists before deleting it
             if (isset($user)) {
                 $user->delete();
             }

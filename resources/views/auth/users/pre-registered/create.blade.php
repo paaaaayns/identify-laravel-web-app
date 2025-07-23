@@ -138,8 +138,7 @@
 
                             <x-forms.field-container class="sm:col-span-4">
                                 <x-forms.label
-                                    for="religion"
-                                    :required="true">
+                                    for="religion">
                                     Religion
                                 </x-forms.label>
 
@@ -197,6 +196,8 @@
                                     id="healthcard_number"
                                     name="healthcard_number"
                                     :value="old('healthcard_number')"
+                                    placeholder="1234567"
+                                    maxlength="7"
                                     autocomplete="off" />
                                 <x-forms.error name="healthcard_number" />
                             </x-forms.field-container>
@@ -236,6 +237,7 @@
                                     id="email"
                                     name="email"
                                     :value="old('email')"
+                                    placeholder="sample@email.com"
                                     autocomplete="off" />
                                 <x-forms.error name="email" />
                             </x-forms.field-container>
@@ -252,6 +254,7 @@
                                     id="contact_number"
                                     name="contact_number"
                                     :value="old('contact_number')"
+                                    placeholder="09123456789"
                                     maxlength="11"
                                     oninput="restrictLetterInput(this)"
                                     autocomplete="off" />
@@ -294,6 +297,7 @@
                                     id="emergency_contact1_number"
                                     name="emergency_contact1_number"
                                     :value="old('emergency_contact1_number')"
+                                    placeholder="09123456789"
                                     maxlength="11"
                                     oninput="restrictLetterInput(this)"
                                     autocomplete="off" />
@@ -344,6 +348,7 @@
                                     id="emergency_contact2_number"
                                     name="emergency_contact2_number"
                                     :value="old('emergency_contact2_number')"
+                                    placeholder="09123456789"
                                     maxlength="11"
                                     oninput="restrictLetterInput(this)"
                                     autocomplete="off" />
@@ -398,16 +403,13 @@
     <!-- Validation -->
     <script>
         function restrictLetterInput(input) {
-            // Allow only numbers and dash "-" (for date format like mm-dd-yyyy)
             input.value = input.value.replace(/[^0-9\-\/]/g, '');
         }
     </script>
 
     <!-- Confirmation dialog -->
     <script>
-        // Confirmation dialog
         async function confirmCreate() {
-            // Prevent the default form submission
             event.preventDefault();
 
             const isFormValidated = await validateForm('RegistrationForm', '/users/pre-reg/validate-store-request');
@@ -416,9 +418,7 @@
                 if (isVerified) {
                     const user = await createUser();
                     if (user) {
-                        // Scroll to top
                         window.scrollTo(0, 0);
-                        // Reset form fields
                         clearForm('RegistrationForm');
                     }
                 }
@@ -426,13 +426,11 @@
             }
         }
 
-        // Creation process
         async function createUser() {
             const form = document.getElementById('RegistrationForm');
             const formData = new FormData(form);
 
             try {
-                // Perform the POST request using Fetch API
                 const response = await fetch(form.action, {
                     method: 'POST',
                     body: formData,
@@ -448,7 +446,6 @@
                     console.log(response.status, result.message);
                     console.log('User:', result.user);
 
-                    // Return user data
                     return result.user;
                 } else {
                     showToast('toast-error', 'Failed to create the account.');
@@ -466,7 +463,6 @@
     <!-- Test -->
     <script>
         function fillFields() {
-            // Predefined values for testing
             const testData = {
                 first_name: "John",
                 middle_name: "James",
@@ -491,7 +487,6 @@
                 emergency_contact2_relationship: "Friend",
             };
 
-            // Fill fields using their IDs
             document.getElementById('first_name').value = testData.first_name;
             document.getElementById('middle_name').value = testData.middle_name;
             document.getElementById('last_name').value = testData.last_name;
@@ -515,5 +510,4 @@
             console.log("Fields filled with test data!");
         }
     </script>
-
 </x-layout>

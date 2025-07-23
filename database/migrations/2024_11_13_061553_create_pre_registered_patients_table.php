@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('pre_registered_patients', function (Blueprint $table) {
@@ -23,7 +20,7 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('birthdate');
             $table->string('sex');
-            $table->string('religion');
+            $table->string('religion')->nullable();
             $table->string('civil_status');
             $table->string('citizenship');
             $table->string('healthcard_number')->nullable();
@@ -39,19 +36,12 @@ return new class extends Migration
             $table->string('emergency_contact2_number');
             $table->string('emergency_contact2_relationship');
 
-            $table->string('left_iris')->nullable();
-            $table->string('face')->nullable();
-            $table->string('right_iris')->nullable();
-
             $table->timestamp('pre_registered_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('pre_registered_patients');

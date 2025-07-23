@@ -13,43 +13,41 @@ class PatientQueueTable extends DataTableComponent
 {
     protected $model = PatientQueue::class;
 
-    protected $listeners = ['refreshTable' => '$refresh'];  // Listen for the event and refresh the table
+    protected $listeners = ['refreshTable' => '$refresh'];
 
     public function configure(): void
     {
         $this->setPrimaryKey('id')
             ->setDefaultSort('created_at', 'desc')
-            ->setRefreshTime(60000) // Component refreshes every 60 seconds
-            ->setPerPageAccepted([10, 25, 50, 100, -1]) // Options for pagination
-            ->setAdditionalSelects(['*']) // Additional columns to select
-            ->setTrimSearchStringEnabled() // Will trim whitespace from either end of search strings
+            ->setRefreshTime(60000)
+            ->setPerPageAccepted([10, 25, 50, 100, -1])
+            ->setAdditionalSelects(['*'])
+            ->setTrimSearchStringEnabled()
         ;
 
         $this->setTableWrapperAttributes([
             'class' => 'overflow-x-auto',
         ]);
+
         $this->setTheadAttributes([
             'class' => 'relative'
         ]);
     }
 
-    // Add the refreshTable method
     public function refreshTable()
     {
-        $this->emitSelf('refresh'); // Trigger the table refresh
+        $this->emitSelf('refresh');
     }
 
     public function builder(): Builder
     {
         $query = PatientQueue::query()
             ->whereNotIn('queue_status', ['Cancelled', 'Completed'])
-            ->with(['patient', 'doctor', 'opd']); // Eager load the relationships
+            ->with(['patient', 'doctor', 'opd']);
 
         $user = Auth::user();
 
         if ($user->role !== 'admin') {
-            // Filter the queue based on the user's role
-            // and queue status is not cancelled or completed
             $query->whereBelongsTo($user, $user->role);
         }
 
@@ -65,24 +63,37 @@ class PatientQueueTable extends DataTableComponent
                 ->sortable()
                 ->searchable(),
 
-            Column::make("Patient Name")
-                ->label($patientName) // Display full name
-                ->sortable(fn($builder, $direction) => $builder->orderBy('last_name', $direction))
-                ->searchable(),
-
-            Column::make("Doctor Name")
-                ->label($doctorName) // Display full name
-                ->sortable(fn($builder, $direction) => $builder->orderBy('last_name', $direction))
-                ->searchable(),
-
+            Column::make("Patient")
+                ->label($patientName)
+                ->searchable(function (Builder $query, string $searchTerm) {
+                    $searchTerm = "%{$searchTerm}%";
+                    $query->orWhereHas('patient', function (Builder $q) use ($searchTerm) {
+                        $q->where('first_name', 'like', $searchTerm)
+                            ->orWhere('middle_name', 'like', $searchTerm)
+                            ->orWhere('last_name', 'like', $searchTerm);
+                    });
+                }),
+            Column::make("Doctor")
+                ->label($doctorName)
+                ->searchable(function (Builder $query, string $searchTerm) {
+                    $searchTerm = "%{$searchTerm}%";
+                    $query->orWhereHas('doctor', function (Builder $q) use ($searchTerm) {
+                        $q->where('first_name', 'like', $searchTerm)
+                            ->orWhere('middle_name', 'like', $searchTerm)
+                            ->orWhere('last_name', 'like', $searchTerm);
+                    });
+                }),
 
             Column::make("Status", "queue_status")
-                ->sortable()
-                ->searchable()
+                ->searchable(function (Builder $query, $term) {
+                    $query->orWhere('queue_status', 'like', '%' . $term . '%');
+                })
                 ->label(function ($row) {
                     $statusColors = [
-                        'Waiting' => 'bg-yellow-500 text-white',
-                        'Assessment Done' => 'bg-blue-500 text-white',
+                        'Awaiting Doctor Selection' => 'bg-yellow-500 text-white',
+                        'Awaiting Assessment' => 'bg-amber-400 text-white',
+                        'Assessing' => 'bg-blue-500 text-white',
+                        'Awaiting Consultation' => 'bg-cyan-500 text-white',
                         'Consulting' => 'bg-orange-500 text-white',
                         'Completed' => 'bg-green-500 text-white',
                         'Cancelled' => 'bg-red-500 text-white',
@@ -91,7 +102,7 @@ class PatientQueueTable extends DataTableComponent
                     $status = $row->queue_status;
                     $colorClass = $statusColors[$status] ?? 'bg-gray-500 text-white';
 
-                    return '<span class="px-2 py-1 rounded ' . $colorClass . '">' . ucfirst($status) . '</span>';
+                    return '<span class="px-2 py-1 rounded ' . $colorClass . '">' . e($status) . '</span>';
                 })
                 ->html(),
 
@@ -113,31 +124,25 @@ class PatientQueueTable extends DataTableComponent
         ];
     }
 
-    // Get the patient's name
     public function getPatientName($row)
     {
-        // Retrieve the patient using the relationships
         $patient = $row->patient;
 
-        // Check if patient exist
         if ($patient) {
             return "{$patient->last_name}, {$patient->first_name} {$patient->middle_name}";
         }
 
-        return 'N/A'; // Default value if no names found
+        return 'N/A';
     }
 
-    // Get the doctor's name
     public function getDoctorName($row)
     {
-        // Retrieve the doctor using the relationships
         $doctor = $row->doctor;
 
-        // Check if doctor exist
         if ($doctor) {
             return "{$doctor->last_name}, {$doctor->first_name} {$doctor->middle_name}";
         }
 
-        return 'N/A'; // Default value if no names found
+        return 'N/A';
     }
 }

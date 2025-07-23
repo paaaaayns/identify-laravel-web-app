@@ -8,20 +8,15 @@ use App\Models\Opd;
 use App\Models\Patient;
 use App\Models\PatientQueue;
 use App\Models\PreRegisteredPatient;
-use Carbon\Carbon;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
-    //
     public function show()
     {
-        // Get the authenticated user
         $user = Auth::user();
-        // dd($user);
 
-        // Check user role and return the appropriate view
         switch ($user->role) {
             case 'admin':
                 $preRegPatientsCount = PreRegisteredPatient::count();
@@ -67,7 +62,7 @@ class DashboardController extends Controller
                     'medicalRecordsCount' => $medicalRecordsCount,
                 ]);
             default:
-                return abort(403);  // Default dashboard view
+                return abort(403);
         }
     }
 }

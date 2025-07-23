@@ -3,23 +3,13 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PreRegisteredPatient>
- */
 class PreRegisteredPatientFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         $code = $this->faker->regexify('[A-Z0-9]{8}');
         return [
-            //
             // Personal Information
             'first_name' => $this->faker->firstName(),
             'middle_name' => $this->faker->optional()->lastName(),
@@ -29,7 +19,7 @@ class PreRegisteredPatientFactory extends Factory
             'religion' => $this->faker->randomElement(['Catholic', 'Buddhist', 'Muslim', 'Christian']),
             'civil_status' => $this->faker->randomElement(['Single', 'Married', 'Divorced']),
             'citizenship' => $this->faker->randomElement(['Filipino', 'American', 'Greek', 'Egyptian']),
-            'healthcard_number' => $this->faker->optional()->regexify('[A-Z]{2}[0-9]{6}'), // Optional health card number
+            'healthcard_number' => $this->faker->optional()->regexify('[A-Z]{2}[0-9]{6}'),
 
             // Contact Details
             'address' => $this->faker->address(),

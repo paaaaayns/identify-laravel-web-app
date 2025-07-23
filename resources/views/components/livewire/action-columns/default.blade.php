@@ -27,7 +27,6 @@
 </div>
 
 <script>
-    // Confirmation dialog
     function confirmDelete(id) {
         Swal.fire({
             title: 'Are you sure?',
@@ -41,7 +40,6 @@
             },
         }).then(async (result) => {
             if (result.isConfirmed) {
-                // Ask for password
                 const isVerified = await promptForPassword();
                 if (isVerified) {
                     deleteUser(id);
@@ -50,12 +48,10 @@
         });
     }
 
-    // Deletion process
     async function deleteUser(id) {
         const form = document.getElementById('delete-form-' + id);
 
         try {
-            // Perform the DELETE request using Fetch API
             const response = await fetch(form.action, {
                 method: 'DELETE',
                 headers: {
@@ -68,7 +64,7 @@
                 const result = await response.json();
                 showToast('toast-success', result.message);
                 console.log('Success:', result.message);
-                Livewire.dispatch('refreshTable'); // Dispatch the Livewire event to refresh the table
+                Livewire.dispatch('refreshTable');
             } else {
                 showToast('toast-error', result.message);
                 console.error('Error:', result.message);

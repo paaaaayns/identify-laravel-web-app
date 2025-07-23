@@ -429,7 +429,7 @@
                             type="file"
                             id="right_iris"
                             name="right_iris"
-                            accept="image/*"
+                            accept="image/bmp"
                             class="hidden"
                             onchange="previewIris(event, 'right_iris', 'right_iris_preview', 'right_iris_text')">
                         <x-forms.error name="right_iris" />
@@ -498,35 +498,29 @@
     </script>
 
     <script>
-        // Confirmation dialog
         async function confirmCreate() {
-            // Prevent the default form submission
             event.preventDefault();
 
             const isFormValidated = await validateForm('RegistrationForm', '/users/patient/validate-store-request');
             if (isFormValidated) {
                 const user = await createUser();
                 if (user) {
-                    // redirect to the users.patient.show with ulid
                     window.location.href = `/users/patient/${user.ulid}`;
                 }
                 return;
             }
         }
 
-        // Creation process
         async function createUser() {
             const form = document.getElementById('RegistrationForm');
             const formData = new FormData(form);
 
-            // Convert images to Base64
             const rightIrisFile = document.getElementById('right_iris').files[0];
             const leftIrisFile = document.getElementById('left_iris').files[0];
 
             console.log('Form data:', formData);
 
             try {
-                // Perform the POST request using Fetch API
                 const response = await fetch(form.action, {
                     method: 'POST',
                     body: formData,
@@ -543,7 +537,6 @@
                     console.log(response.status, result.message);
                     console.log('User:', result.user);
 
-                    // Return user data
                     return result.user;
                 } else {
                     showToast('toast-error', result.message);
@@ -557,5 +550,4 @@
             }
         }
     </script>
-
 </x-layout>

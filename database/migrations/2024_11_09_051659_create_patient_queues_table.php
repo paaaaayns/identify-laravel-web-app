@@ -9,36 +9,26 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('patient_queues', function (Blueprint $table) {
             $table->id();
             $table->string('ulid')->nullable();
             $table->string('queue_id')->unique()->nullable();
+            $table->string('medical_record_id')->nullable();
+            $table->string('patient_id')->nullable();
+            $table->string('opd_id')->nullable();
+            $table->string('doctor_id')->nullable();
 
-            $table->string('medical_record_id')->nullable(); // Foreign key for the medical_record (medical_record_id)
-            $table->foreign('medical_record_id')->references('medical_record_id')->on('medical_records');
-
-            $table->string('patient_id')->nullable(); // Foreign key for the patient (user_id)
-            $table->foreign('patient_id')->references('user_id')->on('patients');
-
-            $table->string('opd_id')->nullable(); // Foreign key for the opd (user_id)
-            $table->foreign('opd_id')->references('user_id')->on('opds');
-
-            $table->string('doctor_id')->nullable(); // Foreign key for the doctor (user_id)
-            $table->foreign('doctor_id')->references('user_id')->on('doctors');
-
-            // Define queue_status as an ENUM field
             $table->enum('queue_status', [
-                'Waiting',
-                'Assessment Done',
+                'Awaiting Doctor Selection',
+                'Awaiting Assessment',
+                'Assessing',
+                'Awaiting Consultation',
                 'Consulting',
                 'Completed',
                 'Cancelled'
-            ])->default('Waiting');
+            ])->default('Awaiting Doctor Selection');
 
             $table->string('height')->nullable();
             $table->string('weight')->nullable();
@@ -60,16 +50,16 @@ return new class extends Migration
             $table->string('doctor_notes')->nullable();
 
             $table->timestamp('queued_at')->nullable();
+            $table->timestamp('doctor_selected_at')->nullable();
+            $table->timestamp('assessment_started_at')->nullable();
             $table->timestamp('assessment_done_at')->nullable();
+            $table->timestamp('consultation_started_at')->nullable();
             $table->timestamp('consultation_done_at')->nullable();
             $table->timestamp('cancelled_at')->nullable();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('patient_queues');

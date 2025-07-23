@@ -122,30 +122,26 @@
             const preRegCode = document.getElementById('preRegCode');
 
             preRegCode.addEventListener('click', function() {
-                const textToCopy = preRegCode.textContent; // Get the text content of the pre-registration code
+                const textToCopy = preRegCode.textContent;
 
-                // Create a temporary textarea element to copy the text
                 const textArea = document.createElement('textarea');
                 textArea.value = textToCopy;
                 document.body.appendChild(textArea);
-                textArea.select(); // Select the text
+                textArea.select();
 
-                // Execute the copy command
                 document.execCommand('copy');
-                document.body.removeChild(textArea); // Remove the textarea after copying
+                document.body.removeChild(textArea);
 
-                // Show a success message (optional)
                 Swal.fire({
                     title: 'Success!',
                     text: 'Pre-registration code copied to clipboard.',
                     icon: 'success',
                     confirmButtonText: 'OK',
                     customClass: {
-                        confirmButton: 'bg-primary text-white px-6 py-3', // Button styles
+                        confirmButton: 'bg-primary text-white px-6 py-3',
                     }
                 });
             });
         });
     </script>
-
 </x-pre-reg-layout>

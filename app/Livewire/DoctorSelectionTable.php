@@ -15,33 +15,33 @@ class DoctorSelectionTable extends DataTableComponent
 
     public function mount($queue)
     {
-        $this->queue = $queue; // Assign the queue
+        $this->queue = $queue;
     }
 
-    protected $listeners = ['refreshTable' => '$refresh'];  // Listen for the event and refresh the table
+    protected $listeners = ['refreshTable' => '$refresh'];
 
     public function configure(): void
     {
         $this->setPrimaryKey('id')
             ->setDefaultSort('created_at', 'desc')
-            ->setRefreshTime(60000) // Component refreshes every 60 seconds
-            ->setPerPageAccepted([10, 25, 50, 100, -1]) // Options for pagination
-            ->setAdditionalSelects(['*']) // Additional columns to select
-            ->setTrimSearchStringEnabled() // Will trim whitespace from either end of search strings
+            ->setRefreshTime(60000)
+            ->setPerPageAccepted([10, 25, 50, 100, -1])
+            ->setAdditionalSelects(['*'])
+            ->setTrimSearchStringEnabled()
         ;
 
         $this->setTableWrapperAttributes([
             'class' => 'overflow-x-auto',
         ]);
+
         $this->setTheadAttributes([
             'class' => 'relative'
         ]);
     }
 
-    // Add the refreshTable method
     public function refreshTable()
     {
-        $this->emitSelf('refresh'); // Trigger the table refresh
+        $this->emitSelf('refresh');
     }
 
     public function columns(): array
@@ -51,7 +51,6 @@ class DoctorSelectionTable extends DataTableComponent
                 ->sortable()
                 ->searchable(),
 
-            // Combine first_name, middle_name, and last_name into a single "Full Name" column
             Column::make("Full Name")
                 ->label(fn($row) => "{$row->last_name}, {$row->first_name} {$row->middle_name}")
                 ->sortable(fn($builder, $direction) => $builder->orderBy('last_name', $direction))
@@ -80,8 +79,6 @@ class DoctorSelectionTable extends DataTableComponent
                         ]
                     )->render()
                 )->html(),
-
-
         ];
     }
 }

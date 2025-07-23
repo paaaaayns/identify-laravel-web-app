@@ -4,7 +4,8 @@
         text-sm font-semibold text-white 
         rounded-md shadow-sm 
         hover:bg-primary 
-        focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary',
+        focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary
+        disabled:bg-gray-400 disabled:hover:bg-gray-400',
         
     ]) }}>
 

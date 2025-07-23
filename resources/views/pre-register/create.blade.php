@@ -115,8 +115,7 @@
 
                             <x-forms.field-container class="sm:col-span-4">
                                 <x-forms.label
-                                    for="religion"
-                                    :required="true">
+                                    for="religion">
                                     Religion
                                 </x-forms.label>
 
@@ -177,6 +176,8 @@
                                     id="healthcard_number"
                                     name="healthcard_number"
                                     :value="old('healthcard_number')"
+                                    placeholder="1234567"
+                                    maxlength="7"
                                     autocomplete="off" />
 
                                 <x-forms.error name="healthcard_number" />
@@ -231,6 +232,7 @@
                                     id="email"
                                     name="email"
                                     :value="old('email')"
+                                    placeholder="sample@email.com"
                                     autocomplete="off" />
 
                                 <x-forms.error name="email" />
@@ -248,6 +250,7 @@
                                     id="contact_number"
                                     name="contact_number"
                                     :value="old('contact_number')"
+                                    placeholder="09123456789"
                                     maxlength="11"
                                     autocomplete="off"
                                     oninput="restrictLetterInput(this)" />
@@ -321,6 +324,7 @@
                                     id="emergency_contact1_number"
                                     name="emergency_contact1_number"
                                     :value="old('emergency_contact1_number')"
+                                    placeholder="09123456789"
                                     autocomplete="off"
                                     maxlength="11"
                                     oninput="restrictLetterInput(this)" />
@@ -374,6 +378,7 @@
                                     id="emergency_contact2_number"
                                     name="emergency_contact2_number"
                                     :value="old('emergency_contact2_number')"
+                                    placeholder="09123456789"
                                     autocomplete="off"
                                     maxlength="11"
                                     oninput="restrictLetterInput(this)" />
@@ -436,7 +441,7 @@
                     </div>
 
                     <div class="flex items-center justify-end gap-x-6 border-t border-gray-900/10 px-4 py-4 sm:px-8">
-                        @role(['admin'])
+                        @if(true)
                         <button
                             id="fill"
                             type="button"
@@ -444,7 +449,7 @@
                             class="rounded-md px-3 py-2 text-sm font-semibold text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
                             Test
                         </button>
-                        @endrole
+                        @endif
 
                         <x-forms.primary-button type="submit">
                             Submit
@@ -460,7 +465,6 @@
     <!-- Validation -->
     <script>
         function restrictLetterInput(input) {
-            // Allow only numbers and dash "-" (for date format like mm-dd-yyyy)
             input.value = input.value.replace(/[^0-9\-\/]/g, '');
         }
     </script>
@@ -474,7 +478,6 @@
 
             const formData = new FormData(form);
 
-            // Clear existing error messages before submitting the form
             document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
 
             try {
@@ -483,18 +486,15 @@
                     body: formData,
                     headers: {
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                        'Accept': 'application/json', // Ensures JSON response
+                        'Accept': 'application/json',
                     },
                 });
 
                 if (response.ok) {
                     const result = await response.json();
                     if (result.success) {
-                        // Display the Swal success message with the code
                         Swal.fire({
                             title: 'Pre-registration Successful!',
-                            // text: 'You have successfully pre-registered. Please check your email for confirmation and further details.',
-                            // result.code should be bold
                             html: `You have successfully pre-registered. <br><br>Your pre-registration code is: <strong>${result.code}</strong>`,
                             icon: 'success',
                             confirmButtonText: 'OK',
@@ -502,17 +502,16 @@
                                 confirmButton: 'bg-primary text-white px-6 py-3',
                             },
                         }).then(() => {
-                            window.location.href = "{{ route('login') }}"; // Redirect to login page
+                            window.location.href = "{{ route('login') }}";
                         });
                     }
                 } else if (response.status === 422) {
                     const errors = await response.json();
 
-                    // Loop through errors and display them in the appropriate field
                     for (const [field, messages] of Object.entries(errors.errors)) {
                         const errorElement = document.querySelector(`#${field}-error`);
                         if (errorElement) {
-                            errorElement.textContent = messages[0]; // Show first error message
+                            errorElement.textContent = messages[0];
                         }
                     }
 
@@ -544,7 +543,6 @@
     <!-- Test -->
     <script>
         function fillFields() {
-            // Predefined values for testing
             const testData = {
                 first_name: "John",
                 middle_name: "James",
@@ -554,7 +552,7 @@
                 sex: "Male",
                 religion: "Catholic",
                 civil_status: "Single",
-                citizenship: "Male",
+                citizenship: "Filipino",
 
                 address: "4527 Colonial Drive High Hill Texas",
                 email: "john.doe@gmail.com",
@@ -568,7 +566,6 @@
                 emergency_contact2_relationship: "Friend",
             };
 
-            // Fill fields using their IDs
             document.getElementById('first_name').value = testData.first_name;
             document.getElementById('middle_name').value = testData.middle_name;
             document.getElementById('last_name').value = testData.last_name;

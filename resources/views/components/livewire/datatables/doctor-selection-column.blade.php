@@ -6,6 +6,7 @@
         action="{{ route('queue.update', ['ulid' => $queue->ulid]) }}">
         @csrf
         @method('PUT')
+        <input type="hidden" name="queue_action" value="Doctor Assigned">
         <button
             type="button"
             onclick="updateDoctor('{{ $doctor_id }}')"
@@ -19,7 +20,7 @@
         const form = document.getElementById('DoctorSelectionForm');
         const formAction = form.action;
         const formData = new FormData(form);
-        // Append the doctor_id to the form data
+
         formData.append('doctor_id', doctor_id);
 
         try {
@@ -31,7 +32,7 @@
                     'Accept': 'application/json',
                 },
             });
-            
+
             const result = await response.json();
 
             if (response.ok) {

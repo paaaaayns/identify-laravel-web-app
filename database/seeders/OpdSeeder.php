@@ -8,16 +8,12 @@ use Illuminate\Database\Seeder;
 
 class OpdSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        //
         Opd::create([
-            'first_name' => 'Exiquiel John',
-            'middle_name' => 'Aldave',
-            'last_name' => 'Pines',
+            'first_name' => 'Test',
+            'middle_name' => '',
+            'last_name' => 'OPD',
             'birthdate' => '2001-10-26',
             'sex' => 'Male',
             'religion' => 'Catholic',

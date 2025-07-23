@@ -7,11 +7,5 @@ use Illuminate\Database\Seeder;
 
 class PreRegisteredPatientSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
-    {
-        //
-    }
+    public function run(): void {}
 }

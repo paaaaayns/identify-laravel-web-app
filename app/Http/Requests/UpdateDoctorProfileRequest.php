@@ -22,7 +22,7 @@ class UpdateDoctorProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'religion' => ['required', 'string', 'max:255'],
+            'religion' => ['nullable', 'string', 'max:255'],
             'civil_status' => ['required', 'string', 'max:255'],
             'citizenship' => ['required', 'string', 'max:255'],
             'address' => ['required', 'string', 'max:255'],

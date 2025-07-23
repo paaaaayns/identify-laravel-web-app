@@ -3,7 +3,6 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\EmailVerificationController;
-use App\Http\Controllers\BiometricsController;
 use App\Http\Controllers\IrisBiometricsController;
 use App\Http\Controllers\MedicalRecordController;
 use App\Http\Controllers\OpdController;
@@ -16,8 +15,6 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UserController;
 use App\Mail\PreRegistrationMail;
-use App\Mail\TestMail;
-use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +29,7 @@ Route::get('/token', function () {
     return csrf_token();
 });
 
+
 // Login
 Route::get('/login', [SessionController::class, 'create'])->name('login');
 Route::post('/login', [SessionController::class, 'store']);
@@ -41,12 +39,9 @@ Route::post('/verify-password', [UserController::class, 'verifyPassword']);
 Route::get('/verify-email', [UserController::class, 'verifyEmail']);
 
 
-
-
-
 // Pre-Registration Public Routes
 Route::get('/pre-register', [PreRegistrationController::class, 'create'])->name('pre-reg.create');
-Route::post('/pre-register/store', [PreRegistrationController::class, 'store'])->name('pre-reg.store'); // TOD0: Implement this
+Route::post('/pre-register/store', [PreRegistrationController::class, 'store'])->name('pre-reg.store');
 
 Route::get('/pre-register/search', [PreRegTrackingController::class, 'index'])->name('pre-reg.tracking.search');
 Route::get('/pre-register/track/search', [PreRegTrackingController::class, 'show'])->name('pre-reg.tracking.show');
@@ -59,6 +54,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::post('users/{user_id}/profile', [UserController::class, 'updateProfile'])->name('users.updateProfile');
     Route::post('users/{user_id}/password', [UserController::class, 'updatePassword'])->name('users.updatePassword');
+
 
     // Pre-Registered Patient
     Route::get('/users/pre-reg', [PreRegisteredPatientController::class, 'index'])->name('users.pre-reg.index');
@@ -109,14 +105,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/api/medical-record/{ulid}/download', [MedicalRecordController::class, 'download'])
         ->name('medical-record.download');
 
+
     // Iris Biometrics
     Route::post('/iris-biometrics/search', [IrisBiometricsController::class, 'search'])->name('iris-biometrics.search');
 });
 
-
-
-
-// Route::post('/users/pre-reg/send-confirmation-email', [PreRegisteredPatientController::class, 'sendConfirmationEmail'])->name('users.pre-reg.send-confirmation-email');
 
 Route::get('/email/verify', [EmailVerificationController::class, 'notice'])
     ->middleware('auth')
@@ -129,14 +122,6 @@ Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 've
 Route::post('/email/verification-notification', [EmailVerificationController::class, 'send'])
     ->middleware(['auth', 'throttle:6,1'])
     ->name('verification.send');
-
-
-
-
-
-
-
-
 
 
 // Test email

@@ -4,31 +4,21 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Patient>
- */
 class PatientFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         return [
-            //
-
             // Personal Information
             'first_name' => $this->faker->firstName(),
             'middle_name' => $this->faker->optional()->lastName(),
             'last_name' => $this->faker->lastName(),
-            'birthdate' => $this->faker->date(), // Date format: YYYY-MM-DD
+            'birthdate' => $this->faker->date(),
             'sex' => $this->faker->randomElement(['Male', 'Female']),
             'religion' => $this->faker->randomElement(['Catholic', 'Buddhist', 'Muslim', 'Christian']),
             'civil_status' => $this->faker->randomElement(['Single', 'Married', 'Divorced']),
             'citizenship' => $this->faker->randomElement(['Filipino', 'American', 'Greek', 'Egyptian']),
-            'healthcard_number' => $this->faker->optional()->regexify('[A-Z]{2}[0-9]{6}'), // Optional health card number
+            'healthcard_number' => $this->faker->optional()->regexify('[A-Z]{2}[0-9]{6}'),
 
             // Contact Details
             'address' => $this->faker->address(),

@@ -5,7 +5,7 @@
     @csrf
     @method('PUT')
 
-    <input type="hidden" name="queue_status" value="Assessment Done">
+    <input type="hidden" name="queue_action" value="Assessment Done">
 
     <div class="grid grid-cols-1">
         <div class="p-6">

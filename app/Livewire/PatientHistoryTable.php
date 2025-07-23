@@ -5,7 +5,6 @@ namespace App\Livewire;
 use App\Models\MedicalRecord;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Auth;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 
@@ -19,15 +18,16 @@ class PatientHistoryTable extends DataTableComponent
     {
         $this->setPrimaryKey('id')
             ->setDefaultSort('created_at', 'desc')
-            ->setRefreshTime(60000) // Component refreshes every 60 seconds
-            ->setPerPageAccepted([10, 25, 50, 100, -1]) // Options for pagination
-            ->setAdditionalSelects(['*']) // Additional columns to select
-            ->setTrimSearchStringEnabled() // Will trim whitespace from either end of search strings
+            ->setRefreshTime(60000)
+            ->setPerPageAccepted([10, 25, 50, 100, -1])
+            ->setAdditionalSelects(['*'])
+            ->setTrimSearchStringEnabled()
         ;
 
         $this->setTableWrapperAttributes([
             'class' => 'overflow-x-auto',
         ]);
+
         $this->setTheadAttributes([
             'class' => 'relative'
         ]);
@@ -41,8 +41,8 @@ class PatientHistoryTable extends DataTableComponent
     public function builder(): Builder
     {
         return MedicalRecord::query()
-            ->with(['doctor']) // Eager load relationships
-            ->where('patient_id', $this->patient_id); // Filter records for the specific patient
+            ->with(['doctor'])
+            ->where('patient_id', $this->patient_id);
     }
 
 
@@ -51,12 +51,55 @@ class PatientHistoryTable extends DataTableComponent
         $doctorName = fn($row) => $this->getDoctorName($row);
         $columns = [
             Column::make("Date", "created_at")
-                ->format(fn($value) => Carbon::parse($value)->format('Y-m-d'))
-                ->sortable(),
+                ->format(fn($value) => \Carbon\Carbon::parse($value)->format('M d, Y'))
+                ->sortable()
+                ->searchable(function (Builder $query, $term) {
+                    $term = strtolower(trim($term));
+
+                    $months = [
+                        'jan' => '01',
+                        'january' => '01',
+                        'feb' => '02',
+                        'february' => '02',
+                        'mar' => '03',
+                        'march' => '03',
+                        'apr' => '04',
+                        'april' => '04',
+                        'may' => '05',
+                        'jun' => '06',
+                        'june' => '06',
+                        'jul' => '07',
+                        'july' => '07',
+                        'aug' => '08',
+                        'august' => '08',
+                        'sep' => '09',
+                        'september' => '09',
+                        'oct' => '10',
+                        'october' => '10',
+                        'nov' => '11',
+                        'november' => '11',
+                        'dec' => '12',
+                        'december' => '12',
+                    ];
+
+                    if (array_key_exists($term, $months)) {
+                        $query->orWhereMonth('created_at', $months[$term]);
+                    }
+
+                    $query->orWhereDate('created_at', 'like', "%$term%");
+                }),
+
             Column::make("Doctor")
                 ->label($doctorName)
-                ->sortable(fn($builder, $direction) => $builder->orderBy('last_name', $direction))
-                ->searchable(),
+                ->searchable(function (Builder $query, string $searchTerm) {
+                    $searchTerm = "%{$searchTerm}%";
+                    $query->orWhereHas('doctor', function (Builder $q) use ($searchTerm) {
+                        $q->where('first_name', 'like', $searchTerm)
+                            ->orWhere('middle_name', 'like', $searchTerm)
+                            ->orWhere('last_name', 'like', $searchTerm);
+                    });
+                }),
+
             Column::make("Action")
                 ->label(
                     fn($row, Column $column) => view('components.livewire.action-columns.patient-history')->with(

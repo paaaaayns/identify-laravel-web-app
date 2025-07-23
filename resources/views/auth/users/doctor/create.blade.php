@@ -126,7 +126,8 @@
 
                             <x-forms.field-container class="sm:col-span-6">
                                 <x-forms.label
-                                    for="sex">
+                                    for="sex"
+                                    :required="true">
                                     Sex
                                 </x-forms.label>
 
@@ -142,8 +143,7 @@
 
                             <x-forms.field-container class="sm:col-span-4">
                                 <x-forms.label
-                                    for="religion"
-                                    :required="true">
+                                    for="religion">
                                     Religion
                                 </x-forms.label>
 
@@ -225,6 +225,7 @@
                                     id="email"
                                     name="email"
                                     :value="old('email')"
+                                    placeholder="sample@email.com"
                                     autocomplete="off" />
                                 <x-forms.error name="email" />
                             </x-forms.field-container>
@@ -241,6 +242,7 @@
                                     id="contact_number"
                                     name="contact_number"
                                     :value="old('contact_number')"
+                                    placeholder="09123456789"
                                     maxlength="11"
                                     oninput="restrictLetterInput(this)"
                                     autocomplete="off" />
@@ -259,15 +261,30 @@
                                 <x-forms.label
                                     for="type"
                                     :required="true">
-                                    Profession
+                                    Specialization
                                 </x-forms.label>
 
                                 <x-forms.input
                                     type="text"
                                     id="type"
                                     name="type"
+                                    list="specializations"
                                     :value="old('type')"
                                     autocomplete="off" />
+
+                                <datalist id="specializations">
+                                    <option value="General Practitioner"></option>
+                                    <option value="Cardiologist"></option>
+                                    <option value="Dermatologist"></option>
+                                    <option value="Pediatrician"></option>
+                                    <option value="Orthopedic Surgeon"></option>
+                                    <option value="Gynecologist"></option>
+                                    <option value="Neurologist"></option>
+                                    <option value="Psychiatrist"></option>
+                                    <option value="Dentist"></option>
+                                    <option value="Ophthalmologist"></option>
+                                </datalist>
+
                                 <x-forms.error name="type" />
                             </x-forms.field-container>
 
@@ -283,6 +300,7 @@
                                     id="license_number"
                                     name="license_number"
                                     :value="old('license_number')"
+                                    placeholder="8067450"
                                     autocomplete="off" />
                                 <x-forms.error name="license_number" />
                             </x-forms.field-container>
@@ -335,16 +353,13 @@
     <!-- Validation -->
     <script>
         function restrictLetterInput(input) {
-            // Allow only numbers and dash "-" (for date format like mm-dd-yyyy)
             input.value = input.value.replace(/[^0-9\-\/]/g, '');
         }
     </script>
 
     <!-- Confirmation dialog -->
     <script>
-        // Confirmation dialog
         async function confirmCreate() {
-            // Prevent the default form submission
             event.preventDefault();
 
             const isFormValidated = await validateForm('RegistrationForm', '/users/doctor/validate-store-request');
@@ -353,9 +368,7 @@
                 if (isVerified) {
                     const user = await createUser();
                     if (user) {
-                        // Scroll to top
                         window.scrollTo(0, 0);
-                        // Reset form fields
                         clearForm('RegistrationForm');
                     }
                 }
@@ -363,13 +376,11 @@
             }
         }
 
-        // Creation process
         async function createUser() {
             const form = document.getElementById('RegistrationForm');
             const formData = new FormData(form);
 
             try {
-                // Perform the POST request using Fetch API
                 const response = await fetch(form.action, {
                     method: 'POST',
                     body: formData,
@@ -386,7 +397,6 @@
                     console.log(response.status, result.message);
                     console.log('User:', result.user);
 
-                    // Return user data
                     return result.user;
                 } else {
                     showToast('toast-error', result.message);
@@ -404,7 +414,6 @@
     <!-- Test -->
     <script>
         function fillFields() {
-            // Predefined values for testing
             const testData = {
                 first_name: "John",
                 middle_name: "James",
@@ -414,7 +423,7 @@
                 sex: "Male",
                 religion: "Catholic",
                 civil_status: "Single",
-                citizenship: "Male",
+                citizenship: "Filipino",
 
                 address: "4527 Colonial Drive High Hill Texas",
                 email: "jd.doctor@gmail.com",
@@ -425,7 +434,6 @@
                 license_number: "8067450"
             };
 
-            // Fill fields using their IDs
             document.getElementById('first_name').value = testData.first_name;
             document.getElementById('middle_name').value = testData.middle_name;
             document.getElementById('last_name').value = testData.last_name;
